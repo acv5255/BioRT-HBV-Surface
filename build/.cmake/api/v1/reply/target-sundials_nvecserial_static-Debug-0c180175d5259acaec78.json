@@ -1,0 +1,152 @@
+{
+	"archive" : {},
+	"artifacts" : 
+	[
+		{
+			"path" : "dep/cvode/src/nvector/serial/libsundials_nvecserial.a"
+		}
+	],
+	"backtrace" : 1,
+	"backtraceGraph" : 
+	{
+		"commands" : 
+		[
+			"ADD_LIBRARY",
+			"INSTALL",
+			"ADD_DEFINITIONS",
+			"INCLUDE_DIRECTORIES"
+		],
+		"files" : 
+		[
+			"dep/cvode/src/nvector/serial/CMakeLists.txt",
+			"dep/cvode/CMakeLists.txt"
+		],
+		"nodes" : 
+		[
+			{
+				"file" : 0
+			},
+			{
+				"command" : 0,
+				"file" : 0,
+				"line" : 48,
+				"parent" : 0
+			},
+			{
+				"command" : 1,
+				"file" : 0,
+				"line" : 51,
+				"parent" : 0
+			},
+			{
+				"command" : 2,
+				"file" : 0,
+				"line" : 41,
+				"parent" : 0
+			},
+			{
+				"file" : 1
+			},
+			{
+				"command" : 3,
+				"file" : 1,
+				"line" : 1115,
+				"parent" : 4
+			},
+			{
+				"command" : 3,
+				"file" : 0,
+				"line" : 38,
+				"parent" : 0
+			}
+		]
+	},
+	"compileGroups" : 
+	[
+		{
+			"compileCommandFragments" : 
+			[
+				{
+					"fragment" : "-g"
+				}
+			],
+			"defines" : 
+			[
+				{
+					"backtrace" : 3,
+					"define" : "BUILD_SUNDIALS_LIBRARY"
+				}
+			],
+			"includes" : 
+			[
+				{
+					"backtrace" : 5,
+					"path" : "/home/andrew/Documents/GitHub/surface/HBV-BioRT/dep/cvode/include"
+				},
+				{
+					"backtrace" : 5,
+					"path" : "/home/andrew/Documents/GitHub/surface/HBV-BioRT/build/dep/cvode/include"
+				},
+				{
+					"backtrace" : 6,
+					"path" : "/home/andrew/Documents/GitHub/surface/HBV-BioRT/dep/cvode/src/nvector/serial/."
+				}
+			],
+			"language" : "C",
+			"sourceIndexes" : 
+			[
+				0,
+				1
+			]
+		}
+	],
+	"id" : "sundials_nvecserial_static::@6ac598a174078e84646a",
+	"install" : 
+	{
+		"destinations" : 
+		[
+			{
+				"backtrace" : 2,
+				"path" : "lib"
+			}
+		],
+		"prefix" : 
+		{
+			"path" : "/usr/local"
+		}
+	},
+	"name" : "sundials_nvecserial_static",
+	"nameOnDisk" : "libsundials_nvecserial.a",
+	"paths" : 
+	{
+		"build" : "dep/cvode/src/nvector/serial",
+		"source" : "dep/cvode/src/nvector/serial"
+	},
+	"sourceGroups" : 
+	[
+		{
+			"name" : "Source Files",
+			"sourceIndexes" : 
+			[
+				0,
+				1
+			]
+		}
+	],
+	"sources" : 
+	[
+		{
+			"backtrace" : 1,
+			"compileGroupIndex" : 0,
+			"path" : "dep/cvode/src/nvector/serial/nvector_serial.c",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 1,
+			"compileGroupIndex" : 0,
+			"path" : "dep/cvode/src/sundials/sundials_math.c",
+			"sourceGroupIndex" : 0
+		}
+	],
+	"type" : "STATIC_LIBRARY"
+}

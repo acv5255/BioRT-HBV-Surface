@@ -1,0 +1,182 @@
+{
+	"backtraceGraph" : 
+	{
+		"commands" : 
+		[
+			"INSTALL"
+		],
+		"files" : 
+		[
+			"dep/cvode/examples/sunmatrix/sparse/CMakeLists.txt"
+		],
+		"nodes" : 
+		[
+			{
+				"file" : 0
+			},
+			{
+				"command" : 0,
+				"file" : 0,
+				"line" : 119,
+				"parent" : 0
+			},
+			{
+				"command" : 0,
+				"file" : 0,
+				"line" : 119,
+				"parent" : 0
+			},
+			{
+				"command" : 0,
+				"file" : 0,
+				"line" : 119,
+				"parent" : 0
+			},
+			{
+				"command" : 0,
+				"file" : 0,
+				"line" : 119,
+				"parent" : 0
+			},
+			{
+				"command" : 0,
+				"file" : 0,
+				"line" : 119,
+				"parent" : 0
+			},
+			{
+				"command" : 0,
+				"file" : 0,
+				"line" : 119,
+				"parent" : 0
+			},
+			{
+				"command" : 0,
+				"file" : 0,
+				"line" : 202,
+				"parent" : 0
+			},
+			{
+				"command" : 0,
+				"file" : 0,
+				"line" : 219,
+				"parent" : 0
+			}
+		]
+	},
+	"installers" : 
+	[
+		{
+			"backtrace" : 1,
+			"component" : "Unspecified",
+			"destination" : "/usr/local/examples/sunmatrix/sparse",
+			"paths" : 
+			[
+				"dep/cvode/examples/sunmatrix/sparse/test_sunmatrix_sparse.c",
+				"dep/cvode/examples/sunmatrix/sparse/../test_sunmatrix.c",
+				"dep/cvode/examples/sunmatrix/sparse/../test_sunmatrix.h",
+				"dep/cvode/examples/sunmatrix/sparse/../../../src/sundials/sundials_matrix.c",
+				"dep/cvode/examples/sunmatrix/sparse/../../../src/sundials/sundials_nvector.c"
+			],
+			"type" : "file"
+		},
+		{
+			"backtrace" : 2,
+			"component" : "Unspecified",
+			"destination" : "/usr/local/examples/sunmatrix/sparse",
+			"paths" : 
+			[
+				"dep/cvode/examples/sunmatrix/sparse/test_sunmatrix_sparse.c",
+				"dep/cvode/examples/sunmatrix/sparse/../test_sunmatrix.c",
+				"dep/cvode/examples/sunmatrix/sparse/../test_sunmatrix.h",
+				"dep/cvode/examples/sunmatrix/sparse/../../../src/sundials/sundials_matrix.c",
+				"dep/cvode/examples/sunmatrix/sparse/../../../src/sundials/sundials_nvector.c"
+			],
+			"type" : "file"
+		},
+		{
+			"backtrace" : 3,
+			"component" : "Unspecified",
+			"destination" : "/usr/local/examples/sunmatrix/sparse",
+			"paths" : 
+			[
+				"dep/cvode/examples/sunmatrix/sparse/test_sunmatrix_sparse.c",
+				"dep/cvode/examples/sunmatrix/sparse/../test_sunmatrix.c",
+				"dep/cvode/examples/sunmatrix/sparse/../test_sunmatrix.h",
+				"dep/cvode/examples/sunmatrix/sparse/../../../src/sundials/sundials_matrix.c",
+				"dep/cvode/examples/sunmatrix/sparse/../../../src/sundials/sundials_nvector.c"
+			],
+			"type" : "file"
+		},
+		{
+			"backtrace" : 4,
+			"component" : "Unspecified",
+			"destination" : "/usr/local/examples/sunmatrix/sparse",
+			"paths" : 
+			[
+				"dep/cvode/examples/sunmatrix/sparse/test_sunmatrix_sparse.c",
+				"dep/cvode/examples/sunmatrix/sparse/../test_sunmatrix.c",
+				"dep/cvode/examples/sunmatrix/sparse/../test_sunmatrix.h",
+				"dep/cvode/examples/sunmatrix/sparse/../../../src/sundials/sundials_matrix.c",
+				"dep/cvode/examples/sunmatrix/sparse/../../../src/sundials/sundials_nvector.c"
+			],
+			"type" : "file"
+		},
+		{
+			"backtrace" : 5,
+			"component" : "Unspecified",
+			"destination" : "/usr/local/examples/sunmatrix/sparse",
+			"paths" : 
+			[
+				"dep/cvode/examples/sunmatrix/sparse/test_sunmatrix_sparse.c",
+				"dep/cvode/examples/sunmatrix/sparse/../test_sunmatrix.c",
+				"dep/cvode/examples/sunmatrix/sparse/../test_sunmatrix.h",
+				"dep/cvode/examples/sunmatrix/sparse/../../../src/sundials/sundials_matrix.c",
+				"dep/cvode/examples/sunmatrix/sparse/../../../src/sundials/sundials_nvector.c"
+			],
+			"type" : "file"
+		},
+		{
+			"backtrace" : 6,
+			"component" : "Unspecified",
+			"destination" : "/usr/local/examples/sunmatrix/sparse",
+			"paths" : 
+			[
+				"dep/cvode/examples/sunmatrix/sparse/test_sunmatrix_sparse.c",
+				"dep/cvode/examples/sunmatrix/sparse/../test_sunmatrix.c",
+				"dep/cvode/examples/sunmatrix/sparse/../test_sunmatrix.h",
+				"dep/cvode/examples/sunmatrix/sparse/../../../src/sundials/sundials_matrix.c",
+				"dep/cvode/examples/sunmatrix/sparse/../../../src/sundials/sundials_nvector.c"
+			],
+			"type" : "file"
+		},
+		{
+			"backtrace" : 7,
+			"component" : "Unspecified",
+			"destination" : "/usr/local/examples/sunmatrix/sparse",
+			"paths" : 
+			[
+				"build/dep/cvode/examples/sunmatrix/sparse/CMakeLists.txt"
+			],
+			"type" : "file"
+		},
+		{
+			"backtrace" : 8,
+			"component" : "Unspecified",
+			"destination" : "/usr/local/examples/sunmatrix/sparse",
+			"paths" : 
+			[
+				{
+					"from" : "build/dep/cvode/examples/sunmatrix/sparse/Makefile_ex",
+					"to" : "Makefile"
+				}
+			],
+			"type" : "file"
+		}
+	],
+	"paths" : 
+	{
+		"build" : "dep/cvode/examples/sunmatrix/sparse",
+		"source" : "dep/cvode/examples/sunmatrix/sparse"
+	}
+}

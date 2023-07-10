@@ -1,0 +1,219 @@
+{
+	"artifacts" : 
+	[
+		{
+			"path" : "dep/cvode/examples/sunlinsol/spbcgs/serial/test_sunlinsol_spbcgs_serial"
+		}
+	],
+	"backtrace" : 1,
+	"backtraceGraph" : 
+	{
+		"commands" : 
+		[
+			"ADD_EXECUTABLE",
+			"TARGET_LINK_LIBRARIES",
+			"INCLUDE_DIRECTORIES"
+		],
+		"files" : 
+		[
+			"dep/cvode/examples/sunlinsol/spbcgs/serial/CMakeLists.txt",
+			"dep/cvode/src/nvector/serial/CMakeLists.txt",
+			"dep/cvode/CMakeLists.txt"
+		],
+		"nodes" : 
+		[
+			{
+				"file" : 0
+			},
+			{
+				"command" : 0,
+				"file" : 0,
+				"line" : 79,
+				"parent" : 0
+			},
+			{
+				"command" : 1,
+				"file" : 0,
+				"line" : 88,
+				"parent" : 0
+			},
+			{
+				"file" : 1
+			},
+			{
+				"command" : 1,
+				"file" : 1,
+				"line" : 63,
+				"parent" : 3
+			},
+			{
+				"file" : 2
+			},
+			{
+				"command" : 2,
+				"file" : 2,
+				"line" : 1115,
+				"parent" : 5
+			},
+			{
+				"command" : 2,
+				"file" : 0,
+				"line" : 43,
+				"parent" : 0
+			}
+		]
+	},
+	"compileGroups" : 
+	[
+		{
+			"compileCommandFragments" : 
+			[
+				{
+					"fragment" : "-g"
+				}
+			],
+			"includes" : 
+			[
+				{
+					"backtrace" : 6,
+					"path" : "/home/andrew/Documents/GitHub/surface/HBV-BioRT/dep/cvode/include"
+				},
+				{
+					"backtrace" : 6,
+					"path" : "/home/andrew/Documents/GitHub/surface/HBV-BioRT/build/dep/cvode/include"
+				},
+				{
+					"backtrace" : 7,
+					"path" : "/home/andrew/Documents/GitHub/surface/HBV-BioRT/dep/cvode/examples/sunlinsol/spbcgs/serial/."
+				},
+				{
+					"backtrace" : 7,
+					"path" : "/home/andrew/Documents/GitHub/surface/HBV-BioRT/dep/cvode/examples/sunlinsol/spbcgs/serial/../.."
+				}
+			],
+			"language" : "C",
+			"sourceIndexes" : 
+			[
+				0,
+				1,
+				2,
+				3
+			]
+		}
+	],
+	"dependencies" : 
+	[
+		{
+			"backtrace" : 2,
+			"id" : "sundials_nvecserial_shared::@6ac598a174078e84646a"
+		},
+		{
+			"backtrace" : 2,
+			"id" : "sundials_sunlinsolspbcgs_shared::@5a1eb9e20400dd7646cb"
+		}
+	],
+	"folder" : 
+	{
+		"name" : "Examples"
+	},
+	"id" : "test_sunlinsol_spbcgs_serial::@3fc82f5f4183311c6f51",
+	"link" : 
+	{
+		"commandFragments" : 
+		[
+			{
+				"fragment" : "-g",
+				"role" : "flags"
+			},
+			{
+				"fragment" : "-rdynamic",
+				"role" : "flags"
+			},
+			{
+				"fragment" : "-Wl,-rpath,/home/andrew/Documents/GitHub/surface/HBV-BioRT/build/dep/cvode/src/nvector/serial:/home/andrew/Documents/GitHub/surface/HBV-BioRT/build/dep/cvode/src/sunlinsol/spbcgs",
+				"role" : "libraries"
+			},
+			{
+				"backtrace" : 2,
+				"fragment" : "../../../../src/nvector/serial/libsundials_nvecserial.so.4.1.0",
+				"role" : "libraries"
+			},
+			{
+				"backtrace" : 2,
+				"fragment" : "../../../../src/sunlinsol/spbcgs/libsundials_sunlinsolspbcgs.so.2.1.0",
+				"role" : "libraries"
+			},
+			{
+				"backtrace" : 2,
+				"fragment" : "-lm",
+				"role" : "libraries"
+			},
+			{
+				"fragment" : "-Wl,-Bstatic",
+				"role" : "libraries"
+			},
+			{
+				"fragment" : "-lrt",
+				"role" : "libraries"
+			},
+			{
+				"fragment" : "-Wl,-Bdynamic",
+				"role" : "libraries"
+			},
+			{
+				"backtrace" : 4,
+				"fragment" : "-lm",
+				"role" : "libraries"
+			}
+		],
+		"language" : "C"
+	},
+	"name" : "test_sunlinsol_spbcgs_serial",
+	"nameOnDisk" : "test_sunlinsol_spbcgs_serial",
+	"paths" : 
+	{
+		"build" : "dep/cvode/examples/sunlinsol/spbcgs/serial",
+		"source" : "dep/cvode/examples/sunlinsol/spbcgs/serial"
+	},
+	"sourceGroups" : 
+	[
+		{
+			"name" : "Source Files",
+			"sourceIndexes" : 
+			[
+				0,
+				1,
+				2,
+				3
+			]
+		}
+	],
+	"sources" : 
+	[
+		{
+			"backtrace" : 1,
+			"compileGroupIndex" : 0,
+			"path" : "dep/cvode/examples/sunlinsol/spbcgs/serial/test_sunlinsol_spbcgs_serial.c",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 1,
+			"compileGroupIndex" : 0,
+			"path" : "dep/cvode/examples/sunlinsol/test_sunlinsol.c",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 1,
+			"compileGroupIndex" : 0,
+			"path" : "dep/cvode/src/sundials/sundials_linearsolver.c",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 1,
+			"compileGroupIndex" : 0,
+			"path" : "dep/cvode/src/sundials/sundials_nvector.c",
+			"sourceGroupIndex" : 0
+		}
+	],
+	"type" : "EXECUTABLE"
+}

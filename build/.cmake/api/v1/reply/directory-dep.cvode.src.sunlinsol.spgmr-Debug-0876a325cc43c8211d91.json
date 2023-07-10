@@ -1,0 +1,105 @@
+{
+	"backtraceGraph" : 
+	{
+		"commands" : 
+		[
+			"INSTALL"
+		],
+		"files" : 
+		[
+			"dep/cvode/src/sunlinsol/spgmr/CMakeLists.txt"
+		],
+		"nodes" : 
+		[
+			{
+				"file" : 0
+			},
+			{
+				"command" : 0,
+				"file" : 0,
+				"line" : 16,
+				"parent" : 0
+			},
+			{
+				"command" : 0,
+				"file" : 0,
+				"line" : 54,
+				"parent" : 0
+			},
+			{
+				"command" : 0,
+				"file" : 0,
+				"line" : 73,
+				"parent" : 0
+			},
+			{
+				"command" : 0,
+				"file" : 0,
+				"line" : 77,
+				"parent" : 0
+			}
+		]
+	},
+	"installers" : 
+	[
+		{
+			"backtrace" : 1,
+			"component" : "Unspecified",
+			"type" : "code"
+		},
+		{
+			"backtrace" : 2,
+			"component" : "Unspecified",
+			"destination" : "lib",
+			"paths" : 
+			[
+				"dep/cvode/src/sunlinsol/spgmr/libsundials_sunlinsolspgmr.a"
+			],
+			"targetId" : "sundials_sunlinsolspgmr_static::@90821ee9a3214a325f43",
+			"targetIndex" : 56,
+			"type" : "target"
+		},
+		{
+			"backtrace" : 3,
+			"component" : "Unspecified",
+			"destination" : "lib",
+			"paths" : 
+			[
+				"dep/cvode/src/sunlinsol/spgmr/libsundials_sunlinsolspgmr.so.2.1.0",
+				"dep/cvode/src/sunlinsol/spgmr/libsundials_sunlinsolspgmr.so.2"
+			],
+			"targetId" : "sundials_sunlinsolspgmr_shared::@90821ee9a3214a325f43",
+			"targetIndex" : 55,
+			"targetInstallNamelink" : "skip",
+			"type" : "target"
+		},
+		{
+			"backtrace" : 3,
+			"component" : "Unspecified",
+			"destination" : "lib",
+			"paths" : 
+			[
+				"dep/cvode/src/sunlinsol/spgmr/libsundials_sunlinsolspgmr.so"
+			],
+			"targetId" : "sundials_sunlinsolspgmr_shared::@90821ee9a3214a325f43",
+			"targetIndex" : 55,
+			"targetInstallNamelink" : "only",
+			"type" : "target"
+		},
+		{
+			"backtrace" : 4,
+			"component" : "Unspecified",
+			"destination" : "include/sunlinsol",
+			"paths" : 
+			[
+				"dep/cvode/include/sunlinsol/sunlinsol_spgmr.h"
+			],
+			"type" : "file"
+		}
+	],
+	"paths" : 
+	{
+		"build" : "dep/cvode/src/sunlinsol/spgmr",
+		"source" : "dep/cvode/src/sunlinsol/spgmr"
+	}
+}

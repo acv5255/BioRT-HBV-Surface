@@ -1,0 +1,105 @@
+{
+	"backtraceGraph" : 
+	{
+		"commands" : 
+		[
+			"INSTALL"
+		],
+		"files" : 
+		[
+			"dep/cvode/src/sunmatrix/sparse/CMakeLists.txt"
+		],
+		"nodes" : 
+		[
+			{
+				"file" : 0
+			},
+			{
+				"command" : 0,
+				"file" : 0,
+				"line" : 16,
+				"parent" : 0
+			},
+			{
+				"command" : 0,
+				"file" : 0,
+				"line" : 53,
+				"parent" : 0
+			},
+			{
+				"command" : 0,
+				"file" : 0,
+				"line" : 72,
+				"parent" : 0
+			},
+			{
+				"command" : 0,
+				"file" : 0,
+				"line" : 76,
+				"parent" : 0
+			}
+		]
+	},
+	"installers" : 
+	[
+		{
+			"backtrace" : 1,
+			"component" : "Unspecified",
+			"type" : "code"
+		},
+		{
+			"backtrace" : 2,
+			"component" : "Unspecified",
+			"destination" : "lib",
+			"paths" : 
+			[
+				"dep/cvode/src/sunmatrix/sparse/libsundials_sunmatrixsparse.a"
+			],
+			"targetId" : "sundials_sunmatrixsparse_static::@1835bcde64db308ec871",
+			"targetIndex" : 64,
+			"type" : "target"
+		},
+		{
+			"backtrace" : 3,
+			"component" : "Unspecified",
+			"destination" : "lib",
+			"paths" : 
+			[
+				"dep/cvode/src/sunmatrix/sparse/libsundials_sunmatrixsparse.so.2.1.0",
+				"dep/cvode/src/sunmatrix/sparse/libsundials_sunmatrixsparse.so.2"
+			],
+			"targetId" : "sundials_sunmatrixsparse_shared::@1835bcde64db308ec871",
+			"targetIndex" : 63,
+			"targetInstallNamelink" : "skip",
+			"type" : "target"
+		},
+		{
+			"backtrace" : 3,
+			"component" : "Unspecified",
+			"destination" : "lib",
+			"paths" : 
+			[
+				"dep/cvode/src/sunmatrix/sparse/libsundials_sunmatrixsparse.so"
+			],
+			"targetId" : "sundials_sunmatrixsparse_shared::@1835bcde64db308ec871",
+			"targetIndex" : 63,
+			"targetInstallNamelink" : "only",
+			"type" : "target"
+		},
+		{
+			"backtrace" : 4,
+			"component" : "Unspecified",
+			"destination" : "include/sunmatrix",
+			"paths" : 
+			[
+				"dep/cvode/include/sunmatrix/sunmatrix_sparse.h"
+			],
+			"type" : "file"
+		}
+	],
+	"paths" : 
+	{
+		"build" : "dep/cvode/src/sunmatrix/sparse",
+		"source" : "dep/cvode/src/sunmatrix/sparse"
+	}
+}

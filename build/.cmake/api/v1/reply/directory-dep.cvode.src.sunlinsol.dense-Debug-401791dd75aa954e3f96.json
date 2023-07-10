@@ -1,0 +1,105 @@
+{
+	"backtraceGraph" : 
+	{
+		"commands" : 
+		[
+			"INSTALL"
+		],
+		"files" : 
+		[
+			"dep/cvode/src/sunlinsol/dense/CMakeLists.txt"
+		],
+		"nodes" : 
+		[
+			{
+				"file" : 0
+			},
+			{
+				"command" : 0,
+				"file" : 0,
+				"line" : 16,
+				"parent" : 0
+			},
+			{
+				"command" : 0,
+				"file" : 0,
+				"line" : 52,
+				"parent" : 0
+			},
+			{
+				"command" : 0,
+				"file" : 0,
+				"line" : 69,
+				"parent" : 0
+			},
+			{
+				"command" : 0,
+				"file" : 0,
+				"line" : 73,
+				"parent" : 0
+			}
+		]
+	},
+	"installers" : 
+	[
+		{
+			"backtrace" : 1,
+			"component" : "Unspecified",
+			"type" : "code"
+		},
+		{
+			"backtrace" : 2,
+			"component" : "Unspecified",
+			"destination" : "lib",
+			"paths" : 
+			[
+				"dep/cvode/src/sunlinsol/dense/libsundials_sunlinsoldense.a"
+			],
+			"targetId" : "sundials_sunlinsoldense_static::@57a9676a0364f604e80a",
+			"targetIndex" : 48,
+			"type" : "target"
+		},
+		{
+			"backtrace" : 3,
+			"component" : "Unspecified",
+			"destination" : "lib",
+			"paths" : 
+			[
+				"dep/cvode/src/sunlinsol/dense/libsundials_sunlinsoldense.so.2.1.0",
+				"dep/cvode/src/sunlinsol/dense/libsundials_sunlinsoldense.so.2"
+			],
+			"targetId" : "sundials_sunlinsoldense_shared::@57a9676a0364f604e80a",
+			"targetIndex" : 47,
+			"targetInstallNamelink" : "skip",
+			"type" : "target"
+		},
+		{
+			"backtrace" : 3,
+			"component" : "Unspecified",
+			"destination" : "lib",
+			"paths" : 
+			[
+				"dep/cvode/src/sunlinsol/dense/libsundials_sunlinsoldense.so"
+			],
+			"targetId" : "sundials_sunlinsoldense_shared::@57a9676a0364f604e80a",
+			"targetIndex" : 47,
+			"targetInstallNamelink" : "only",
+			"type" : "target"
+		},
+		{
+			"backtrace" : 4,
+			"component" : "Unspecified",
+			"destination" : "include/sunlinsol",
+			"paths" : 
+			[
+				"dep/cvode/include/sunlinsol/sunlinsol_dense.h"
+			],
+			"type" : "file"
+		}
+	],
+	"paths" : 
+	{
+		"build" : "dep/cvode/src/sunlinsol/dense",
+		"source" : "dep/cvode/src/sunlinsol/dense"
+	}
+}

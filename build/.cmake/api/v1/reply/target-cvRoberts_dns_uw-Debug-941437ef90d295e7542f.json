@@ -1,0 +1,174 @@
+{
+	"artifacts" : 
+	[
+		{
+			"path" : "dep/cvode/examples/cvode/serial/cvRoberts_dns_uw"
+		}
+	],
+	"backtrace" : 1,
+	"backtraceGraph" : 
+	{
+		"commands" : 
+		[
+			"ADD_EXECUTABLE",
+			"TARGET_LINK_LIBRARIES",
+			"INCLUDE_DIRECTORIES"
+		],
+		"files" : 
+		[
+			"dep/cvode/examples/cvode/serial/CMakeLists.txt",
+			"dep/cvode/src/cvode/CMakeLists.txt",
+			"dep/cvode/CMakeLists.txt"
+		],
+		"nodes" : 
+		[
+			{
+				"file" : 0
+			},
+			{
+				"command" : 0,
+				"file" : 0,
+				"line" : 75,
+				"parent" : 0
+			},
+			{
+				"command" : 1,
+				"file" : 0,
+				"line" : 86,
+				"parent" : 0
+			},
+			{
+				"file" : 1
+			},
+			{
+				"command" : 1,
+				"file" : 1,
+				"line" : 127,
+				"parent" : 3
+			},
+			{
+				"file" : 2
+			},
+			{
+				"command" : 2,
+				"file" : 2,
+				"line" : 1115,
+				"parent" : 5
+			}
+		]
+	},
+	"compileGroups" : 
+	[
+		{
+			"compileCommandFragments" : 
+			[
+				{
+					"fragment" : "-g"
+				}
+			],
+			"includes" : 
+			[
+				{
+					"backtrace" : 6,
+					"path" : "/home/andrew/Documents/GitHub/surface/HBV-BioRT/dep/cvode/include"
+				},
+				{
+					"backtrace" : 6,
+					"path" : "/home/andrew/Documents/GitHub/surface/HBV-BioRT/build/dep/cvode/include"
+				}
+			],
+			"language" : "C",
+			"sourceIndexes" : 
+			[
+				0
+			]
+		}
+	],
+	"dependencies" : 
+	[
+		{
+			"backtrace" : 2,
+			"id" : "sundials_nvecserial_shared::@6ac598a174078e84646a"
+		},
+		{
+			"backtrace" : 2,
+			"id" : "sundials_cvode_shared::@007acf8286e3f156ab4c"
+		}
+	],
+	"folder" : 
+	{
+		"name" : "Examples"
+	},
+	"id" : "cvRoberts_dns_uw::@b0940dd2a2448bb14a80",
+	"link" : 
+	{
+		"commandFragments" : 
+		[
+			{
+				"fragment" : "-g",
+				"role" : "flags"
+			},
+			{
+				"fragment" : "",
+				"role" : "flags"
+			},
+			{
+				"fragment" : "-Wl,-rpath,/home/andrew/Documents/GitHub/surface/HBV-BioRT/build/dep/cvode/src/cvode:/home/andrew/Documents/GitHub/surface/HBV-BioRT/build/dep/cvode/src/nvector/serial",
+				"role" : "libraries"
+			},
+			{
+				"backtrace" : 2,
+				"fragment" : "../../../src/cvode/libsundials_cvode.so.4.1.0",
+				"role" : "libraries"
+			},
+			{
+				"backtrace" : 2,
+				"fragment" : "../../../src/nvector/serial/libsundials_nvecserial.so.4.1.0",
+				"role" : "libraries"
+			},
+			{
+				"backtrace" : 2,
+				"fragment" : "-lm",
+				"role" : "libraries"
+			},
+			{
+				"backtrace" : 2,
+				"fragment" : "/usr/lib/x86_64-linux-gnu/librt.a",
+				"role" : "libraries"
+			},
+			{
+				"backtrace" : 4,
+				"fragment" : "-lm",
+				"role" : "libraries"
+			}
+		],
+		"language" : "C"
+	},
+	"name" : "cvRoberts_dns_uw",
+	"nameOnDisk" : "cvRoberts_dns_uw",
+	"paths" : 
+	{
+		"build" : "dep/cvode/examples/cvode/serial",
+		"source" : "dep/cvode/examples/cvode/serial"
+	},
+	"sourceGroups" : 
+	[
+		{
+			"name" : "Source Files",
+			"sourceIndexes" : 
+			[
+				0
+			]
+		}
+	],
+	"sources" : 
+	[
+		{
+			"backtrace" : 1,
+			"compileGroupIndex" : 0,
+			"path" : "dep/cvode/examples/cvode/serial/cvRoberts_dns_uw.c",
+			"sourceGroupIndex" : 0
+		}
+	],
+	"type" : "EXECUTABLE"
+}

@@ -7,27 +7,27 @@ void ReadChem(const char dir[], ctrl_struct *ctrl, rttbl_struct *rttbl, chemtbl_
     char            cmdstr[MAXSTRING];
     char            temp_str[MAXSTRING];
     char            chemn[MAXSPS][MAXSTRING];
-    char            fn[MAXSTRING];
+    char            file_name[MAXSTRING];
     int             p_type[MAXSPS];
     int             lno = 0;
-    FILE           *fp;
+    FILE           *file_pointer;
 
     // READ CHEM.TXT FILE
-    sprintf(fn, "input/%s/chem.txt", dir);
-    fp = fopen(fn, "r");
+    sprintf(file_name, "input/%s/chem.txt", dir);
+    file_pointer = fopen(file_name, "r");
 
     biort_printf(VL_NORMAL, "\nBIORT CONTROL PARAMETERS\n");
 
-    NextLine(fp, cmdstr, &lno);
-    ReadParam(cmdstr, "RECYCLE", 'i', fn, lno, &ctrl->recycle);
+    NextLine(file_pointer, cmdstr, &lno);
+    ReadParam(cmdstr, "RECYCLE", 'i', file_name, lno, &ctrl->recycle);
     biort_printf(VL_NORMAL, "  Forcing recycle %d time(s). \n", ctrl->recycle);
 
-    NextLine(fp, cmdstr, &lno);
-    ReadParam(cmdstr, "ACTIVITY", 'i', fn, lno, &ctrl->actv_mode);
+    NextLine(file_pointer, cmdstr, &lno);
+    ReadParam(cmdstr, "ACTIVITY", 'i', file_name, lno, &ctrl->actv_mode);
     biort_printf(VL_NORMAL, "  Activity correction is set to %d. \n", ctrl->actv_mode);
 
-    NextLine(fp, cmdstr, &lno);
-    ReadParam(cmdstr, "TRANSPORT_ONLY", 'i', fn, lno, &ctrl->transpt);
+    NextLine(file_pointer, cmdstr, &lno);
+    ReadParam(cmdstr, "TRANSPORT_ONLY", 'i', file_name, lno, &ctrl->transpt);
     switch (ctrl->transpt)
     {
         case KIN_REACTION:
@@ -41,8 +41,8 @@ void ReadChem(const char dir[], ctrl_struct *ctrl, rttbl_struct *rttbl, chemtbl_
             break;
     }
 
-    NextLine(fp, cmdstr, &lno);  // 2021-05-20
-    ReadParam(cmdstr, "PRECIPCHEM", 'i', fn, lno, &ctrl->precipchem);
+    NextLine(file_pointer, cmdstr, &lno);  // 2021-05-20
+    ReadParam(cmdstr, "PRECIPCHEM", 'i', file_name, lno, &ctrl->precipchem);
     switch (ctrl->precipchem)
     {
         case 0:
@@ -55,8 +55,8 @@ void ReadChem(const char dir[], ctrl_struct *ctrl, rttbl_struct *rttbl, chemtbl_
             break;
     }
 
-    NextLine(fp, cmdstr, &lno);  // 2021-09-09
-    ReadParam(cmdstr, "NUMEXP", 'i', fn, lno, &ctrl->precipchem_numexp);
+    NextLine(file_pointer, cmdstr, &lno);  // 2021-09-09
+    ReadParam(cmdstr, "NUMEXP", 'i', file_name, lno, &ctrl->precipchem_numexp);
     switch (ctrl->precipchem_numexp)
     {
         case 0:
@@ -69,8 +69,8 @@ void ReadChem(const char dir[], ctrl_struct *ctrl, rttbl_struct *rttbl, chemtbl_
             break;
     }
 
-    NextLine(fp, cmdstr, &lno);
-    ReadParam(cmdstr, "TEMPERATURE", 'd', fn, lno, &rttbl->tmp);
+    NextLine(file_pointer, cmdstr, &lno);
+    ReadParam(cmdstr, "TEMPERATURE", 'd', file_name, lno, &rttbl->tmp);
     biort_printf(VL_NORMAL, "  Temperature = %3.1f \n", rttbl->tmp);
 
     //NextLine(fp, cmdstr, &lno);
@@ -86,17 +86,17 @@ void ReadChem(const char dir[], ctrl_struct *ctrl, rttbl_struct *rttbl, chemtbl_
     //biort_printf(VL_NORMAL, "  Q10 factor = %.2f\n", rttbl->q10);
 
     // Count numbers of species and reactions
-    FindLine(fp, "PRIMARY_SPECIES", &lno, fn);
-    rttbl->num_stc = CountLines(fp, cmdstr, 1, "SECONDARY_SPECIES");
-    rttbl->num_ssc = CountLines(fp, cmdstr, 1, "MINERAL_KINETICS");
-    rttbl->num_mkr = CountLines(fp, cmdstr, 1, "PRECIPITATION_CONC");
+    FindLine(file_pointer, "PRIMARY_SPECIES", &lno, file_name);
+    rttbl->num_stc = CountLines(file_pointer, cmdstr, 1, "SECONDARY_SPECIES");
+    rttbl->num_ssc = CountLines(file_pointer, cmdstr, 1, "MINERAL_KINETICS");
+    rttbl->num_mkr = CountLines(file_pointer, cmdstr, 1, "PRECIPITATION_CONC");
     rttbl->num_akr = 0;     // Not implemented yet
 
     // Primary species block
     biort_printf(VL_NORMAL, "\nPRIMARY SPECIES\n");
     biort_printf(VL_NORMAL, "  %d chemical species specified. \n", rttbl->num_stc);
-    FindLine(fp, "BOF", &lno, fn);
-    FindLine(fp, "PRIMARY_SPECIES", &lno, fn);
+    FindLine(file_pointer, "BOF", &lno, file_name);
+    FindLine(file_pointer, "PRIMARY_SPECIES", &lno, file_name);
 
     rttbl->num_spc = 0;
     rttbl->num_ads = 0;
@@ -105,10 +105,10 @@ void ReadChem(const char dir[], ctrl_struct *ctrl, rttbl_struct *rttbl, chemtbl_
 
     for (i = 0; i < rttbl->num_stc; i++)
     {
-        NextLine(fp, cmdstr, &lno);
+        NextLine(file_pointer, cmdstr, &lno);
         if (sscanf(cmdstr, "%s", chemn[i]) != 1)
         {
-            biort_printf(VL_ERROR, "Error reading primary_species in %s near Line %d.\n", fn, lno);
+            biort_printf(VL_ERROR, "Error reading primary_species in %s near Line %d.\n", file_name, lno);
         }
         p_type[i] = SpeciesType(dir, chemn[i]);
 
@@ -131,7 +131,7 @@ void ReadChem(const char dir[], ctrl_struct *ctrl, rttbl_struct *rttbl, chemtbl_
                 break;
             case SECONDARY:
                 biort_printf(VL_ERROR, "%s is a secondary species, but is listed as a primary species.\n"
-                    "Error at Line %d in %s.\n", chemn[i], lno, fn);
+                    "Error at Line %d in %s.\n", chemn[i], lno, file_name);
                 exit(EXIT_FAILURE);
                 break;
             default:
@@ -152,13 +152,13 @@ void ReadChem(const char dir[], ctrl_struct *ctrl, rttbl_struct *rttbl, chemtbl_
     // Secondary_species block
     biort_printf(VL_NORMAL, "\nSECONDARY SPECIES\n");
     biort_printf(VL_NORMAL, "  %d secondary species specified. \n", rttbl->num_ssc);
-    FindLine(fp, "SECONDARY_SPECIES", &lno, fn);
+    FindLine(file_pointer, "SECONDARY_SPECIES", &lno, file_name);
     for (i = 0; i < rttbl->num_ssc; i++)
     {
-        NextLine(fp, cmdstr, &lno);
+        NextLine(file_pointer, cmdstr, &lno);
         if (sscanf(cmdstr, "%s", chemtbl[rttbl->num_stc + i].name) != 1)
         {
-            biort_printf(VL_ERROR, "Error reading secondary_species in %s near Line %d.\n", fn, lno);
+            biort_printf(VL_ERROR, "Error reading secondary_species in %s near Line %d.\n", file_name, lno);
         }
 
         if (SpeciesType(dir, chemtbl[rttbl->num_stc + i].name) == 0)
@@ -172,14 +172,14 @@ void ReadChem(const char dir[], ctrl_struct *ctrl, rttbl_struct *rttbl, chemtbl_
     // Minerals block
     biort_printf(VL_NORMAL, "\nMINERAL KINETIC REACTIONS\n");
     biort_printf(VL_NORMAL, "  %d mineral kinetic reaction(s) specified. \n", rttbl->num_mkr);
-    FindLine(fp, "MINERAL_KINETICS", &lno, fn);
+    FindLine(file_pointer, "MINERAL_KINETICS", &lno, file_name);
 
     for (i = 0; i < rttbl->num_mkr; i++)
     {
-        NextLine(fp, cmdstr, &lno);
+        NextLine(file_pointer, cmdstr, &lno);
         if (sscanf(cmdstr, "%s %*s %s", temp_str, kintbl[i].label) != 2)
         {
-            biort_printf(VL_ERROR, "Error reading mineral information in %s near Line %d.\n", fn, lno);
+            biort_printf(VL_ERROR, "Error reading mineral information in %s near Line %d.\n", file_name, lno);
             exit(EXIT_FAILURE);
         }
 
@@ -198,7 +198,7 @@ void ReadChem(const char dir[], ctrl_struct *ctrl, rttbl_struct *rttbl, chemtbl_
         }
     }
 
-    fclose(fp);
+    fclose(file_pointer);
 }
 
 // This subroutine is used to find out what the input species is.

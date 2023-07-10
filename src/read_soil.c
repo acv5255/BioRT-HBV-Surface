@@ -1,6 +1,6 @@
 #include "biort.h"
 
-void ReadSoil(const char dir[], int nsub, subcatch_struct sub[])
+void ReadSoil(const char dir[], subcatch_struct sub[])
 {
     char            cmdstr[MAXSTRING];
     char            fn[MAXSTRING];

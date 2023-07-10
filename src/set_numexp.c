@@ -1,6 +1,6 @@
 #include "biort.h"
 
-void CopyConstSubcatchProp(int nsub, const subcatch_struct subcatch[], subcatch_struct subcatch_numexp[])
+void CopyConstSubcatchProp(const subcatch_struct subcatch[], subcatch_struct subcatch_numexp[])
 {
     subcatch_numexp[0].k1 = subcatch[0].k1;
     subcatch_numexp[0].k2 = subcatch[0].k2;

@@ -35,7 +35,7 @@ void ReadPrecipChem(const char dir[], int nsub, int *nsteps, int *steps[], subca
 
     rewind(fp);
 
-    if (ntime != *nsteps & mode == 1){
+    if ((ntime != *nsteps) & (mode == 1)){
         biort_printf(VL_ERROR,"\nNumber of time steps in \"Numexp_precipchem.txt\" should be same as in \"Numexp_Results.txt\" file.\n");
         exit(EXIT_FAILURE);
     }

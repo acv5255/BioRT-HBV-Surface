@@ -1,6 +1,6 @@
 #include "biort.h"
 
-void ReadCini(const char dir[], int nsub, const chemtbl_struct *chemtbl, rttbl_struct *rttbl,
+void ReadCini(const char dir[], const chemtbl_struct *chemtbl, rttbl_struct *rttbl,
     subcatch_struct subcatch[])
 {
     char            fn[MAXSTRING];

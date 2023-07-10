@@ -67,6 +67,7 @@ void Transpt(int step, int nsub, const chemtbl_struct *chemtbl, rttbl_struct *rt
             subcatch[ksub].chms[UZ].tot_mol[kspc] -= conc_temp * subcatch[ksub].q[step][Q0];
             subcatch[ksub].chms[STREAM].tot_mol[kspc] = conc_temp * subcatch[ksub].q[step][Q0];
             
+            
             subcatch[ksub].chms[UZ].tot_conc[kspc] =  subcatch[ksub].chms[UZ].tot_mol[kspc] /
                 (subcatch[ksub].ws[step][UZ] + subcatch[ksub].q[step][Q1] + subcatch[ksub].q[step][PERC]);
             
@@ -158,7 +159,7 @@ void Transpt(int step, int nsub, const chemtbl_struct *chemtbl, rttbl_struct *rt
     }
 }
 
-void UpdatePrimConc(int step, int nsub, const rttbl_struct *rttbl, const ctrl_struct *ctrl, subcatch_struct subcatch[])
+void UpdatePrimConc(int nsub, const rttbl_struct *rttbl, const ctrl_struct *ctrl, subcatch_struct subcatch[])
 {
     int             ksub;
     int             kspc;

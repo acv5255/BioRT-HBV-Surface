@@ -20,7 +20,7 @@
 # ---------------------------------------------------------------
 
 # Require a fairly recent cmake version
-cmake_minimum_required(VERSION 3.1.3)
+cmake_minimum_required(VERSION 3.6)
 
 # Libraries linked via full path no longer produce linker search paths
 # Allows examples to build

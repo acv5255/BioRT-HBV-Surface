@@ -44,7 +44,7 @@ void ReadHbvResults(const char dir[], int nsub, int *nsteps, int *steps[], subca
 
     *steps = (int *)malloc(*nsteps * sizeof(int));
 
-    if (mode == 1 & numexp_file_flag == 0)
+    if ((mode == 1) & (numexp_file_flag == 0))
     {
       if (len_numexp % *nsteps != 0){
           biort_printf(VL_ERROR,"\nNumber of time steps in \"Numexp_precipchem.txt\" should be a multiple of time steps in \"Results.txt\" file, if \"Numexp_precipchem.txt\" file is not provided.\n");
@@ -87,14 +87,14 @@ void ReadHbvResults(const char dir[], int nsub, int *nsteps, int *steps[], subca
             fscanf(fp, "%lf %lf", &subcatch[ksub].q[kstep][PRECIP], &subcatch[ksub].tmp[kstep]);    // Read precip. and
                                                                                                     // air temperature
             fscanf(fp, "%*f %*f");   // Skip "AET" and PET"
-            fscanf(fp, "%lf %*lf %lf", &snow, &sm);     // Read snow and soil moisture
+            fscanf(fp, "%lf %*f %lf", &snow, &sm);     // Read snow and soil moisture
             subcatch[ksub].ws[kstep][SNOW] = snow;  // 2021-05-14
             subcatch[ksub].ws[kstep][SM] = sm;
             fscanf(fp, "%lf", &subcatch[ksub].q[kstep][RECHG]);  // Read recharge
-            fscanf(fp, "%*lf %*lf");   // Skip upper and lower zone storages
+            fscanf(fp, "%*f %*f");   // Skip upper and lower zone storages
             fscanf(fp, "%lf %lf %lf", &subcatch[ksub].q[kstep][Q0],
                 &subcatch[ksub].q[kstep][Q1], &subcatch[ksub].q[kstep][Q2]);  // Read Q0, Q1, and Q2
-            fscanf(fp, "%*lf %*lf");   // Skip "Qsim_rain" and "Qsim_snow"
+            fscanf(fp, "%*f %*f");   // Skip "Qsim_rain" and "Qsim_snow"
 
             //Incoming precipitation might become snow or enter the soil zone directly.
             //  Psnow = PRECIP * SFCF (if temp < TT)
@@ -172,7 +172,7 @@ void ReadHbvResults(const char dir[], int nsub, int *nsteps, int *steps[], subca
         fclose(fp);
     }
 
-    if (mode == 1 & numexp_file_flag == 0)
+    if ((mode == 1) & (numexp_file_flag == 0))
     {
         if (len_numexp > 1)
         {

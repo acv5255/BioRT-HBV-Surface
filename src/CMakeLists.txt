@@ -23,6 +23,14 @@ add_executable(biort
     util_func.c
 )
 
+target_compile_options(
+    biort
+    PRIVATE
+    -Wall
+    -Wextra
+    -Werror
+)
+
 target_include_directories(
     biort PRIVATE
     ${BioRT_SOURCE_DIR}/build/dep/cvode/include

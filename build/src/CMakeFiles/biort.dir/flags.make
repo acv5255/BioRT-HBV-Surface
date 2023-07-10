@@ -6,5 +6,5 @@ C_DEFINES =
 
 C_INCLUDES = -I/home/andrew/Documents/GitHub/surface/HBV-BioRT/build/dep/cvode/include -I/home/andrew/Documents/GitHub/surface/HBV-BioRT/dep/cvode/include -I/home/andrew/Documents/GitHub/surface/HBV-BioRT/include
 
-C_FLAGS = -g
+C_FLAGS = -g -Wall -Wextra -Werror
 

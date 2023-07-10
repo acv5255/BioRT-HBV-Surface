@@ -1441,109 +1441,109 @@
 },
 {
   "directory": "/home/andrew/Documents/GitHub/surface/HBV-BioRT/build/src",
-  "command": "/usr/bin/gcc-12  -I/home/andrew/Documents/GitHub/surface/HBV-BioRT/build/dep/cvode/include -I/home/andrew/Documents/GitHub/surface/HBV-BioRT/dep/cvode/include -I/home/andrew/Documents/GitHub/surface/HBV-BioRT/include -g -o CMakeFiles/biort.dir/main.c.o -c /home/andrew/Documents/GitHub/surface/HBV-BioRT/src/main.c",
+  "command": "/usr/bin/gcc-12  -I/home/andrew/Documents/GitHub/surface/HBV-BioRT/build/dep/cvode/include -I/home/andrew/Documents/GitHub/surface/HBV-BioRT/dep/cvode/include -I/home/andrew/Documents/GitHub/surface/HBV-BioRT/include -g -Wall -Wextra -Werror -o CMakeFiles/biort.dir/main.c.o -c /home/andrew/Documents/GitHub/surface/HBV-BioRT/src/main.c",
   "file": "/home/andrew/Documents/GitHub/surface/HBV-BioRT/src/main.c",
   "output": "src/CMakeFiles/biort.dir/main.c.o"
 },
 {
   "directory": "/home/andrew/Documents/GitHub/surface/HBV-BioRT/build/src",
-  "command": "/usr/bin/gcc-12  -I/home/andrew/Documents/GitHub/surface/HBV-BioRT/build/dep/cvode/include -I/home/andrew/Documents/GitHub/surface/HBV-BioRT/dep/cvode/include -I/home/andrew/Documents/GitHub/surface/HBV-BioRT/include -g -o CMakeFiles/biort.dir/custom_io.c.o -c /home/andrew/Documents/GitHub/surface/HBV-BioRT/src/custom_io.c",
+  "command": "/usr/bin/gcc-12  -I/home/andrew/Documents/GitHub/surface/HBV-BioRT/build/dep/cvode/include -I/home/andrew/Documents/GitHub/surface/HBV-BioRT/dep/cvode/include -I/home/andrew/Documents/GitHub/surface/HBV-BioRT/include -g -Wall -Wextra -Werror -o CMakeFiles/biort.dir/custom_io.c.o -c /home/andrew/Documents/GitHub/surface/HBV-BioRT/src/custom_io.c",
   "file": "/home/andrew/Documents/GitHub/surface/HBV-BioRT/src/custom_io.c",
   "output": "src/CMakeFiles/biort.dir/custom_io.c.o"
 },
 {
   "directory": "/home/andrew/Documents/GitHub/surface/HBV-BioRT/build/src",
-  "command": "/usr/bin/gcc-12  -I/home/andrew/Documents/GitHub/surface/HBV-BioRT/build/dep/cvode/include -I/home/andrew/Documents/GitHub/surface/HBV-BioRT/dep/cvode/include -I/home/andrew/Documents/GitHub/surface/HBV-BioRT/include -g -o CMakeFiles/biort.dir/init.c.o -c /home/andrew/Documents/GitHub/surface/HBV-BioRT/src/init.c",
+  "command": "/usr/bin/gcc-12  -I/home/andrew/Documents/GitHub/surface/HBV-BioRT/build/dep/cvode/include -I/home/andrew/Documents/GitHub/surface/HBV-BioRT/dep/cvode/include -I/home/andrew/Documents/GitHub/surface/HBV-BioRT/include -g -Wall -Wextra -Werror -o CMakeFiles/biort.dir/init.c.o -c /home/andrew/Documents/GitHub/surface/HBV-BioRT/src/init.c",
   "file": "/home/andrew/Documents/GitHub/surface/HBV-BioRT/src/init.c",
   "output": "src/CMakeFiles/biort.dir/init.c.o"
 },
 {
   "directory": "/home/andrew/Documents/GitHub/surface/HBV-BioRT/build/src",
-  "command": "/usr/bin/gcc-12  -I/home/andrew/Documents/GitHub/surface/HBV-BioRT/build/dep/cvode/include -I/home/andrew/Documents/GitHub/surface/HBV-BioRT/dep/cvode/include -I/home/andrew/Documents/GitHub/surface/HBV-BioRT/include -g -o CMakeFiles/biort.dir/lookup.c.o -c /home/andrew/Documents/GitHub/surface/HBV-BioRT/src/lookup.c",
+  "command": "/usr/bin/gcc-12  -I/home/andrew/Documents/GitHub/surface/HBV-BioRT/build/dep/cvode/include -I/home/andrew/Documents/GitHub/surface/HBV-BioRT/dep/cvode/include -I/home/andrew/Documents/GitHub/surface/HBV-BioRT/include -g -Wall -Wextra -Werror -o CMakeFiles/biort.dir/lookup.c.o -c /home/andrew/Documents/GitHub/surface/HBV-BioRT/src/lookup.c",
   "file": "/home/andrew/Documents/GitHub/surface/HBV-BioRT/src/lookup.c",
   "output": "src/CMakeFiles/biort.dir/lookup.c.o"
 },
 {
   "directory": "/home/andrew/Documents/GitHub/surface/HBV-BioRT/build/src",
-  "command": "/usr/bin/gcc-12  -I/home/andrew/Documents/GitHub/surface/HBV-BioRT/build/dep/cvode/include -I/home/andrew/Documents/GitHub/surface/HBV-BioRT/dep/cvode/include -I/home/andrew/Documents/GitHub/surface/HBV-BioRT/include -g -o CMakeFiles/biort.dir/optparse.c.o -c /home/andrew/Documents/GitHub/surface/HBV-BioRT/src/optparse.c",
+  "command": "/usr/bin/gcc-12  -I/home/andrew/Documents/GitHub/surface/HBV-BioRT/build/dep/cvode/include -I/home/andrew/Documents/GitHub/surface/HBV-BioRT/dep/cvode/include -I/home/andrew/Documents/GitHub/surface/HBV-BioRT/include -g -Wall -Wextra -Werror -o CMakeFiles/biort.dir/optparse.c.o -c /home/andrew/Documents/GitHub/surface/HBV-BioRT/src/optparse.c",
   "file": "/home/andrew/Documents/GitHub/surface/HBV-BioRT/src/optparse.c",
   "output": "src/CMakeFiles/biort.dir/optparse.c.o"
 },
 {
   "directory": "/home/andrew/Documents/GitHub/surface/HBV-BioRT/build/src",
-  "command": "/usr/bin/gcc-12  -I/home/andrew/Documents/GitHub/surface/HBV-BioRT/build/dep/cvode/include -I/home/andrew/Documents/GitHub/surface/HBV-BioRT/dep/cvode/include -I/home/andrew/Documents/GitHub/surface/HBV-BioRT/include -g -o CMakeFiles/biort.dir/print.c.o -c /home/andrew/Documents/GitHub/surface/HBV-BioRT/src/print.c",
+  "command": "/usr/bin/gcc-12  -I/home/andrew/Documents/GitHub/surface/HBV-BioRT/build/dep/cvode/include -I/home/andrew/Documents/GitHub/surface/HBV-BioRT/dep/cvode/include -I/home/andrew/Documents/GitHub/surface/HBV-BioRT/include -g -Wall -Wextra -Werror -o CMakeFiles/biort.dir/print.c.o -c /home/andrew/Documents/GitHub/surface/HBV-BioRT/src/print.c",
   "file": "/home/andrew/Documents/GitHub/surface/HBV-BioRT/src/print.c",
   "output": "src/CMakeFiles/biort.dir/print.c.o"
 },
 {
   "directory": "/home/andrew/Documents/GitHub/surface/HBV-BioRT/build/src",
-  "command": "/usr/bin/gcc-12  -I/home/andrew/Documents/GitHub/surface/HBV-BioRT/build/dep/cvode/include -I/home/andrew/Documents/GitHub/surface/HBV-BioRT/dep/cvode/include -I/home/andrew/Documents/GitHub/surface/HBV-BioRT/include -g -o CMakeFiles/biort.dir/react.c.o -c /home/andrew/Documents/GitHub/surface/HBV-BioRT/src/react.c",
+  "command": "/usr/bin/gcc-12  -I/home/andrew/Documents/GitHub/surface/HBV-BioRT/build/dep/cvode/include -I/home/andrew/Documents/GitHub/surface/HBV-BioRT/dep/cvode/include -I/home/andrew/Documents/GitHub/surface/HBV-BioRT/include -g -Wall -Wextra -Werror -o CMakeFiles/biort.dir/react.c.o -c /home/andrew/Documents/GitHub/surface/HBV-BioRT/src/react.c",
   "file": "/home/andrew/Documents/GitHub/surface/HBV-BioRT/src/react.c",
   "output": "src/CMakeFiles/biort.dir/react.c.o"
 },
 {
   "directory": "/home/andrew/Documents/GitHub/surface/HBV-BioRT/build/src",
-  "command": "/usr/bin/gcc-12  -I/home/andrew/Documents/GitHub/surface/HBV-BioRT/build/dep/cvode/include -I/home/andrew/Documents/GitHub/surface/HBV-BioRT/dep/cvode/include -I/home/andrew/Documents/GitHub/surface/HBV-BioRT/include -g -o CMakeFiles/biort.dir/read_chem.c.o -c /home/andrew/Documents/GitHub/surface/HBV-BioRT/src/read_chem.c",
+  "command": "/usr/bin/gcc-12  -I/home/andrew/Documents/GitHub/surface/HBV-BioRT/build/dep/cvode/include -I/home/andrew/Documents/GitHub/surface/HBV-BioRT/dep/cvode/include -I/home/andrew/Documents/GitHub/surface/HBV-BioRT/include -g -Wall -Wextra -Werror -o CMakeFiles/biort.dir/read_chem.c.o -c /home/andrew/Documents/GitHub/surface/HBV-BioRT/src/read_chem.c",
   "file": "/home/andrew/Documents/GitHub/surface/HBV-BioRT/src/read_chem.c",
   "output": "src/CMakeFiles/biort.dir/read_chem.c.o"
 },
 {
   "directory": "/home/andrew/Documents/GitHub/surface/HBV-BioRT/build/src",
-  "command": "/usr/bin/gcc-12  -I/home/andrew/Documents/GitHub/surface/HBV-BioRT/build/dep/cvode/include -I/home/andrew/Documents/GitHub/surface/HBV-BioRT/dep/cvode/include -I/home/andrew/Documents/GitHub/surface/HBV-BioRT/include -g -o CMakeFiles/biort.dir/read_cini.c.o -c /home/andrew/Documents/GitHub/surface/HBV-BioRT/src/read_cini.c",
+  "command": "/usr/bin/gcc-12  -I/home/andrew/Documents/GitHub/surface/HBV-BioRT/build/dep/cvode/include -I/home/andrew/Documents/GitHub/surface/HBV-BioRT/dep/cvode/include -I/home/andrew/Documents/GitHub/surface/HBV-BioRT/include -g -Wall -Wextra -Werror -o CMakeFiles/biort.dir/read_cini.c.o -c /home/andrew/Documents/GitHub/surface/HBV-BioRT/src/read_cini.c",
   "file": "/home/andrew/Documents/GitHub/surface/HBV-BioRT/src/read_cini.c",
   "output": "src/CMakeFiles/biort.dir/read_cini.c.o"
 },
 {
   "directory": "/home/andrew/Documents/GitHub/surface/HBV-BioRT/build/src",
-  "command": "/usr/bin/gcc-12  -I/home/andrew/Documents/GitHub/surface/HBV-BioRT/build/dep/cvode/include -I/home/andrew/Documents/GitHub/surface/HBV-BioRT/dep/cvode/include -I/home/andrew/Documents/GitHub/surface/HBV-BioRT/include -g -o CMakeFiles/biort.dir/read_hbv.c.o -c /home/andrew/Documents/GitHub/surface/HBV-BioRT/src/read_hbv.c",
+  "command": "/usr/bin/gcc-12  -I/home/andrew/Documents/GitHub/surface/HBV-BioRT/build/dep/cvode/include -I/home/andrew/Documents/GitHub/surface/HBV-BioRT/dep/cvode/include -I/home/andrew/Documents/GitHub/surface/HBV-BioRT/include -g -Wall -Wextra -Werror -o CMakeFiles/biort.dir/read_hbv.c.o -c /home/andrew/Documents/GitHub/surface/HBV-BioRT/src/read_hbv.c",
   "file": "/home/andrew/Documents/GitHub/surface/HBV-BioRT/src/read_hbv.c",
   "output": "src/CMakeFiles/biort.dir/read_hbv.c.o"
 },
 {
   "directory": "/home/andrew/Documents/GitHub/surface/HBV-BioRT/build/src",
-  "command": "/usr/bin/gcc-12  -I/home/andrew/Documents/GitHub/surface/HBV-BioRT/build/dep/cvode/include -I/home/andrew/Documents/GitHub/surface/HBV-BioRT/dep/cvode/include -I/home/andrew/Documents/GitHub/surface/HBV-BioRT/include -g -o CMakeFiles/biort.dir/read_param.c.o -c /home/andrew/Documents/GitHub/surface/HBV-BioRT/src/read_param.c",
+  "command": "/usr/bin/gcc-12  -I/home/andrew/Documents/GitHub/surface/HBV-BioRT/build/dep/cvode/include -I/home/andrew/Documents/GitHub/surface/HBV-BioRT/dep/cvode/include -I/home/andrew/Documents/GitHub/surface/HBV-BioRT/include -g -Wall -Wextra -Werror -o CMakeFiles/biort.dir/read_param.c.o -c /home/andrew/Documents/GitHub/surface/HBV-BioRT/src/read_param.c",
   "file": "/home/andrew/Documents/GitHub/surface/HBV-BioRT/src/read_param.c",
   "output": "src/CMakeFiles/biort.dir/read_param.c.o"
 },
 {
   "directory": "/home/andrew/Documents/GitHub/surface/HBV-BioRT/build/src",
-  "command": "/usr/bin/gcc-12  -I/home/andrew/Documents/GitHub/surface/HBV-BioRT/build/dep/cvode/include -I/home/andrew/Documents/GitHub/surface/HBV-BioRT/dep/cvode/include -I/home/andrew/Documents/GitHub/surface/HBV-BioRT/include -g -o CMakeFiles/biort.dir/read_precipchem.c.o -c /home/andrew/Documents/GitHub/surface/HBV-BioRT/src/read_precipchem.c",
+  "command": "/usr/bin/gcc-12  -I/home/andrew/Documents/GitHub/surface/HBV-BioRT/build/dep/cvode/include -I/home/andrew/Documents/GitHub/surface/HBV-BioRT/dep/cvode/include -I/home/andrew/Documents/GitHub/surface/HBV-BioRT/include -g -Wall -Wextra -Werror -o CMakeFiles/biort.dir/read_precipchem.c.o -c /home/andrew/Documents/GitHub/surface/HBV-BioRT/src/read_precipchem.c",
   "file": "/home/andrew/Documents/GitHub/surface/HBV-BioRT/src/read_precipchem.c",
   "output": "src/CMakeFiles/biort.dir/read_precipchem.c.o"
 },
 {
   "directory": "/home/andrew/Documents/GitHub/surface/HBV-BioRT/build/src",
-  "command": "/usr/bin/gcc-12  -I/home/andrew/Documents/GitHub/surface/HBV-BioRT/build/dep/cvode/include -I/home/andrew/Documents/GitHub/surface/HBV-BioRT/dep/cvode/include -I/home/andrew/Documents/GitHub/surface/HBV-BioRT/include -g -o CMakeFiles/biort.dir/read_soil.c.o -c /home/andrew/Documents/GitHub/surface/HBV-BioRT/src/read_soil.c",
+  "command": "/usr/bin/gcc-12  -I/home/andrew/Documents/GitHub/surface/HBV-BioRT/build/dep/cvode/include -I/home/andrew/Documents/GitHub/surface/HBV-BioRT/dep/cvode/include -I/home/andrew/Documents/GitHub/surface/HBV-BioRT/include -g -Wall -Wextra -Werror -o CMakeFiles/biort.dir/read_soil.c.o -c /home/andrew/Documents/GitHub/surface/HBV-BioRT/src/read_soil.c",
   "file": "/home/andrew/Documents/GitHub/surface/HBV-BioRT/src/read_soil.c",
   "output": "src/CMakeFiles/biort.dir/read_soil.c.o"
 },
 {
   "directory": "/home/andrew/Documents/GitHub/surface/HBV-BioRT/build/src",
-  "command": "/usr/bin/gcc-12  -I/home/andrew/Documents/GitHub/surface/HBV-BioRT/build/dep/cvode/include -I/home/andrew/Documents/GitHub/surface/HBV-BioRT/dep/cvode/include -I/home/andrew/Documents/GitHub/surface/HBV-BioRT/include -g -o CMakeFiles/biort.dir/set_numexp.c.o -c /home/andrew/Documents/GitHub/surface/HBV-BioRT/src/set_numexp.c",
+  "command": "/usr/bin/gcc-12  -I/home/andrew/Documents/GitHub/surface/HBV-BioRT/build/dep/cvode/include -I/home/andrew/Documents/GitHub/surface/HBV-BioRT/dep/cvode/include -I/home/andrew/Documents/GitHub/surface/HBV-BioRT/include -g -Wall -Wextra -Werror -o CMakeFiles/biort.dir/set_numexp.c.o -c /home/andrew/Documents/GitHub/surface/HBV-BioRT/src/set_numexp.c",
   "file": "/home/andrew/Documents/GitHub/surface/HBV-BioRT/src/set_numexp.c",
   "output": "src/CMakeFiles/biort.dir/set_numexp.c.o"
 },
 {
   "directory": "/home/andrew/Documents/GitHub/surface/HBV-BioRT/build/src",
-  "command": "/usr/bin/gcc-12  -I/home/andrew/Documents/GitHub/surface/HBV-BioRT/build/dep/cvode/include -I/home/andrew/Documents/GitHub/surface/HBV-BioRT/dep/cvode/include -I/home/andrew/Documents/GitHub/surface/HBV-BioRT/include -g -o CMakeFiles/biort.dir/speciation.c.o -c /home/andrew/Documents/GitHub/surface/HBV-BioRT/src/speciation.c",
+  "command": "/usr/bin/gcc-12  -I/home/andrew/Documents/GitHub/surface/HBV-BioRT/build/dep/cvode/include -I/home/andrew/Documents/GitHub/surface/HBV-BioRT/dep/cvode/include -I/home/andrew/Documents/GitHub/surface/HBV-BioRT/include -g -Wall -Wextra -Werror -o CMakeFiles/biort.dir/speciation.c.o -c /home/andrew/Documents/GitHub/surface/HBV-BioRT/src/speciation.c",
   "file": "/home/andrew/Documents/GitHub/surface/HBV-BioRT/src/speciation.c",
   "output": "src/CMakeFiles/biort.dir/speciation.c.o"
 },
 {
   "directory": "/home/andrew/Documents/GitHub/surface/HBV-BioRT/build/src",
-  "command": "/usr/bin/gcc-12  -I/home/andrew/Documents/GitHub/surface/HBV-BioRT/build/dep/cvode/include -I/home/andrew/Documents/GitHub/surface/HBV-BioRT/dep/cvode/include -I/home/andrew/Documents/GitHub/surface/HBV-BioRT/include -g -o CMakeFiles/biort.dir/time_func.c.o -c /home/andrew/Documents/GitHub/surface/HBV-BioRT/src/time_func.c",
+  "command": "/usr/bin/gcc-12  -I/home/andrew/Documents/GitHub/surface/HBV-BioRT/build/dep/cvode/include -I/home/andrew/Documents/GitHub/surface/HBV-BioRT/dep/cvode/include -I/home/andrew/Documents/GitHub/surface/HBV-BioRT/include -g -Wall -Wextra -Werror -o CMakeFiles/biort.dir/time_func.c.o -c /home/andrew/Documents/GitHub/surface/HBV-BioRT/src/time_func.c",
   "file": "/home/andrew/Documents/GitHub/surface/HBV-BioRT/src/time_func.c",
   "output": "src/CMakeFiles/biort.dir/time_func.c.o"
 },
 {
   "directory": "/home/andrew/Documents/GitHub/surface/HBV-BioRT/build/src",
-  "command": "/usr/bin/gcc-12  -I/home/andrew/Documents/GitHub/surface/HBV-BioRT/build/dep/cvode/include -I/home/andrew/Documents/GitHub/surface/HBV-BioRT/dep/cvode/include -I/home/andrew/Documents/GitHub/surface/HBV-BioRT/include -g -o CMakeFiles/biort.dir/transpt.c.o -c /home/andrew/Documents/GitHub/surface/HBV-BioRT/src/transpt.c",
+  "command": "/usr/bin/gcc-12  -I/home/andrew/Documents/GitHub/surface/HBV-BioRT/build/dep/cvode/include -I/home/andrew/Documents/GitHub/surface/HBV-BioRT/dep/cvode/include -I/home/andrew/Documents/GitHub/surface/HBV-BioRT/include -g -Wall -Wextra -Werror -o CMakeFiles/biort.dir/transpt.c.o -c /home/andrew/Documents/GitHub/surface/HBV-BioRT/src/transpt.c",
   "file": "/home/andrew/Documents/GitHub/surface/HBV-BioRT/src/transpt.c",
   "output": "src/CMakeFiles/biort.dir/transpt.c.o"
 },
 {
   "directory": "/home/andrew/Documents/GitHub/surface/HBV-BioRT/build/src",
-  "command": "/usr/bin/gcc-12  -I/home/andrew/Documents/GitHub/surface/HBV-BioRT/build/dep/cvode/include -I/home/andrew/Documents/GitHub/surface/HBV-BioRT/dep/cvode/include -I/home/andrew/Documents/GitHub/surface/HBV-BioRT/include -g -o CMakeFiles/biort.dir/util_func.c.o -c /home/andrew/Documents/GitHub/surface/HBV-BioRT/src/util_func.c",
+  "command": "/usr/bin/gcc-12  -I/home/andrew/Documents/GitHub/surface/HBV-BioRT/build/dep/cvode/include -I/home/andrew/Documents/GitHub/surface/HBV-BioRT/dep/cvode/include -I/home/andrew/Documents/GitHub/surface/HBV-BioRT/include -g -Wall -Wextra -Werror -o CMakeFiles/biort.dir/util_func.c.o -c /home/andrew/Documents/GitHub/surface/HBV-BioRT/src/util_func.c",
   "file": "/home/andrew/Documents/GitHub/surface/HBV-BioRT/src/util_func.c",
   "output": "src/CMakeFiles/biort.dir/util_func.c.o"
 }

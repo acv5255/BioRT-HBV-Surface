@@ -13,6 +13,7 @@
 
 // Maximum string length
 #define MAXSTRING               1024
+#define SUBSTRING_SIZE          64
 
 // Verbosity level
 #define VL_ERROR                -999

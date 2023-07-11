@@ -211,18 +211,16 @@ int SolveSpeciation(const chemtbl_struct chemtbl[], const ctrl_struct *ctrl, con
 }
 
 void Speciation(const chemtbl_struct chemtbl[], const ctrl_struct *ctrl, const rttbl_struct *rttbl,
-    subcatch_struct subcatch[])
+    subcatch_struct* subcatch)
 {
-    const int ksub = 0;
-    SolveSpeciation(chemtbl, ctrl, rttbl, 0, &subcatch[ksub].chms[UZ]);
-    SolveSpeciation(chemtbl, ctrl, rttbl, 0, &subcatch[ksub].chms[LZ]);
+    SolveSpeciation(chemtbl, ctrl, rttbl, 0, &subcatch->chms[UZ]);
+    SolveSpeciation(chemtbl, ctrl, rttbl, 0, &subcatch->chms[LZ]);
 }
 
 void StreamSpeciation(int step, const chemtbl_struct chemtbl[], const ctrl_struct *ctrl,
-    const rttbl_struct *rttbl, subcatch_struct subcatch[])
+    const rttbl_struct *rttbl, subcatch_struct* subcatch)
 {
     static int      init_flag = 1;
-    const int ksub = 0;
 
     // In the first model step, initialize primary concentrations, activities in river. This cannot be done during
     // initialization step because stream concentrations are unknown
@@ -233,51 +231,51 @@ void StreamSpeciation(int step, const chemtbl_struct chemtbl[], const ctrl_struc
         {
             if (chemtbl[kspc].itype == AQUEOUS)
             {
-                subcatch[ksub].chms[STREAM].prim_actv[kspc] = subcatch[ksub].chms[STREAM].tot_conc[kspc];
-                subcatch[ksub].chms[STREAM].prim_conc[kspc] = subcatch[ksub].chms[STREAM].tot_conc[kspc];
+                subcatch->chms[STREAM].prim_actv[kspc] = subcatch->chms[STREAM].tot_conc[kspc];
+                subcatch->chms[STREAM].prim_conc[kspc] = subcatch->chms[STREAM].tot_conc[kspc];
             }
             else
             {
-                subcatch[ksub].chms[STREAM].tot_conc[kspc] = ZERO_CONC;
-                subcatch[ksub].chms[STREAM].prim_conc[kspc] = ZERO_CONC;
-                subcatch[ksub].chms[STREAM].prim_actv[kspc] = ZERO_CONC;
-                subcatch[ksub].chms[STREAM].tot_mol[kspc] = 0.0;
+                subcatch->chms[STREAM].tot_conc[kspc] = ZERO_CONC;
+                subcatch->chms[STREAM].prim_conc[kspc] = ZERO_CONC;
+                subcatch->chms[STREAM].prim_actv[kspc] = ZERO_CONC;
+                subcatch->chms[STREAM].tot_mol[kspc] = 0.0;
             }
         }
 
         for (int kspc = 0; kspc < rttbl->num_ssc; kspc++)
         {
-            subcatch[ksub].chms[STREAM].sec_conc[kspc] = ZERO_CONC;
+            subcatch->chms[STREAM].sec_conc[kspc] = ZERO_CONC;
         }
     }
 
     init_flag = 0;
 
-    if (subcatch[ksub].q[step][Q0] + subcatch[ksub].q[step][Q1] + subcatch[ksub].q[step][Q2] <= 0.0)
+    if (subcatch->q[step][Q0] + subcatch->q[step][Q1] + subcatch->q[step][Q2] <= 0.0)
     {
         for (int kspc = 0; kspc < rttbl->num_stc; kspc++)
         {
             if (chemtbl[kspc].itype == AQUEOUS)
             {
-                subcatch[ksub].chms[STREAM].prim_actv[kspc] = subcatch[ksub].chms[STREAM].tot_conc[kspc];
-                subcatch[ksub].chms[STREAM].prim_conc[kspc] = subcatch[ksub].chms[STREAM].tot_conc[kspc];
+                subcatch->chms[STREAM].prim_actv[kspc] = subcatch->chms[STREAM].tot_conc[kspc];
+                subcatch->chms[STREAM].prim_conc[kspc] = subcatch->chms[STREAM].tot_conc[kspc];
             }
             else
             {
-                subcatch[ksub].chms[STREAM].tot_conc[kspc] = ZERO_CONC;
-                subcatch[ksub].chms[STREAM].prim_conc[kspc] = ZERO_CONC;
-                subcatch[ksub].chms[STREAM].prim_actv[kspc] = ZERO_CONC;
-                subcatch[ksub].chms[STREAM].tot_mol[kspc] = 0.0;
+                subcatch->chms[STREAM].tot_conc[kspc] = ZERO_CONC;
+                subcatch->chms[STREAM].prim_conc[kspc] = ZERO_CONC;
+                subcatch->chms[STREAM].prim_actv[kspc] = ZERO_CONC;
+                subcatch->chms[STREAM].tot_mol[kspc] = 0.0;
             }
         }
 
         for (int kspc = 0; kspc < rttbl->num_ssc; kspc++)
         {
-            subcatch[ksub].chms[STREAM].sec_conc[kspc] = ZERO_CONC;
+            subcatch->chms[STREAM].sec_conc[kspc] = ZERO_CONC;
         }
     }
     else
     {
-        SolveSpeciation(chemtbl, ctrl, rttbl, 0, &subcatch[ksub].chms[STREAM]);
+        SolveSpeciation(chemtbl, ctrl, rttbl, 0, &subcatch->chms[STREAM]);
     }
 }

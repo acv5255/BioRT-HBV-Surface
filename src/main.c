@@ -16,52 +16,51 @@ int main(int argc, char *argv[])
     rttbl_struct    rttbl;
     chemtbl_struct  chemtbl[MAXSPS];
     kintbl_struct   kintbl[MAXSPS];
-    subcatch_struct *subcatch;
-    subcatch_struct *subcatch_numexp;
     calib_struct    calib;
     ctrl_struct     ctrl;
-    FILE           *fp;
 
     // Read command line arguments
     ParseCmdLineParam(argc, argv, dir);
 
     // Allocate
-    subcatch = (subcatch_struct *)malloc(sizeof(subcatch_struct));
-    subcatch_numexp = (subcatch_struct *)malloc(sizeof(subcatch_struct));
+    // subcatch_struct* subcatch = (subcatch_struct *)malloc(sizeof(subcatch_struct));
+    // subcatch_struct* subcatch_numexp = (subcatch_struct *)malloc(sizeof(subcatch_struct));
+    subcatch_struct subcatch;
+    subcatch_struct subcatch_numexp;
 
     calib.rate = 0.0;
     calib.xsorption = 0.0;
     calib.ssa = 1.0;
 
     // Read subcatchment soil parameters
-    ReadSoil(dir, subcatch);
+    ReadSoil(dir, &subcatch);
 
     // Read HBV simulation steps, water states and fluxes
-    ReadHbvParam(dir, subcatch);
-    ReadHbvResults(dir, &nsteps, &steps, subcatch, 0);
+    ReadHbvParam(dir, &subcatch);
+    ReadHbvResults(dir, &nsteps, &steps, &subcatch, 0);
 
     // Read chemistry control file
     ReadChem(dir, &ctrl, &rttbl, chemtbl, kintbl);
 
     // Read chemistry initial conditions
-    ReadCini(dir, chemtbl, &rttbl, subcatch);
+    ReadCini(dir, chemtbl, &rttbl, &subcatch);
 
     // Read time-series precipitation chemistry if defined in chem.txt  2021-05-20
     if (ctrl.variable_precipchem == 1) {
         //printf("read in time-series precipitation %d", ctrl.precipchem);
-        ReadPrecipChem(dir, &nsteps, &steps, subcatch, rttbl.num_stc, chemtbl, 0);
+        ReadPrecipChem(dir, &nsteps, &steps, &subcatch, rttbl.num_stc, chemtbl, 0);
     }
 
 
     if (ctrl.precipchem_numexp == 1){
         ctrl.recycle = ctrl.recycle - 1;
-        CopyConstSubcatchProp(subcatch, subcatch_numexp);
-        ReadHbvResults(dir, &nsteps_numexp,  &steps_numexp, subcatch_numexp, 1);
-        ReadPrecipChem(dir, &nsteps_numexp, &steps_numexp, subcatch_numexp, rttbl.num_stc, chemtbl, 1);
+        CopyConstSubcatchProp(&subcatch, &subcatch_numexp);
+        ReadHbvResults(dir, &nsteps_numexp,  &steps_numexp, &subcatch_numexp, 1);
+        ReadPrecipChem(dir, &nsteps_numexp, &steps_numexp, &subcatch_numexp, rttbl.num_stc, chemtbl, 1);
     }
 
     // Initialize RT structures
-    InitChem(dir, &calib, &ctrl, chemtbl, kintbl, &rttbl, subcatch);
+    InitChem(dir, &calib, &ctrl, chemtbl, kintbl, &rttbl, &subcatch);
 
     // Create output directory when necessary
     mkdir("output");
@@ -73,6 +72,7 @@ int main(int argc, char *argv[])
 
     // Open output file
     {
+        FILE* file_pointer;
         char dir_substr[SUBSTRING_SIZE];
         char time_substr[SUBSTRING_SIZE];
         strncpy(dir_substr, dir, SUBSTRING_SIZE);
@@ -80,52 +80,52 @@ int main(int argc, char *argv[])
 
         // sprintf(file_name, "output/%s_results_%s.txt", dir, timestr);
         sprintf(file_name, "output/%s_results_%s.txt", dir_substr, time_substr);
-        fp = fopen(file_name, "w");
-        PrintHeader(fp, ctrl.transport_only, &rttbl, chemtbl);
-    }
+        file_pointer = fopen(file_name, "w");
+        PrintHeader(file_pointer, ctrl.transport_only, &rttbl, chemtbl);
+    
+        biort_printf(VL_NORMAL, "\nHBV-BioRT %s simulation started.\n", dir);
 
-    biort_printf(VL_NORMAL, "\nHBV-BioRT %s simulation started.\n", dir);
-
-    // Loop through forcing cycles
-    for (int kcycle = 0; kcycle <= ctrl.recycle; kcycle++)
-    {
-        // Loop through model steps to calculate reactive transport
-        for (int kstep = 0; kstep < nsteps; kstep++)
+        // Loop through forcing cycles
+        for (int kcycle = 0; kcycle <= ctrl.recycle; kcycle++)
         {
-            // Transport and routing
-            Transpt(kstep, chemtbl, &rttbl, &ctrl, subcatch); // 2021-05-20
-
-            // Transport changes total concentrations. Primary concentrations needs to be updated using total
-            // concentrations
-            UpdatePrimConc(&rttbl, &ctrl, subcatch);
-            
-            StreamSpeciation(kstep, chemtbl, &ctrl, &rttbl, subcatch);
-
-            PrintDailyResults(fp, ctrl.transport_only, steps[kstep], &rttbl, subcatch);
-            
-            if (ctrl.transport_only == KIN_REACTION)
+            // Loop through model steps to calculate reactive transport
+            for (int kstep = 0; kstep < nsteps; kstep++)
             {
-                // In reaction mode, simulate reaction for soil, and speciation for stream
-                Reaction(kstep, 86400.0, steps, chemtbl, kintbl, &rttbl, subcatch);
-            }
-            else
-            {
-                Speciation(chemtbl, &ctrl, &rttbl, subcatch);
-            }
+                // Transport and routing
+                Transpt(kstep, chemtbl, &rttbl, &ctrl, &subcatch); // 2021-05-20
 
-            
+                // Transport changes total concentrations. Primary concentrations needs to be updated using total
+                // concentrations
+                UpdatePrimConc(&rttbl, &ctrl, &subcatch);
+                
+                StreamSpeciation(kstep, chemtbl, &ctrl, &rttbl, &subcatch);
+
+                PrintDailyResults(file_pointer, ctrl.transport_only, steps[kstep], &rttbl, &subcatch);
+                
+                if (ctrl.transport_only == KIN_REACTION)
+                {
+                    // In reaction mode, simulate reaction for soil, and speciation for stream
+                    Reaction(kstep, 86400.0, steps, chemtbl, kintbl, &rttbl, &subcatch);
+                }
+                else
+                {
+                    Speciation(chemtbl, &ctrl, &rttbl, &subcatch);
+                }
+            }
         }
+
+        fclose(file_pointer);
     }
 
     biort_printf(VL_NORMAL, "\nHBV-BioRT %s simulation succeeded.\n", dir);
 
-    fclose(fp);
 
     if (ctrl.precipchem_numexp == 1){
-        CopyInitChemSubcatch(&rttbl, subcatch, subcatch_numexp);
+        CopyInitChemSubcatch(&rttbl, &subcatch, &subcatch_numexp);
 
         //sprintf(fn, "output/%s_results_numexp.txt", dir);
         {
+            FILE* file_pointer;
             char dir_substr[SUBSTRING_SIZE];
             char time_substr[SUBSTRING_SIZE];
             strncpy(dir_substr, dir, SUBSTRING_SIZE);
@@ -133,45 +133,41 @@ int main(int argc, char *argv[])
 
             // sprintf(file_name, "output/%s_results_numexp_%s.txt", dir, timestr);
             sprintf(file_name, "output/%s_results_numexp_%s.txt", dir_substr, time_substr);
-            fp = fopen(file_name, "w");
-            PrintHeader(fp, ctrl.transport_only, &rttbl, chemtbl);
-        }
+            file_pointer = fopen(file_name, "w");
+            PrintHeader(file_pointer, ctrl.transport_only, &rttbl, chemtbl);
 
-        biort_printf(VL_NORMAL, "\nHBV-BioRT %s numerical experiment started.\n", dir);
+            biort_printf(VL_NORMAL, "\nHBV-BioRT %s numerical experiment started.\n", dir);
 
-        for (int kstep = 0; kstep < nsteps_numexp; kstep++){
+            for (int kstep = 0; kstep < nsteps_numexp; kstep++){
 
 
-            Transpt(kstep, chemtbl, &rttbl, &ctrl, subcatch_numexp); // 2021-05-20
+                Transpt(kstep, chemtbl, &rttbl, &ctrl, &subcatch_numexp); // 2021-05-20
 
-            // Transport changes total concentrations. Primary concentrations needs to be updated using total
-            // concentrations
-            UpdatePrimConc(&rttbl, &ctrl, subcatch_numexp);
-            
-            StreamSpeciation(kstep, chemtbl, &ctrl, &rttbl, subcatch_numexp);
+                // Transport changes total concentrations. Primary concentrations needs to be updated using total
+                // concentrations
+                UpdatePrimConc(&rttbl, &ctrl, &subcatch_numexp);
+                
+                StreamSpeciation(kstep, chemtbl, &ctrl, &rttbl, &subcatch_numexp);
 
-            PrintDailyResults(fp, ctrl.transport_only, steps_numexp[kstep], &rttbl, subcatch_numexp);
+                PrintDailyResults(file_pointer, ctrl.transport_only, steps_numexp[kstep], &rttbl, &subcatch_numexp);
 
-            if (ctrl.transport_only == KIN_REACTION)
-            {
-                // In reaction mode, simulate reaction for soil, and speciation for stream
-                Reaction(kstep, 86400.0, steps, chemtbl, kintbl, &rttbl, subcatch_numexp);
+                if (ctrl.transport_only == KIN_REACTION)
+                {
+                    // In reaction mode, simulate reaction for soil, and speciation for stream
+                    Reaction(kstep, 86400.0, steps, chemtbl, kintbl, &rttbl, &subcatch_numexp);
+                }
+                else
+                {
+                    Speciation(chemtbl, &ctrl, &rttbl, &subcatch_numexp);
+                }
+
             }
-            else
-            {
-                Speciation(chemtbl, &ctrl, &rttbl, subcatch_numexp);
-            }
+            biort_printf(VL_NORMAL, "\nHBV-BioRT %s numerical experiment succeeded.\n", dir);
 
+            fclose(file_pointer);
         }
-
-        biort_printf(VL_NORMAL, "\nHBV-BioRT %s numerical experiment succeeded.\n", dir);
-
-        fclose(fp);
     }
 
-    FreeStruct(nsteps, &steps, subcatch);
-    FreeStruct(nsteps_numexp, &steps_numexp, subcatch_numexp);
-
-    free(subcatch);
-    free(subcatch_numexp);
+    FreeStruct(nsteps, &steps, &subcatch);
+    FreeStruct(nsteps_numexp, &steps_numexp, &subcatch_numexp);
 }

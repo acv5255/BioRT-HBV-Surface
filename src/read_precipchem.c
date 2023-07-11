@@ -6,8 +6,6 @@ void ReadPrecipChem(const char dir[], int *nsteps, int *steps[], subcatch_struct
     char            file_name[MAXSTRING];
     char            cmdstr[MAXSTRING];
     char            temp_str[MAXSTRING];
-    int             ksub = 0;
-    int             kstep;
     int             pH_index = 0;
     int             pH_convert = 0;
     int             ind;
@@ -41,11 +39,11 @@ void ReadPrecipChem(const char dir[], int *nsteps, int *steps[], subcatch_struct
     *steps = (int *)malloc(*nsteps * sizeof(int));
 
 
-    subcatch[ksub].prcp_conc_time = (double **)malloc(*nsteps * sizeof(double *));
+    subcatch->prcp_conc_time = (double **)malloc(*nsteps * sizeof(double *));
 
-    for (kstep = 0; kstep < *nsteps; kstep++)
+    for (int kstep = 0; kstep < *nsteps; kstep++)
     {
-        subcatch[ksub].prcp_conc_time[kstep] = (double *)malloc(num_stc * sizeof(double));
+        subcatch->prcp_conc_time[kstep] = (double *)malloc(num_stc * sizeof(double));
     }
 
 
@@ -73,30 +71,23 @@ void ReadPrecipChem(const char dir[], int *nsteps, int *steps[], subcatch_struct
 
     }
 
-    for (kstep = 0; kstep < *nsteps; kstep++)
+    for (int kstep = 0; kstep < *nsteps; kstep++)
     {
 
-        if (ksub == 0)
-        {
-            fscanf(file_pointer, "%d", &((*steps)[kstep]));    // Read model steps
-        }
-        else
-        {
-            fscanf(file_pointer, "%*d");
-        }
+        fscanf(file_pointer, "%d", &((*steps)[kstep]));    // Read model steps
 
         for (int kspc = 0; kspc < num_stc; kspc++)  // Read precipitation chemistry
         {
             if (kspc == pH_index && pH_convert == 1)
             {
-                fscanf(file_pointer, "%lf", &subcatch[ksub].prcp_conc_time[kstep][kspc]);
-                //printf("  step = %d, converting time-series precipitation pH (%lf) to ", kstep, subcatch[ksub].prcp_conc_time[kstep][kspc]);
-                subcatch[ksub].prcp_conc_time[kstep][kspc] = pow(10, -subcatch[ksub].prcp_conc_time[kstep][kspc]);
-                //printf("H+ concentration (%lf) \n", subcatch[ksub].prcp_conc_time[kstep][kspc]);
+                fscanf(file_pointer, "%lf", &subcatch->prcp_conc_time[kstep][kspc]);
+                //printf("  step = %d, converting time-series precipitation pH (%lf) to ", kstep, subcatch->prcp_conc_time[kstep][kspc]);
+                subcatch->prcp_conc_time[kstep][kspc] = pow(10, -subcatch->prcp_conc_time[kstep][kspc]);
+                //printf("H+ concentration (%lf) \n", subcatch->prcp_conc_time[kstep][kspc]);
             }
             else
             {
-                fscanf(file_pointer, "%lf", &subcatch[ksub].prcp_conc_time[kstep][kspc]);
+                fscanf(file_pointer, "%lf", &subcatch->prcp_conc_time[kstep][kspc]);
             }
         }
 

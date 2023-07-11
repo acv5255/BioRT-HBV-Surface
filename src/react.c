@@ -1,9 +1,8 @@
 #include "biort.h"
 
 void Reaction(int kstep, double stepsize, const int steps[], const chemtbl_struct chemtbl[],
-    const kintbl_struct kintbl[], const rttbl_struct *rttbl, subcatch_struct subcatch[])
+    const kintbl_struct kintbl[], const rttbl_struct *rttbl, subcatch_struct* subcatch)
 {
-    const int             ksub = 0;
     int             kzone;
     int             kspc;
     double          satn;
@@ -13,36 +12,36 @@ void Reaction(int kstep, double stepsize, const int steps[], const chemtbl_struc
     double          Zw;
     const int       NZONES = 2;   // 2021-05-14
 
-    //ftemp = SoilTempFactor(rttbl->q10, subcatch[ksub].tmp[kstep]);
-    const double temp = subcatch[ksub].tmp[kstep];
+    //ftemp = SoilTempFactor(rttbl->q10, subcatch->tmp[kstep]);
+    const double temp = subcatch->tmp[kstep];
 
     for (kzone = UZ; kzone < UZ + NZONES; kzone++)   // 2021-05-14
     {
         switch (kzone)
         {
             //case SURFACE:   // 2021-05-14
-            //    depth = subcatch[ksub].d_surface;
-            //    porosity = subcatch[ksub].porosity_surface;
+            //    depth = subcatch->d_surface;
+            //    porosity = subcatch->porosity_surface;
             //    break;
             case UZ:
-                depth = subcatch[ksub].d_uz;
-                porosity = subcatch[ksub].porosity_uz;
-                Zw = depth - (subcatch[ksub].ws[kstep][UZ]/porosity);
+                depth = subcatch->d_uz;
+                porosity = subcatch->porosity_uz;
+                Zw = depth - (subcatch->ws[kstep][UZ]/porosity);
                 break;
             case LZ:
-                depth = subcatch[ksub].d_lz;
-                porosity = subcatch[ksub].porosity_lz;
-                Zw = depth - (subcatch[ksub].ws[kstep][LZ]/porosity);
+                depth = subcatch->d_lz;
+                porosity = subcatch->porosity_lz;
+                Zw = depth - (subcatch->ws[kstep][LZ]/porosity);
                 break;
         }
 
         for (kspc = 0; kspc < MAXSPS; kspc++)
         {
-            subcatch[ksub].react_rate[kzone][kspc] = BADVAL;   // Set reaction rate to -999
+            subcatch->react_rate[kzone][kspc] = BADVAL;   // Set reaction rate to -999
         }
 
 
-        satn = subcatch[ksub].ws[kstep][kzone] / (depth * porosity);  // add porosity for saturation calculation
+        satn = subcatch->ws[kstep][kzone] / (depth * porosity);  // add porosity for saturation calculation
 
         satn = MIN(satn, 1.0);
 
@@ -52,7 +51,7 @@ void Reaction(int kstep, double stepsize, const int steps[], const chemtbl_struc
         if (satn > 1.0E-2)
         {
             substep = ReactControl(chemtbl, kintbl, rttbl, stepsize, porosity, depth, satn, temp, Zw,
-                subcatch[ksub].react_rate[kzone], &subcatch[ksub].chms[kzone]);
+                subcatch->react_rate[kzone], &subcatch->chms[kzone]);
 
             if (substep < 0.0)
             {

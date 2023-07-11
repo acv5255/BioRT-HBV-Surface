@@ -3,32 +3,32 @@
 void ReadCini(const char dir[], const chemtbl_struct *chemtbl, rttbl_struct *rttbl,
     subcatch_struct subcatch[])
 {
-    char            fn[MAXSTRING];
+    char            file_name[MAXSTRING];
     char            cmdstr[MAXSTRING];
-    FILE           *fp;
-    int             lno = 0;
+    FILE           *file_pointer;
+    int             line_number = 0;
     double          dummy[MAXSPS];
 
-    sprintf(fn, "input/%s/cini.txt", dir);
-    fp = fopen(fn, "r");
+    sprintf(file_name, "input/%s/cini.txt", dir);
+    file_pointer = fopen(file_name, "r");
 
     // Read precipitation concentration
-    FindLine(fp, "PRECIPITATION", &lno, cmdstr);
-    ReadConc(fp, rttbl->num_stc, chemtbl, &lno, subcatch[0].prcp_conc, dummy, dummy, dummy, dummy, dummy);
+    FindLine(file_pointer, "PRECIPITATION", &line_number, cmdstr);
+    ReadConc(file_pointer, rttbl->num_stc, chemtbl, &line_number, subcatch->prcp_conc, dummy, dummy, dummy, dummy, dummy);
 
     // Read surface concentration  2021-05-07
     //FindLine(fp, "SURFACE", &lno, cmdstr);
-    //ReadConc(fp, rttbl->num_stc, chemtbl, &lno, subcatch[0].chms[SURFACE].tot_conc, subcatch[0].chms[SURFACE].ssa);
+    //ReadConc(fp, rttbl->num_stc, chemtbl, &lno, subcatch->chms[SURFACE].tot_conc, subcatch->chms[SURFACE].ssa);
 
     // Read upper zone concentration
-    FindLine(fp, "UZ", &lno, cmdstr);
-    ReadConc(fp, rttbl->num_stc, chemtbl, &lno, subcatch[0].chms[UZ].tot_conc, subcatch[0].chms[UZ].ssa, subcatch[0].chms[UZ].q10, subcatch[0].chms[UZ].sw_thld, subcatch[0].chms[UZ].sw_exp, subcatch[0].chms[UZ].n_alpha);
+    FindLine(file_pointer, "UZ", &line_number, cmdstr);
+    ReadConc(file_pointer, rttbl->num_stc, chemtbl, &line_number, subcatch->chms[UZ].tot_conc, subcatch->chms[UZ].ssa, subcatch->chms[UZ].q10, subcatch->chms[UZ].sw_thld, subcatch->chms[UZ].sw_exp, subcatch->chms[UZ].n_alpha);
 
     // Read lower zone concentration
-    FindLine(fp, "LZ", &lno, cmdstr);
-    ReadConc(fp, rttbl->num_stc, chemtbl, &lno, subcatch[0].chms[LZ].tot_conc, subcatch[0].chms[LZ].ssa, subcatch[0].chms[LZ].q10, subcatch[0].chms[LZ].sw_thld, subcatch[0].chms[LZ].sw_exp, subcatch[0].chms[LZ].n_alpha);
+    FindLine(file_pointer, "LZ", &line_number, cmdstr);
+    ReadConc(file_pointer, rttbl->num_stc, chemtbl, &line_number, subcatch->chms[LZ].tot_conc, subcatch->chms[LZ].ssa, subcatch->chms[LZ].q10, subcatch->chms[LZ].sw_thld, subcatch->chms[LZ].sw_exp, subcatch->chms[LZ].n_alpha);
 
-    fclose(fp);
+    fclose(file_pointer);
 }
 
 void ReadConc(FILE *fp, int num_stc, const chemtbl_struct chemtbl[], int *lno, double tot_conc[], double ssa[], double q10[], double sw_thld[], double sw_exp[], double n_alpha[])

@@ -1,6 +1,6 @@
 #include "biort.h"
 
-void ReadHbvResults(const char dir[], int *nsteps, int *steps[], subcatch_struct subcatch[], int mode)
+void ReadHbvResults(const char dir[], int *nsteps, int *steps[], subcatch_struct* subcatch, int mode)
 {
     FILE           *file_pointer;
     char            file_name[MAXSTRING];
@@ -10,7 +10,6 @@ void ReadHbvResults(const char dir[], int *nsteps, int *steps[], subcatch_struct
     int             i;
     int             len_numexp=1;
     int             numexp_file_flag=0;
-    const int ksub = 0;
 
     if (mode==0)
     {
@@ -54,14 +53,14 @@ void ReadHbvResults(const char dir[], int *nsteps, int *steps[], subcatch_struct
     }
 
 
-    subcatch[ksub].ws = (double **)malloc(len_numexp * *nsteps * sizeof(double *));
-    subcatch[ksub].q = (double **)malloc(len_numexp * *nsteps * sizeof(double *));
-    subcatch[ksub].tmp = (double *)malloc(len_numexp * *nsteps * sizeof(double));
+    subcatch->ws = (double **)malloc(len_numexp * *nsteps * sizeof(double *));
+    subcatch->q = (double **)malloc(len_numexp * *nsteps * sizeof(double *));
+    subcatch->tmp = (double *)malloc(len_numexp * *nsteps * sizeof(double));
 
     for (kstep = 0; kstep < len_numexp * *nsteps; kstep++)
     {
-        subcatch[ksub].ws[kstep] = (double *)malloc(NWS * sizeof(double));
-        subcatch[ksub].q[kstep] = (double *)malloc(NQ * sizeof(double));
+        subcatch->ws[kstep] = (double *)malloc(NWS * sizeof(double));
+        subcatch->q[kstep] = (double *)malloc(NQ * sizeof(double));
     }
 
 
@@ -71,26 +70,19 @@ void ReadHbvResults(const char dir[], int *nsteps, int *steps[], subcatch_struct
     {
         double          snow, sm;
 
-        if (ksub == 0)
-        {
-            fscanf(file_pointer, "%d", &((*steps)[kstep]));    // Read model steps
-        }
-        else
-        {
-            fscanf(file_pointer, "%*d");
-        }
+        fscanf(file_pointer, "%d", &((*steps)[kstep]));    // Read model steps
 
         fscanf(file_pointer, "%*f %*f");  // Skip "Qsim" and "Qobs"
-        fscanf(file_pointer, "%lf %lf", &subcatch[ksub].q[kstep][PRECIP], &subcatch[ksub].tmp[kstep]);    // Read precip. and
+        fscanf(file_pointer, "%lf %lf", &subcatch->q[kstep][PRECIP], &subcatch->tmp[kstep]);    // Read precip. and
                                                                                                 // air temperature
         fscanf(file_pointer, "%*f %*f");   // Skip "AET" and PET"
         fscanf(file_pointer, "%lf %*f %lf", &snow, &sm);     // Read snow and soil moisture
-        subcatch[ksub].ws[kstep][SNOW] = snow;  // 2021-05-14
-        subcatch[ksub].ws[kstep][SM] = sm;
-        fscanf(file_pointer, "%lf", &subcatch[ksub].q[kstep][RECHG]);  // Read recharge
+        subcatch->ws[kstep][SNOW] = snow;  // 2021-05-14
+        subcatch->ws[kstep][SM] = sm;
+        fscanf(file_pointer, "%lf", &subcatch->q[kstep][RECHG]);  // Read recharge
         fscanf(file_pointer, "%*f %*f");   // Skip upper and lower zone storages
-        fscanf(file_pointer, "%lf %lf %lf", &subcatch[ksub].q[kstep][Q0],
-            &subcatch[ksub].q[kstep][Q1], &subcatch[ksub].q[kstep][Q2]);  // Read Q0, Q1, and Q2
+        fscanf(file_pointer, "%lf %lf %lf", &subcatch->q[kstep][Q0],
+            &subcatch->q[kstep][Q1], &subcatch->q[kstep][Q2]);  // Read Q0, Q1, and Q2
         fscanf(file_pointer, "%*f %*f");   // Skip "Qsim_rain" and "Qsim_snow"
 
         //Incoming precipitation might become snow or enter the soil zone directly.
@@ -100,15 +92,15 @@ void ReadHbvResults(const char dir[], int *nsteps, int *steps[], subcatch_struct
         //
         // Solving the above equations,
         //
-        subcatch[ksub].q[kstep][Prain] = (subcatch[ksub].tmp[kstep] < subcatch[ksub].tt) ?
-            0.0 : subcatch[ksub].q[kstep][PRECIP];
+        subcatch->q[kstep][Prain] = (subcatch->tmp[kstep] < subcatch->tt) ?
+            0.0 : subcatch->q[kstep][PRECIP];
         
-        subcatch[ksub].q[kstep][Psnow] = (subcatch[ksub].tmp[kstep] < subcatch[ksub].tt) ?
-            subcatch[ksub].q[kstep][PRECIP] * subcatch[ksub].sfcf : 0.0;
+        subcatch->q[kstep][Psnow] = (subcatch->tmp[kstep] < subcatch->tt) ?
+            subcatch->q[kstep][PRECIP] * subcatch->sfcf : 0.0;
         
-        subcatch[ksub].q[kstep][snowmelt] = (kstep == 0) ?
-            0.0 : MAX(0, subcatch[ksub].q[kstep][Psnow] + subcatch[ksub].ws[kstep - 1][SNOW] - subcatch[ksub].ws[kstep][SNOW]);
-        //biort_printf(VL_NORMAL, "  snowmelt %.2f m3 m-3.\n", subcatch[ksub].q[kstep][snowmelt]);
+        subcatch->q[kstep][snowmelt] = (kstep == 0) ?
+            0.0 : MAX(0, subcatch->q[kstep][Psnow] + subcatch->ws[kstep - 1][SNOW] - subcatch->ws[kstep][SNOW]);
+        //biort_printf(VL_NORMAL, "  snowmelt %.2f m3 m-3.\n", subcatch->q[kstep][snowmelt]);
         // In the upper zone, HBV first calculates percolation to the lower zone.
         //   percolation = MIN(perc0, SUZ0 + recharge).                         (1)
         // If there is water left in the upper zone, calculate Q0 and Q1:
@@ -126,40 +118,40 @@ void ReadHbvResults(const char dir[], int *nsteps, int *steps[], subcatch_struct
         // HBV Light outputs SUZ and SLZ with low precision (one decimal digit), and does not output percolation
         // rate. Therefore, SUZ, SLZ, and percolation rate are calculated using Equations (1), (4), and (8).
 
-        subcatch[ksub].ws[kstep][UZ] = subcatch[ksub].q[kstep][Q1] / subcatch[ksub].k1 -
-            (subcatch[ksub].q[kstep][Q0] + subcatch[ksub].q[kstep][Q1]);
-        subcatch[ksub].ws[kstep][LZ] = subcatch[ksub].q[kstep][Q2] / subcatch[ksub].k2 -
-            subcatch[ksub].q[kstep][Q2];
-        subcatch[ksub].q[kstep][PERC] = (kstep == 0) ?
-            0.0 : MIN(subcatch[ksub].perc, subcatch[ksub].ws[kstep - 1][UZ] + subcatch[ksub].q[kstep][RECHG]);
+        subcatch->ws[kstep][UZ] = subcatch->q[kstep][Q1] / subcatch->k1 -
+            (subcatch->q[kstep][Q0] + subcatch->q[kstep][Q1]);
+        subcatch->ws[kstep][LZ] = subcatch->q[kstep][Q2] / subcatch->k2 -
+            subcatch->q[kstep][Q2];
+        subcatch->q[kstep][PERC] = (kstep == 0) ?
+            0.0 : MIN(subcatch->perc, subcatch->ws[kstep - 1][UZ] + subcatch->q[kstep][RECHG]);
 
     }
     
     //Change PERC value for 1st time step using water storage for last timestep
     
-    subcatch[ksub].q[0][PERC] = MIN(subcatch[ksub].perc, subcatch[ksub].ws[kstep - 1][UZ] + subcatch[ksub].q[0][RECHG]);
+    subcatch->q[0][PERC] = MIN(subcatch->perc, subcatch->ws[kstep - 1][UZ] + subcatch->q[0][RECHG]);
 
     // Add 1. residual moisture to LZ & UZ and 2. SM to UZ
     for (kstep = 0; kstep < *nsteps; kstep++)
     {
-        // subcatch[ksub].ws[kstep][SURFACE] += subcatch[ksub].res_surface;   // 2021-05-14
-        subcatch[ksub].ws[kstep][UZ] += subcatch[ksub].res_uz;
-        subcatch[ksub].ws[kstep][LZ] += subcatch[ksub].res_lz;
-        subcatch[ksub].ws[kstep][UZ] += subcatch[ksub].ws[kstep][SM];
+        // subcatch->ws[kstep][SURFACE] += subcatch->res_surface;   // 2021-05-14
+        subcatch->ws[kstep][UZ] += subcatch->res_uz;
+        subcatch->ws[kstep][LZ] += subcatch->res_lz;
+        subcatch->ws[kstep][UZ] += subcatch->ws[kstep][SM];
         
     }
     for (kstep = 0; kstep < *nsteps; kstep++)
     {
-        //if (subcatch[ksub].ws[kstep][SURFACE] > (subcatch[ksub].d_surface * subcatch[ksub].porosity_surface))
+        //if (subcatch->ws[kstep][SURFACE] > (subcatch->d_surface * subcatch->porosity_surface))
         //{
             //biort_printf(VL_NORMAL, "\nWater storage in SURFACE exceeds maximum water storage capacity at line %d.\n", kstep);
         //}
-        if (subcatch[ksub].ws[kstep][UZ] > (subcatch[ksub].d_uz * subcatch[ksub].porosity_uz))
+        if (subcatch->ws[kstep][UZ] > (subcatch->d_uz * subcatch->porosity_uz))
         {
             biort_printf(VL_ERROR, "\nWater storage in UZ exceeds maximum water storage capacity at line %d.\n", kstep);
             exit(EXIT_FAILURE);
         }
-        if (subcatch[ksub].ws[kstep][LZ] > (subcatch[ksub].d_lz * subcatch[ksub].porosity_lz))
+        if (subcatch->ws[kstep][LZ] > (subcatch->d_lz * subcatch->porosity_lz))
         {
             biort_printf(VL_ERROR, "\nWater storage in LZ exceeds maximum water storage capacity at line %d.\n", kstep);
             exit(EXIT_FAILURE);
@@ -176,18 +168,18 @@ void ReadHbvResults(const char dir[], int *nsteps, int *steps[], subcatch_struct
             {
                 for (kstep = 0; kstep < *nsteps; kstep++)
                 {
-                    subcatch[ksub].ws[(i * *nsteps)+kstep][SNOW] = subcatch[ksub].ws[kstep][SNOW];
-                    //subcatch[ksub].ws[(i * *nsteps)+kstep][SURFACE] = subcatch[ksub].ws[kstep][SURFACE];
-                    subcatch[ksub].ws[(i * *nsteps)+kstep][UZ] = subcatch[ksub].ws[kstep][UZ];
-                    subcatch[ksub].ws[(i * *nsteps)+kstep][LZ] = subcatch[ksub].ws[kstep][LZ];
-                    subcatch[ksub].q[(i * *nsteps)+kstep][PRECIP] = subcatch[ksub].q[kstep][PRECIP];
-                    subcatch[ksub].q[(i * *nsteps)+kstep][RECHG] = subcatch[ksub].q[kstep][RECHG];
-                    subcatch[ksub].q[(i * *nsteps)+kstep][PERC] = subcatch[ksub].q[kstep][PERC];
-                    subcatch[ksub].q[(i * *nsteps)+kstep][Q0] = subcatch[ksub].q[kstep][Q0];
-                    subcatch[ksub].q[(i * *nsteps)+kstep][Q1] = subcatch[ksub].q[kstep][Q1];
-                    subcatch[ksub].q[(i * *nsteps)+kstep][Q2] = subcatch[ksub].q[kstep][Q2];
-                    subcatch[ksub].tmp[(i * *nsteps)+kstep] = subcatch[ksub].tmp[kstep];
-                    //biort_printf(VL_NORMAL, "\n%d kstep: PERC%d\n", kstep, subcatch[ksub].q[kstep][PERC]);
+                    subcatch->ws[(i * *nsteps)+kstep][SNOW] = subcatch->ws[kstep][SNOW];
+                    //subcatch->ws[(i * *nsteps)+kstep][SURFACE] = subcatch->ws[kstep][SURFACE];
+                    subcatch->ws[(i * *nsteps)+kstep][UZ] = subcatch->ws[kstep][UZ];
+                    subcatch->ws[(i * *nsteps)+kstep][LZ] = subcatch->ws[kstep][LZ];
+                    subcatch->q[(i * *nsteps)+kstep][PRECIP] = subcatch->q[kstep][PRECIP];
+                    subcatch->q[(i * *nsteps)+kstep][RECHG] = subcatch->q[kstep][RECHG];
+                    subcatch->q[(i * *nsteps)+kstep][PERC] = subcatch->q[kstep][PERC];
+                    subcatch->q[(i * *nsteps)+kstep][Q0] = subcatch->q[kstep][Q0];
+                    subcatch->q[(i * *nsteps)+kstep][Q1] = subcatch->q[kstep][Q1];
+                    subcatch->q[(i * *nsteps)+kstep][Q2] = subcatch->q[kstep][Q2];
+                    subcatch->tmp[(i * *nsteps)+kstep] = subcatch->tmp[kstep];
+                    //biort_printf(VL_NORMAL, "\n%d kstep: PERC%d\n", kstep, subcatch->q[kstep][PERC]);
                 }
             }
         }
@@ -195,14 +187,13 @@ void ReadHbvResults(const char dir[], int *nsteps, int *steps[], subcatch_struct
     *nsteps *= len_numexp;
 }
 
-void ReadHbvParam(const char dir[], subcatch_struct subcatch[])
+void ReadHbvParam(const char dir[], subcatch_struct* subcatch)
 {
     FILE           *file_pointer;
     char            file_name[MAXSTRING];
     char            cmdstr[MAXSTRING];
     char            tag[MAXSTRING];
-    int             lno = 0;
-    const int             ksub = 0;
+    int             line_number = 0;
     double          value;
 
     sprintf(file_name, "input/%s/Parameter.xml", dir);
@@ -210,49 +201,49 @@ void ReadHbvParam(const char dir[], subcatch_struct subcatch[])
 
     biort_printf(VL_NORMAL, "\nHBV MODEL PARAMETERS\n");
 
-    FindLine(file_pointer, "<SubCatchmentParameters>", &lno, cmdstr);
+    FindLine(file_pointer, "<SubCatchmentParameters>", &line_number, cmdstr);
 
     while (!feof(file_pointer))
     {
-        NextLine(file_pointer, cmdstr, &lno);
+        NextLine(file_pointer, cmdstr, &line_number);
         ParseLine(cmdstr, tag, &value);
         if (strcmp(tag, "PERC") == 0)
         {
-            subcatch[ksub].perc = value;
-            biort_printf(VL_NORMAL, "  Percolation rate is %.2lf mm day-1\n", subcatch[ksub].perc);
+            subcatch->perc = value;
+            biort_printf(VL_NORMAL, "  Percolation rate is %.2lf mm day-1\n", subcatch->perc);
         }
         else if (strcmp(tag, "K1") == 0)
         {
-            subcatch[ksub].k1 = value;
-            biort_printf(VL_NORMAL, "  K1 is %.2lf day-1\n", subcatch[ksub].k1);
+            subcatch->k1 = value;
+            biort_printf(VL_NORMAL, "  K1 is %.2lf day-1\n", subcatch->k1);
         }
         else if (strcmp(tag, "K2") == 0)
         {
-            subcatch[ksub].k2 = value;
-            biort_printf(VL_NORMAL, "  K2 is %.2lf day-1\n", subcatch[ksub].k2);
+            subcatch->k2 = value;
+            biort_printf(VL_NORMAL, "  K2 is %.2lf day-1\n", subcatch->k2);
         }
         else if (strcmp(tag, "MAXBAS") == 0)
         {
-            subcatch[ksub].maxbas = value;
-            biort_printf(VL_NORMAL, "  Routing parameter is %.2lf\n", subcatch[ksub].maxbas);
+            subcatch->maxbas = value;
+            biort_printf(VL_NORMAL, "  Routing parameter is %.2lf\n", subcatch->maxbas);
             break;
         }
     }
-    FindLine(file_pointer, "<SubCatchmentVegetationZoneParameters>", &lno, cmdstr);
+    FindLine(file_pointer, "<SubCatchmentVegetationZoneParameters>", &line_number, cmdstr);
 
     while (!feof(file_pointer))
     {
-        NextLine(file_pointer, cmdstr, &lno);
+        NextLine(file_pointer, cmdstr, &line_number);
         ParseLine(cmdstr, tag, &value);
         if (strcmp(tag,"TT") == 0)
         {
-            subcatch[ksub].tt = value;
-            biort_printf(VL_NORMAL, "  TT is %.2lf\n", subcatch[ksub].tt);
+            subcatch->tt = value;
+            biort_printf(VL_NORMAL, "  TT is %.2lf\n", subcatch->tt);
         }
         else if (strcmp(tag,"SFCF") == 0)
         {
-            subcatch[ksub].sfcf = value;
-            biort_printf(VL_NORMAL, "  SFCF is %.2lf\n", subcatch[ksub].sfcf);
+            subcatch->sfcf = value;
+            biort_printf(VL_NORMAL, "  SFCF is %.2lf\n", subcatch->sfcf);
             break;
         }
     }

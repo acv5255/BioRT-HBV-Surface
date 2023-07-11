@@ -1,83 +1,79 @@
 #include "biort.h"
 
-void Reaction(int kstep, int nsub, double stepsize, const int steps[], const chemtbl_struct chemtbl[],
+void Reaction(int kstep, double stepsize, const int steps[], const chemtbl_struct chemtbl[],
     const kintbl_struct kintbl[], const rttbl_struct *rttbl, subcatch_struct subcatch[])
 {
-    int             ksub;
+    const int             ksub = 0;
     int             kzone;
     int             kspc;
     double          satn;
-    double          temp;
     double          substep;
     double          depth;
     double          porosity;
     double          Zw;
     const int       NZONES = 2;   // 2021-05-14
 
-    for (ksub = 0; ksub < nsub; ksub++)
+    //ftemp = SoilTempFactor(rttbl->q10, subcatch[ksub].tmp[kstep]);
+    const double temp = subcatch[ksub].tmp[kstep];
+
+    for (kzone = UZ; kzone < UZ + NZONES; kzone++)   // 2021-05-14
     {
-        //ftemp = SoilTempFactor(rttbl->q10, subcatch[ksub].tmp[kstep]);
-        temp = subcatch[ksub].tmp[kstep];
-
-        for (kzone = UZ; kzone < UZ + NZONES; kzone++)   // 2021-05-14
+        switch (kzone)
         {
-            switch (kzone)
+            //case SURFACE:   // 2021-05-14
+            //    depth = subcatch[ksub].d_surface;
+            //    porosity = subcatch[ksub].porosity_surface;
+            //    break;
+            case UZ:
+                depth = subcatch[ksub].d_uz;
+                porosity = subcatch[ksub].porosity_uz;
+                Zw = depth - (subcatch[ksub].ws[kstep][UZ]/porosity);
+                break;
+            case LZ:
+                depth = subcatch[ksub].d_lz;
+                porosity = subcatch[ksub].porosity_lz;
+                Zw = depth - (subcatch[ksub].ws[kstep][LZ]/porosity);
+                break;
+        }
+
+        for (kspc = 0; kspc < MAXSPS; kspc++)
+        {
+            subcatch[ksub].react_rate[kzone][kspc] = BADVAL;   // Set reaction rate to -999
+        }
+
+
+        satn = subcatch[ksub].ws[kstep][kzone] / (depth * porosity);  // add porosity for saturation calculation
+
+        satn = MIN(satn, 1.0);
+
+        //biort_printf(VL_NORMAL, "%d %d %s zone reaction has saturation of %.1lf s.\n",
+        //              steps[kstep],kzone, satn);
+
+        if (satn > 1.0E-2)
+        {
+            substep = ReactControl(chemtbl, kintbl, rttbl, stepsize, porosity, depth, satn, temp, Zw,
+                subcatch[ksub].react_rate[kzone], &subcatch[ksub].chms[kzone]);
+
+            if (substep < 0.0)
             {
-                //case SURFACE:   // 2021-05-14
-                //    depth = subcatch[ksub].d_surface;
-                //    porosity = subcatch[ksub].porosity_surface;
-                //    break;
-                case UZ:
-                    depth = subcatch[ksub].d_uz;
-                    porosity = subcatch[ksub].porosity_uz;
-                    Zw = depth - (subcatch[ksub].ws[kstep][UZ]/porosity);
-                    break;
-                case LZ:
-                    depth = subcatch[ksub].d_lz;
-                    porosity = subcatch[ksub].porosity_lz;
-                    Zw = depth - (subcatch[ksub].ws[kstep][LZ]/porosity);
-                    break;
-            }
-
-            for (kspc = 0; kspc < MAXSPS; kspc++)
-            {
-                subcatch[ksub].react_rate[kzone][kspc] = BADVAL;   // Set reaction rate to -999
-            }
-
-
-            satn = subcatch[ksub].ws[kstep][kzone] / (depth * porosity);  // add porosity for saturation calculation
-
-            satn = MIN(satn, 1.0);
-
-            //biort_printf(VL_NORMAL, "%d %d %s zone reaction has saturation of %.1lf s.\n",
-            //              steps[kstep],kzone, satn);
-
-            if (satn > 1.0E-2)
-            {
-                substep = ReactControl(chemtbl, kintbl, rttbl, stepsize, porosity, depth, satn, temp, Zw,
-                    subcatch[ksub].react_rate[kzone], &subcatch[ksub].chms[kzone]);
-
-                if (substep < 0.0)
+                if (kzone == SURFACE)   // 2021-05-14
                 {
-                   if (kzone == SURFACE)   // 2021-05-14
-                    {
-                        biort_printf(VL_NORMAL, "%d %s zone reaction failed with a substep of %.1lf s.\n",
-                          steps[kstep], "SURFACE", -substep);
-                    } else {
-                        biort_printf(VL_NORMAL, "%d %s zone reaction failed with a substep of %.1lf s.\n",
-                          steps[kstep], (kzone == UZ) ? "Upper" : "Lower", -substep);
-                    }
+                    biort_printf(VL_NORMAL, "%d %s zone reaction failed with a substep of %.1lf s.\n",
+                        steps[kstep], "SURFACE", -substep);
+                } else {
+                    biort_printf(VL_NORMAL, "%d %s zone reaction failed with a substep of %.1lf s.\n",
+                        steps[kstep], (kzone == UZ) ? "Upper" : "Lower", -substep);
                 }
-                if (substep > 0.0)
+            }
+            if (substep > 0.0)
+            {
+                if (kzone == SURFACE)   // 2021-05-14
                 {
-                    if (kzone == SURFACE)   // 2021-05-14
-                    {
-                      biort_printf(VL_VERBOSE, "%d %s zone reaction passed with a minimum step of %.1lf s.\n",
-                        steps[kstep], "SURFACE", substep);
-                    } else {
-                      biort_printf(VL_VERBOSE, "%d %s zone reaction passed with a minimum step of %.1lf s.\n",
-                        steps[kstep], (kzone == UZ) ? "Upper" : "Lower", substep);
-                    }
+                    biort_printf(VL_VERBOSE, "%d %s zone reaction passed with a minimum step of %.1lf s.\n",
+                    steps[kstep], "SURFACE", substep);
+                } else {
+                    biort_printf(VL_VERBOSE, "%d %s zone reaction passed with a minimum step of %.1lf s.\n",
+                    steps[kstep], (kzone == UZ) ? "Upper" : "Lower", substep);
                 }
             }
         }

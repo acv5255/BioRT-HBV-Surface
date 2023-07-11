@@ -58,22 +58,20 @@ void UnwrapParentheses(const char wrapped_str[], char str[])
     str[j] = '\0';
 }
 
-void FreeStruct(int nsub, int nsteps, int *steps[], subcatch_struct subcatch[])
+void FreeStruct(int nsteps, int *steps[], subcatch_struct subcatch[])
 {
+    const int ksub = 0;
     free(*steps);
 
-    for (int ksub = 0; ksub < nsub; ksub++)
+    for (int kstep = 0; kstep < nsteps; kstep++)
     {
-        for (int kstep = 0; kstep < nsteps; kstep++)
-        {
-            free(subcatch[ksub].ws[kstep]);
-            free(subcatch[ksub].q[kstep]);
-        }
-
-        free(subcatch[ksub].ws);
-        free(subcatch[ksub].q);
-        free(subcatch[ksub].tmp);
+        free(subcatch[ksub].ws[kstep]);
+        free(subcatch[ksub].q[kstep]);
     }
+
+    free(subcatch[ksub].ws);
+    free(subcatch[ksub].q);
+    free(subcatch[ksub].tmp);
 }
 
 void ParseCmdLineParam(int argc, char *argv[], char dir[])
@@ -154,11 +152,11 @@ void ComputeDependence(double tmpconc[MAXSPS], const double dep_mtx[MAXSPS][MAXS
 void GetLogActivity(double tmpconc[MAXSPS], double gamma[MAXSPS], const double dep_mtx[MAXSPS][MAXSPS], const double keq[MAXSPS], int num_rows, int num_cols, int offset) {
     for (int i = 0; i < num_rows; i++)
     {
-        tmpconc[i + num_rows] = 0.0;
+        tmpconc[i + offset] = 0.0;
         for (int j = 0; j < num_cols; j++)
         {
-            tmpconc[i + num_cols] += (tmpconc[j] + gamma[j]) * dep_mtx[i][j];
+            tmpconc[i + offset] += (tmpconc[j] + gamma[j]) * dep_mtx[i][j];
         }
-        tmpconc[i + num_cols] -= keq[i] + gamma[i + offset];
+        tmpconc[i + offset] -= keq[i] + gamma[i + offset];
     }
 }

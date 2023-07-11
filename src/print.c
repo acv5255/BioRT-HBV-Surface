@@ -206,86 +206,83 @@ void PrintHeader(FILE *fp, int transpt, const rttbl_struct *rttbl, const chemtbl
     fflush(fp);
 }
 
-void PrintDailyResults(FILE *fp, int transpt, int step, int nsub, const rttbl_struct *rttbl,
+void PrintDailyResults(FILE *fp, int transpt, int step, const rttbl_struct *rttbl,
     const subcatch_struct subcatch[])
 {
+    const int ksub = 0;
 
     // Soil concentration file header
     fprintf(fp, "%-15d",  step);
 
-    for (int ksub = 0; ksub < nsub; ksub++)
+    if (transpt == KIN_REACTION)
     {
 
-        if (transpt == KIN_REACTION)
+        for (int kspc = 0; kspc < rttbl->num_spc; kspc++)   // 2021-06-29
         {
-
-            for (int kspc = 0; kspc < rttbl->num_spc; kspc++)   // 2021-06-29
-            {
-                fprintf(fp, "\t%-15lg", subcatch[ksub].chms[SNOW].prim_conc[kspc]);
-            }
-            for (int kspc = 0; kspc < rttbl->num_spc; kspc++)   // 2021-06-29
-            {
-                fprintf(fp, "\t%-15lg", subcatch[ksub].chms[SURFACE].prim_conc[kspc]);
-            }
-            for (int kspc = 0; kspc < rttbl->num_stc; kspc++)
-            {
-                fprintf(fp, "\t%-15lg", subcatch[ksub].chms[UZ].prim_conc[kspc]);
-            }
-            for (int kspc = 0; kspc < rttbl->num_ssc; kspc++)
-            {
-                fprintf(fp, "\t%-15lg", subcatch[ksub].chms[UZ].sec_conc[kspc]);
-            }
-            for (int kspc = 0; kspc < rttbl->num_stc; kspc++)
-            {
-                fprintf(fp, "\t%-15lg", subcatch[ksub].chms[LZ].prim_conc[kspc]);
-            }
-            for (int kspc = 0; kspc < rttbl->num_ssc; kspc++)
-            {
-                fprintf(fp, "\t%-15lg", subcatch[ksub].chms[LZ].sec_conc[kspc]);
-            }
-            for (int kspc = 0; kspc < rttbl->num_stc; kspc++)
-            {
-                fprintf(fp, "\t%-15lg", subcatch[ksub].chms[STREAM].prim_conc[kspc]);
-            }
-            for (int kspc = 0; kspc < rttbl->num_ssc; kspc++)
-            {
-                fprintf(fp, "\t%-15lg", subcatch[ksub].chms[STREAM].sec_conc[kspc]);
-            }
-            //for (int kspc = 0; kspc < rttbl->num_min; kspc++)  // 2021-05-14
-            //{
-            //    fprintf(fp, "\t%-23lg", subcatch[ksub].react_rate[SURFACE][kspc]);
-            //}
-            for (int kspc = 0; kspc < rttbl->num_min; kspc++)
-            {
-                fprintf(fp, "\t%-23lg", subcatch[ksub].react_rate[UZ][kspc]);
-            }
-            for (int kspc = 0; kspc < rttbl->num_min; kspc++)
-            {
-                fprintf(fp, "\t%-23lg", subcatch[ksub].react_rate[LZ][kspc]);
-            }
+            fprintf(fp, "\t%-15lg", subcatch[ksub].chms[SNOW].prim_conc[kspc]);
         }
-        else    // In transport mode, only print primary species
+        for (int kspc = 0; kspc < rttbl->num_spc; kspc++)   // 2021-06-29
         {
-            for (int kspc = 0; kspc < rttbl->num_spc; kspc++)  // 2021-06-29
-            {
-                fprintf(fp, "\t%-15lg", subcatch[ksub].chms[SNOW].prim_conc[kspc]);
-            }
-            for (int kspc = 0; kspc < rttbl->num_spc; kspc++)  // 2021-06-29
-            {
-                fprintf(fp, "\t%-15lg", subcatch[ksub].chms[SURFACE].prim_conc[kspc]);
-            }
-            for (int kspc = 0; kspc < rttbl->num_spc; kspc++)
-            {
-                fprintf(fp, "\t%-15lg", subcatch[ksub].chms[UZ].prim_conc[kspc]);
-            }
-            for (int kspc = 0; kspc < rttbl->num_spc; kspc++)
-            {
-                fprintf(fp, "\t%-15lg", subcatch[ksub].chms[LZ].prim_conc[kspc]);
-            }
-            for (int kspc = 0; kspc < rttbl->num_spc; kspc++)
-            {
-                fprintf(fp, "\t%-15lg", subcatch[ksub].chms[STREAM].prim_conc[kspc]);
-            }
+            fprintf(fp, "\t%-15lg", subcatch[ksub].chms[SURFACE].prim_conc[kspc]);
+        }
+        for (int kspc = 0; kspc < rttbl->num_stc; kspc++)
+        {
+            fprintf(fp, "\t%-15lg", subcatch[ksub].chms[UZ].prim_conc[kspc]);
+        }
+        for (int kspc = 0; kspc < rttbl->num_ssc; kspc++)
+        {
+            fprintf(fp, "\t%-15lg", subcatch[ksub].chms[UZ].sec_conc[kspc]);
+        }
+        for (int kspc = 0; kspc < rttbl->num_stc; kspc++)
+        {
+            fprintf(fp, "\t%-15lg", subcatch[ksub].chms[LZ].prim_conc[kspc]);
+        }
+        for (int kspc = 0; kspc < rttbl->num_ssc; kspc++)
+        {
+            fprintf(fp, "\t%-15lg", subcatch[ksub].chms[LZ].sec_conc[kspc]);
+        }
+        for (int kspc = 0; kspc < rttbl->num_stc; kspc++)
+        {
+            fprintf(fp, "\t%-15lg", subcatch[ksub].chms[STREAM].prim_conc[kspc]);
+        }
+        for (int kspc = 0; kspc < rttbl->num_ssc; kspc++)
+        {
+            fprintf(fp, "\t%-15lg", subcatch[ksub].chms[STREAM].sec_conc[kspc]);
+        }
+        //for (int kspc = 0; kspc < rttbl->num_min; kspc++)  // 2021-05-14
+        //{
+        //    fprintf(fp, "\t%-23lg", subcatch[ksub].react_rate[SURFACE][kspc]);
+        //}
+        for (int kspc = 0; kspc < rttbl->num_min; kspc++)
+        {
+            fprintf(fp, "\t%-23lg", subcatch[ksub].react_rate[UZ][kspc]);
+        }
+        for (int kspc = 0; kspc < rttbl->num_min; kspc++)
+        {
+            fprintf(fp, "\t%-23lg", subcatch[ksub].react_rate[LZ][kspc]);
+        }
+    }
+    else    // In transport mode, only print primary species
+    {
+        for (int kspc = 0; kspc < rttbl->num_spc; kspc++)  // 2021-06-29
+        {
+            fprintf(fp, "\t%-15lg", subcatch[ksub].chms[SNOW].prim_conc[kspc]);
+        }
+        for (int kspc = 0; kspc < rttbl->num_spc; kspc++)  // 2021-06-29
+        {
+            fprintf(fp, "\t%-15lg", subcatch[ksub].chms[SURFACE].prim_conc[kspc]);
+        }
+        for (int kspc = 0; kspc < rttbl->num_spc; kspc++)
+        {
+            fprintf(fp, "\t%-15lg", subcatch[ksub].chms[UZ].prim_conc[kspc]);
+        }
+        for (int kspc = 0; kspc < rttbl->num_spc; kspc++)
+        {
+            fprintf(fp, "\t%-15lg", subcatch[ksub].chms[LZ].prim_conc[kspc]);
+        }
+        for (int kspc = 0; kspc < rttbl->num_spc; kspc++)
+        {
+            fprintf(fp, "\t%-15lg", subcatch[ksub].chms[STREAM].prim_conc[kspc]);
         }
     }
     fprintf(fp, "\n");

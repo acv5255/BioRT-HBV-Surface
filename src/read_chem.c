@@ -23,11 +23,11 @@ void ReadChem(const char dir[], ctrl_struct *ctrl, rttbl_struct *rttbl, chemtbl_
     biort_printf(VL_NORMAL, "  Forcing recycle %d time(s). \n", ctrl->recycle);
 
     NextLine(file_pointer, cmdstr, &lno);
-    ReadParam(cmdstr, "ACTIVITY", 'i', file_name, lno, &ctrl->actv_mode);
-    biort_printf(VL_NORMAL, "  Activity correction is set to %d. \n", ctrl->actv_mode);
+    ReadParam(cmdstr, "ACTIVITY", 'i', file_name, lno, &ctrl->use_activity);
+    biort_printf(VL_NORMAL, "  Activity correction is set to %d. \n", ctrl->use_activity);
 
     NextLine(file_pointer, cmdstr, &lno);
-    ReadParam(cmdstr, "TRANSPORT_ONLY", 'i', file_name, lno, &ctrl->transpt);
+    ReadParam(cmdstr, "TRANSPORT_ONLY", 'i', file_name, lno, &ctrl->transport_only);
     // switch (ctrl->transpt)
     // {
     //     case KIN_REACTION:
@@ -41,10 +41,10 @@ void ReadChem(const char dir[], ctrl_struct *ctrl, rttbl_struct *rttbl, chemtbl_
     //         break;
     // }
 
-    if (ctrl->transpt == KIN_REACTION) {
+    if (ctrl->transport_only == KIN_REACTION) {
         biort_printf(VL_NORMAL, "  Transport only mode disabled.\n");
     }
-    else if (ctrl->transpt == TRANSPORT_ONLY) {
+    else if (ctrl->transport_only == TRANSPORT_ONLY) {
         biort_printf(VL_NORMAL, "  Transport only mode enabled. \n");
     }
     else {
@@ -53,8 +53,8 @@ void ReadChem(const char dir[], ctrl_struct *ctrl, rttbl_struct *rttbl, chemtbl_
     }
 
     NextLine(file_pointer, cmdstr, &lno);  // 2021-05-20
-    ReadParam(cmdstr, "PRECIPCHEM", 'i', file_name, lno, &ctrl->precipchem);
-    switch (ctrl->precipchem)
+    ReadParam(cmdstr, "PRECIPCHEM", 'i', file_name, lno, &ctrl->variable_precipchem);
+    switch (ctrl->variable_precipchem)
     {
         case 0:
             biort_printf(VL_NORMAL, "  Using constant precipitation chemistry in cini.txt. \n");

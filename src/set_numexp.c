@@ -19,59 +19,55 @@ void CopyConstSubcatchProp(const subcatch_struct subcatch[], subcatch_struct sub
     subcatch_numexp[0].d_lz = subcatch[0].d_lz;
 }
 
-void CopyInitChemSubcatch(int nsub, rttbl_struct *rttbl, const subcatch_struct subcatch[], subcatch_struct subcatch_numexp[])
+void CopyInitChemSubcatch(rttbl_struct *rttbl, const subcatch_struct subcatch[], subcatch_struct subcatch_numexp[])
 {
-    int ksub;
+    const int ksub = 0;
     int kspc;
 
-    for (ksub = 0; ksub < nsub; ksub++)
+    for (kspc = 0; kspc < rttbl->num_stc; kspc++)
     {
-        for (kspc = 0; kspc < rttbl->num_stc; kspc++)
-        {
-            subcatch_numexp[ksub].chms[SNOW].ssa[kspc] = subcatch[ksub].chms[SNOW].ssa[kspc];
-            subcatch_numexp[ksub].chms[UZ].ssa[kspc] = subcatch[ksub].chms[UZ].ssa[kspc];
-            subcatch_numexp[ksub].chms[LZ].ssa[kspc] = subcatch[ksub].chms[LZ].ssa[kspc];
-            
-            subcatch_numexp[ksub].chms[UZ].q10[kspc] = subcatch[ksub].chms[UZ].q10[kspc];
-            subcatch_numexp[ksub].chms[LZ].q10[kspc] = subcatch[ksub].chms[LZ].q10[kspc];
-            
-            subcatch_numexp[ksub].chms[UZ].sw_thld[kspc] = subcatch[ksub].chms[UZ].sw_thld[kspc];
-            subcatch_numexp[ksub].chms[LZ].sw_thld[kspc] = subcatch[ksub].chms[LZ].sw_thld[kspc];
-            
-            subcatch_numexp[ksub].chms[UZ].sw_exp[kspc] = subcatch[ksub].chms[UZ].sw_exp[kspc];
-            subcatch_numexp[ksub].chms[LZ].sw_exp[kspc] = subcatch[ksub].chms[LZ].sw_exp[kspc];
-            
-            subcatch_numexp[ksub].chms[UZ].n_alpha[kspc] = subcatch[ksub].chms[UZ].n_alpha[kspc];
-            subcatch_numexp[ksub].chms[LZ].n_alpha[kspc] = subcatch[ksub].chms[LZ].n_alpha[kspc];
+        subcatch_numexp[ksub].chms[SNOW].ssa[kspc] = subcatch[ksub].chms[SNOW].ssa[kspc];
+        subcatch_numexp[ksub].chms[UZ].ssa[kspc] = subcatch[ksub].chms[UZ].ssa[kspc];
+        subcatch_numexp[ksub].chms[LZ].ssa[kspc] = subcatch[ksub].chms[LZ].ssa[kspc];
+        
+        subcatch_numexp[ksub].chms[UZ].q10[kspc] = subcatch[ksub].chms[UZ].q10[kspc];
+        subcatch_numexp[ksub].chms[LZ].q10[kspc] = subcatch[ksub].chms[LZ].q10[kspc];
+        
+        subcatch_numexp[ksub].chms[UZ].sw_thld[kspc] = subcatch[ksub].chms[UZ].sw_thld[kspc];
+        subcatch_numexp[ksub].chms[LZ].sw_thld[kspc] = subcatch[ksub].chms[LZ].sw_thld[kspc];
+        
+        subcatch_numexp[ksub].chms[UZ].sw_exp[kspc] = subcatch[ksub].chms[UZ].sw_exp[kspc];
+        subcatch_numexp[ksub].chms[LZ].sw_exp[kspc] = subcatch[ksub].chms[LZ].sw_exp[kspc];
+        
+        subcatch_numexp[ksub].chms[UZ].n_alpha[kspc] = subcatch[ksub].chms[UZ].n_alpha[kspc];
+        subcatch_numexp[ksub].chms[LZ].n_alpha[kspc] = subcatch[ksub].chms[LZ].n_alpha[kspc];
 
-            subcatch_numexp[ksub].chms[SNOW].prim_conc[kspc] = subcatch[ksub].chms[SNOW].prim_conc[kspc];
-            subcatch_numexp[ksub].chms[UZ].prim_conc[kspc] = subcatch[ksub].chms[UZ].prim_conc[kspc];
-            subcatch_numexp[ksub].chms[LZ].prim_conc[kspc] = subcatch[ksub].chms[LZ].prim_conc[kspc];
-            subcatch_numexp[ksub].chms[STREAM].prim_conc[kspc] = subcatch[ksub].chms[STREAM].prim_conc[kspc];
+        subcatch_numexp[ksub].chms[SNOW].prim_conc[kspc] = subcatch[ksub].chms[SNOW].prim_conc[kspc];
+        subcatch_numexp[ksub].chms[UZ].prim_conc[kspc] = subcatch[ksub].chms[UZ].prim_conc[kspc];
+        subcatch_numexp[ksub].chms[LZ].prim_conc[kspc] = subcatch[ksub].chms[LZ].prim_conc[kspc];
+        subcatch_numexp[ksub].chms[STREAM].prim_conc[kspc] = subcatch[ksub].chms[STREAM].prim_conc[kspc];
 
-            subcatch_numexp[ksub].chms[SNOW].prim_actv[kspc] = subcatch[ksub].chms[SNOW].prim_actv[kspc];
-            subcatch_numexp[ksub].chms[UZ].prim_actv[kspc] = subcatch[ksub].chms[UZ].prim_actv[kspc];
-            subcatch_numexp[ksub].chms[LZ].prim_actv[kspc] = subcatch[ksub].chms[LZ].prim_actv[kspc];
-            subcatch_numexp[ksub].chms[STREAM].prim_actv[kspc] = subcatch[ksub].chms[STREAM].prim_actv[kspc];
+        subcatch_numexp[ksub].chms[SNOW].prim_actv[kspc] = subcatch[ksub].chms[SNOW].prim_actv[kspc];
+        subcatch_numexp[ksub].chms[UZ].prim_actv[kspc] = subcatch[ksub].chms[UZ].prim_actv[kspc];
+        subcatch_numexp[ksub].chms[LZ].prim_actv[kspc] = subcatch[ksub].chms[LZ].prim_actv[kspc];
+        subcatch_numexp[ksub].chms[STREAM].prim_actv[kspc] = subcatch[ksub].chms[STREAM].prim_actv[kspc];
 
-            subcatch_numexp[ksub].chms[SNOW].tot_conc[kspc] = subcatch[ksub].chms[SNOW].tot_conc[kspc];
-            subcatch_numexp[ksub].chms[UZ].tot_conc[kspc] = subcatch[ksub].chms[UZ].tot_conc[kspc];
-            subcatch_numexp[ksub].chms[LZ].tot_conc[kspc] = subcatch[ksub].chms[LZ].tot_conc[kspc];
-            subcatch_numexp[ksub].chms[STREAM].tot_conc[kspc] = subcatch[ksub].chms[STREAM].tot_conc[kspc];
+        subcatch_numexp[ksub].chms[SNOW].tot_conc[kspc] = subcatch[ksub].chms[SNOW].tot_conc[kspc];
+        subcatch_numexp[ksub].chms[UZ].tot_conc[kspc] = subcatch[ksub].chms[UZ].tot_conc[kspc];
+        subcatch_numexp[ksub].chms[LZ].tot_conc[kspc] = subcatch[ksub].chms[LZ].tot_conc[kspc];
+        subcatch_numexp[ksub].chms[STREAM].tot_conc[kspc] = subcatch[ksub].chms[STREAM].tot_conc[kspc];
 
-            subcatch_numexp[ksub].chms[SNOW].tot_mol[kspc] = subcatch[ksub].chms[SNOW].tot_mol[kspc];
-            subcatch_numexp[ksub].chms[UZ].tot_mol[kspc] = subcatch[ksub].chms[UZ].tot_mol[kspc];
-            subcatch_numexp[ksub].chms[LZ].tot_mol[kspc] = subcatch[ksub].chms[LZ].tot_mol[kspc];
-            subcatch_numexp[ksub].chms[STREAM].tot_mol[kspc] = subcatch[ksub].chms[STREAM].tot_mol[kspc];
-        }
+        subcatch_numexp[ksub].chms[SNOW].tot_mol[kspc] = subcatch[ksub].chms[SNOW].tot_mol[kspc];
+        subcatch_numexp[ksub].chms[UZ].tot_mol[kspc] = subcatch[ksub].chms[UZ].tot_mol[kspc];
+        subcatch_numexp[ksub].chms[LZ].tot_mol[kspc] = subcatch[ksub].chms[LZ].tot_mol[kspc];
+        subcatch_numexp[ksub].chms[STREAM].tot_mol[kspc] = subcatch[ksub].chms[STREAM].tot_mol[kspc];
+    }
 
-        for (kspc = 0; kspc < rttbl->num_ssc; kspc++)
-        {
-            subcatch_numexp[ksub].chms[SNOW].sec_conc[kspc] = subcatch[ksub].chms[SNOW].sec_conc[kspc];
-            subcatch_numexp[ksub].chms[UZ].sec_conc[kspc] = subcatch[ksub].chms[UZ].sec_conc[kspc];
-            subcatch_numexp[ksub].chms[LZ].sec_conc[kspc] = subcatch[ksub].chms[LZ].sec_conc[kspc];
-        }
-
+    for (kspc = 0; kspc < rttbl->num_ssc; kspc++)
+    {
+        subcatch_numexp[ksub].chms[SNOW].sec_conc[kspc] = subcatch[ksub].chms[SNOW].sec_conc[kspc];
+        subcatch_numexp[ksub].chms[UZ].sec_conc[kspc] = subcatch[ksub].chms[UZ].sec_conc[kspc];
+        subcatch_numexp[ksub].chms[LZ].sec_conc[kspc] = subcatch[ksub].chms[LZ].sec_conc[kspc];
     }
 
 }

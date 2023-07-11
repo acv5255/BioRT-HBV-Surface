@@ -11,6 +11,7 @@
 #include <stdarg.h>
 #include <float.h>
 #include <sys/stat.h>
+#include <stdbool.h>
 
 // SUNDIAL Header Files
 #include "sundials/sundials_dense.h"        // Prototypes for small dense fcts.
@@ -77,9 +78,9 @@ typedef struct ctrl_struct
 {
     int             recycle;                // number of times to recycle forcing
     int             read_restart;           // flag to read rt restart file
-    int             actv_mode;              // activity coefficient mode: 0 = unity coefficient, 1 = DH equation
-    int             transpt;                // transport only flag: 0 = simulate kinetic reaction, 1 = transport only
-    int             precipchem;             // precipitation chemistry mode: 0 = constant precipitation chemistry, 1 = time-series precipitation chemistry   2021-05-20
+    int             use_activity;           // activity coefficient mode: 0 = unity coefficient, 1 = DH equation
+    int             transport_only;         // transport only flag: 0 = simulate kinetic reaction, 1 = transport only
+    int             variable_precipchem;    // precipitation chemistry mode: 0 = constant precipitation chemistry, 1 = time-series precipitation chemistry   2021-05-20
     int             precipchem_numexp;      // Numerical experiment mode: 0 = same precipitation chemistry during warm-up and simulation
                                             // 1 = different precipitation chemistry during warm-up and simulation useful for numerical experiment  2021-09-09
     double         *steps;                  // model steps
@@ -204,12 +205,12 @@ typedef struct subcatch_struct
 #endif
 
 void            CopyConstSubcatchProp(const subcatch_struct [], subcatch_struct []);
-void            CopyInitChemSubcatch(int, rttbl_struct *, const subcatch_struct [], subcatch_struct []);
+void            CopyInitChemSubcatch(rttbl_struct *, const subcatch_struct [], subcatch_struct []);
 int             CountLeapYears(int, int);
 int             FindChem(const char [MAXSTRING], int, const chemtbl_struct[]);
-void            FreeStruct(int nsub, int nsteps, int *steps[], subcatch_struct subcatch[]);
+void            FreeStruct(int nsteps, int *steps[], subcatch_struct subcatch[]);
 int             GetDifference(int, int);
-void            InitChem(const char [], int, const calib_struct *, const ctrl_struct *, chemtbl_struct [],
+void            InitChem(const char [], const calib_struct *, const ctrl_struct *, chemtbl_struct [],
     kintbl_struct [], rttbl_struct *, subcatch_struct []);
 void            InitChemState(double, double, const chemtbl_struct [], const rttbl_struct *, const ctrl_struct *,
     chmstate_struct *);
@@ -217,11 +218,11 @@ void            Lookup(FILE *, const calib_struct *, chemtbl_struct [], kintbl_s
 int             MatchWrappedKey(const char [], const char []);
 void            ParseCmdLineParam(int argc, char *argv[], char dir[]);
 void            ParseLine(const char [], char [], double *);
-void            PrintDailyResults(FILE *, int, int, int, const rttbl_struct *, const subcatch_struct []);
+void            PrintDailyResults(FILE *, int, int, const rttbl_struct *, const subcatch_struct []);
 void            PrintHeader(FILE *, int, const rttbl_struct *, const chemtbl_struct chemtbl[]);
 double          ReactControl(const chemtbl_struct [], const kintbl_struct [], const rttbl_struct *, double, double, double,
     double, double, double, double [], chmstate_struct *);
-void            Reaction(int, int, double, const int [], const chemtbl_struct [], const kintbl_struct [],
+void            Reaction(int, double, const int [], const chemtbl_struct [], const kintbl_struct [],
     const rttbl_struct *, subcatch_struct []);
 void            ReadAdsorption(const char [], int, int, chemtbl_struct [], rttbl_struct *);
 void            ReadCationEchg(const char [], double, chemtbl_struct [], rttbl_struct *);
@@ -229,9 +230,9 @@ void            ReadChem(const char [], ctrl_struct *, rttbl_struct *, chemtbl_s
 void            ReadCini(const char [], const chemtbl_struct *, rttbl_struct *, subcatch_struct []);
 void            ReadConc(FILE *, int, const chemtbl_struct [], int *, double [], double [], double [], double [], double[], double[]);
 void            ReadDHParam(const char [], int, double *);
-void            ReadHbvParam(const char [], int, subcatch_struct []);
-void            ReadHbvResults(const char [], int, int *, int **, subcatch_struct [], int);
-void            ReadPrecipChem(const char [], int, int *, int **, subcatch_struct [], int, const chemtbl_struct [], int);
+void            ReadHbvParam(const char [], subcatch_struct []);
+void            ReadHbvResults(const char [], int *, int **, subcatch_struct [], int);
+void            ReadPrecipChem(const char [], int *, int **, subcatch_struct [], int, const chemtbl_struct [], int);
 void            ReadMinerals(const char [], int, int, double [MAXSPS][MAXSPS], double [], chemtbl_struct [],
     rttbl_struct *);
 void            ReadMinKin(FILE *, int, double, int *, char [], chemtbl_struct [], kintbl_struct *);
@@ -249,15 +250,15 @@ int             SolveReact(double, const chemtbl_struct [], const kintbl_struct 
     double, double, chmstate_struct *);
 int             SolveSpeciation(const chemtbl_struct [], const ctrl_struct *, const rttbl_struct *, int, chmstate_struct *);
 void            SortChem(char [MAXSPS][MAXSTRING], const int [MAXSPS], int, chemtbl_struct []);
-void            Speciation(int, const chemtbl_struct [], const ctrl_struct *, const rttbl_struct *, subcatch_struct []);
+void            Speciation(const chemtbl_struct [], const ctrl_struct *, const rttbl_struct *, subcatch_struct []);
 int             SpeciesType(const char [], const char []);
-void            StreamSpeciation(int, int, const chemtbl_struct [], const ctrl_struct *, const rttbl_struct *,
+void            StreamSpeciation(int, const chemtbl_struct [], const ctrl_struct *, const rttbl_struct *,
     subcatch_struct []);
-void            Transpt(int, int, const chemtbl_struct [], rttbl_struct *, const ctrl_struct *, subcatch_struct []);   // 2021-05-21
+void            Transpt(int step, const chemtbl_struct *chemtbl, rttbl_struct *rttbl, const ctrl_struct *ctrl, subcatch_struct subcatch[]);   // 2021-05-21
 void            WrapInParentheses(char *str);
 double          WTDepthFactor(double ,double );
 void            UnwrapParentheses(const char wrapped_str[], char str[]);
-void            UpdatePrimConc(int, const rttbl_struct *, const ctrl_struct *, subcatch_struct []);
+void            UpdatePrimConc(const rttbl_struct *rttbl, const ctrl_struct *ctrl, subcatch_struct subcatch[]);
 
 // Andrew's functions
 void            SetZero(double arr[MAXSPS]);

@@ -12,7 +12,7 @@ void PrintHeader(FILE *fp, int transpt, const rttbl_struct *rttbl, const chemtbl
     {
         for (int kspc = 0; kspc < rttbl->num_spc; kspc++)  // 2021-06-29
         {
-            Unwrap(chemtbl[kspc].name, chemn);
+            UnwrapParentheses(chemtbl[kspc].name, chemn);
 
             char substr[SUBSTRING_SIZE];
             strncpy(substr, chemn, SUBSTRING_SIZE);
@@ -25,7 +25,7 @@ void PrintHeader(FILE *fp, int transpt, const rttbl_struct *rttbl, const chemtbl
 
         for (int kspc = 0; kspc < rttbl->num_spc; kspc++)  // 2021-06-29
         {
-            Unwrap(chemtbl[kspc].name, chemn);
+            UnwrapParentheses(chemtbl[kspc].name, chemn);
 
             char substr[SUBSTRING_SIZE];
             strncpy(substr, chemn, SUBSTRING_SIZE);
@@ -38,7 +38,7 @@ void PrintHeader(FILE *fp, int transpt, const rttbl_struct *rttbl, const chemtbl
 
         for (int kspc = 0; kspc < rttbl->num_stc + rttbl->num_ssc; kspc++)
         {
-            Unwrap(chemtbl[kspc].name, chemn);
+            UnwrapParentheses(chemtbl[kspc].name, chemn);
 
             char substr[SUBSTRING_SIZE];
             strncpy(substr, chemn, SUBSTRING_SIZE);
@@ -51,7 +51,7 @@ void PrintHeader(FILE *fp, int transpt, const rttbl_struct *rttbl, const chemtbl
 
         for (int kspc = 0; kspc < rttbl->num_stc + rttbl->num_ssc; kspc++)
         {
-            Unwrap(chemtbl[kspc].name, chemn);
+            UnwrapParentheses(chemtbl[kspc].name, chemn);
 
             char substr[SUBSTRING_SIZE];
             strncpy(substr, chemn, SUBSTRING_SIZE);
@@ -64,7 +64,7 @@ void PrintHeader(FILE *fp, int transpt, const rttbl_struct *rttbl, const chemtbl
 
         for (int kspc = 0; kspc < rttbl->num_stc + rttbl->num_ssc; kspc++)
         {
-            Unwrap(chemtbl[kspc].name, chemn);
+            UnwrapParentheses(chemtbl[kspc].name, chemn);
 
             char substr[SUBSTRING_SIZE];
             strncpy(substr, chemn, SUBSTRING_SIZE);
@@ -77,7 +77,7 @@ void PrintHeader(FILE *fp, int transpt, const rttbl_struct *rttbl, const chemtbl
 
         for (int kspc = 0; kspc < rttbl->num_min; kspc++)  // 2021-05-14
         {
-            Unwrap(chemtbl[kspc + rttbl->num_stc - rttbl->num_min].name, chemn);
+            UnwrapParentheses(chemtbl[kspc + rttbl->num_stc - rttbl->num_min].name, chemn);
 
             char substr[SUBSTRING_SIZE];
             strncpy(substr, chemn, SUBSTRING_SIZE);
@@ -100,7 +100,7 @@ void PrintHeader(FILE *fp, int transpt, const rttbl_struct *rttbl, const chemtbl
 
         for (int kspc = 0; kspc < rttbl->num_min; kspc++)
         {
-            Unwrap(chemtbl[kspc + rttbl->num_stc - rttbl->num_min].name, chemn);
+            UnwrapParentheses(chemtbl[kspc + rttbl->num_stc - rttbl->num_min].name, chemn);
 
             char substr[SUBSTRING_SIZE];
             strncpy(substr, chemn, SUBSTRING_SIZE);
@@ -115,7 +115,7 @@ void PrintHeader(FILE *fp, int transpt, const rttbl_struct *rttbl, const chemtbl
 
         for (int kspc = 0; kspc < rttbl->num_spc; kspc++)
         {
-            Unwrap(chemtbl[kspc].name, chemn);
+            UnwrapParentheses(chemtbl[kspc].name, chemn);
 
             char substr[SUBSTRING_SIZE];
             strncpy(substr, chemn, SUBSTRING_SIZE);
@@ -127,7 +127,7 @@ void PrintHeader(FILE *fp, int transpt, const rttbl_struct *rttbl, const chemtbl
         }
         for (int kspc = 0; kspc < rttbl->num_spc; kspc++)
         {
-            Unwrap(chemtbl[kspc].name, chemn);
+            UnwrapParentheses(chemtbl[kspc].name, chemn);
 
             char substr[SUBSTRING_SIZE];
             strncpy(substr, chemn, SUBSTRING_SIZE);
@@ -139,7 +139,7 @@ void PrintHeader(FILE *fp, int transpt, const rttbl_struct *rttbl, const chemtbl
         }
         for (int kspc = 0; kspc < rttbl->num_spc; kspc++)
         {
-            Unwrap(chemtbl[kspc].name, chemn);
+            UnwrapParentheses(chemtbl[kspc].name, chemn);
 
             char substr[SUBSTRING_SIZE];
             strncpy(substr, chemn, SUBSTRING_SIZE);
@@ -151,7 +151,7 @@ void PrintHeader(FILE *fp, int transpt, const rttbl_struct *rttbl, const chemtbl
         }
         for (int kspc = 0; kspc < rttbl->num_spc; kspc++)
         {
-            Unwrap(chemtbl[kspc].name, chemn);
+            UnwrapParentheses(chemtbl[kspc].name, chemn);
 
             char substr[SUBSTRING_SIZE];
             strncpy(substr, chemn, SUBSTRING_SIZE);
@@ -163,7 +163,7 @@ void PrintHeader(FILE *fp, int transpt, const rttbl_struct *rttbl, const chemtbl
         }
         for (int kspc = 0; kspc < rttbl->num_spc; kspc++)
         {
-            Unwrap(chemtbl[kspc].name, chemn);
+            UnwrapParentheses(chemtbl[kspc].name, chemn);
 
             char substr[SUBSTRING_SIZE];
             strncpy(substr, chemn, SUBSTRING_SIZE);

@@ -28,17 +28,28 @@ void ReadChem(const char dir[], ctrl_struct *ctrl, rttbl_struct *rttbl, chemtbl_
 
     NextLine(file_pointer, cmdstr, &lno);
     ReadParam(cmdstr, "TRANSPORT_ONLY", 'i', file_name, lno, &ctrl->transpt);
-    switch (ctrl->transpt)
-    {
-        case KIN_REACTION:
-            biort_printf(VL_NORMAL, "  Transport only mode disabled.\n");
-            break;
-        case TRANSPORT_ONLY:
-            biort_printf(VL_NORMAL, "  Transport only mode enabled. \n");
-            break;
-            // under construction.
-        default:
-            break;
+    // switch (ctrl->transpt)
+    // {
+    //     case KIN_REACTION:
+    //         biort_printf(VL_NORMAL, "  Transport only mode disabled.\n");
+    //         break;
+    //     case TRANSPORT_ONLY:
+    //         biort_printf(VL_NORMAL, "  Transport only mode enabled. \n");
+    //         break;
+    //         // under construction.
+    //     default:
+    //         break;
+    // }
+
+    if (ctrl->transpt == KIN_REACTION) {
+        biort_printf(VL_NORMAL, "  Transport only mode disabled.\n");
+    }
+    else if (ctrl->transpt == TRANSPORT_ONLY) {
+        biort_printf(VL_NORMAL, "  Transport only mode enabled. \n");
+    }
+    else {
+        printf("Unkown simulation mode flag, must be 1 (transport only) or 0 (kinetic reactions)");
+        exit(-1);
     }
 
     NextLine(file_pointer, cmdstr, &lno);  // 2021-05-20
@@ -297,7 +308,7 @@ int MatchWrappedKey(const char cmdstr[], const char key[])
     }
     else
     {
-        Wrap(optstr);
+        WrapInParentheses(optstr);
         return (strcmp(optstr, key) == 0) ? 0 : 1;
     }
 }

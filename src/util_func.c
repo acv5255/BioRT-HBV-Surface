@@ -6,7 +6,35 @@ int roundi(double x)
     return (int)((x < 0.0) ? x - 0.5 : x + 0.5);
 }
 
-void Wrap(char *str)
+void SetZero(double arr[MAXSPS]) {
+    for (size_t i = 0; i < MAXSPS; i++) {
+        arr[i] = 0.0;
+    }
+}
+
+void Log10Arr(const double src[MAXSPS], double dst[MAXSPS], int num_species) {
+    for (int i = 0; i < num_species; i++) {
+        dst[i] = log10(src[i]);
+    }
+}
+
+void Pow10Arr(const double src[MAXSPS], double dst[MAXSPS], int num_species) {
+    for (int i = 0; i < num_species; i++) {
+        dst[i] = pow(10.0, src[i]);
+    }
+}
+
+double SumArr(const double arr[MAXSPS], int num_species) {
+    double res;
+
+    for (int i = 0; i < num_species; i++) {
+        res += arr[i];
+    }
+
+    return res;
+}
+
+void WrapInParentheses(char *str)
 {
     char            word[MAXSTRING];
 
@@ -14,7 +42,7 @@ void Wrap(char *str)
     strcpy(str, word);
 }
 
-void Unwrap(const char wrapped_str[], char str[])
+void UnwrapParentheses(const char wrapped_str[], char str[])
 {
     int             i, j = 0;
 
@@ -32,14 +60,11 @@ void Unwrap(const char wrapped_str[], char str[])
 
 void FreeStruct(int nsub, int nsteps, int *steps[], subcatch_struct subcatch[])
 {
-    int             ksub;
-    int             kstep;
-
     free(*steps);
 
-    for (ksub = 0; ksub < nsub; ksub++)
+    for (int ksub = 0; ksub < nsub; ksub++)
     {
-        for (kstep = 0; kstep < nsteps; kstep++)
+        for (int kstep = 0; kstep < nsteps; kstep++)
         {
             free(subcatch[ksub].ws[kstep]);
             free(subcatch[ksub].q[kstep]);
@@ -111,5 +136,29 @@ void ParseCmdLineParam(int argc, char *argv[], char dir[])
     {
         // Parse remaining arguments
         strcpy(dir, optparse_arg(&options));
+    }
+}
+
+void ComputeDependence(double tmpconc[MAXSPS], const double dep_mtx[MAXSPS][MAXSPS], const double keq[MAXSPS], int num_rows, int num_cols, int offset) {
+    for (int i = 0; i < num_rows; i++)
+    {
+        tmpconc[i + offset] = 0.0;
+        for (int j = 0; j < num_cols; j++)
+        {
+            tmpconc[i + offset] += tmpconc[j] * dep_mtx[i][j];
+        }
+        tmpconc[i + offset] -= keq[i];
+    }
+}
+
+void GetLogActivity(double tmpconc[MAXSPS], double gamma[MAXSPS], const double dep_mtx[MAXSPS][MAXSPS], const double keq[MAXSPS], int num_rows, int num_cols, int offset) {
+    for (int i = 0; i < num_rows; i++)
+    {
+        tmpconc[i + num_rows] = 0.0;
+        for (int j = 0; j < num_cols; j++)
+        {
+            tmpconc[i + num_cols] += (tmpconc[j] + gamma[j]) * dep_mtx[i][j];
+        }
+        tmpconc[i + num_cols] -= keq[i] + gamma[i + offset];
     }
 }

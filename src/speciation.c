@@ -3,7 +3,6 @@
 int SolveSpeciation(const chemtbl_struct chemtbl[], const ctrl_struct *ctrl, const rttbl_struct *rttbl, int speciation_flg,
     chmstate_struct *chms)
 {
-    int             i, j, k;
     int             jcb_dim;
     double          residue[MAXSPS];
     double          tmpconc[MAXSPS];
@@ -16,29 +15,14 @@ int SolveSpeciation(const chemtbl_struct chemtbl[], const ctrl_struct *ctrl, con
     // If speciation flg = 1, pH is defined. Total concentration is calculated from the activity of H+. Dependency is
     // the same but the total concentration for H+ does not need to be solved.
     // If speciation flg = 0, all defined value is total concentration
-    for (k = 0; k < MAXSPS; k++)
-    {
-        residue[k] = 0.0;
-        tmpconc[k] = 0.0;
-        tot_conc[k] = 0.0;
-        gamma[k] = 0.0;
-    }
+    SetZero(residue);
+    SetZero(tmpconc);
+    SetZero(tot_conc);
+    SetZero(gamma);
 
-    for (i = 0; i < rttbl->num_stc; i++)
-    {
-        // Using log10 conc as the primary unknowns. Works better because negative numbers are not a problem.
-        tmpconc[i] = log10(chms->prim_conc[i]);
-    }
+    Log10Arr(chms->prim_conc, tmpconc, rttbl->num_stc);
 
-    for (i = 0; i < rttbl->num_ssc; i++)
-    {
-        tmpconc[i + rttbl->num_stc] = 0.0;
-        for (j = 0; j < rttbl->num_sdc; j++)
-        {
-            tmpconc[i + rttbl->num_stc] += tmpconc[j] * rttbl->dep_mtx[i][j];
-        }
-        tmpconc[i + rttbl->num_stc] -= rttbl->keq[i];
-    }
+    ComputeDependence(tmpconc, rttbl->dep_mtx, rttbl->keq, rttbl->num_ssc, rttbl->num_sdc, rttbl->num_stc);
 
     jcb_dim = (speciation_flg == 1) ? rttbl->num_stc - 1: rttbl->num_stc;
 
@@ -56,13 +40,13 @@ int SolveSpeciation(const chemtbl_struct chemtbl[], const ctrl_struct *ctrl, con
             double          iroot;
 
             // Calculate the ionic strength in this block
-            for (i = 0; i < rttbl->num_stc + rttbl->num_ssc; i++)
+            for (int i = 0; i < rttbl->num_stc + rttbl->num_ssc; i++)
             {
                 imat += 0.5 * pow(10, tmpconc[i]) * chemtbl[i].charge * chemtbl[i].charge;
             }
             iroot = sqrt(imat);
 
-            for (i = 0; i < rttbl->num_stc + rttbl->num_ssc; i++)
+            for (int i = 0; i < rttbl->num_stc + rttbl->num_ssc; i++)
             {
                 // Aqueous species in the unit of mol/L, however the solids are in the unit of mol/L porous media.
                 // Activity of solid is 1, log10 of activity is 0. By assigning gamma[minerals] to negative of the
@@ -78,21 +62,22 @@ int SolveSpeciation(const chemtbl_struct chemtbl[], const ctrl_struct *ctrl, con
             }
         }
 
-        for (i = 0; i < rttbl->num_ssc; i++)
+        for (int i = 0; i < rttbl->num_ssc; i++)
         {
             tmpconc[i + rttbl->num_stc] = 0.0;
-            for (j = 0; j < rttbl->num_sdc; j++)
+            for (int j = 0; j < rttbl->num_sdc; j++)
             {
                 tmpconc[i + rttbl->num_stc] += (tmpconc[j] + gamma[j]) * rttbl->dep_mtx[i][j];
             }
             tmpconc[i + rttbl->num_stc] -= rttbl->keq[i] + gamma[i + rttbl->num_stc];
         }
 
-        for (i = 0; i < rttbl->num_stc; i++)
+
+        for (int i = 0; i < rttbl->num_stc; i++)
         {
             // Update the total concentration of H+ for later stage RT at initialization
             tot_conc[i] = 0.0;
-            for (j = 0; j < rttbl->num_stc + rttbl->num_ssc; j++)
+            for (int j = 0; j < rttbl->num_stc + rttbl->num_ssc; j++)
             {
                 tot_conc[i] += rttbl->conc_contrib[i][j] * pow(10, tmpconc[j]);
             }
@@ -107,7 +92,7 @@ int SolveSpeciation(const chemtbl_struct chemtbl[], const ctrl_struct *ctrl, con
 
 
         col = 0;
-        for (k = 0; k < rttbl->num_stc; k++)
+        for (int k = 0; k < rttbl->num_stc; k++)
         {
             if (speciation_flg == 1 && strcmp(chemtbl[k].name, "'H+'") == 0)
             {
@@ -115,10 +100,10 @@ int SolveSpeciation(const chemtbl_struct chemtbl[], const ctrl_struct *ctrl, con
             }
 
             tmpconc[k] += TMPPRB;
-            for (i = 0; i < rttbl->num_ssc; i++)
+            for (int i = 0; i < rttbl->num_ssc; i++)
             {
                 tmpconc[i + rttbl->num_stc] = 0.0;
-                for (j = 0; j < rttbl->num_sdc; j++)
+                for (int j = 0; j < rttbl->num_sdc; j++)
                 {
                     tmpconc[i + rttbl->num_stc] += (tmpconc[j] + gamma[j]) * rttbl->dep_mtx[i][j];
                 }
@@ -126,7 +111,7 @@ int SolveSpeciation(const chemtbl_struct chemtbl[], const ctrl_struct *ctrl, con
             }
 
             row = 0;
-            for (i = 0; i < rttbl->num_stc; i++)
+            for (int i = 0; i < rttbl->num_stc; i++)
             {
                 double          tmpval;
 
@@ -136,7 +121,7 @@ int SolveSpeciation(const chemtbl_struct chemtbl[], const ctrl_struct *ctrl, con
                 }
 
                 tmpval = 0.0;
-                for (j = 0; j < rttbl->num_stc + rttbl->num_ssc; j++)
+                for (int j = 0; j < rttbl->num_stc + rttbl->num_ssc; j++)
                 {
                     tmpval += rttbl->conc_contrib[i][j] * pow(10, tmpconc[j]);
                 }
@@ -152,7 +137,7 @@ int SolveSpeciation(const chemtbl_struct chemtbl[], const ctrl_struct *ctrl, con
         }
 
         row = 0;
-        for (i = 0; i < rttbl->num_stc; i++)
+        for (int i = 0; i < rttbl->num_stc; i++)
         {
             if (speciation_flg == 1 && strcmp(chemtbl[i].name, "'H+'") == 0)
             {
@@ -172,7 +157,7 @@ int SolveSpeciation(const chemtbl_struct chemtbl[], const ctrl_struct *ctrl, con
 
         maxerror = 0.0;
         row = 0;
-        for (i = 0; i < rttbl->num_stc; i++)
+        for (int i = 0; i < rttbl->num_stc; i++)
         {
             if (speciation_flg == 1 && strcmp(chemtbl[i].name, "'H+'") == 0)
             {
@@ -184,27 +169,27 @@ int SolveSpeciation(const chemtbl_struct chemtbl[], const ctrl_struct *ctrl, con
         }
     } while (maxerror > TOLERANCE);
 
-    for (i = 0; i < rttbl->num_ssc; i++)
+    for (int i = 0; i < rttbl->num_ssc; i++)
     {
         tmpconc[i + rttbl->num_stc] = 0.0;
-        for (j = 0; j < rttbl->num_sdc; j++)
+        for (int j = 0; j < rttbl->num_sdc; j++)
         {
             tmpconc[i + rttbl->num_stc] += (tmpconc[j] + gamma[j]) * rttbl->dep_mtx[i][j];
         }
         tmpconc[i + rttbl->num_stc] -= rttbl->keq[i] + gamma[i + rttbl->num_stc];
     }
 
-    for (i = 0; i < rttbl->num_stc; i++)
+    for (int i = 0; i < rttbl->num_stc; i++)
     {
         tot_conc[i] = 0.0;
-        for (j = 0; j < rttbl->num_stc + rttbl->num_ssc; j++)
+        for (int j = 0; j < rttbl->num_stc + rttbl->num_ssc; j++)
         {
             tot_conc[i] += rttbl->conc_contrib[i][j] * pow(10, tmpconc[j]);
         }
         residue[i] = tot_conc[i] - chms->tot_conc[i];
     }
 
-    for (i = 0; i < rttbl->num_stc + rttbl->num_ssc; i++)
+    for (int i = 0; i < rttbl->num_stc + rttbl->num_ssc; i++)
     {
         if (i < rttbl->num_stc)
         {
@@ -236,9 +221,7 @@ int SolveSpeciation(const chemtbl_struct chemtbl[], const ctrl_struct *ctrl, con
 void Speciation(int nsub, const chemtbl_struct chemtbl[], const ctrl_struct *ctrl, const rttbl_struct *rttbl,
     subcatch_struct subcatch[])
 {
-    int             ksub;
-
-    for (ksub = 0; ksub < nsub; ksub++)
+    for (int ksub = 0; ksub < nsub; ksub++)
     {
         SolveSpeciation(chemtbl, ctrl, rttbl, 0, &subcatch[ksub].chms[UZ]);
         SolveSpeciation(chemtbl, ctrl, rttbl, 0, &subcatch[ksub].chms[LZ]);
@@ -248,17 +231,15 @@ void Speciation(int nsub, const chemtbl_struct chemtbl[], const ctrl_struct *ctr
 void StreamSpeciation(int step, int nsub, const chemtbl_struct chemtbl[], const ctrl_struct *ctrl,
     const rttbl_struct *rttbl, subcatch_struct subcatch[])
 {
-    int             ksub;
-    int             kspc;
     static int      init_flag = 1;
 
     // In the first model step, initialize primary concentrations, activities in river. This cannot be done during
     // initialization step because stream concentrations are unknown
     if (init_flag == 1)
     {
-        for (ksub = 0; ksub < nsub; ksub++)
+        for (int ksub = 0; ksub < nsub; ksub++)
         {
-            for (kspc = 0; kspc < rttbl->num_stc; kspc++)
+            for (int kspc = 0; kspc < rttbl->num_stc; kspc++)
             {
                 if (chemtbl[kspc].itype == AQUEOUS)
                 {
@@ -274,7 +255,7 @@ void StreamSpeciation(int step, int nsub, const chemtbl_struct chemtbl[], const 
                 }
             }
 
-            for (kspc = 0; kspc < rttbl->num_ssc; kspc++)
+            for (int kspc = 0; kspc < rttbl->num_ssc; kspc++)
             {
                 subcatch[ksub].chms[STREAM].sec_conc[kspc] = ZERO_CONC;
             }
@@ -283,11 +264,11 @@ void StreamSpeciation(int step, int nsub, const chemtbl_struct chemtbl[], const 
 
     init_flag = 0;
 
-    for (ksub = 0; ksub < nsub; ksub++)
+    for (int ksub = 0; ksub < nsub; ksub++)
     {
         if (subcatch[ksub].q[step][Q0] + subcatch[ksub].q[step][Q1] + subcatch[ksub].q[step][Q2] <= 0.0)
         {
-            for (kspc = 0; kspc < rttbl->num_stc; kspc++)
+            for (int kspc = 0; kspc < rttbl->num_stc; kspc++)
             {
                 if (chemtbl[kspc].itype == AQUEOUS)
                 {
@@ -303,7 +284,7 @@ void StreamSpeciation(int step, int nsub, const chemtbl_struct chemtbl[], const 
                 }
             }
 
-            for (kspc = 0; kspc < rttbl->num_ssc; kspc++)
+            for (int kspc = 0; kspc < rttbl->num_ssc; kspc++)
             {
                 subcatch[ksub].chms[STREAM].sec_conc[kspc] = ZERO_CONC;
             }

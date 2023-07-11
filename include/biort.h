@@ -45,14 +45,13 @@
 #define STREAM                  4
 #define SM                      5
 
-#define MAXSPS                  20          // Maximum number of species
-#define MAXDEP                  4           // Maximum number of dependece, monod, and inhibition terms
-
-#define SKIP_JACOB              1
+#define MAXSPS 20
+#define MAXDEP 4
+#define SKIP_JACOB 1
 
 // RT simulation mode
-#define KIN_REACTION            0
-#define TRANSPORT_ONLY          1
+static const int KIN_REACTION = 0;
+static const int TRANSPORT_ONLY = 1;
 
 // RT primary species types
 #define AQUEOUS                 1
@@ -106,10 +105,6 @@ typedef struct rttbl_struct
     double          adh;                    // Debye Huckel parameter
     double          bdh;                    // Debye Huckel parameter
     double          bdt;                    // Debye Huckel parameter
-    //double          sw_thld;                // threshold in soil moisture function (-)
-    //double          sw_exp;                 // exponent in soil moisture function (-)
-    //double          q10;                    // Q10 factor (-)
-    //double          n_alpha;                // n*alpha in depth function (-)
 } rttbl_struct;
 
 typedef struct chemtbl_struct
@@ -212,7 +207,7 @@ void            CopyConstSubcatchProp(const subcatch_struct [], subcatch_struct 
 void            CopyInitChemSubcatch(int, rttbl_struct *, const subcatch_struct [], subcatch_struct []);
 int             CountLeapYears(int, int);
 int             FindChem(const char [MAXSTRING], int, const chemtbl_struct[]);
-void            FreeStruct(int, int, int *[], subcatch_struct []);
+void            FreeStruct(int nsub, int nsteps, int *steps[], subcatch_struct subcatch[]);
 int             GetDifference(int, int);
 void            InitChem(const char [], int, const calib_struct *, const ctrl_struct *, chemtbl_struct [],
     kintbl_struct [], rttbl_struct *, subcatch_struct []);
@@ -220,7 +215,7 @@ void            InitChemState(double, double, const chemtbl_struct [], const rtt
     chmstate_struct *);
 void            Lookup(FILE *, const calib_struct *, chemtbl_struct [], kintbl_struct [], rttbl_struct *);
 int             MatchWrappedKey(const char [], const char []);
-void            ParseCmdLineParam(int, char *[], char []);
+void            ParseCmdLineParam(int argc, char *argv[], char dir[]);
 void            ParseLine(const char [], char [], double *);
 void            PrintDailyResults(FILE *, int, int, int, const rttbl_struct *, const subcatch_struct []);
 void            PrintHeader(FILE *, int, const rttbl_struct *, const chemtbl_struct chemtbl[]);
@@ -259,9 +254,16 @@ int             SpeciesType(const char [], const char []);
 void            StreamSpeciation(int, int, const chemtbl_struct [], const ctrl_struct *, const rttbl_struct *,
     subcatch_struct []);
 void            Transpt(int, int, const chemtbl_struct [], rttbl_struct *, const ctrl_struct *, subcatch_struct []);   // 2021-05-21
-void            Wrap(char []);
+void            WrapInParentheses(char *str);
 double          WTDepthFactor(double ,double );
-void            Unwrap(const char [], char []);
+void            UnwrapParentheses(const char wrapped_str[], char str[]);
 void            UpdatePrimConc(int, const rttbl_struct *, const ctrl_struct *, subcatch_struct []);
 
+// Andrew's functions
+void            SetZero(double arr[MAXSPS]);
+void            Log10Arr(const double src[MAXSPS], double dst[MAXSPS], int num_species);
+void            Pow10Arr(const double src[MAXSPS], double dst[MAXSPS], int num_species);
+double          SumArr(const double arr[MAXSPS], int num_species);
+void            ComputeDependence(double tmpconc[MAXSPS], const double dep_mtx[MAXSPS][MAXSPS], const double keq[MAXSPS], int num_rows, int num_cols, int offset);
+void            GetLogActivity(double tmpconc[MAXSPS], double gamma[MAXSPS], const double dep_mtx[MAXSPS][MAXSPS], const double keq[MAXSPS], int num_rows, int num_cols, int offset);
 #endif

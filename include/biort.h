@@ -29,15 +29,15 @@
 
 #define TOLERANCE               1E-7        // tolerance for reaction calculation
 
-#define PRECIP                  0
-#define RECHG                   1
-#define PERC                    2
-#define Q0                      3
-#define Q1                      4
-#define Q2                      5
-#define Prain                   6
-#define Psnow                   7
-#define snowmelt                8
+static const int PRECIP = 0;
+static const int RECHG = 1;
+static const int PERC = 2;
+static const int Q0 = 3;
+static const int Q1 = 4;
+static const int Q2 = 5;
+static const int Prain = 6;
+static const int Psnow = 7;
+static const int snowmelt = 8;
 
 #define SNOW                    0
 #define SURFACE                 1          // add surface Q0 reaction, 2021-05-14
@@ -45,6 +45,12 @@
 #define LZ                      3
 #define STREAM                  4
 #define SM                      5
+// static const int SNOW = 0;
+// static const int SURFACE = 1;
+// static const int UZ = 2;
+// static const int LZ = 3;
+// static const int STREAM = 4;
+// static const int SM = 5;
 
 #define MAXSPS 20
 #define MAXDEP 4
@@ -73,6 +79,7 @@ static const int TRANSPORT_ONLY = 1;
 #define MONOD                   4
 
 extern int     verbose_mode;
+
 
 typedef struct ctrl_struct
 {
@@ -261,10 +268,17 @@ void            UnwrapParentheses(const char wrapped_str[], char str[]);
 void            UpdatePrimConc(const rttbl_struct *rttbl, const ctrl_struct *ctrl, subcatch_struct* subcatch);
 
 // Andrew's functions
-void            SetZero(double arr[MAXSPS]);
-void            Log10Arr(const double src[MAXSPS], double dst[MAXSPS], int num_species);
-void            Pow10Arr(const double src[MAXSPS], double dst[MAXSPS], int num_species);
-double          SumArr(const double arr[MAXSPS], int num_species);
 void            ComputeDependence(double tmpconc[MAXSPS], const double dep_mtx[MAXSPS][MAXSPS], const double keq[MAXSPS], int num_rows, int num_cols, int offset);
 void            GetLogActivity(double tmpconc[MAXSPS], double gamma[MAXSPS], const double dep_mtx[MAXSPS][MAXSPS], const double keq[MAXSPS], int num_rows, int num_cols, int offset);
+void            Log10Arr(const double src[MAXSPS], double dst[MAXSPS], int num_species);
+void            Pow10Arr(const double src[MAXSPS], double dst[MAXSPS], int num_species);
+void            SetZero(double arr[MAXSPS]);
+void            SetZeroRange(double arr[MAXSPS], int start, int end);
+double          SumArr(const double arr[MAXSPS], int num_species);
+
+void            SoilMoistFactorRange(double dst[MAXSPS], double satn, const double sw_threshold[MAXSPS], const double sw_exponent[MAXSPS], 
+                    int start, int end, int offset);
+void            GetSurfaceAreaRange(double area[MAXSPS], const double prim_conc[MAXSPS], const double ssa[MAXSPS], const chemtbl_struct chemtbl[], int start, int end, int offset);
+void            GetTempFactorRange(double ftemp[MAXSPS], const double q10[MAXSPS], double temperature, int start, int end, int offset);
+void            GetWTDepthFactorRange(double fzw[MAXSPS], double Zw, const double n_alpha[MAXSPS], int start, int end, int offset);
 #endif

@@ -12,6 +12,13 @@ void SetZero(double arr[MAXSPS]) {
     }
 }
 
+void SetZeroRange(double arr[MAXSPS], int start, int end) {
+    /* Set some subset of the data to equal zero */
+    for (int i = start; i < end; i++) {
+        arr[i] = 0.0;
+    }
+}
+
 void Log10Arr(const double src[MAXSPS], double dst[MAXSPS], int num_species) {
     for (int i = 0; i < num_species; i++) {
         dst[i] = log10(src[i]);

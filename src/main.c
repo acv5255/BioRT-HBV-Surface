@@ -60,7 +60,7 @@ int main(int argc, char *argv[])
     }
 
     // Initialize RT structures
-    InitChem(dir, &calib, &ctrl, chemtbl, kintbl, &rttbl, &subcatch);
+    InitChem(dir, &calib, ctrl, chemtbl, kintbl, &rttbl, &subcatch);
 
     // Create output directory when necessary
     mkdir("output");
@@ -92,13 +92,13 @@ int main(int argc, char *argv[])
             for (int kstep = 0; kstep < nsteps; kstep++)
             {
                 // Transport and routing
-                Transpt(kstep, chemtbl, &rttbl, &ctrl, &subcatch); // 2021-05-20
+                Transport(kstep, chemtbl, &rttbl, ctrl, &subcatch); // 2021-05-20
 
                 // Transport changes total concentrations. Primary concentrations needs to be updated using total
                 // concentrations
-                UpdatePrimConc(&rttbl, &ctrl, &subcatch);
+                UpdatePrimConc(&rttbl, ctrl, &subcatch);
                 
-                StreamSpeciation(kstep, chemtbl, &ctrl, &rttbl, &subcatch);
+                StreamSpeciation(kstep, chemtbl, ctrl, &rttbl, &subcatch);
 
                 PrintDailyResults(file_pointer, ctrl.transport_only, steps[kstep], &rttbl, &subcatch);
                 
@@ -109,7 +109,7 @@ int main(int argc, char *argv[])
                 }
                 else
                 {
-                    Speciation(chemtbl, &ctrl, &rttbl, &subcatch);
+                    Speciation(chemtbl, ctrl, &rttbl, &subcatch);
                 }
             }
         }
@@ -141,13 +141,13 @@ int main(int argc, char *argv[])
             for (int kstep = 0; kstep < nsteps_numexp; kstep++){
 
 
-                Transpt(kstep, chemtbl, &rttbl, &ctrl, &subcatch_numexp); // 2021-05-20
+                Transport(kstep, chemtbl, &rttbl, ctrl, &subcatch_numexp); // 2021-05-20
 
                 // Transport changes total concentrations. Primary concentrations needs to be updated using total
                 // concentrations
-                UpdatePrimConc(&rttbl, &ctrl, &subcatch_numexp);
+                UpdatePrimConc(&rttbl, ctrl, &subcatch_numexp);
                 
-                StreamSpeciation(kstep, chemtbl, &ctrl, &rttbl, &subcatch_numexp);
+                StreamSpeciation(kstep, chemtbl, ctrl, &rttbl, &subcatch_numexp);
 
                 PrintDailyResults(file_pointer, ctrl.transport_only, steps_numexp[kstep], &rttbl, &subcatch_numexp);
 
@@ -158,7 +158,7 @@ int main(int argc, char *argv[])
                 }
                 else
                 {
-                    Speciation(chemtbl, &ctrl, &rttbl, &subcatch_numexp);
+                    Speciation(chemtbl, ctrl, &rttbl, &subcatch_numexp);
                 }
 
             }

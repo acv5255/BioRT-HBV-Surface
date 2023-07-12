@@ -37,24 +37,29 @@ double GetInhibTerm(const kintbl_struct* entry, const chmstate_struct* chms) {
     return inhibterm;
 }
 
+double GetDependenceTerm(const kintbl_struct* entry, const chmstate_struct* chms) {
+    double dep_term = 1.0;
+    for (int k = 0; k < entry->ndep; k++) {
+        const int dep_ind = entry->dep_index[k];
+        dep_term *= pow(chms->prim_actv[dep_ind], entry->dep_power[k]);
+    }
+    return dep_term;
+}
+
+
 void GetRate(double rate[MAXSPS], double rate_spe[MAXSPS], const double area[MAXSPS], const double ftemp[MAXSPS], const double fsw[MAXSPS], const double fzw[MAXSPS],
-        const rttbl_struct* rttbl, const kintbl_struct kintbl[MAXSPS], const chmstate_struct* chms) {
-    double iap[MAXSPS];
-    double dependency[MAXSPS];
+    const rttbl_struct* rttbl, const kintbl_struct kintbl[MAXSPS], const chmstate_struct* chms) {
+        
     for (int i = 0; i < rttbl->num_mkr; i++) {
         int min_pos = kintbl[i].position - rttbl->num_stc + rttbl->num_min;
 
         if (kintbl[i].type == TST)
         {
-            
+            double iap[MAXSPS];
+            double dependency[MAXSPS];
             GetIAP(iap, chms->prim_actv, rttbl->dep_kin, rttbl->num_mkr, rttbl->num_stc);
             double temp_keq = pow(10, rttbl->keq_kin[i]);
-
-            dependency[i] = 1.0;
-            for (int k = 0; k < kintbl[i].ndep; k++)
-            {
-                dependency[i] *= pow(chms->prim_actv[kintbl[i].dep_index[k]], kintbl[i].dep_power[k]);
-            }
+            dependency[i] = GetDependenceTerm(&kintbl[i], chms);
 
             // Calculate the predicted rate depending on the type of rate law
             //   rate_pre: rate per reaction (mol L-1 porous media s-1)

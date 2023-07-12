@@ -1,6 +1,6 @@
 #include "biort.h"
 
-int SolveSpeciation(const chemtbl_struct chemtbl[], const ctrl_struct *ctrl, const rttbl_struct *rttbl, int speciation_flg,
+int SolveSpeciation(const chemtbl_struct chemtbl[], const ctrl_struct ctrl, const rttbl_struct *rttbl, int speciation_flg,
     chmstate_struct *chms)
 {
     int             jcb_dim;
@@ -34,7 +34,7 @@ int SolveSpeciation(const chemtbl_struct chemtbl[], const ctrl_struct *ctrl, con
         realtype        x[MAXSPS];
         int             row, col;
 
-        if (ctrl->use_activity == 1)
+        if (ctrl.use_activity == 1)
         {
             double          imat = 0.0;
             double          iroot;
@@ -210,14 +210,14 @@ int SolveSpeciation(const chemtbl_struct chemtbl[], const ctrl_struct *ctrl, con
     return 0;
 }
 
-void Speciation(const chemtbl_struct chemtbl[], const ctrl_struct *ctrl, const rttbl_struct *rttbl,
+void Speciation(const chemtbl_struct chemtbl[], const ctrl_struct ctrl, const rttbl_struct *rttbl,
     subcatch_struct* subcatch)
 {
     SolveSpeciation(chemtbl, ctrl, rttbl, 0, &subcatch->chms[UZ]);
     SolveSpeciation(chemtbl, ctrl, rttbl, 0, &subcatch->chms[LZ]);
 }
 
-void StreamSpeciation(int step, const chemtbl_struct chemtbl[], const ctrl_struct *ctrl,
+void StreamSpeciation(int step, const chemtbl_struct chemtbl[], const ctrl_struct ctrl,
     const rttbl_struct *rttbl, subcatch_struct* subcatch)
 {
     static int      init_flag = 1;

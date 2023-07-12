@@ -90,7 +90,6 @@ typedef struct ctrl_struct
     int             variable_precipchem;    // precipitation chemistry mode: 0 = constant precipitation chemistry, 1 = time-series precipitation chemistry   2021-05-20
     int             precipchem_numexp;      // Numerical experiment mode: 0 = same precipitation chemistry during warm-up and simulation
                                             // 1 = different precipitation chemistry during warm-up and simulation useful for numerical experiment  2021-09-09
-    double         *steps;                  // model steps
 } ctrl_struct;
 
 typedef struct rttbl_struct
@@ -217,9 +216,9 @@ int             CountLeapYears(int, int);
 int             FindChem(const char [MAXSTRING], int, const chemtbl_struct[]);
 void            FreeStruct(int nsteps, int *steps[], subcatch_struct subcatch[]);
 int             GetDifference(int, int);
-void            InitChem(const char [], const calib_struct *, const ctrl_struct *, chemtbl_struct [],
+void            InitChem(const char [], const calib_struct *, const ctrl_struct ctrl, chemtbl_struct [],
     kintbl_struct [], rttbl_struct *, subcatch_struct []);
-void            InitChemState(double, double, const chemtbl_struct [], const rttbl_struct *, const ctrl_struct *,
+void            InitChemState(double, double, const chemtbl_struct [], const rttbl_struct *, const ctrl_struct ctrl,
     chmstate_struct *);
 void            Lookup(FILE *, const calib_struct *, chemtbl_struct [], kintbl_struct [], rttbl_struct *);
 int             MatchWrappedKey(const char [], const char []);
@@ -255,17 +254,17 @@ double          SoilTempFactor(double, double);
 double          SoilMoistFactor(double, double, double);
 int             SolveReact(double, const chemtbl_struct [], const kintbl_struct [], const rttbl_struct *, double, double,
     double, double, chmstate_struct *);
-int             SolveSpeciation(const chemtbl_struct [], const ctrl_struct *, const rttbl_struct *, int, chmstate_struct *);
+int             SolveSpeciation(const chemtbl_struct [], const ctrl_struct ctrl, const rttbl_struct *, int, chmstate_struct *);
 void            SortChem(char [MAXSPS][MAXSTRING], const int [MAXSPS], int, chemtbl_struct []);
-void            Speciation(const chemtbl_struct [], const ctrl_struct *, const rttbl_struct *, subcatch_struct* subcatch);
+void            Speciation(const chemtbl_struct [], const ctrl_struct ctrl, const rttbl_struct *, subcatch_struct* subcatch);
 int             SpeciesType(const char [], const char []);
-void            StreamSpeciation(int, const chemtbl_struct [], const ctrl_struct *, const rttbl_struct *,
+void            StreamSpeciation(int, const chemtbl_struct [], const ctrl_struct ctrl, const rttbl_struct *,
     subcatch_struct* subcatch);
-void            Transpt(int step, const chemtbl_struct *chemtbl, rttbl_struct *rttbl, const ctrl_struct *ctrl, subcatch_struct* subcatch);   // 2021-05-21
+void            Transport(int step, const chemtbl_struct *chemtbl, rttbl_struct *rttbl, const ctrl_struct ctrl, subcatch_struct* subcatch);   // 2021-05-21
 void            WrapInParentheses(char *str);
 double          WTDepthFactor(double ,double );
 void            UnwrapParentheses(const char wrapped_str[], char str[]);
-void            UpdatePrimConc(const rttbl_struct *rttbl, const ctrl_struct *ctrl, subcatch_struct* subcatch);
+void            UpdatePrimConc(const rttbl_struct *rttbl, const ctrl_struct ctrl, subcatch_struct* subcatch);
 
 // Andrew's functions
 void            ComputeDependence(double tmpconc[MAXSPS], const double dep_mtx[MAXSPS][MAXSPS], const double keq[MAXSPS], int num_rows, int num_cols, int offset);
@@ -281,4 +280,7 @@ void            SoilMoistFactorRange(double dst[MAXSPS], double satn, const doub
 void            GetSurfaceAreaRange(double area[MAXSPS], const double prim_conc[MAXSPS], const double ssa[MAXSPS], const chemtbl_struct chemtbl[], int start, int end, int offset);
 void            GetTempFactorRange(double ftemp[MAXSPS], const double q10[MAXSPS], double temperature, int start, int end, int offset);
 void            GetWTDepthFactorRange(double fzw[MAXSPS], double Zw, const double n_alpha[MAXSPS], int start, int end, int offset);
+void            TransportSurfaceZone(const rttbl_struct* rttbl, const ctrl_struct ctrl, subcatch_struct* subcatch, const int step);
+void            TransportShallowZone(const rttbl_struct* rttbl, const chemtbl_struct chemtbl[], subcatch_struct* subcatch, const int step);
+void            TransportDeepZone(const rttbl_struct* rttbl, const chemtbl_struct chemtbl[], subcatch_struct* subcatch, const int step);
 #endif

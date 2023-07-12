@@ -1,7 +1,7 @@
 #include "biort.h"
 
 // Initialize RT structures
-void InitChem(const char dir[], const calib_struct *calib, const ctrl_struct *ctrl, chemtbl_struct chemtbl[],
+void InitChem(const char dir[], const calib_struct *calib, const ctrl_struct ctrl, chemtbl_struct chemtbl[],
     kintbl_struct kintbl[], rttbl_struct *rttbl, subcatch_struct subcatch[])
 {
     char            fn[MAXSTRING];
@@ -41,11 +41,9 @@ void InitChem(const char dir[], const calib_struct *calib, const ctrl_struct *ct
 }
 
 void InitChemState(double smcmax, double vol, const chemtbl_struct chemtbl[], const rttbl_struct *rttbl,
-    const ctrl_struct *ctrl, chmstate_struct *chms)
+    const ctrl_struct ctrl, chmstate_struct *chms)
 {
-    int             kspc;
-
-    for (kspc = 0; kspc < rttbl->num_stc; kspc++)
+    for (int kspc = 0; kspc < rttbl->num_stc; kspc++)
     {
         if (strcmp(chemtbl[kspc].name, "'H+'") == 0)
         {
@@ -77,7 +75,7 @@ void InitChemState(double smcmax, double vol, const chemtbl_struct chemtbl[], co
         }
     }
 
-    for (kspc = 0; kspc < rttbl->num_ssc; kspc++)
+    for (int kspc = 0; kspc < rttbl->num_ssc; kspc++)
     {
         chms->sec_conc[kspc] = ZERO_CONC;
     }
@@ -86,7 +84,7 @@ void InitChemState(double smcmax, double vol, const chemtbl_struct chemtbl[], co
     SolveSpeciation(chemtbl, ctrl, rttbl, 1, chms);
 
     // Total moles should be calculated after speciation
-    for (kspc = 0; kspc < rttbl->num_stc; kspc++)
+    for (int kspc = 0; kspc < rttbl->num_stc; kspc++)
     {
         chms->tot_mol[kspc] = chms->tot_conc[kspc] * vol;
     }

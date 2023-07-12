@@ -79,7 +79,7 @@ void CopyInitChemSubcatch(rttbl_struct *rttbl, const subcatch_struct subcatch[],
 
         //biort_printf(VL_NORMAL, "\n%d.\n",kstep);
         // Transport and routing
-        //Transpt(kstep, nsub, &rttbl, &ctrl, subcatch); //; // 2021-05-20
+        //Transport(kstep, nsub, &rttbl, &ctrl, subcatch); //; // 2021-05-20
 
 
 

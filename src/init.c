@@ -34,6 +34,8 @@ void InitChem(const char dir[], const CalibrationStruct *calib, const ControlDat
     // Initialize upper and lower zone concentrations taking into account speciation
     //InitChemState(subcatch[ksub].porosity_surface, subcatch[ksub].ws[0][SURFACE], chemtbl, rttbl, ctrl,    // 2021-05-07
     //    &subcatch[ksub].chms[SURFACE]);
+    // InitChemState(subcatch[ksub].soil_surface.porosity, subcatch[ksub].ws[0][SURFACE], chemtbl, rttbl, ctrl,
+    //     &subcatch[ksub].chms[UZ]);
     InitChemState(subcatch[ksub].soil_sz.porosity, subcatch[ksub].ws[0][UZ], chemtbl, rttbl, ctrl,
         &subcatch[ksub].chms[UZ]);
     InitChemState(subcatch[ksub].soil_dz.porosity, subcatch[ksub].ws[0][LZ], chemtbl, rttbl, ctrl,

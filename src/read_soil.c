@@ -13,9 +13,10 @@ void ReadSoil(const char dir[], Subcatchment* sub)
 
     biort_printf(VL_NORMAL, "SOIL PARAMTERS\n");
 
-    //NextLine(fp, cmdstr, &lno);   // 2021-05-14
-    //ReadParam(cmdstr, "POROSITY_SURFACE", 'd', fn, lno, &sub[0].porosity_surface);
-    //biort_printf(VL_NORMAL, "  Surface porosity is %.2f m3 m-3.\n", sub[0].porosity_surface);
+    //===== Porosity =====//
+    NextLine(file_pointer, cmdstr, &line_number);   // 2021-05-14
+    ReadParam(cmdstr, "POROSITY_SURFACE", 'd', file_name, line_number, &sub->soil_surface.porosity);
+    biort_printf(VL_NORMAL, "  Surface zone porosity is %.2f m3 m-3.\n", sub->soil_surface.porosity);
 
     NextLine(file_pointer, cmdstr, &line_number);
     ReadParam(cmdstr, "POROSITY_UZ", 'd', file_name, line_number, &sub->soil_sz.porosity);
@@ -25,10 +26,11 @@ void ReadSoil(const char dir[], Subcatchment* sub)
     ReadParam(cmdstr, "POROSITY_LZ", 'd', file_name, line_number, &sub->soil_dz.porosity);
     biort_printf(VL_NORMAL, "  Lower zone porosity is %.2f m3 m-3.\n", sub->soil_dz.porosity);
 
-    //NextLine(fp, cmdstr, &lno);  // 2021-05-14
-    //ReadParam(cmdstr, "WS_PASSIVE_SURFACE", 'd', fn, lno, &sub[0].res_surface);
-    //sub[0].res_surface = MAX(sub[0].res_surface, STORAGE_MIN);
-    //biort_printf(VL_NORMAL, "  Surface passive water storage is %.2f mm.\n", sub[0].res_surface);
+    //===== Passive water storage =====//
+    NextLine(file_pointer, cmdstr, &line_number);
+    ReadParam(cmdstr, "WS_PASSIVE_SURFACE", 'd', file_name, line_number, &sub->soil_surface.ws_passive);
+    sub->soil_surface.ws_passive = MAX(sub->soil_surface.ws_passive, STORAGE_MIN);
+    biort_printf(VL_NORMAL, "  Surface zone passive water storage is %.2f mm.\n", sub->soil_surface.ws_passive);
 
     NextLine(file_pointer, cmdstr, &line_number);
     ReadParam(cmdstr, "WS_PASSIVE_UZ", 'd', file_name, line_number, &sub->soil_sz.ws_passive);
@@ -40,9 +42,10 @@ void ReadSoil(const char dir[], Subcatchment* sub)
     sub->soil_dz.ws_passive = MAX(sub->soil_dz.ws_passive, STORAGE_MIN);
     biort_printf(VL_NORMAL, "  Lower zone passive water storage is %.2f mm.\n", sub->soil_dz.ws_passive);
 
-    //NextLine(fp, cmdstr, &lno);  // 2021-05-14
-    //ReadParam(cmdstr, "DEPTH_SURFACE", 'd', fn, lno, &sub[0].d_surface);
-    //biort_printf(VL_NORMAL, "  Depth of surface zone is %.2f mm.\n", sub[0].d_surface);
+    //===== Depth =====//
+    NextLine(file_pointer, cmdstr, &line_number);
+    ReadParam(cmdstr, "DEPTH_SURFACE", 'd', file_name, line_number, &sub->soil_surface.depth);
+    biort_printf(VL_NORMAL, "  Depth of surface zone is %.2f mm.\n", sub->soil_surface.depth);
 
     NextLine(file_pointer, cmdstr, &line_number);
     ReadParam(cmdstr, "DEPTH_UZ", 'd', file_name, line_number, &sub->soil_sz.depth);

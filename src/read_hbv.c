@@ -127,6 +127,7 @@ void ReadHbvResults(const char dir[], int *nsteps, int *steps[], Subcatchment* s
     // Add 1. residual moisture to LZ & UZ and 2. SM to UZ
     for (kstep = 0; kstep < *nsteps; kstep++)
     {
+        subcatch->ws[kstep][SURFACE]+= subcatch->soil_surface.ws_passive;
         subcatch->ws[kstep][UZ] += subcatch->soil_sz.ws_passive;
         subcatch->ws[kstep][LZ] += subcatch->soil_dz.ws_passive;
         subcatch->ws[kstep][UZ] += subcatch->ws[kstep][SM];
@@ -138,6 +139,7 @@ void ReadHbvResults(const char dir[], int *nsteps, int *steps[], Subcatchment* s
         //{
             //biort_printf(VL_NORMAL, "\nWater storage in SURFACE exceeds maximum water storage capacity at line %d.\n", kstep);
         //}
+        
         if (subcatch->ws[kstep][UZ] > (subcatch->soil_sz.depth * subcatch->soil_sz.porosity))
         {
             biort_printf(VL_ERROR, "\nWater storage in UZ exceeds maximum water storage capacity at line %d.\n", kstep);

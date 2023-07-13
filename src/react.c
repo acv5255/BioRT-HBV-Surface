@@ -126,7 +126,7 @@ void Reaction(int kstep, double stepsize, const ChemTableEntry chemtbl[],
     const KineticTableEntry kintbl[], const ReactionNetwork *rttbl, Subcatchment* subcatch)
 {
     const double temp = subcatch->tmp[kstep];
-
+    // ReactZone(SURFACE, temp, subcatch->soil_surface, subcatch->ws[kstep], chemtbl, kintbl, rttbl, stepsize, subcatch);
     ReactZone(UZ, temp, subcatch->soil_sz, subcatch->ws[kstep], chemtbl, kintbl, rttbl, stepsize, subcatch);
     ReactZone(LZ, temp, subcatch->soil_dz, subcatch->ws[kstep], chemtbl, kintbl, rttbl, stepsize, subcatch);
 

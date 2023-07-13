@@ -8,15 +8,10 @@ void CopyConstSubcatchProp(const Subcatchment* subcatch, Subcatchment* subcatch_
     subcatch_numexp->perc = subcatch->perc;
     subcatch_numexp->tt = subcatch->tt;
     subcatch_numexp->sfcf = subcatch->sfcf;
-    //subcatch_numexp->porosity_surface = subcatch->porosity_surface;
-    subcatch_numexp->soil_sz.porosity = subcatch->soil_sz.porosity;
-    subcatch_numexp->soil_dz.porosity = subcatch->soil_dz.porosity;
-    //subcatch_numexp->res_surface = subcatch->res_surface;
-    subcatch_numexp->soil_sz.ws_passive = subcatch->soil_sz.ws_passive;
-    subcatch_numexp->soil_dz.ws_passive = subcatch->soil_dz.ws_passive;
-    //subcatch_numexp->d_surface = subcatch->d_surface;
-    subcatch_numexp->soil_sz.depth = subcatch->soil_sz.depth;
-    subcatch_numexp->soil_dz.depth = subcatch->soil_dz.depth;
+    
+    subcatch_numexp->soil_surface = subcatch->soil_surface;
+    subcatch_numexp->soil_sz = subcatch->soil_sz;
+    subcatch_numexp->soil_dz = subcatch->soil_dz;
 }
 
 void CopyInitChemSubcatch(ReactionNetwork *rttbl, const Subcatchment subcatch[], Subcatchment subcatch_numexp[])

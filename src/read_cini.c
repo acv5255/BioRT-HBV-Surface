@@ -1,7 +1,7 @@
 #include "biort.h"
 
-void ReadCini(const char dir[], const chemtbl_struct *chemtbl, rttbl_struct *rttbl,
-    subcatch_struct subcatch[])
+void ReadCini(const char dir[], const ChemTableEntry *chemtbl, ReactionNetwork *rttbl,
+    Subcatchment subcatch[])
 {
     char            file_name[MAXSTRING];
     char            cmdstr[MAXSTRING];
@@ -31,7 +31,7 @@ void ReadCini(const char dir[], const chemtbl_struct *chemtbl, rttbl_struct *rtt
     fclose(file_pointer);
 }
 
-void ReadConc(FILE *fp, int num_stc, const chemtbl_struct chemtbl[], int *lno, double tot_conc[], double ssa[], double q10[], double sw_thld[], double sw_exp[], double n_alpha[])
+void ReadConc(FILE *fp, int num_stc, const ChemTableEntry chemtbl[], int *lno, double tot_conc[], double ssa[], double q10[], double sw_thld[], double sw_exp[], double n_alpha[])
 {
     char            cmdstr[MAXSTRING];
     char            temp_str[MAXSTRING];

@@ -1,15 +1,35 @@
 #include "biort.h"
 
-int SolveSpeciation(const chemtbl_struct chemtbl[], const ctrl_struct ctrl, const rttbl_struct *rttbl, int speciation_flg,
-    chmstate_struct *chms)
+void GetSecondarySpeciesRange(const ReactionNetwork* rttbl, double tmpconc[MAXSPS], double gamma[MAXSPS]) {
+    for (int i = 0; i < rttbl->num_ssc; i++)
+    {
+        tmpconc[i + rttbl->num_stc] = 0.0;
+        for (int j = 0; j < rttbl->num_sdc; j++)
+        {
+            tmpconc[i + rttbl->num_stc] += (tmpconc[j] + gamma[j]) * rttbl->dep_mtx[i][j];
+        }
+        tmpconc[i + rttbl->num_stc] -= rttbl->keq[i] + gamma[i + rttbl->num_stc];
+    }
+}
+
+double GetIonicStrength(const ReactionNetwork* rttbl, const ChemTableEntry chemtbl[], const double conc[MAXSPS]) {
+    double imat = 0.0;
+    for (int i = 0; i < rttbl->num_stc + rttbl->num_ssc; i++)
+    {
+        imat += pow(10, conc[i]) * chemtbl[i].charge * chemtbl[i].charge;
+    }
+
+    return 0.5 * imat;
+}
+
+int SolveSpeciation(const ChemTableEntry chemtbl[], const ControlData ctrl, const ReactionNetwork *rttbl, int speciation_flg,
+    ChemicalState *chms)
 {
-    int             jcb_dim;
     double          residue[MAXSPS];
     double          tmpconc[MAXSPS];
     double          tot_conc[MAXSPS];
     double          gamma[MAXSPS];
     double          maxerror;
-    realtype      **jcb;
     const double    TMPPRB = 1E-2;
 
     // If speciation flg = 1, pH is defined. Total concentration is calculated from the activity of H+. Dependency is
@@ -24,27 +44,19 @@ int SolveSpeciation(const chemtbl_struct chemtbl[], const ctrl_struct ctrl, cons
 
     ComputeDependence(tmpconc, rttbl->dep_mtx, rttbl->keq, rttbl->num_ssc, rttbl->num_sdc, rttbl->num_stc);
 
-    jcb_dim = (speciation_flg == 1) ? rttbl->num_stc - 1: rttbl->num_stc;
-
-    jcb = newDenseMat(jcb_dim, jcb_dim);
+    const int jcb_dim = (speciation_flg == 1) ? rttbl->num_stc - 1: rttbl->num_stc;
 
     do
     {
         sunindextype    p[MAXSPS];
         realtype        x[MAXSPS];
         int             row, col;
+        realtype** jcb = newDenseMat(jcb_dim, jcb_dim);
 
-        if (ctrl.use_activity == 1)
+        if (ctrl.use_activity == true)
         {
-            double          imat = 0.0;
-            double          iroot;
-
-            // Calculate the ionic strength in this block
-            for (int i = 0; i < rttbl->num_stc + rttbl->num_ssc; i++)
-            {
-                imat += 0.5 * pow(10, tmpconc[i]) * chemtbl[i].charge * chemtbl[i].charge;
-            }
-            iroot = sqrt(imat);
+            double ionic_strength = GetIonicStrength(rttbl, chemtbl, tmpconc);
+            double root_ion_str = sqrt(ionic_strength);
 
             for (int i = 0; i < rttbl->num_stc + rttbl->num_ssc; i++)
             {
@@ -52,8 +64,8 @@ int SolveSpeciation(const chemtbl_struct chemtbl[], const ctrl_struct ctrl, cons
                 // Activity of solid is 1, log10 of activity is 0. By assigning gamma[minerals] to negative of the
                 // tmpconc[minerals], we ensured the log10 of activity of solids are 0. gamma stores log10gamma[i]
                 gamma[i] = (chemtbl[i].itype == MINERAL) ? -tmpconc[i] :
-                    (-rttbl->adh * iroot * chemtbl[i].charge * chemtbl[i].charge) /
-                    (1.0 + rttbl->bdh * chemtbl[i].size_fac * iroot) + rttbl->bdt * imat;
+                    (-rttbl->adh * root_ion_str * chemtbl[i].charge * chemtbl[i].charge) /
+                    (1.0 + rttbl->bdh * chemtbl[i].size_fac * root_ion_str) + rttbl->bdt * ionic_strength;
 
                 if (speciation_flg == 1 && strcmp(chemtbl[i].name, "'H+'") == 0)
                 {
@@ -63,7 +75,6 @@ int SolveSpeciation(const chemtbl_struct chemtbl[], const ctrl_struct ctrl, cons
         }
 
         GetLogActivity(tmpconc, gamma,rttbl->dep_mtx, rttbl->keq,  rttbl->num_ssc, rttbl->num_sdc, rttbl->num_stc);
-
 
         for (int i = 0; i < rttbl->num_stc; i++)
         {
@@ -159,17 +170,11 @@ int SolveSpeciation(const chemtbl_struct chemtbl[], const ctrl_struct ctrl, cons
             tmpconc[i] += x[row++];
             maxerror = MAX(fabs(residue[i] / tot_conc[i]), maxerror);
         }
+
+        destroyMat(jcb);
     } while (maxerror > TOLERANCE);
 
-    for (int i = 0; i < rttbl->num_ssc; i++)
-    {
-        tmpconc[i + rttbl->num_stc] = 0.0;
-        for (int j = 0; j < rttbl->num_sdc; j++)
-        {
-            tmpconc[i + rttbl->num_stc] += (tmpconc[j] + gamma[j]) * rttbl->dep_mtx[i][j];
-        }
-        tmpconc[i + rttbl->num_stc] -= rttbl->keq[i] + gamma[i + rttbl->num_stc];
-    }
+    GetSecondarySpeciesRange(rttbl, tmpconc, gamma);    // Compute secondary species
 
     for (int i = 0; i < rttbl->num_stc; i++)
     {
@@ -199,26 +204,22 @@ int SolveSpeciation(const chemtbl_struct chemtbl[], const ctrl_struct ctrl, cons
         else
         {
             chms->sec_conc[i - rttbl->num_stc] = pow(10, tmpconc[i]);
-#if TEMP_DISABLED
-            chms->s_actv[i - rttbl->num_stc] = pow(10, (tmpconc[i] + gamma[i]));
-#endif
         }
     }
 
-    destroyMat(jcb);
 
     return 0;
 }
 
-void Speciation(const chemtbl_struct chemtbl[], const ctrl_struct ctrl, const rttbl_struct *rttbl,
-    subcatch_struct* subcatch)
+void Speciation(const ChemTableEntry chemtbl[], const ControlData ctrl, const ReactionNetwork *rttbl,
+    Subcatchment* subcatch)
 {
     SolveSpeciation(chemtbl, ctrl, rttbl, 0, &subcatch->chms[UZ]);
     SolveSpeciation(chemtbl, ctrl, rttbl, 0, &subcatch->chms[LZ]);
 }
 
-void StreamSpeciation(int step, const chemtbl_struct chemtbl[], const ctrl_struct ctrl,
-    const rttbl_struct *rttbl, subcatch_struct* subcatch)
+void StreamSpeciation(int step, const ChemTableEntry chemtbl[], const ControlData ctrl,
+    const ReactionNetwork *rttbl, Subcatchment* subcatch)
 {
     static int      init_flag = 1;
 

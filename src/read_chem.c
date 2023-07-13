@@ -1,7 +1,7 @@
 #include "biort.h"
 
-void ReadChem(const char dir[], ctrl_struct *ctrl, rttbl_struct *rttbl, chemtbl_struct chemtbl[],
-    kintbl_struct kintbl[])
+void ReadChem(const char dir[], ControlData *ctrl, ReactionNetwork *rttbl, ChemTableEntry chemtbl[],
+    KineticTableEntry kintbl[])
 {
     int             i;
     char            cmdstr[MAXSTRING];
@@ -313,7 +313,7 @@ int MatchWrappedKey(const char cmdstr[], const char key[])
     }
 }
 
-void SortChem(char chemn[MAXSPS][MAXSTRING], const int p_type[MAXSPS], int nsps, chemtbl_struct chemtbl[])
+void SortChem(char chemn[MAXSPS][MAXSTRING], const int p_type[MAXSPS], int nsps, ChemTableEntry chemtbl[])
 {
     int             i, j;
     int             temp;
@@ -350,7 +350,7 @@ void SortChem(char chemn[MAXSPS][MAXSTRING], const int p_type[MAXSPS], int nsps,
     }
 }
 
-int FindChem(const char chemn[MAXSTRING], int nsps, const chemtbl_struct  chemtbl[])
+int FindChem(const char chemn[MAXSTRING], int nsps, const ChemTableEntry  chemtbl[])
 {
     int             i;
     int             ind = BADVAL;

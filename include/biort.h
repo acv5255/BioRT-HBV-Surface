@@ -81,7 +81,7 @@ static const int TRANSPORT_ONLY = 1;
 extern int     verbose_mode;
 
 
-typedef struct ctrl_struct
+typedef struct ControlData
 {
     int             recycle;                // number of times to recycle forcing
     int             read_restart;           // flag to read rt restart file
@@ -90,9 +90,9 @@ typedef struct ctrl_struct
     int             variable_precipchem;    // precipitation chemistry mode: 0 = constant precipitation chemistry, 1 = time-series precipitation chemistry   2021-05-20
     int             precipchem_numexp;      // Numerical experiment mode: 0 = same precipitation chemistry during warm-up and simulation
                                             // 1 = different precipitation chemistry during warm-up and simulation useful for numerical experiment  2021-09-09
-} ctrl_struct;
+} ControlData;
 
-typedef struct rttbl_struct
+typedef struct ReactionNetwork
 {
     int             num_stc;                // number of total species
     int             num_spc;                // number of primary species
@@ -112,9 +112,9 @@ typedef struct rttbl_struct
     double          adh;                    // Debye Huckel parameter
     double          bdh;                    // Debye Huckel parameter
     double          bdt;                    // Debye Huckel parameter
-} rttbl_struct;
+} ReactionNetwork;
 
-typedef struct chemtbl_struct
+typedef struct ChemTableEntry
 {
     char            name[MAXSTRING];        // molecular formula or name
     double          molar_mass;             // (g mol-1)
@@ -127,9 +127,9 @@ typedef struct chemtbl_struct
     int             mtype;                  // type of the mass action species
                                             // 0 = immobile mass action, 1 = mobile mass action,
                                             // 2 = mixed mobility mass action
-} chemtbl_struct;
+} ChemTableEntry;
 
-typedef struct kintbl_struct
+typedef struct KineticTableEntry
 {
     int             position;               // position of target mineral in the array of primary species
     char            label[MAXSTRING];       // label of kinetic reaction
@@ -149,9 +149,9 @@ typedef struct kintbl_struct
     int             ninhib;                 // number of inhibition species
     int             inhib_index[MAXDEP];    // position of inhibition species
     double          inhib_para[MAXDEP];     // parameters that controls this inhibition
-} kintbl_struct;
+} KineticTableEntry;
 
-typedef struct chmstate_struct
+typedef struct ChemicalState
 {
     double          tot_conc[MAXSPS];       // concentration (mol kgH2O-1)
     double          prim_conc[MAXSPS];      // primary concentration (mol kgH2O-1)
@@ -163,41 +163,49 @@ typedef struct chmstate_struct
     double          q10[MAXSPS];            // Q10 factor (-)
     double          n_alpha[MAXSPS];        // n*alpha in depth function (-)
     double          tot_mol[MAXSPS];        // total moles (mol m-2)
-} chmstate_struct;
+} ChemicalState;
 
-typedef struct calib_struct
+typedef struct CalibrationStruct
 {
     double          xsorption;
     double          rate;
     double          ssa;
-} calib_struct;
+} CalibrationStruct;
 
-typedef struct subcatch_struct
+typedef struct SoilConstants {
+    double porosity;
+    double depth;
+    double ws_passive;
+} SoilConstants;
+
+typedef struct Subcatchment
 {
-    double        **ws;                     // water storages (mm)
-    double        **q;                      // water fluxes (mm day-1)
+    double         (*ws)[NWS];
+    double         (*q)[NQ];
     double        **prcp_conc_time;         // time-series precipitation concentration (mol L-1)  2021-05-20
     double         *tmp;                    // air temperature (degree C)
     double          prcp_conc[MAXSPS];      // concentration in precipitation (mol kgH2O-1)
     //double          d_surface;              // surface zone maximum water (passive + dynamic) storage capacity (mm)
-    double          d_uz;                   // upper zone maximum water (passive + dynamic) storage capacity (mm)
-    double          d_lz;                   // lower zone maximum water (passive + dynamic) storage capacity (mm)
+    // double          d_uz;                   // upper zone maximum water (passive + dynamic) storage capacity (mm)
+    // double          d_lz;                   // lower zone maximum water (passive + dynamic) storage capacity (mm)
+    SoilConstants   soil_sz;
+    SoilConstants   soil_dz;
     double          k1;                     // recession coefficient for upper zone (day -1)
     double          k2;                     // recession coefficient for lower zone (day -1)
     double          maxbas;                 // routing parameter
     double          perc;                   // percolation rate (mm day-1)
     //double          porosity_surface;       // surface zone porosity (m3 m-3), 2021-05-14
-    double          porosity_uz;            // upper zone porosity (m3 m-3)
-    double          porosity_lz;            // lower zone porosity (m3 m-3)
+    // double          porosity_uz;            // upper zone porosity (m3 m-3)
+    // double          porosity_lz;            // lower zone porosity (m3 m-3)
     //double          res_surface;            // surface zone passive water storage (mm), 2021-05-14
-    double          res_uz;                 // upper zone passive water storage (mm)
-    double          res_lz;                 // lower zone passive water storage (mm)
+    // double          res_uz;                 // upper zone passive water storage (mm)
+    // double          res_lz;                 // lower zone passive water storage (mm)
     double          sfcf;                   // snow fall correction factor
     double          tt;                     // threshold temperature (degree C)
     double          react_rate[NWS][MAXSPS];// reaction rate (mol m-2 day-1)
-    chmstate_struct chms[NWS];
-    chmstate_struct river_chms;
-} subcatch_struct;
+    ChemicalState chms[NWS];
+    ChemicalState river_chms;
+} Subcatchment;
 
 #define MIN(x, y)               (((x) < (y)) ? (x) : (y))
 #define MAX(x, y)               (((x) > (y)) ? (x) : (y))
@@ -210,77 +218,78 @@ typedef struct subcatch_struct
 # define mkdir(path)            mkdir(path, 0755)
 #endif
 
-void            CopyConstSubcatchProp(const subcatch_struct* subcatch, subcatch_struct* subcatch_numexp);
-void            CopyInitChemSubcatch(rttbl_struct *, const subcatch_struct* subcatch, subcatch_struct* subcatch_numexp );
+void            CopyConstSubcatchProp(const Subcatchment* subcatch, Subcatchment* subcatch_numexp);
+void            CopyInitChemSubcatch(ReactionNetwork *, const Subcatchment* subcatch, Subcatchment* subcatch_numexp );
 int             CountLeapYears(int, int);
-int             FindChem(const char [MAXSTRING], int, const chemtbl_struct[]);
-void            FreeStruct(int nsteps, int *steps[], subcatch_struct subcatch[]);
+int             FindChem(const char [MAXSTRING], int, const ChemTableEntry[]);
+void            FreeStruct(int *steps[], Subcatchment subcatch[]);
 int             GetDifference(int, int);
-void            InitChem(const char [], const calib_struct *, const ctrl_struct ctrl, chemtbl_struct [],
-    kintbl_struct [], rttbl_struct *, subcatch_struct []);
-void            InitChemState(double, double, const chemtbl_struct [], const rttbl_struct *, const ctrl_struct ctrl,
-    chmstate_struct *);
-void            Lookup(FILE *, const calib_struct *, chemtbl_struct [], kintbl_struct [], rttbl_struct *);
+void            InitChem(const char [], const CalibrationStruct *, const ControlData ctrl, ChemTableEntry [],
+    KineticTableEntry [], ReactionNetwork *, Subcatchment []);
+void            InitChemState(double, double, const ChemTableEntry [], const ReactionNetwork *, const ControlData ctrl,
+    ChemicalState *);
+void            Lookup(FILE *, const CalibrationStruct *, ChemTableEntry [], KineticTableEntry [], ReactionNetwork *);
 int             MatchWrappedKey(const char [], const char []);
 void            ParseCmdLineParam(int argc, char *argv[], char dir[]);
 void            ParseLine(const char [], char [], double *);
-void            PrintDailyResults(FILE *, int, int, const rttbl_struct *, const subcatch_struct* subcatch);
-void            PrintHeader(FILE *, int, const rttbl_struct *, const chemtbl_struct chemtbl[]);
-double          ReactControl(const chemtbl_struct [], const kintbl_struct [], const rttbl_struct *, double, double, double,
-    double, double, double, double [], chmstate_struct *);
-void            Reaction(int, double, const int [], const chemtbl_struct [], const kintbl_struct [],
-    const rttbl_struct *, subcatch_struct* subcatch);
-void            ReadAdsorption(const char [], int, int, chemtbl_struct [], rttbl_struct *);
-void            ReadCationEchg(const char [], double, chemtbl_struct [], rttbl_struct *);
-void            ReadChem(const char [], ctrl_struct *, rttbl_struct *, chemtbl_struct [], kintbl_struct []);
-void            ReadCini(const char [], const chemtbl_struct *, rttbl_struct *, subcatch_struct* subcatch);
-void            ReadConc(FILE *, int, const chemtbl_struct [], int *, double [], double [], double [], double [], double[], double[]);
+void            PrintDailyResults(FILE *, int, int, const ReactionNetwork *, const Subcatchment* subcatch);
+void            PrintHeader(FILE *, int, const ReactionNetwork *, const ChemTableEntry chemtbl[]);
+double          ReactControl(const ChemTableEntry [], const KineticTableEntry [], const ReactionNetwork *, double, double, double,
+    double, double, double, double [], ChemicalState *);
+void            Reaction(int, double, const ChemTableEntry [], const KineticTableEntry [],
+    const ReactionNetwork *, Subcatchment* subcatch);
+void            ReadAdsorption(const char [], int, int, ChemTableEntry [], ReactionNetwork *);
+void            ReadCationEchg(const char [], double, ChemTableEntry [], ReactionNetwork *);
+void            ReadChem(const char [], ControlData *, ReactionNetwork *, ChemTableEntry [], KineticTableEntry []);
+void            ReadCini(const char [], const ChemTableEntry *, ReactionNetwork *, Subcatchment* subcatch);
+void            ReadConc(FILE *, int, const ChemTableEntry [], int *, double [], double [], double [], double [], double[], double[]);
 void            ReadDHParam(const char [], int, double *);
-void            ReadHbvParam(const char [], subcatch_struct* subcatch);
-void            ReadHbvResults(const char [], int *, int **, subcatch_struct* subcatch, int);
-void            ReadPrecipChem(const char [], int *, int **, subcatch_struct* subcatch, int, const chemtbl_struct [], int);
-void            ReadMinerals(const char [], int, int, double [MAXSPS][MAXSPS], double [], chemtbl_struct [],
-    rttbl_struct *);
-void            ReadMinKin(FILE *, int, double, int *, char [], chemtbl_struct [], kintbl_struct *);
+void            ReadHbvParam(const char [], Subcatchment* subcatch);
+void            ReadHbvResults(const char [], int *, int **, Subcatchment* subcatch, int);
+void            ReadPrecipChem(const char [], int *, int **, Subcatchment* subcatch, int, const ChemTableEntry [], int);
+void            ReadMinerals(const char [], int, int, double [MAXSPS][MAXSPS], double [], ChemTableEntry [],
+    ReactionNetwork *);
+void            ReadMinKin(FILE *, int, double, int *, char [], ChemTableEntry [], KineticTableEntry *);
 int             ReadParam(const char [], const char [], char, const char [], int, void *);
-void            ReadPrimary(const char [], int, chemtbl_struct []);
-void            ReadSecondary(const char [], int, int, chemtbl_struct [], rttbl_struct *);
-void            ReadSoil(const char [], subcatch_struct* sub);
+void            ReadPrimary(const char [], int, ChemTableEntry []);
+void            ReadSecondary(const char [], int, int, ChemTableEntry [], ReactionNetwork *);
+void            ReadSoil(const char [], Subcatchment* sub);
 void            ReadTempPoints(const char [], double, int *, int *);
 int             roundi(double);
 //void            RunNumExp(int, int, const chemtbl_struct [], const kintbl_struct [], rttbl_struct *, const ctrl_struct *,
 //    subcatch_struct [], FILE *);//2021-09-09
 double          SoilTempFactor(double, double);
 double          SoilMoistFactor(double, double, double);
-int             SolveReact(double, const chemtbl_struct [], const kintbl_struct [], const rttbl_struct *, double, double,
-    double, double, chmstate_struct *);
-int             SolveSpeciation(const chemtbl_struct [], const ctrl_struct ctrl, const rttbl_struct *, int, chmstate_struct *);
-void            SortChem(char [MAXSPS][MAXSTRING], const int [MAXSPS], int, chemtbl_struct []);
-void            Speciation(const chemtbl_struct [], const ctrl_struct ctrl, const rttbl_struct *, subcatch_struct* subcatch);
+int             SolveReact(double, const ChemTableEntry [], const KineticTableEntry [], const ReactionNetwork *, double, double,
+    double, double, ChemicalState *);
+int             SolveSpeciation(const ChemTableEntry [], const ControlData ctrl, const ReactionNetwork *, int, ChemicalState *);
+void            SortChem(char [MAXSPS][MAXSTRING], const int [MAXSPS], int, ChemTableEntry []);
+void            Speciation(const ChemTableEntry [], const ControlData ctrl, const ReactionNetwork *, Subcatchment* subcatch);
 int             SpeciesType(const char [], const char []);
-void            StreamSpeciation(int, const chemtbl_struct [], const ctrl_struct ctrl, const rttbl_struct *,
-    subcatch_struct* subcatch);
-void            Transport(int step, const chemtbl_struct *chemtbl, rttbl_struct *rttbl, const ctrl_struct ctrl, subcatch_struct* subcatch);   // 2021-05-21
+void            StreamSpeciation(int, const ChemTableEntry [], const ControlData ctrl, const ReactionNetwork *,
+    Subcatchment* subcatch);
+void            Transport(int step, const ChemTableEntry *chemtbl, ReactionNetwork *rttbl, const ControlData ctrl, Subcatchment* subcatch);   // 2021-05-21
 void            WrapInParentheses(char *str);
 double          WTDepthFactor(double ,double );
 void            UnwrapParentheses(const char wrapped_str[], char str[]);
-void            UpdatePrimConc(const rttbl_struct *rttbl, const ctrl_struct ctrl, subcatch_struct* subcatch);
+void            UpdatePrimConc(const ReactionNetwork *rttbl, const ControlData ctrl, Subcatchment* subcatch);
 
 // Andrew's functions
 void            ComputeDependence(double tmpconc[MAXSPS], const double dep_mtx[MAXSPS][MAXSPS], const double keq[MAXSPS], int num_rows, int num_cols, int offset);
 void            GetLogActivity(double tmpconc[MAXSPS], double gamma[MAXSPS], const double dep_mtx[MAXSPS][MAXSPS], const double keq[MAXSPS], int num_rows, int num_cols, int offset);
+void            GetSecondarySpecies(double conc[MAXSPS], const double gamma[MAXSPS], const ReactionNetwork* rttbl);
+void            GetSurfaceAreaRange(double area[MAXSPS], const double prim_conc[MAXSPS], const double ssa[MAXSPS], const ChemTableEntry chemtbl[], int start, int end, int offset);
+void            GetTempFactorRange(double ftemp[MAXSPS], const double q10[MAXSPS], double temperature, int start, int end, int offset);
+void            GetWTDepthFactorRange(double fzw[MAXSPS], double Zw, const double n_alpha[MAXSPS], int start, int end, int offset);
 void            Log10Arr(const double src[MAXSPS], double dst[MAXSPS], int num_species);
 void            Pow10Arr(const double src[MAXSPS], double dst[MAXSPS], int num_species);
 void            SetZero(double arr[MAXSPS]);
 void            SetZeroRange(double arr[MAXSPS], int start, int end);
-double          SumArr(const double arr[MAXSPS], int num_species);
-
 void            SoilMoistFactorRange(double dst[MAXSPS], double satn, const double sw_threshold[MAXSPS], const double sw_exponent[MAXSPS], 
                     int start, int end, int offset);
-void            GetSurfaceAreaRange(double area[MAXSPS], const double prim_conc[MAXSPS], const double ssa[MAXSPS], const chemtbl_struct chemtbl[], int start, int end, int offset);
-void            GetTempFactorRange(double ftemp[MAXSPS], const double q10[MAXSPS], double temperature, int start, int end, int offset);
-void            GetWTDepthFactorRange(double fzw[MAXSPS], double Zw, const double n_alpha[MAXSPS], int start, int end, int offset);
-void            TransportSurfaceZone(const rttbl_struct* rttbl, const ctrl_struct ctrl, subcatch_struct* subcatch, const int step);
-void            TransportShallowZone(const rttbl_struct* rttbl, const chemtbl_struct chemtbl[], subcatch_struct* subcatch, const int step);
-void            TransportDeepZone(const rttbl_struct* rttbl, const chemtbl_struct chemtbl[], subcatch_struct* subcatch, const int step);
+double          SumArr(const double arr[MAXSPS], int num_species);
+
+void            TransportDeepZone(const ReactionNetwork* rttbl, const ChemTableEntry chemtbl[], Subcatchment* subcatch, const int step);
+void            TransportShallowZone(const ReactionNetwork* rttbl, const ChemTableEntry chemtbl[], Subcatchment* subcatch, const int step);
+void            TransportSurfaceZone(const ReactionNetwork* rttbl, const ControlData ctrl, Subcatchment* subcatch, const int step);
 #endif

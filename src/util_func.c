@@ -65,16 +65,10 @@ void UnwrapParentheses(const char wrapped_str[], char str[])
     str[j] = '\0';
 }
 
-void FreeStruct(int nsteps, int *steps[], subcatch_struct subcatch[])
+void FreeStruct(int *steps[], Subcatchment subcatch[])
 {
     const int ksub = 0;
     free(*steps);
-
-    for (int kstep = 0; kstep < nsteps; kstep++)
-    {
-        free(subcatch[ksub].ws[kstep]);
-        free(subcatch[ksub].q[kstep]);
-    }
 
     free(subcatch[ksub].ws);
     free(subcatch[ksub].q);

@@ -11,7 +11,7 @@ void GetIAP(double iap[MAXSPS], const double activity[MAXSPS], const double dep_
     return;
 }
 
-double GetMonodTerm(const kintbl_struct* entry, const chmstate_struct* chms) {
+double GetMonodTerm(const KineticTableEntry* entry, const ChemicalState* chms) {
     double monodterm = 1.0;
 
     for (int kmonod = 0; kmonod < entry->nmonod; kmonod++) {
@@ -24,7 +24,7 @@ double GetMonodTerm(const kintbl_struct* entry, const chmstate_struct* chms) {
     return monodterm;
 }
 
-double GetInhibTerm(const kintbl_struct* entry, const chmstate_struct* chms) {
+double GetInhibTerm(const KineticTableEntry* entry, const ChemicalState* chms) {
     double inhibterm = 1.0;
 
     for (int kinhib = 0; kinhib < entry->ninhib; kinhib++) {
@@ -37,7 +37,7 @@ double GetInhibTerm(const kintbl_struct* entry, const chmstate_struct* chms) {
     return inhibterm;
 }
 
-double GetDependenceTerm(const kintbl_struct* entry, const chmstate_struct* chms) {
+double GetDependenceTerm(const KineticTableEntry* entry, const ChemicalState* chms) {
     double dep_term = 1.0;
     for (int k = 0; k < entry->ndep; k++) {
         const int dep_ind = entry->dep_index[k];
@@ -46,9 +46,46 @@ double GetDependenceTerm(const kintbl_struct* entry, const chmstate_struct* chms
     return dep_term;
 }
 
+void GetSecondarySpecies(double conc[MAXSPS], const double gamma[MAXSPS], const ReactionNetwork* rttbl) {
+    for (int i = 0; i < rttbl->num_ssc; i++) {
+        double tmpval = 0.0;
+        for (int j = 0; j < rttbl->num_sdc; j++) {
+            tmpval += (conc[j] + gamma[j]) * rttbl->dep_mtx[i][j];
+        }
+        tmpval -= (rttbl->keq[i] + gamma[i + rttbl->num_stc]);
+        conc[i + rttbl->num_stc] = tmpval;
+    }
 
-void GetRate(double rate[MAXSPS], double rate_spe[MAXSPS], const double area[MAXSPS], const double ftemp[MAXSPS], const double fsw[MAXSPS], const double fzw[MAXSPS],
-    const rttbl_struct* rttbl, const kintbl_struct kintbl[MAXSPS], const chmstate_struct* chms) {
+    return;
+}
+
+void ReactZone(const int kzone, const double temp, const SoilConstants soil, const double ws[NWS], const ChemTableEntry chemtbl[],
+        const KineticTableEntry kintbl[], const ReactionNetwork* rttbl, double stepsize, Subcatchment* subcatch) {
+    
+    const double Zw = soil.depth - ws[kzone] / soil.porosity;     // UZ or LZ or SURFACE
+    double substep;
+
+    for (int kspc = 0; kspc < MAXSPS; kspc++)
+        {
+            subcatch->react_rate[kzone][kspc] = BADVAL;   // Set reaction rate to -999
+        }
+
+    double satn = ws[kzone] / (soil.depth * soil.porosity);  // add porosity for saturation calculation
+        satn = MIN(satn, 1.0);
+
+    if (satn > 1.0E-2)
+    {
+        substep = ReactControl(chemtbl, kintbl, rttbl, stepsize, soil.porosity, soil.depth, satn, temp, Zw,
+            subcatch->react_rate[kzone], &subcatch->chms[kzone]);
+
+        if (substep < 0.0) {
+            printf("React failed to converge...\n");
+        }
+    }
+}
+
+void GetRates(double rate[MAXSPS], double rate_spe[MAXSPS], const double area[MAXSPS], const double ftemp[MAXSPS], const double fsw[MAXSPS], const double fzw[MAXSPS],
+    const ReactionNetwork* rttbl, const KineticTableEntry kintbl[MAXSPS], const ChemicalState* chms) {
         
     for (int i = 0; i < rttbl->num_mkr; i++) {
         int min_pos = kintbl[i].position - rttbl->num_stc + rttbl->num_min;
@@ -84,80 +121,19 @@ void GetRate(double rate[MAXSPS], double rate_spe[MAXSPS], const double area[MAX
 
 }
 
-void Reaction(int kstep, double stepsize, const int steps[], const chemtbl_struct chemtbl[],
-    const kintbl_struct kintbl[], const rttbl_struct *rttbl, subcatch_struct* subcatch)
-{
-    double          substep;
-    const int       NZONES = 2;   // 2021-05-14
 
+void Reaction(int kstep, double stepsize, const ChemTableEntry chemtbl[],
+    const KineticTableEntry kintbl[], const ReactionNetwork *rttbl, Subcatchment* subcatch)
+{
     const double temp = subcatch->tmp[kstep];
 
-    for (int kzone = UZ; kzone < UZ + NZONES; kzone++)   // 2021-05-14
-    {
-        double satn, porosity, Zw, depth;
-        switch (kzone)
-        {
-            //case SURFACE:   // 2021-05-14
-            //    depth = subcatch->d_surface;
-            //    porosity = subcatch->porosity_surface;
-            //    break;
-            case UZ:
-                depth = subcatch->d_uz;
-                porosity = subcatch->porosity_uz;
-                Zw = depth - (subcatch->ws[kstep][UZ]/porosity);
-                break;
-            case LZ:
-                depth = subcatch->d_lz;
-                porosity = subcatch->porosity_lz;
-                Zw = depth - (subcatch->ws[kstep][LZ]/porosity);
-                break;
-        }
+    ReactZone(UZ, temp, subcatch->soil_sz, subcatch->ws[kstep], chemtbl, kintbl, rttbl, stepsize, subcatch);
+    ReactZone(LZ, temp, subcatch->soil_dz, subcatch->ws[kstep], chemtbl, kintbl, rttbl, stepsize, subcatch);
 
-        for (int kspc = 0; kspc < MAXSPS; kspc++)
-        {
-            subcatch->react_rate[kzone][kspc] = BADVAL;   // Set reaction rate to -999
-        }
-
-
-        satn = subcatch->ws[kstep][kzone] / (depth * porosity);  // add porosity for saturation calculation
-        satn = MIN(satn, 1.0);
-
-        //biort_printf(VL_NORMAL, "%d %d %s zone reaction has saturation of %.1lf s.\n",
-        //              steps[kstep],kzone, satn);
-
-        if (satn > 1.0E-2)
-        {
-            substep = ReactControl(chemtbl, kintbl, rttbl, stepsize, porosity, depth, satn, temp, Zw,
-                subcatch->react_rate[kzone], &subcatch->chms[kzone]);
-
-            if (substep < 0.0)
-            {
-                if (kzone == SURFACE)   // 2021-05-14
-                {
-                    biort_printf(VL_NORMAL, "%d %s zone reaction failed with a substep of %.1lf s.\n",
-                        steps[kstep], "SURFACE", -substep);
-                } else {
-                    biort_printf(VL_NORMAL, "%d %s zone reaction failed with a substep of %.1lf s.\n",
-                        steps[kstep], (kzone == UZ) ? "Upper" : "Lower", -substep);
-                }
-            }
-            if (substep > 0.0)
-            {
-                if (kzone == SURFACE)   // 2021-05-14
-                {
-                    biort_printf(VL_VERBOSE, "%d %s zone reaction passed with a minimum step of %.1lf s.\n",
-                    steps[kstep], "SURFACE", substep);
-                } else {
-                    biort_printf(VL_VERBOSE, "%d %s zone reaction passed with a minimum step of %.1lf s.\n",
-                    steps[kstep], (kzone == UZ) ? "Upper" : "Lower", substep);
-                }
-            }
-        }
-    }
 }
 
-int SolveReact(double stepsize, const chemtbl_struct chemtbl[], const kintbl_struct kintbl[], const rttbl_struct *rttbl,
-    double satn, double temp, double porosity, double Zw, chmstate_struct *chms)
+int SolveReact(double stepsize, const ChemTableEntry chemtbl[], const KineticTableEntry kintbl[], const ReactionNetwork *rttbl,
+    double satn, double temp, double porosity, double Zw, ChemicalState *chms)
 {
     double          tmpconc[MAXSPS];
     double          tot_conc[MAXSPS];
@@ -185,7 +161,7 @@ int SolveReact(double stepsize, const chemtbl_struct chemtbl[], const kintbl_str
     SoilMoistFactorRange(fsw, satn, chms->sw_thld, chms->sw_exp, rttbl->num_stc - rttbl->num_min, rttbl->num_stc, rttbl->num_stc - rttbl->num_min);
 
     SetZeroRange(rate_spe, 0, rttbl->num_stc);
-    GetRate(rate_pre, rate_spe, area, ftemp, fsw, fzw, rttbl, kintbl, chms);
+    GetRates(rate_pre, rate_spe, area, ftemp, fsw, fzw, rttbl, kintbl, chms);
 
     for (int i = 0; i < rttbl->num_mkr + rttbl->num_akr; i++)
     {
@@ -251,16 +227,7 @@ int SolveReact(double stepsize, const chemtbl_struct chemtbl[], const kintbl_str
         sunindextype    p[MAXSPS];
         realtype        x[MAXSPS];
 
-        for (int i = 0; i < rttbl->num_ssc; i++)
-        {
-            double tmpval = 0.0;
-            for (int j = 0; j < rttbl->num_sdc; j++)
-            {
-                tmpval += (tmpconc[j] + gamma[j]) * rttbl->dep_mtx[i][j];
-            }
-            tmpval -= rttbl->keq[i] + gamma[i + rttbl->num_stc];
-            tmpconc[i + rttbl->num_stc] = tmpval;
-        }
+        GetSecondarySpecies(tmpconc, gamma, rttbl);
 
         SetZeroRange(rate_spet, 0, rttbl->num_stc);
 
@@ -287,7 +254,7 @@ int SolveReact(double stepsize, const chemtbl_struct chemtbl[], const kintbl_str
                     dependency[i] += (tmpconc[kintbl[i].dep_index[k]] +
                         gamma[kintbl[i].dep_index[k]]) * kintbl[i].dep_power[k];
                 }
-                dependency[i] = pow(10, dependency[i]);
+                dependency[i] = pow(10.0, dependency[i]);
 
                 // Calculate predicted rate depending on type of rate law
                 // rate_pre: in mol / L water / s
@@ -320,6 +287,7 @@ int SolveReact(double stepsize, const chemtbl_struct chemtbl[], const kintbl_str
             rate_spet[i] *= (chemtbl[i].itype == AQUEOUS) ? (inv_sat/porosity) : 1.0;
         }
 
+        // Calculate the residual for each aqueous primary species
         for (int i = 0; i < rttbl->num_stc - rttbl->num_min; i++)
         {
             double tmpval = 0.0;
@@ -331,34 +299,34 @@ int SolveReact(double stepsize, const chemtbl_struct chemtbl[], const kintbl_str
             residue[i] = tmpval - (chms->tot_conc[i] + (rate_spe[i] + rate_spet[i]) * stepsize * 0.5);
         }
 
-        if (control % SKIP_JACOB == 0)
+
+        // Calculate the concentrations with a perturbation TMPPRB to calculate the numerical Jacobian
+        for (int k = 0; k < rttbl->num_stc - rttbl->num_min; k++)
         {
-            for (int k = 0; k < rttbl->num_stc - rttbl->num_min; k++)
+            tmpconc[k] += TMPPRB;
+            for (int i = 0; i < rttbl->num_ssc; i++)
             {
-                tmpconc[k] += TMPPRB;
-                for (int i = 0; i < rttbl->num_ssc; i++)
+                double tmpval = 0.0;
+                for (int j = 0; j < rttbl->num_sdc; j++)
                 {
-                    double tmpval = 0.0;
-                    for (int j = 0; j < rttbl->num_sdc; j++)
-                    {
-                        tmpval += (tmpconc[j] + gamma[j]) * rttbl->dep_mtx[i][j];
-                    }
-                    tmpval -= rttbl->keq[i] + gamma[i + rttbl->num_stc];
-                    tmpconc[i + rttbl->num_stc] = tmpval;
+                    tmpval += (tmpconc[j] + gamma[j]) * rttbl->dep_mtx[i][j];
                 }
-                for (int i = 0; i < rttbl->num_stc - rttbl->num_min; i++)
-                {
-                    double tmpval = 0.0;
-                    for (int j = 0; j < rttbl->num_stc + rttbl->num_ssc; j++)
-                    {
-                        tmpval += rttbl->conc_contrib[i][j] * pow(10, tmpconc[j]);
-                    }
-                    residue_t[i] = tmpval - (chms->tot_conc[i] + (rate_spe[i] + rate_spet[i]) * stepsize * 0.5);
-                    jcb[k][i] = (residue_t[i] - residue[i]) * TMPPRB_INV;
-                }
-                tmpconc[k] -= TMPPRB;
+                tmpval -= rttbl->keq[i] + gamma[i + rttbl->num_stc];
+                tmpconc[i + rttbl->num_stc] = tmpval;
             }
+            for (int i = 0; i < rttbl->num_stc - rttbl->num_min; i++)
+            {
+                double tmpval = 0.0;
+                for (int j = 0; j < rttbl->num_stc + rttbl->num_ssc; j++)
+                {
+                    tmpval += rttbl->conc_contrib[i][j] * pow(10, tmpconc[j]);
+                }
+                residue_t[i] = tmpval - (chms->tot_conc[i] + (rate_spe[i] + rate_spet[i]) * stepsize * 0.5);
+                jcb[k][i] = (residue_t[i] - residue[i]) * TMPPRB_INV;
+            }
+            tmpconc[k] -= TMPPRB;
         }
+        
         for (int i = 0; i < rttbl->num_stc - rttbl->num_min; i++)
         {
             x[i] = -residue[i];
@@ -376,6 +344,7 @@ int SolveReact(double stepsize, const chemtbl_struct chemtbl[], const kintbl_str
         max_error = 0.0;
         for (int i = 0; i < rttbl->num_stc - rttbl->num_min; i++)
         {
+            // Take the step, limited to 0.3
             if (fabs(x[i]) < 0.3)
             {
                 tmpconc[i] += x[i];
@@ -389,7 +358,7 @@ int SolveReact(double stepsize, const chemtbl_struct chemtbl[], const kintbl_str
         }
 
         control++;
-        if (control > 10)
+        if (control > 10)   // Only allow a maximum of 10 model steps for a single time step before failing
         {
             destroyMat(jcb);
             biort_printf(VL_NORMAL, "React failed to converge...\n");
@@ -399,6 +368,7 @@ int SolveReact(double stepsize, const chemtbl_struct chemtbl[], const kintbl_str
     } while (max_error > TOLERANCE);
 
 
+    // Update secondary species here
     for (int i = 0; i < rttbl->num_ssc; i++)
     {
         double tmpval = 0.0;
@@ -446,18 +416,17 @@ int SolveReact(double stepsize, const chemtbl_struct chemtbl[], const kintbl_str
     return 0;
 }
 
-double ReactControl(const chemtbl_struct chemtbl[], const kintbl_struct kintbl[], const rttbl_struct *rttbl,
+double ReactControl(const ChemTableEntry chemtbl[], const KineticTableEntry kintbl[], const ReactionNetwork *rttbl,
     double stepsize, double porosity, double depth, double satn, double temp, double Zw, double react_rate[],
-    chmstate_struct *chms)
+    ChemicalState *chms)
 {
     int             flag;
-    int             kspc;
     double          substep;
     double          step_counter = 0.0;
     double          conc0[MAXSPS];
 
     // Copy initial mineral concentration to array
-    for (kspc = 0; kspc < rttbl->num_min; kspc++)
+    for (int kspc = 0; kspc < rttbl->num_min; kspc++)
     {
         conc0[kspc] = chms->tot_conc[kspc + rttbl->num_stc - rttbl->num_min];
     }
@@ -485,7 +454,7 @@ double ReactControl(const chemtbl_struct chemtbl[], const kintbl_struct kintbl[]
     }
     else    // Reactions succeed
     {
-        for (kspc = 0; kspc < rttbl->num_min; kspc++)
+        for (int kspc = 0; kspc < rttbl->num_min; kspc++)
         {
             // Calculate reaction rate (mole/m2-pm/day) = mol/L-pm/day * mm of depth   * (1m/1000mm) * (1000L/1m3)
             react_rate[kspc] =
@@ -493,7 +462,7 @@ double ReactControl(const chemtbl_struct chemtbl[], const kintbl_struct kintbl[]
 
         }
 
-        for (kspc = 0; kspc <rttbl->num_spc; kspc++)
+        for (int kspc = 0; kspc <rttbl->num_spc; kspc++)
         {
             chms->tot_mol[kspc] = chms->tot_conc[kspc] * porosity * satn * depth; // tot_mol (moles-mm of water/L water ) =tot_conc (mol/L water) * satn * porosity * depth
         }
@@ -538,7 +507,7 @@ void SoilMoistFactorRange(double dst[MAXSPS], double satn, const double sw_thres
     return;
 }
 
-void GetSurfaceAreaRange(double area[MAXSPS], const double prim_conc[MAXSPS], const double ssa[MAXSPS], const chemtbl_struct chemtbl[], int start, int end, int offset) {
+void GetSurfaceAreaRange(double area[MAXSPS], const double prim_conc[MAXSPS], const double ssa[MAXSPS], const ChemTableEntry chemtbl[], int start, int end, int offset) {
     for (int i = start; i < end; i++) {
         area[i - offset] = prim_conc[i] * ssa[i] * chemtbl[i].molar_mass;
     }

@@ -1,8 +1,8 @@
 #include "biort.h"
 
 // Initialize RT structures
-void InitChem(const char dir[], const calib_struct *calib, const ctrl_struct ctrl, chemtbl_struct chemtbl[],
-    kintbl_struct kintbl[], rttbl_struct *rttbl, subcatch_struct subcatch[])
+void InitChem(const char dir[], const CalibrationStruct *calib, const ControlData ctrl, ChemTableEntry chemtbl[],
+    KineticTableEntry kintbl[], ReactionNetwork *rttbl, Subcatchment subcatch[])
 {
     char            fn[MAXSTRING];
     int             kspc;
@@ -34,14 +34,14 @@ void InitChem(const char dir[], const calib_struct *calib, const ctrl_struct ctr
     // Initialize upper and lower zone concentrations taking into account speciation
     //InitChemState(subcatch[ksub].porosity_surface, subcatch[ksub].ws[0][SURFACE], chemtbl, rttbl, ctrl,    // 2021-05-07
     //    &subcatch[ksub].chms[SURFACE]);
-    InitChemState(subcatch[ksub].porosity_uz, subcatch[ksub].ws[0][UZ], chemtbl, rttbl, ctrl,
+    InitChemState(subcatch[ksub].soil_sz.porosity, subcatch[ksub].ws[0][UZ], chemtbl, rttbl, ctrl,
         &subcatch[ksub].chms[UZ]);
-    InitChemState(subcatch[ksub].porosity_lz, subcatch[ksub].ws[0][LZ], chemtbl, rttbl, ctrl,
+    InitChemState(subcatch[ksub].soil_dz.porosity, subcatch[ksub].ws[0][LZ], chemtbl, rttbl, ctrl,
         &subcatch[ksub].chms[LZ]);
 }
 
-void InitChemState(double smcmax, double vol, const chemtbl_struct chemtbl[], const rttbl_struct *rttbl,
-    const ctrl_struct ctrl, chmstate_struct *chms)
+void InitChemState(double smcmax, double vol, const ChemTableEntry chemtbl[], const ReactionNetwork *rttbl,
+    const ControlData ctrl, ChemicalState *chms)
 {
     for (int kspc = 0; kspc < rttbl->num_stc; kspc++)
     {

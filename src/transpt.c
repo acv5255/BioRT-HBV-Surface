@@ -7,7 +7,7 @@
 //   C * V - C_0 * V_0 = C_in * Q_in - C * Q_out + F.
 // Thus,
 //   C = (C_in * Qin + F + C0 * V0) / (V + Q_out).
-void Transport(int step, const chemtbl_struct *chemtbl, rttbl_struct *rttbl, const ctrl_struct ctrl, subcatch_struct* subcatch)
+void Transport(int step, const ChemTableEntry *chemtbl, ReactionNetwork *rttbl, const ControlData ctrl, Subcatchment* subcatch)
 {
     /* Transport for all species in each of the zones */
     TransportSurfaceZone(rttbl, ctrl, subcatch, step);
@@ -21,7 +21,7 @@ void Transport(int step, const chemtbl_struct *chemtbl, rttbl_struct *rttbl, con
     TransportDeepZone(rttbl, chemtbl, subcatch, step);
 }
 
-void UpdatePrimConc(const rttbl_struct *rttbl, const ctrl_struct ctrl, subcatch_struct* subcatch)
+void UpdatePrimConc(const ReactionNetwork *rttbl, const ControlData ctrl, Subcatchment* subcatch)
 {
     /* Set concentrations */
 
@@ -38,7 +38,7 @@ void UpdatePrimConc(const rttbl_struct *rttbl, const ctrl_struct ctrl, subcatch_
     }
 }
 
-void TransportSurfaceZone(const rttbl_struct* rttbl, const ctrl_struct ctrl, subcatch_struct* subcatch, const int step) {
+void TransportSurfaceZone(const ReactionNetwork* rttbl, const ControlData ctrl, Subcatchment* subcatch, const int step) {
     const double q_snow = subcatch->q[step][Psnow];
     const double q_snowmelt = subcatch->q[step][snowmelt];
     const double q_rain = subcatch->q[step][Prain];
@@ -99,7 +99,7 @@ void TransportSurfaceZone(const rttbl_struct* rttbl, const ctrl_struct ctrl, sub
     }
 }
 
-void TransportShallowZone(const rttbl_struct* rttbl, const chemtbl_struct chemtbl[], subcatch_struct* subcatch, const int step) {
+void TransportShallowZone(const ReactionNetwork* rttbl, const ChemTableEntry chemtbl[], Subcatchment* subcatch, const int step) {
     const double q_q1 = subcatch->q[step][Q1];
     const double q_q2 = subcatch->q[step][Q2];
     const double q_perc = subcatch->q[step][PERC];
@@ -141,7 +141,7 @@ void TransportShallowZone(const rttbl_struct* rttbl, const chemtbl_struct chemtb
     return;
 }
 
-void TransportDeepZone(const rttbl_struct* rttbl, const chemtbl_struct chemtbl[], subcatch_struct* subcatch, const int step) {
+void TransportDeepZone(const ReactionNetwork* rttbl, const ChemTableEntry chemtbl[], Subcatchment* subcatch, const int step) {
     const double q_q0 = subcatch->q[step][Q0];
     const double q_q1 = subcatch->q[step][Q1];
     const double q_q2 = subcatch->q[step][Q2];

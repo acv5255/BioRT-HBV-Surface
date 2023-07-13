@@ -1,6 +1,6 @@
 #include "biort.h"
 
-void PrintHeader(FILE *file_pointer, int transpt, const rttbl_struct *rttbl, const chemtbl_struct chemtbl[])
+void PrintHeader(FILE *file_pointer, int transpt, const ReactionNetwork *rttbl, const ChemTableEntry chemtbl[])
 {
     char            chemn[MAXSTRING];
     char            tempstr[MAXSTRING];
@@ -206,8 +206,8 @@ void PrintHeader(FILE *file_pointer, int transpt, const rttbl_struct *rttbl, con
     fflush(file_pointer);
 }
 
-void PrintDailyResults(FILE *fp, int transpt, int step, const rttbl_struct *rttbl,
-    const subcatch_struct* subcatch)
+void PrintDailyResults(FILE *fp, int transpt, int step, const ReactionNetwork *rttbl,
+    const Subcatchment* subcatch)
 {
     // Soil concentration file header
     fprintf(fp, "%-15d",  step);

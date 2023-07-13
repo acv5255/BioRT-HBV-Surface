@@ -13,11 +13,11 @@ int main(int argc, char *argv[])
     int            *steps_numexp;                  // simulation steps
     time_t          rawtime;
     struct tm      *timestamp;
-    rttbl_struct    rttbl;
-    chemtbl_struct  chemtbl[MAXSPS];
-    kintbl_struct   kintbl[MAXSPS];
-    calib_struct    calib;
-    ctrl_struct     ctrl;
+    ReactionNetwork    rttbl;
+    ChemTableEntry  chemtbl[MAXSPS];
+    KineticTableEntry   kintbl[MAXSPS];
+    CalibrationStruct    calib;
+    ControlData     ctrl;
 
     // Read command line arguments
     ParseCmdLineParam(argc, argv, dir);
@@ -25,8 +25,8 @@ int main(int argc, char *argv[])
     // Allocate
     // subcatch_struct* subcatch = (subcatch_struct *)malloc(sizeof(subcatch_struct));
     // subcatch_struct* subcatch_numexp = (subcatch_struct *)malloc(sizeof(subcatch_struct));
-    subcatch_struct subcatch;
-    subcatch_struct subcatch_numexp;
+    Subcatchment subcatch;
+    Subcatchment subcatch_numexp;
 
     calib.rate = 0.0;
     calib.xsorption = 0.0;
@@ -105,7 +105,7 @@ int main(int argc, char *argv[])
                 if (ctrl.transport_only == KIN_REACTION)
                 {
                     // In reaction mode, simulate reaction for soil, and speciation for stream
-                    Reaction(kstep, 86400.0, steps, chemtbl, kintbl, &rttbl, &subcatch);
+                    Reaction(kstep, 86400.0, chemtbl, kintbl, &rttbl, &subcatch);
                 }
                 else
                 {
@@ -154,7 +154,7 @@ int main(int argc, char *argv[])
                 if (ctrl.transport_only == KIN_REACTION)
                 {
                     // In reaction mode, simulate reaction for soil, and speciation for stream
-                    Reaction(kstep, 86400.0, steps, chemtbl, kintbl, &rttbl, &subcatch_numexp);
+                    Reaction(kstep, 86400.0, chemtbl, kintbl, &rttbl, &subcatch_numexp);
                 }
                 else
                 {
@@ -168,6 +168,6 @@ int main(int argc, char *argv[])
         }
     }
 
-    FreeStruct(nsteps, &steps, &subcatch);
-    FreeStruct(nsteps_numexp, &steps_numexp, &subcatch_numexp);
+    FreeStruct(&steps, &subcatch);
+    FreeStruct(&steps_numexp, &subcatch_numexp);
 }

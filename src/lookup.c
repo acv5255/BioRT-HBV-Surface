@@ -1,6 +1,6 @@
 #include "biort.h"
 
-void Lookup(FILE *fp, const calib_struct *calib, chemtbl_struct chemtbl[], kintbl_struct kintbl[], rttbl_struct *rttbl)
+void Lookup(FILE *fp, const CalibrationStruct *calib, ChemTableEntry chemtbl[], KineticTableEntry kintbl[], ReactionNetwork *rttbl)
 {
     char            cmdstr[MAXSTRING];
     int             i, j, k;
@@ -359,7 +359,7 @@ void ReadDHParam(const char cmdstr[], int tmp_position, double *param)
     }
 }
 
-void ReadPrimary(const char cmdstr[], int num_stc, chemtbl_struct chemtbl[])
+void ReadPrimary(const char cmdstr[], int num_stc, ChemTableEntry chemtbl[])
 {
     int             i;
 
@@ -380,7 +380,7 @@ void ReadPrimary(const char cmdstr[], int num_stc, chemtbl_struct chemtbl[])
     }
 }
 
-void ReadSecondary(const char cmdstr[], int npoints, int keq_position, chemtbl_struct chemtbl[], rttbl_struct *rttbl)
+void ReadSecondary(const char cmdstr[], int npoints, int keq_position, ChemTableEntry chemtbl[], ReactionNetwork *rttbl)
 {
     int             bytes_now;
     int             bytes_consumed = 0;
@@ -445,7 +445,7 @@ void ReadSecondary(const char cmdstr[], int npoints, int keq_position, chemtbl_s
 }
 
 void ReadMinerals(const char cmdstr[], int npoints, int keq_position, double pot_dep[MAXSPS][MAXSPS],
-    double keq_kin_all[], chemtbl_struct chemtbl[], rttbl_struct *rttbl)
+    double keq_kin_all[], ChemTableEntry chemtbl[], ReactionNetwork *rttbl)
 {
     int             bytes_now;
     int             bytes_consumed = 0;
@@ -535,7 +535,7 @@ void ReadMinerals(const char cmdstr[], int npoints, int keq_position, double pot
     }
 }
 
-void ReadAdsorption(const char cmdstr[], int npoints, int keq_position, chemtbl_struct chemtbl[], rttbl_struct *rttbl)
+void ReadAdsorption(const char cmdstr[], int npoints, int keq_position, ChemTableEntry chemtbl[], ReactionNetwork *rttbl)
 {
     int             bytes_now;
     int             bytes_consumed = 0;
@@ -596,7 +596,7 @@ void ReadAdsorption(const char cmdstr[], int npoints, int keq_position, chemtbl_
     }
 }
 
-void ReadCationEchg(const char cmdstr[], double calval, chemtbl_struct chemtbl[], rttbl_struct *rttbl)
+void ReadCationEchg(const char cmdstr[], double calval, ChemTableEntry chemtbl[], ReactionNetwork *rttbl)
 {
     int             bytes_now;
     int             bytes_consumed = 0;
@@ -646,8 +646,8 @@ void ReadCationEchg(const char cmdstr[], double calval, chemtbl_struct chemtbl[]
     }
 }
 
-void ReadMinKin(FILE *fp, int num_stc, double calval, int *lno, char cmdstr[], chemtbl_struct chemtbl[],
-    kintbl_struct *kintbl)
+void ReadMinKin(FILE *fp, int num_stc, double calval, int *lno, char cmdstr[], ChemTableEntry chemtbl[],
+    KineticTableEntry *kintbl)
 {
     int             bytes_now;
     int             bytes_consumed = 0;

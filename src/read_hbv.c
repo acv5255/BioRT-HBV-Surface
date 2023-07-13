@@ -1,6 +1,6 @@
 #include "biort.h"
 
-void ReadHbvResults(const char dir[], int *nsteps, int *steps[], subcatch_struct* subcatch, int mode)
+void ReadHbvResults(const char dir[], int *nsteps, int *steps[], Subcatchment* subcatch, int mode)
 {
     FILE           *file_pointer;
     char            file_name[MAXSTRING];
@@ -53,16 +53,9 @@ void ReadHbvResults(const char dir[], int *nsteps, int *steps[], subcatch_struct
     }
 
 
-    subcatch->ws = (double **)malloc(len_numexp * *nsteps * sizeof(double *));
-    subcatch->q = (double **)malloc(len_numexp * *nsteps * sizeof(double *));
+    subcatch->ws = (double (*)[NWS])malloc(len_numexp * *nsteps * sizeof(double[NWS]));
+    subcatch->q = (double (*)[NQ])malloc(len_numexp * *nsteps * sizeof(double[NQ]));
     subcatch->tmp = (double *)malloc(len_numexp * *nsteps * sizeof(double));
-
-    for (kstep = 0; kstep < len_numexp * *nsteps; kstep++)
-    {
-        subcatch->ws[kstep] = (double *)malloc(NWS * sizeof(double));
-        subcatch->q[kstep] = (double *)malloc(NQ * sizeof(double));
-    }
-
 
     NextLine(file_pointer, cmdstr, &lno);     // Skip header line
 
@@ -134,9 +127,8 @@ void ReadHbvResults(const char dir[], int *nsteps, int *steps[], subcatch_struct
     // Add 1. residual moisture to LZ & UZ and 2. SM to UZ
     for (kstep = 0; kstep < *nsteps; kstep++)
     {
-        // subcatch->ws[kstep][SURFACE] += subcatch->res_surface;   // 2021-05-14
-        subcatch->ws[kstep][UZ] += subcatch->res_uz;
-        subcatch->ws[kstep][LZ] += subcatch->res_lz;
+        subcatch->ws[kstep][UZ] += subcatch->soil_sz.ws_passive;
+        subcatch->ws[kstep][LZ] += subcatch->soil_dz.ws_passive;
         subcatch->ws[kstep][UZ] += subcatch->ws[kstep][SM];
         
     }
@@ -146,12 +138,12 @@ void ReadHbvResults(const char dir[], int *nsteps, int *steps[], subcatch_struct
         //{
             //biort_printf(VL_NORMAL, "\nWater storage in SURFACE exceeds maximum water storage capacity at line %d.\n", kstep);
         //}
-        if (subcatch->ws[kstep][UZ] > (subcatch->d_uz * subcatch->porosity_uz))
+        if (subcatch->ws[kstep][UZ] > (subcatch->soil_sz.depth * subcatch->soil_sz.porosity))
         {
             biort_printf(VL_ERROR, "\nWater storage in UZ exceeds maximum water storage capacity at line %d.\n", kstep);
             exit(EXIT_FAILURE);
         }
-        if (subcatch->ws[kstep][LZ] > (subcatch->d_lz * subcatch->porosity_lz))
+        if (subcatch->ws[kstep][LZ] > (subcatch->soil_dz.depth * subcatch->soil_dz.porosity))
         {
             biort_printf(VL_ERROR, "\nWater storage in LZ exceeds maximum water storage capacity at line %d.\n", kstep);
             exit(EXIT_FAILURE);
@@ -187,7 +179,7 @@ void ReadHbvResults(const char dir[], int *nsteps, int *steps[], subcatch_struct
     *nsteps *= len_numexp;
 }
 
-void ReadHbvParam(const char dir[], subcatch_struct* subcatch)
+void ReadHbvParam(const char dir[], Subcatchment* subcatch)
 {
     FILE           *file_pointer;
     char            file_name[MAXSTRING];

@@ -1,6 +1,6 @@
 #include "biort.h"
 
-void CopyConstSubcatchProp(const subcatch_struct* subcatch, subcatch_struct* subcatch_numexp)
+void CopyConstSubcatchProp(const Subcatchment* subcatch, Subcatchment* subcatch_numexp)
 {
     subcatch_numexp->k1 = subcatch->k1;
     subcatch_numexp->k2 = subcatch->k2;
@@ -9,17 +9,17 @@ void CopyConstSubcatchProp(const subcatch_struct* subcatch, subcatch_struct* sub
     subcatch_numexp->tt = subcatch->tt;
     subcatch_numexp->sfcf = subcatch->sfcf;
     //subcatch_numexp->porosity_surface = subcatch->porosity_surface;
-    subcatch_numexp->porosity_uz = subcatch->porosity_uz;
-    subcatch_numexp->porosity_lz = subcatch->porosity_lz;
+    subcatch_numexp->soil_sz.porosity = subcatch->soil_sz.porosity;
+    subcatch_numexp->soil_dz.porosity = subcatch->soil_dz.porosity;
     //subcatch_numexp->res_surface = subcatch->res_surface;
-    subcatch_numexp->res_uz = subcatch->res_uz;
-    subcatch_numexp->res_lz = subcatch->res_lz;
+    subcatch_numexp->soil_sz.ws_passive = subcatch->soil_sz.ws_passive;
+    subcatch_numexp->soil_dz.ws_passive = subcatch->soil_dz.ws_passive;
     //subcatch_numexp->d_surface = subcatch->d_surface;
-    subcatch_numexp->d_uz = subcatch->d_uz;
-    subcatch_numexp->d_lz = subcatch->d_lz;
+    subcatch_numexp->soil_sz.depth = subcatch->soil_sz.depth;
+    subcatch_numexp->soil_dz.depth = subcatch->soil_dz.depth;
 }
 
-void CopyInitChemSubcatch(rttbl_struct *rttbl, const subcatch_struct subcatch[], subcatch_struct subcatch_numexp[])
+void CopyInitChemSubcatch(ReactionNetwork *rttbl, const Subcatchment subcatch[], Subcatchment subcatch_numexp[])
 {
     for (int kspc = 0; kspc < rttbl->num_stc; kspc++)
     {

@@ -1,6 +1,6 @@
 #include "biort.h"
 
-void ReadPrecipChem(const char dir[], int *nsteps, int *steps[], subcatch_struct subcatch[], int num_stc, const chemtbl_struct chemtbl[],int mode)
+void ReadPrecipChem(const char dir[], int *nsteps, int *steps[], Subcatchment subcatch[], int num_stc, const ChemTableEntry chemtbl[],int mode)
 {
     FILE           *file_pointer;
     char            file_name[MAXSTRING];

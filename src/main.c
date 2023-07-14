@@ -4,27 +4,25 @@ int             verbose_mode;
 
 int main(int argc, char *argv[])
 {
-    char            dir[MAXSTRING];         // name of input directory
-    char            file_name[MAXSTRING];          // name of output file
-    char            timestr[MAXSTRING];     // time stamp
-    int             nsteps;                 // number of simulation steps
-    int            *steps;                  // simulation steps
-    int             nsteps_numexp;                 // number of simulation steps
-    int            *steps_numexp;                  // simulation steps
-    time_t          rawtime;
-    struct tm      *timestamp;
-    ReactionNetwork    rttbl;
-    ChemTableEntry  chemtbl[MAXSPS];
+    char                dir[MAXSTRING];         // name of input directory
+    char                file_name[MAXSTRING];          // name of output file
+    char                timestr[MAXSTRING];     // time stamp
+    int                 nsteps;                 // number of simulation steps
+    int                 *steps;                  // simulation steps
+    int                 nsteps_numexp;                 // number of simulation steps
+    int                 *steps_numexp;                  // simulation steps
+    time_t              rawtime;
+    struct tm           *timestamp;
+    ReactionNetwork     rttbl;
+    ChemTableEntry      chemtbl[MAXSPS];
     KineticTableEntry   kintbl[MAXSPS];
-    CalibrationStruct    calib;
-    ControlData     ctrl;
+    CalibrationStruct   calib;
+    ControlData         ctrl;
 
     // Read command line arguments
     ParseCmdLineParam(argc, argv, dir);
 
     // Allocate
-    // subcatch_struct* subcatch = (subcatch_struct *)malloc(sizeof(subcatch_struct));
-    // subcatch_struct* subcatch_numexp = (subcatch_struct *)malloc(sizeof(subcatch_struct));
     Subcatchment subcatch;
     Subcatchment subcatch_numexp;
 
@@ -47,7 +45,6 @@ int main(int argc, char *argv[])
 
     // Read time-series precipitation chemistry if defined in chem.txt  2021-05-20
     if (ctrl.variable_precipchem == 1) {
-        //printf("read in time-series precipitation %d", ctrl.precipchem);
         ReadPrecipChem(dir, &nsteps, &steps, &subcatch, rttbl.num_stc, chemtbl, 0);
     }
 
@@ -62,8 +59,16 @@ int main(int argc, char *argv[])
     // Initialize RT structures
     InitChem(dir, &calib, ctrl, chemtbl, kintbl, &rttbl, &subcatch);
 
+    // Check on secondary concentrations in the surface zone
+    ErrOnZeroRanged("main.c", "subcatch.chms[SURFACE].sec_conc", 63, subcatch.chms[SURFACE].sec_conc, 2);
+
     // Create output directory when necessary
     mkdir("output");
+
+    {
+        printf("Surface total concentration at before starting: \n");
+        PrintArray(subcatch.chms[SURFACE].tot_conc);
+    }
 
     //
     time(&rawtime);
@@ -91,26 +96,32 @@ int main(int argc, char *argv[])
             // Loop through model steps to calculate reactive transport
             for (int kstep = 0; kstep < nsteps; kstep++)
             {
+                ErrOnZeroRanged("main.c", "subcatch.chms[SURFACE].sec_conc", 99, subcatch.chms[SURFACE].sec_conc, 2);
                 // Transport and routing
                 Transport(kstep, chemtbl, &rttbl, ctrl, &subcatch); // 2021-05-20
-
+                ErrOnZeroRanged("main.c", "subcatch.chms[SURFACE].sec_conc", 102, subcatch.chms[SURFACE].sec_conc, 2);
                 // Transport changes total concentrations. Primary concentrations needs to be updated using total
                 // concentrations
                 UpdatePrimConc(&rttbl, ctrl, &subcatch);
+                ErrOnZeroRanged("main.c", "subcatch.chms[SURFACE].sec_conc", 106, subcatch.chms[SURFACE].sec_conc, 2);
                 
                 StreamSpeciation(kstep, chemtbl, ctrl, &rttbl, &subcatch);
+                ErrOnZeroRanged("main.c", "subcatch.chms[SURFACE].sec_conc", 109, subcatch.chms[SURFACE].sec_conc, 2);
 
                 PrintDailyResults(file_pointer, ctrl.transport_only, steps[kstep], &rttbl, &subcatch);
+                ErrOnZeroRanged("main.c", "subcatch.chms[SURFACE].sec_conc", 112, subcatch.chms[SURFACE].sec_conc, 2);
                 
                 if (ctrl.transport_only == KIN_REACTION)
                 {
                     // In reaction mode, simulate reaction for soil, and speciation for stream
+                    if (subcatch.q[kstep][Q0] > 0.1) {printf("Surface secondary after entering: "); PrintArray(subcatch.chms[SURFACE].sec_conc);}
                     Reaction(kstep, 86400.0, chemtbl, kintbl, &rttbl, &subcatch);
                 }
                 else
                 {
                     Speciation(chemtbl, ctrl, &rttbl, &subcatch);
                 }
+                ErrOnZeroRanged("main.c", "subcatch.chms[SURFACE].sec_conc", 123, subcatch.chms[SURFACE].sec_conc, 2);
             }
         }
 
@@ -122,7 +133,10 @@ int main(int argc, char *argv[])
 
     if (ctrl.precipchem_numexp == 1){
         CopyInitChemSubcatch(&rttbl, &subcatch, &subcatch_numexp);
-
+        // if (!CompareSubcatch(&subcatch, &subcatch_numexp, nsteps)) {
+        //     printf("The two subcatchments are not equal, exiting...\n");
+        //     exit(-1);
+        // }
         //sprintf(fn, "output/%s_results_numexp.txt", dir);
         {
             FILE* file_pointer;

@@ -161,3 +161,168 @@ void GetLogActivity(double tmpconc[MAXSPS], double gamma[MAXSPS], const double d
         tmpconc[i + offset] -= keq[i] + gamma[i + offset];
     }
 }
+
+bool CheckArrayForNan(const double arr[MAXSPS]) {
+    for (int i = 0; i < MAXSPS; i++) {
+        if (!isfinite(arr[i])) {
+            return false;
+        }
+    }
+
+    return true;
+}
+
+void ErrorOnArrayNan(const double arr[MAXSPS], const char* array_name, const char* filename, const int line_number) {
+    /* If an array contains a nan value, exit, or else do nothing */
+    if (!CheckArrayForNan(arr)) {
+        printf("Array '%s' in file '%s' near line %d contains nonfinite value, exiting...\n", array_name, filename, line_number);
+        PrintArray(arr);
+        exit(-1);
+    }
+
+    return;
+}
+
+void PrintArray(const double arr[MAXSPS]) {
+    // Print a constant sized array
+    for (int i = 0; i < MAXSPS; i++) {
+        printf("%g ", arr[i]);
+    }
+    printf("\n");
+}
+
+void CheckChmsForNonFinite(const ChemicalState* chms, const char* filename, const int line_number) {
+    /* Check a chemical state for any nan values */
+    const char* msg = "Chemical state entry ChemicalState->%s contained nonfinite value in file '%s' near line %d: \n";
+
+    if (!CheckArrayForNan(chms->tot_conc)) {
+        printf(msg, "tot_conc", filename, line_number);
+        PrintArray(chms->tot_conc);
+        exit(-1);
+    }
+    if (!CheckArrayForNan(chms->prim_conc)) {
+        printf(msg, "prim_conc", filename, line_number);
+        PrintArray(chms->prim_conc);
+        exit(-1);
+    }
+    if (!CheckArrayForNan(chms->sec_conc)) {
+        printf(msg, "sec_conc", filename, line_number);
+        PrintArray(chms->sec_conc);
+        exit(-1);
+    }
+    if (!CheckArrayForNan(chms->prim_actv)) {
+        printf(msg, "prim_actv", filename, line_number);
+        PrintArray(chms->prim_actv);
+        exit(-1);
+    }
+    if (!CheckArrayForNan(chms->ssa)) {
+        printf(msg, "ssa", filename, line_number);
+        PrintArray(chms->ssa);
+        exit(-1);
+    }
+    if (!CheckArrayForNan(chms->sw_thld)) {
+        printf(msg, "sw_thld", filename, line_number);
+        PrintArray(chms->sw_thld);
+        exit(-1);
+    }
+    if (!CheckArrayForNan(chms->sw_exp)) {
+        printf(msg, "sw_exp", filename, line_number);
+        PrintArray(chms->sw_exp);
+        exit(-1);
+    }
+    if (!CheckArrayForNan(chms->q10)) {
+        printf(msg, "q10", filename, line_number);
+        PrintArray(chms->q10);
+        exit(-1);
+    }
+    if (!CheckArrayForNan(chms->n_alpha)) {
+        printf(msg, "n_alpha", filename, line_number);
+        PrintArray(chms->n_alpha);
+        exit(-1);
+    }
+    if (!CheckArrayForNan(chms->tot_mol)) {
+        printf(msg, "tot_mol", filename, line_number);
+        PrintArray(chms->tot_mol);
+        exit(-1);
+    }
+}
+
+void ErrorOnArrayNanIter(const double arr[MAXSPS], const char* array_name, const char* filename, const int line_number, const int iter) {
+    /* If an array contains a nan value, exit, or else do nothing */
+    if (!CheckArrayForNan(arr)) {
+        printf("Array '%s' in file '%s' near line %d on iter %d contains NaN value, exiting...\n", array_name, filename, line_number, iter);
+        PrintArray(arr);
+        exit(-1);
+    }
+
+    return;   
+}
+
+bool CheckNonzeroRanged(const double arr[MAXSPS], const int num) {
+    const double TOL = 1e-15;
+    for (int i = 0; i < num; i++) {
+        if (fabs(arr[i]) < TOL) return false;
+    }
+    return true;
+}
+
+void ErrOnZeroRanged(const char* filename, const char* arr_name, const int line_number, const double arr[MAXSPS], const int num) {
+    if (!CheckNonzeroRanged(arr, num)) {
+        printf("Array '%s' in file '%s' near line '%d' contains zero value (ranged) when it shouldn't, exiting...\n", arr_name, filename, line_number);
+        PrintArray(arr);
+        exit(-1);
+    }
+    return;
+}
+
+bool CompareFloats(const double lhs, const double rhs) {
+    const double TOL = 1e-12;
+
+    return fabs(lhs - rhs) < TOL;
+}
+
+bool CompareArray(const double* lhs, const double* rhs, const int num) {
+    for (int i = 0; i < num; i++) {
+        if (CompareFloats(lhs[i], rhs[i])) return false;
+    }
+
+    return true;
+}
+
+bool CompareChemicalState(const ChemicalState* lhs, const ChemicalState* rhs) {
+    return CompareArray(lhs->tot_conc, rhs->tot_conc, MAXSPS)
+        && CompareArray(lhs->prim_conc, rhs->prim_conc, MAXSPS)
+        && CompareArray(lhs->prim_actv, rhs->prim_actv, MAXSPS)
+        && CompareArray(lhs->sec_conc, rhs->sec_conc, MAXSPS)
+        && CompareArray(lhs->ssa, rhs->ssa, MAXSPS)
+        && CompareArray(lhs->sw_thld, rhs->sw_thld, MAXSPS)
+        && CompareArray(lhs->sw_exp, rhs->sw_exp, MAXSPS)
+        && CompareArray(lhs->q10, rhs->q10, MAXSPS)
+        && CompareArray(lhs->n_alpha, rhs->n_alpha, MAXSPS)
+        && CompareArray(lhs->tot_mol, rhs->tot_mol, MAXSPS);
+}
+
+// Compare two subcatchments and determine whether the data in each is the same
+bool CompareSubcatch(const Subcatchment* lhs, const Subcatchment* rhs, const int num_steps) {
+    for (int i = 0; i < num_steps; i++) {
+        if (!CompareArray(lhs->ws[i], rhs->ws[i], NWS)) return false;
+        if (!CompareArray(lhs->q[i], rhs->q[i], NQ)) return false;
+    }
+
+    if (!(
+        CompareFloats(lhs->k1, rhs->k1) &&
+        CompareFloats(lhs->k2, rhs->k2) &&
+        CompareFloats(lhs->maxbas, rhs->maxbas) &&
+        CompareFloats(lhs->perc, rhs->perc) &&
+        CompareFloats(lhs->sfcf, rhs->sfcf) &&
+        CompareFloats(lhs->tt, rhs->tt)
+    )) return false;
+
+    for (int i = 0; i < NWS; i++) {
+        if (!CompareChemicalState(&lhs->chms[i], &rhs->chms[i])) return false;
+    }
+
+    if (!CompareChemicalState(&lhs->river_chms, &rhs->river_chms)) return false;
+
+    return true;
+}

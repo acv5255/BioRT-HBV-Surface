@@ -1,13 +1,13 @@
 #include "biort.h"
 
+const double SURFACE_STORAGE_MIN = 1.0; // 1 mm water, minimum water allowed in the surface zone
+
 void ReadHbvResults(const char dir[], int *nsteps, int *steps[], Subcatchment* subcatch, int mode)
 {
     FILE           *file_pointer;
     char            file_name[MAXSTRING];
     char            cmdstr[MAXSTRING];
-    int             kstep;
-    int             lno = 0;
-    int             i;
+    int             line_number = 0;
     int             len_numexp=1;
     int             numexp_file_flag=0;
 
@@ -57,9 +57,9 @@ void ReadHbvResults(const char dir[], int *nsteps, int *steps[], Subcatchment* s
     subcatch->q = (double (*)[NQ])malloc(len_numexp * *nsteps * sizeof(double[NQ]));
     subcatch->tmp = (double *)malloc(len_numexp * *nsteps * sizeof(double));
 
-    NextLine(file_pointer, cmdstr, &lno);     // Skip header line
+    NextLine(file_pointer, cmdstr, &line_number);     // Skip header line
 
-    for (kstep = 0; kstep < *nsteps; kstep++)
+    for (int kstep = 0; kstep < *nsteps; kstep++)
     {
         double          snow, sm;
 
@@ -122,24 +122,19 @@ void ReadHbvResults(const char dir[], int *nsteps, int *steps[], Subcatchment* s
     
     //Change PERC value for 1st time step using water storage for last timestep
     
-    subcatch->q[0][PERC] = MIN(subcatch->perc, subcatch->ws[kstep - 1][UZ] + subcatch->q[0][RECHG]);
+    subcatch->q[0][PERC] = MIN(subcatch->perc, subcatch->ws[*nsteps - 1][UZ] + subcatch->q[0][RECHG]);
 
     // Add 1. residual moisture to LZ & UZ and 2. SM to UZ
-    for (kstep = 0; kstep < *nsteps; kstep++)
+    for (int kstep = 0; kstep < *nsteps; kstep++)
     {
-        subcatch->ws[kstep][SURFACE]+= subcatch->soil_surface.ws_passive;
+        subcatch->ws[kstep][SURFACE]+= MIN(subcatch->soil_surface.ws_passive, STORAGE_MIN);
         subcatch->ws[kstep][UZ] += subcatch->soil_sz.ws_passive;
         subcatch->ws[kstep][LZ] += subcatch->soil_dz.ws_passive;
         subcatch->ws[kstep][UZ] += subcatch->ws[kstep][SM];
         
     }
-    for (kstep = 0; kstep < *nsteps; kstep++)
+    for (int kstep = 0; kstep < *nsteps; kstep++)
     {
-        //if (subcatch->ws[kstep][SURFACE] > (subcatch->d_surface * subcatch->porosity_surface))
-        //{
-            //biort_printf(VL_NORMAL, "\nWater storage in SURFACE exceeds maximum water storage capacity at line %d.\n", kstep);
-        //}
-        
         if (subcatch->ws[kstep][UZ] > (subcatch->soil_sz.depth * subcatch->soil_sz.porosity))
         {
             biort_printf(VL_ERROR, "\nWater storage in UZ exceeds maximum water storage capacity at line %d.\n", kstep);
@@ -158,12 +153,12 @@ void ReadHbvResults(const char dir[], int *nsteps, int *steps[], Subcatchment* s
     {
         if (len_numexp > 1)
         {
-            for (i = 1; i < len_numexp; i++)
+            for (int i = 1; i < len_numexp; i++)
             {
-                for (kstep = 0; kstep < *nsteps; kstep++)
+                for (int kstep = 0; kstep < *nsteps; kstep++)
                 {
                     subcatch->ws[(i * *nsteps)+kstep][SNOW] = subcatch->ws[kstep][SNOW];
-                    //subcatch->ws[(i * *nsteps)+kstep][SURFACE] = subcatch->ws[kstep][SURFACE];
+                    subcatch->ws[(i * *nsteps)+kstep][SURFACE] = subcatch->ws[kstep][SURFACE];
                     subcatch->ws[(i * *nsteps)+kstep][UZ] = subcatch->ws[kstep][UZ];
                     subcatch->ws[(i * *nsteps)+kstep][LZ] = subcatch->ws[kstep][LZ];
                     subcatch->q[(i * *nsteps)+kstep][PRECIP] = subcatch->q[kstep][PRECIP];
@@ -173,7 +168,6 @@ void ReadHbvResults(const char dir[], int *nsteps, int *steps[], Subcatchment* s
                     subcatch->q[(i * *nsteps)+kstep][Q1] = subcatch->q[kstep][Q1];
                     subcatch->q[(i * *nsteps)+kstep][Q2] = subcatch->q[kstep][Q2];
                     subcatch->tmp[(i * *nsteps)+kstep] = subcatch->tmp[kstep];
-                    //biort_printf(VL_NORMAL, "\n%d kstep: PERC%d\n", kstep, subcatch->q[kstep][PERC]);
                 }
             }
         }

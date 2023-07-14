@@ -2,44 +2,43 @@
 
 // Initialize RT structures
 void InitChem(const char dir[], const CalibrationStruct *calib, const ControlData ctrl, ChemTableEntry chemtbl[],
-    KineticTableEntry kintbl[], ReactionNetwork *rttbl, Subcatchment subcatch[])
+    KineticTableEntry kintbl[], ReactionNetwork *rttbl, Subcatchment* subcatch)
 {
-    char            fn[MAXSTRING];
-    int             kspc;
-    int             ksub = 0;
-    FILE           *fp;
+    char            file_name[MAXSTRING];
+    FILE           *file_pointer;
 
     // LOOK UP DATABASE TO FIND REQUIRED PARAMETERS AND DEPENDENCIES FOR CHEMICAL SPECIES IN CDBS.TXT
-    sprintf(fn, "input/%s/cdbs.txt", dir);
-    fp = fopen(fn, "r");
+    sprintf(file_name, "input/%s/cdbs.txt", dir);
+    file_pointer = fopen(file_name, "r");
 
-    Lookup(fp, calib, chemtbl, kintbl, rttbl);
-    fclose(fp);
+    Lookup(file_pointer, calib, chemtbl, kintbl, rttbl);
+    fclose(file_pointer);
 
-    for (kspc = 0; kspc < rttbl->num_stc; kspc++)
+    for (int kspc = 0; kspc < rttbl->num_stc; kspc++)
     {
         // Apply calibration
-        //subcatch[ksub].chms[SNOW].ssa[kspc] *= (chemtbl[kspc].itype == MINERAL) ? calib->ssa : 1.0;   // 2021-05-07
-        subcatch[ksub].chms[UZ].ssa[kspc] *= (chemtbl[kspc].itype == MINERAL) ? calib->ssa : 1.0;
-        subcatch[ksub].chms[LZ].ssa[kspc] *= (chemtbl[kspc].itype == MINERAL) ? calib->ssa : 1.0;
+        // subcatch->chms[SNOW].ssa[kspc] *= (chemtbl[kspc].itype == MINERAL) ? calib->ssa : 1.0;   // 2021-05-07
+        subcatch->chms[UZ].ssa[kspc] *= (chemtbl[kspc].itype == MINERAL) ? calib->ssa : 1.0;
+        subcatch->chms[LZ].ssa[kspc] *= (chemtbl[kspc].itype == MINERAL) ? calib->ssa : 1.0;
 
         // Snow and soil moisture zone should have the same concentrations as the upper zone at the beginning
-        subcatch[ksub].chms[SNOW].tot_conc[kspc] = subcatch[ksub].chms[UZ].tot_conc[kspc];
-        subcatch[ksub].chms[SNOW].prim_conc[kspc] = subcatch[ksub].chms[SNOW].tot_conc[kspc];
-        subcatch[ksub].chms[SNOW].ssa[kspc] = subcatch[ksub].chms[UZ].ssa[kspc];
-        subcatch[ksub].chms[SNOW].tot_mol[kspc] =
-            subcatch[ksub].chms[SNOW].tot_conc[kspc] * subcatch[ksub].ws[0][SNOW];
+        subcatch->chms[SNOW].tot_conc[kspc] = subcatch->chms[UZ].tot_conc[kspc];
+        subcatch->chms[SNOW].prim_conc[kspc] = subcatch->chms[SNOW].tot_conc[kspc];
+        subcatch->chms[SNOW].ssa[kspc] = subcatch->chms[UZ].ssa[kspc];
+        subcatch->chms[SNOW].tot_mol[kspc] =
+            subcatch->chms[SNOW].tot_conc[kspc] * subcatch->ws[0][SNOW];
     }
 
     // Initialize upper and lower zone concentrations taking into account speciation
-    //InitChemState(subcatch[ksub].porosity_surface, subcatch[ksub].ws[0][SURFACE], chemtbl, rttbl, ctrl,    // 2021-05-07
-    //    &subcatch[ksub].chms[SURFACE]);
-    // InitChemState(subcatch[ksub].soil_surface.porosity, subcatch[ksub].ws[0][SURFACE], chemtbl, rttbl, ctrl,
-    //     &subcatch[ksub].chms[UZ]);
-    InitChemState(subcatch[ksub].soil_sz.porosity, subcatch[ksub].ws[0][UZ], chemtbl, rttbl, ctrl,
-        &subcatch[ksub].chms[UZ]);
-    InitChemState(subcatch[ksub].soil_dz.porosity, subcatch[ksub].ws[0][LZ], chemtbl, rttbl, ctrl,
-        &subcatch[ksub].chms[LZ]);
+    InitChemState(subcatch->soil_surface.porosity, subcatch->ws[0][SURFACE], chemtbl, rttbl, ctrl,
+        &subcatch->chms[SURFACE]);
+    CheckChmsForNonFinite(&subcatch->chms[SURFACE], "init.c", 35);
+    InitChemState(subcatch->soil_sz.porosity, subcatch->ws[0][UZ], chemtbl, rttbl, ctrl,
+        &subcatch->chms[UZ]);
+    CheckChmsForNonFinite(&subcatch->chms[UZ], "init.c", 38);
+    InitChemState(subcatch->soil_dz.porosity, subcatch->ws[0][LZ], chemtbl, rttbl, ctrl,
+        &subcatch->chms[LZ]);
+    CheckChmsForNonFinite(&subcatch->chms[LZ], "init.c", 41);
 }
 
 void InitChemState(double smcmax, double vol, const ChemTableEntry chemtbl[], const ReactionNetwork *rttbl,

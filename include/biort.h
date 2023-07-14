@@ -217,7 +217,7 @@ int             FindChem(const char [MAXSTRING], int, const ChemTableEntry[]);
 void            FreeStruct(int *steps[], Subcatchment subcatch[]);
 int             GetDifference(int, int);
 void            InitChem(const char [], const CalibrationStruct *, const ControlData ctrl, ChemTableEntry [],
-    KineticTableEntry [], ReactionNetwork *, Subcatchment []);
+    KineticTableEntry [], ReactionNetwork *, Subcatchment* subcatch);
 void            InitChemState(double, double, const ChemTableEntry [], const ReactionNetwork *, const ControlData ctrl,
     ChemicalState *);
 void            Lookup(FILE *, const CalibrationStruct *, ChemTableEntry [], KineticTableEntry [], ReactionNetwork *);
@@ -267,7 +267,13 @@ void            UnwrapParentheses(const char wrapped_str[], char str[]);
 void            UpdatePrimConc(const ReactionNetwork *rttbl, const ControlData ctrl, Subcatchment* subcatch);
 
 // Andrew's functions
+bool            CheckArrayForNan(const double arr[MAXSPS]);
+void            CheckChmsForNonFinite(const ChemicalState* chms, const char* filename, const int line_number);
+bool            CheckNonzeroRanged(const double arr[MAXSPS], const int num);
+void            ErrOnZeroRanged(const char* filename, const char* arr_name, const int line_number, const double arr[MAXSPS], const int num);
 void            ComputeDependence(double tmpconc[MAXSPS], const double dep_mtx[MAXSPS][MAXSPS], const double keq[MAXSPS], int num_rows, int num_cols, int offset);
+void            ErrorOnArrayNan(const double arr[MAXSPS], const char* array_name, const char* filename, const int line_number);
+void            ErrorOnArrayNanIter(const double arr[MAXSPS], const char* array_name, const char* filename, const int line_number, const int iter);
 void            GetLogActivity(double tmpconc[MAXSPS], double gamma[MAXSPS], const double dep_mtx[MAXSPS][MAXSPS], const double keq[MAXSPS], int num_rows, int num_cols, int offset);
 void            GetSecondarySpecies(double conc[MAXSPS], const double gamma[MAXSPS], const ReactionNetwork* rttbl);
 void            GetSurfaceAreaRange(double area[MAXSPS], const double prim_conc[MAXSPS], const double ssa[MAXSPS], const ChemTableEntry chemtbl[], int start, int end, int offset);
@@ -275,6 +281,7 @@ void            GetTempFactorRange(double ftemp[MAXSPS], const double q10[MAXSPS
 void            GetWTDepthFactorRange(double fzw[MAXSPS], double Zw, const double n_alpha[MAXSPS], int start, int end, int offset);
 void            Log10Arr(const double src[MAXSPS], double dst[MAXSPS], int num_species);
 void            Pow10Arr(const double src[MAXSPS], double dst[MAXSPS], int num_species);
+void            PrintArray(const double arr[MAXSPS]);
 void            SetZero(double arr[MAXSPS]);
 void            SetZeroRange(double arr[MAXSPS], int start, int end);
 void            SoilMoistFactorRange(double dst[MAXSPS], double satn, const double sw_threshold[MAXSPS], const double sw_exponent[MAXSPS], 
@@ -284,4 +291,6 @@ double          SumArr(const double arr[MAXSPS], int num_species);
 void            TransportDeepZone(const ReactionNetwork* rttbl, const ChemTableEntry chemtbl[], Subcatchment* subcatch, const int step);
 void            TransportShallowZone(const ReactionNetwork* rttbl, const ChemTableEntry chemtbl[], Subcatchment* subcatch, const int step);
 void            TransportSurfaceZone(const ReactionNetwork* rttbl, const ControlData ctrl, Subcatchment* subcatch, const int step);
+
+bool            CompareSubcatch(const Subcatchment* lhs, const Subcatchment* rhs, const int num);
 #endif

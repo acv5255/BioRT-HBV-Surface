@@ -186,7 +186,7 @@ void ErrorOnArrayNan(const double arr[MAXSPS], const char* array_name, const cha
 void PrintArray(const double arr[MAXSPS]) {
     // Print a constant sized array
     for (int i = 0; i < MAXSPS; i++) {
-        printf("%g ", arr[i]);
+        printf("%.4g  ", arr[i]);
     }
     printf("\n");
 }
@@ -325,4 +325,46 @@ bool CompareSubcatch(const Subcatchment* lhs, const Subcatchment* rhs, const int
     if (!CompareChemicalState(&lhs->river_chms, &rhs->river_chms)) return false;
 
     return true;
+}
+
+void PrintMatrix(const realtype** mat, const int nrows, const int ncols) {
+    // Print a matrix
+    for (int i =0; i < nrows; i++) {
+        for (int j = 0; j < ncols; j++) {
+            printf("%8g\t", mat[i][j]);
+        }
+        printf("\n");
+    }
+}
+
+// Print all the values in a chemical state
+void PrintChemicalState(const ChemicalState* chms) {
+    printf("Total concentration: ");
+    PrintArray(chms->tot_conc);
+
+    printf("Total moles: ");
+    PrintArray(chms->tot_mol);
+    
+    printf("Primary concentration: ");
+    PrintArray(chms->prim_conc);
+
+    printf("Secondary concentration: ");
+    PrintArray(chms->sec_conc);
+
+    printf("SSA: ");
+    PrintArray(chms->ssa);
+
+    printf("SW Threshold: ");
+    PrintArray(chms->sw_thld);
+
+    printf("SW Exponent: ");
+    PrintArray(chms->sw_exp);
+
+    printf("Q10: ");
+    PrintArray(chms->q10);
+
+    printf("N_alpha: ");
+    PrintArray(chms->n_alpha);
+
+    return;
 }

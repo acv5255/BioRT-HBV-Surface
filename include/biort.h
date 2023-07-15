@@ -282,6 +282,7 @@ void            GetWTDepthFactorRange(double fzw[MAXSPS], double Zw, const doubl
 void            Log10Arr(const double src[MAXSPS], double dst[MAXSPS], int num_species);
 void            Pow10Arr(const double src[MAXSPS], double dst[MAXSPS], int num_species);
 void            PrintArray(const double arr[MAXSPS]);
+void            PrintMatrix(const realtype** mat, const int nrows, const int ncols);
 void            SetZero(double arr[MAXSPS]);
 void            SetZeroRange(double arr[MAXSPS], int start, int end);
 void            SoilMoistFactorRange(double dst[MAXSPS], double satn, const double sw_threshold[MAXSPS], const double sw_exponent[MAXSPS], 
@@ -291,6 +292,8 @@ double          SumArr(const double arr[MAXSPS], int num_species);
 void            TransportDeepZone(const ReactionNetwork* rttbl, const ChemTableEntry chemtbl[], Subcatchment* subcatch, const int step);
 void            TransportShallowZone(const ReactionNetwork* rttbl, const ChemTableEntry chemtbl[], Subcatchment* subcatch, const int step);
 void            TransportSurfaceZone(const ReactionNetwork* rttbl, const ControlData ctrl, Subcatchment* subcatch, const int step);
+
+void            PrintChemicalState(const ChemicalState* chms);
 
 bool            CompareSubcatch(const Subcatchment* lhs, const Subcatchment* rhs, const int num);
 #endif

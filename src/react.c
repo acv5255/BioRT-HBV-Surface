@@ -1,5 +1,9 @@
 #include "biort.h"
 
+const double SATN_MINIMUM = 1e-4;       // Minimum saturation to initiate kinetic reactions
+const int MAX_ITERATIONS = 25;
+const double MINIMUM_SUBSTEP = 1e-20;
+
 void GetIAP(double iap[MAXSPS], const double activity[MAXSPS], const double dep_kin[MAXSPS][MAXSPS], int num_reactions, int num_stc) {
     for (int i = 0; i < num_reactions; i++) {
         iap[i] = 0.0;
@@ -80,18 +84,14 @@ void ReactZone(const int kzone, const double temp, const SoilConstants soil, con
     }
 
     double satn = tot_water / (soil.depth * soil.porosity);  // add porosity for saturation calculation
-        satn = MIN(satn, 1.0);
+    satn = MIN(satn, 1.0);
 
-    if (kzone == SURFACE) {
-    //     // printf("satn for surface zone: %f\n", satn);
-        satn = 1.0;
-    }
     CheckChmsForNonFinite(&subcatch->chms[kzone], "react.c", 80);
     if (!CheckArrayForNan(subcatch->react_rate[kzone])) {
         printf("ChemicalState->react_rate contains nan in 'react.c' near line 82 with kzone = %d", kzone);
     }
 
-    if (satn > 1.0E-2)
+    if (satn > SATN_MINIMUM)
     {
         substep = ReactControl(chemtbl, kintbl, rttbl, stepsize, soil.porosity, soil.depth, satn, temp, Zw,
             subcatch->react_rate[kzone], &subcatch->chms[kzone]);
@@ -140,15 +140,15 @@ void GetRates(double rate[MAXSPS], double rate_spe[MAXSPS], const double area[MA
 
 }
 
-
 void Reaction(int kstep, double stepsize, const ChemTableEntry chemtbl[],
     const KineticTableEntry kintbl[], const ReactionNetwork *rttbl, Subcatchment* subcatch)
 {
     const double temp = subcatch->tmp[kstep];
-    if (subcatch->q[kstep][Q0] > 0.1) {
-        printf("Running surface reactions for step %d\n", kstep);
+    if (subcatch->q[kstep][Q0] >= 0.1) {
+        // printf("Starting surface reactions with a water value of %g mm\n", subcatch->q[kstep][Q0]);
+        // printf("Surface zone chemical state before reactions: \n");
+        // PrintChemicalState(&subcatch->chms[SURFACE]);
         ErrOnZeroRanged("react.c", "subcatch->chms[SURFACE].sec_conc", 150, subcatch->chms[SURFACE].sec_conc, rttbl->num_ssc);
-        printf("Surface secondary after entering: "); PrintArray(subcatch->chms[SURFACE].sec_conc);
         ReactZone(SURFACE, temp, subcatch->soil_surface, subcatch->q[kstep][Q0], chemtbl, kintbl, rttbl, stepsize, subcatch);
     }
     CheckChmsForNonFinite(&subcatch->chms[SURFACE], "react.c", 153);
@@ -170,9 +170,10 @@ int SolveReact(double stepsize, const ChemTableEntry chemtbl[], const KineticTab
     double          rate_pre[MAXSPS];
     double          rate_spe[MAXSPS];
     double          rate_spet[MAXSPS];
-    const double    TMPPRB = 1.0E-2;
+    const double    TMPPRB = 1.0E-4;
     const double    TMPPRB_INV = 1.0 / TMPPRB;
     const double    inv_sat = 1.0 / satn;//inv_sat(L of porous space/L of water)= 1/sat(L of water/L of porous space)
+    SetZero(tmpconc); SetZero(tot_conc);
     CheckChmsForNonFinite(chms, "react.c", 174);
     ErrOnZeroRanged("react.c", "chms->sec_conc", 175, chms->sec_conc, rttbl->num_ssc);
     {
@@ -185,7 +186,6 @@ int SolveReact(double stepsize, const ChemTableEntry chemtbl[], const KineticTab
     }
 
     SoilMoistFactorRange(fsw, satn, chms->sw_thld, chms->sw_exp, rttbl->num_stc - rttbl->num_min, rttbl->num_stc, rttbl->num_stc - rttbl->num_min);
-    SetZero(tmpconc); SetZero(tot_conc);
     SetZeroRange(rate_spe, 0, rttbl->num_stc);
     GetRates(rate_pre, rate_spe, area, ftemp, fsw, fzw, rttbl, kintbl, chms);
 
@@ -256,7 +256,8 @@ int SolveReact(double stepsize, const ChemTableEntry chemtbl[], const KineticTab
     double max_error = 0.0;
     do
     {
-        realtype** jcb = newDenseMat(rttbl->num_stc - rttbl->num_min, rttbl->num_stc - rttbl->num_min);
+        const int matrix_dimension = rttbl->num_stc - rttbl->num_min;
+        realtype** jcb = newDenseMat(matrix_dimension, matrix_dimension);
         double          residue[MAXSPS];
         double          residue_t[MAXSPS];
         sunindextype    p[MAXSPS];
@@ -397,15 +398,20 @@ int SolveReact(double stepsize, const ChemTableEntry chemtbl[], const KineticTab
         }
 
         control++;
-        if (control > 10)   // Only allow a maximum of 10 model steps for a single time step before failing
+        if (control > MAX_ITERATIONS)   // Limit the model steps
         {
+            // biort_printf(VL_NORMAL, "React failed to converge...\n");
+            // printf("Failed to converge with stepsize of %g\n", stepsize);
+            // printf("Jacobian matrix: \n");
+            // PrintMatrix((const realtype**)jcb, matrix_dimension, matrix_dimension);
             destroyMat(jcb);
-            biort_printf(VL_NORMAL, "React failed to converge...\n");
+            // printf("\n\n");
             return 1;
+            // exit(-1);
         }
         destroyMat(jcb);
     } while (max_error > TOLERANCE);
-    
+
     ErrorOnArrayNan(tmpconc, "tmpconc", "react.c", 385);
     ErrorOnArrayNan(gamma, "gamma", "react.c", 386);
     ErrorOnArrayNan(tot_conc, "tot_conc", "react.c", 388);
@@ -478,7 +484,7 @@ double ReactControl(const ChemTableEntry chemtbl[], const KineticTableEntry kint
 
     substep = stepsize;
 
-    while (1.0 - step_counter / stepsize > 1.0E-10 && substep > 1.0E-30)
+    while (1.0 - step_counter / stepsize > 1.0E-10 && substep > MINIMUM_SUBSTEP)
     {
         CheckChmsForNonFinite(chms, "react.c", 451);
         int flag = SolveReact(substep, chemtbl, kintbl, rttbl, satn, temp, porosity, Zw, chms);
@@ -497,7 +503,9 @@ double ReactControl(const ChemTableEntry chemtbl[], const KineticTableEntry kint
 
     if (roundi(step_counter) != roundi(stepsize))   // Reactions fail
     {
-        return -substep;
+        printf("Failed to converge with stepsize %g\n", substep);
+        // return -substep;
+        exit(-1);
     }
     else    // Reactions succeed
     {

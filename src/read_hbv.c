@@ -1,6 +1,6 @@
 #include "biort.h"
 
-const double SURFACE_STORAGE_MIN = 1.0; // 1 mm water, minimum water allowed in the surface zone
+const double SURFACE_STORAGE_MIN = 1e-5; // 1 mm water, minimum water allowed in the surface zone
 
 void ReadHbvResults(const char dir[], int *nsteps, int *steps[], Subcatchment* subcatch, int mode)
 {
@@ -128,11 +128,13 @@ void ReadHbvResults(const char dir[], int *nsteps, int *steps[], Subcatchment* s
     for (int kstep = 0; kstep < *nsteps; kstep++)
     {
         subcatch->ws[kstep][SURFACE]+= MIN(subcatch->soil_surface.ws_passive, STORAGE_MIN);
+        if (subcatch->q[kstep][Q0] > 0.0) subcatch->ws[kstep][SURFACE] = subcatch->q[kstep][Q0];
         subcatch->ws[kstep][UZ] += subcatch->soil_sz.ws_passive;
         subcatch->ws[kstep][LZ] += subcatch->soil_dz.ws_passive;
         subcatch->ws[kstep][UZ] += subcatch->ws[kstep][SM];
         
     }
+
     for (int kstep = 0; kstep < *nsteps; kstep++)
     {
         if (subcatch->ws[kstep][UZ] > (subcatch->soil_sz.depth * subcatch->soil_sz.porosity))

@@ -1,0 +1,226 @@
+SOIL PARAMTERS
+  Surface zone porosity is 0.50 m3 m-3.
+  Upper zone porosity is 0.50 m3 m-3.
+  Lower zone porosity is 0.05 m3 m-3.
+  Surface zone passive water storage is 1.00 mm.
+  Upper zone passive water storage is 50.00 mm.
+  Lower zone passive water storage is 900.00 mm.
+  Depth of surface zone is 1000.00 mm.
+  Depth of upper zone is 2000.00 mm.
+  Depth of lower zone is 20000.00 mm.
+
+HBV MODEL PARAMETERS
+  Percolation rate is 4.00 mm day-1
+  K1 is 0.40 day-1
+  K2 is 0.20 day-1
+  Routing parameter is 1.50
+  TT is -1.50
+  SFCF is 1.00
+
+BIORT CONTROL PARAMETERS
+  Forcing recycle 2 time(s). 
+  Activity correction is set to 1. 
+  Transport only mode disabled.
+  Using time-series precipitation chemistry in precipchem.txt. 
+  Using different precipitation chemistry during warmup and simulation run. 
+  Temperature = 25.0 
+
+PRIMARY SPECIES
+  5 chemical species specified. 
+  3 aqueous species specified. 
+  0 surface complexation specified. 
+  1 cation exchange specified. 
+  1 minerals specified. 
+
+SECONDARY SPECIES
+  2 secondary species specified. 
+
+MINERAL KINETIC REACTIONS
+  1 mineral kinetic reaction(s) specified. 
+  Kinetic reaction on 'SOC' is specified, label 'test'.
+  Position_check (num_mkr[i] vs num_stc[j]) (0, 4)
+INITIAL CONCENTRATIONS:
+	PRECIPITATION:
+		AQUEOUS: pH
+			Concentration       : 4.3
+		AQUEOUS: Cl-
+			Concentration       : 1e-05
+		AQUEOUS: DOC
+			Concentration       : 1e-07
+		MINERAL: SOC
+			Volume Fraction     : 1e-10
+			SSA                 : 0
+			Q10                 : 0
+			SW Threshold        : 0
+			SW Exponent         : 0
+			N_alpha             : 0
+		AQUEOUS: X-
+			Concentration       : 1e-10
+	SURFACE:
+		AQUEOUS: pH
+			Concentration       : 4.3
+		AQUEOUS: Cl-
+			Concentration       : 1e-05
+		AQUEOUS: DOC
+			Concentration       : 0.01
+		MINERAL: SOC
+			Volume Fraction     : 0.01
+			SSA                 : 5
+			Q10                 : 1
+			SW Threshold        : 1
+			SW Exponent         : 0
+			N_alpha             : 0
+		AQUEOUS: X-
+			Concentration       : 1e-06
+	SHALLOW ZONE:
+		AQUEOUS: pH
+			Concentration       : 4.56
+		AQUEOUS: Cl-
+			Concentration       : 3.69e-05
+		AQUEOUS: DOC
+			Concentration       : 2e-05
+		MINERAL: SOC
+			Volume Fraction     : 0.02
+			SSA                 : 5
+			Q10                 : 2
+			SW Threshold        : 0.7
+			SW Exponent         : 1.5
+			N_alpha             : 0.002
+		AQUEOUS: X-
+			Concentration       : 5.2e-05
+	DEEP ZONE:
+		AQUEOUS: pH
+			Concentration       : 4.56
+		AQUEOUS: Cl-
+			Concentration       : 3.69e-05
+		AQUEOUS: DOC
+			Concentration       : 2e-05
+		MINERAL: SOC
+			Volume Fraction     : 0.002
+			SSA                 : 5
+			Q10                 : 2
+			SW Threshold        : 0.7
+			SW Exponent         : 1.5
+			N_alpha             : 0
+		AQUEOUS: X-
+			Concentration       : 5.2e-05
+
+
+
+READING TIME-SERIES PRECIPITATION CHEMISTRY from "precipchem.txt"
+
+Hydrology in input/KonzaSurface/Results.txt will be used for numerical experiment.
+
+READING TIME-SERIES PRECIPITATION CHEMISTRY from "Numexp_precipchem.txt"
+
+DATABASE
+
+ Temperature point 25.00 found in database (Pos. 2).
+
+ Debye-Huckel Parameters set to A=0.5114; B=0.3288; b=0.0410
+
+ Primary species 'DOC' found in database.
+ molar_mass = 300.0000
+
+ Primary species 'Cl-' found in database.
+ molar_mass = 35.4527
+
+ Primary species 'H+' found in database.
+ molar_mass = 1.0079
+
+ Secondary species 'OH-' found in database!
+ 'OH-' 2   -1.0000 'H+'    1.0000 'H2O'   14.9398    13.9951    13.0272    12.2551    11.6308    11.2836    11.1675    11.3002  3.5 -1.0 17.0073
+ Keq = 13.9951
+ molar_mass = 17.0073, Charge = -1.0000, SizeFactor = 3.5000
+
+ Mineral 'SOC' found in database!
+ 'SOC'  4166.7  1 1.0000 'DOC'   -3.00  -3.00  -3.00  -3.00  -3.00  -3.00  -3.00  -3.00  5000
+ Keq = -3.0000
+ molar_mass = 5000.0000, molar_vol = 4166.7000
+
+ Selecting the kinetic species 'SOC' from all possible species.
+
+ Secondary ion exchange 'XDOC' found in database!
+ 'XDOC'  2 1.0 'X-'  1.0 'DOC'  -0.20  0.000
+ Keq = -0.2000 
+ After calibration: Keq = -0.2000 
+ 
+ Mineral kinetics 'SOC' test found in database!
+ Rate is -13.600000
+ After calibration: Rate is -13.600000, calib->Rate = 0.000000 
+ Activation is 0.000000
+ No dependency.
+ Biomass species: 'C5H7O2N(s)' 
+ Biomass species position: -999 
+ Monod term: 'SOC' 0.000600
+ 
+ Dependency Matrix!
+               'H+'          'Cl-'         'DOC'         'X-'          
+ 'OH-'         -1.00         0.00          0.00          0.00            14.00
+ 'XDOC'        0.00          0.00          1.00          1.00            -0.20
+ 
+ Total Concentration Matrix!
+                  'H+'          'Cl-'         'DOC'         'X-'          'SOC'         'OH-'         'XDOC'        
+ Sum'H+'          1.00          0.00          0.00          0.00          0.00          -1.00         0.00          
+ Sum'Cl-'         0.00          1.00          0.00          0.00          0.00          0.00          0.00          
+ Sum'DOC'         0.00          0.00          1.00          0.00          0.00          0.00          1.00          
+ Sum'X-'          0.00          0.00          0.00          1.00          0.00          0.00          1.00          
+ Sum'SOC'         0.00          0.00          0.00          0.00          1.00          0.00          0.00          
+ 
+ Kinetic Mass Matrix!
+               'H+'          'Cl-'         'DOC'         'X-'          'SOC'         
+ 'SOC'         0.000000      0.000000      1.000000      0.000000      -1.000000      Keq = -3.00 
+ 
+ Mass action species type determination (0: immobile, 1: mobile, 2: Mixed) 
+         'H+'             1
+        'Cl-'             1
+        'DOC'             2
+ 
+ Individual species type determination (1: aqueous, 2: adsorption, 3: ion exchange, 4: solid)
+         'H+'             1
+        'Cl-'             1
+        'DOC'             1
+         'X-'             3
+        'SOC'             4
+        'OH-'             1
+       'XDOC'             3
+Surface total concentration at before starting: 
+5.044e-05  1e-05  0.01  0.001325  0.0024  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0  
+Surface zone chemistry before starting loops: 
+Total concentration: 5.044e-05  1e-05  0.01  0.001325  0.0024  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0  
+Total moles: 5.044e-06  1e-06  0.001  0.0001325  0.00024  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0  
+Primary concentration: 5.044e-05  1e-05  0.009979  0.001304  0.0024  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0  
+Secondary concentration: 2.031e-10  2.063e-05  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0  
+SSA: 0  0  0  0  5  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0  
+SW Threshold: 0  0  0  0  1  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0  
+SW Exponent: 0  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0  
+Q10: 0  0  0  0  1  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0  
+N_alpha: 0  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0  
+
+HBV-BioRT KonzaSurface simulation started.
+
+
+Surface zone at the start of step 0: 
+Total concentration: 5.044e-05  1e-05  0.01  0.001325  0.0024  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0  
+Total moles: 5.044e-06  1e-06  0.001  0.0001325  0.00024  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0  
+Primary concentration: 5.044e-05  1e-05  0.009979  0.001304  0.0024  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0  
+Secondary concentration: 2.031e-10  2.063e-05  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0  
+SSA: 0  0  0  0  5  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0  
+SW Threshold: 0  0  0  0  1  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0  
+SW Exponent: 0  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0  
+Q10: 0  0  0  0  1  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0  
+N_alpha: 0  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0  
+
+
+Surface zone before 'Reaction' at step 0: 
+Total concentration: -nan  -nan  -nan  0.001325  0.0024  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0  
+Total moles: -nan  -nan  -nan  0.0001325  0.00024  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0  
+Primary concentration: -nan  -nan  -nan  0.001304  0.0024  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0  
+Secondary concentration: 2.031e-10  2.063e-05  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0  
+SSA: 0  0  0  0  5  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0  
+SW Threshold: 0  0  0  0  1  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0  
+SW Exponent: 0  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0  
+Q10: 0  0  0  0  1  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0  
+N_alpha: 0  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0  
+Chemical state entry ChemicalState->tot_conc contained nonfinite value in file 'react.c' near line 80: 
+-nan  -nan  -nan  0.001325  0.0024  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0  

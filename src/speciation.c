@@ -30,7 +30,7 @@ int SolveSpeciation(const ChemTableEntry chemtbl[], const ControlData ctrl, cons
     double          tot_conc[MAXSPS];
     double          gamma[MAXSPS];
     double          maxerror;
-    const double    TMPPRB = 1E-2;
+    const double    TMPPRB = 1E-4;
 
     // If speciation flg = 1, pH is defined. Total concentration is calculated from the activity of H+. Dependency is
     // the same but the total concentration for H+ does not need to be solved.

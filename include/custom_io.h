@@ -1,5 +1,4 @@
-#ifndef CUCTOMIO_HEADER
-#define CUCTOMIO_HEADER
+#pragma once
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -31,5 +30,3 @@ int             CountOccurr(FILE *, const char *);
 void            FindLine(FILE *, const char *, int *, const char *);
 int             NextLine(FILE *, char *, int *);
 int             NonBlank(char *);
-
-#endif

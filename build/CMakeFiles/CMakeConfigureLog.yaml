@@ -1555,3 +1555,46 @@ events:
         
       exitCode: 0
 ...
+
+---
+events:
+  -
+    kind: "try_compile-v1"
+    backtrace:
+      - "dep/cvode/config/SundialsPOSIXTimers.cmake:73 (try_compile)"
+      - "dep/cvode/CMakeLists.txt:357 (INCLUDE)"
+    directories:
+      source: "/home/andrew/Documents/GitHub/surface/HBV-BioRT/build/dep/cvode/PosixTimersTest"
+      binary: "/home/andrew/Documents/GitHub/surface/HBV-BioRT/build/dep/cvode/PosixTimersTest"
+    buildResult:
+      variable: "POSIX_TIMERS_TEST_OK"
+      cached: true
+      stdout: |
+        Change Dir: '/home/andrew/Documents/GitHub/surface/HBV-BioRT/build/dep/cvode/PosixTimersTest'
+        
+        Run Build Command(s): /usr/local/bin/cmake -E env VERBOSE=1 /usr/bin/gmake -f Makefile
+        /usr/local/bin/cmake -S/home/andrew/Documents/GitHub/surface/HBV-BioRT/build/dep/cvode/PosixTimersTest -B/home/andrew/Documents/GitHub/surface/HBV-BioRT/build/dep/cvode/PosixTimersTest --check-build-system CMakeFiles/Makefile.cmake 0
+        /usr/local/bin/cmake -E cmake_progress_start /home/andrew/Documents/GitHub/surface/HBV-BioRT/build/dep/cvode/PosixTimersTest/CMakeFiles /home/andrew/Documents/GitHub/surface/HBV-BioRT/build/dep/cvode/PosixTimersTest//CMakeFiles/progress.marks
+        /usr/bin/gmake  -f CMakeFiles/Makefile2 all
+        gmake[1]: Entering directory '/home/andrew/Documents/GitHub/surface/HBV-BioRT/build/dep/cvode/PosixTimersTest'
+        /usr/bin/gmake  -f CMakeFiles/posixtimerstest.dir/build.make CMakeFiles/posixtimerstest.dir/depend
+        gmake[2]: Entering directory '/home/andrew/Documents/GitHub/surface/HBV-BioRT/build/dep/cvode/PosixTimersTest'
+        cd /home/andrew/Documents/GitHub/surface/HBV-BioRT/build/dep/cvode/PosixTimersTest && /usr/local/bin/cmake -E cmake_depends "Unix Makefiles" /home/andrew/Documents/GitHub/surface/HBV-BioRT/build/dep/cvode/PosixTimersTest /home/andrew/Documents/GitHub/surface/HBV-BioRT/build/dep/cvode/PosixTimersTest /home/andrew/Documents/GitHub/surface/HBV-BioRT/build/dep/cvode/PosixTimersTest /home/andrew/Documents/GitHub/surface/HBV-BioRT/build/dep/cvode/PosixTimersTest /home/andrew/Documents/GitHub/surface/HBV-BioRT/build/dep/cvode/PosixTimersTest/CMakeFiles/posixtimerstest.dir/DependInfo.cmake
+        Dependee "/home/andrew/Documents/GitHub/surface/HBV-BioRT/build/dep/cvode/PosixTimersTest/CMakeFiles/posixtimerstest.dir/DependInfo.cmake" is newer than depender "/home/andrew/Documents/GitHub/surface/HBV-BioRT/build/dep/cvode/PosixTimersTest/CMakeFiles/posixtimerstest.dir/depend.internal".
+        Dependee "/home/andrew/Documents/GitHub/surface/HBV-BioRT/build/dep/cvode/PosixTimersTest/CMakeFiles/CMakeDirectoryInformation.cmake" is newer than depender "/home/andrew/Documents/GitHub/surface/HBV-BioRT/build/dep/cvode/PosixTimersTest/CMakeFiles/posixtimerstest.dir/depend.internal".
+        Scanning dependencies of target posixtimerstest
+        gmake[2]: Leaving directory '/home/andrew/Documents/GitHub/surface/HBV-BioRT/build/dep/cvode/PosixTimersTest'
+        /usr/bin/gmake  -f CMakeFiles/posixtimerstest.dir/build.make CMakeFiles/posixtimerstest.dir/build
+        gmake[2]: Entering directory '/home/andrew/Documents/GitHub/surface/HBV-BioRT/build/dep/cvode/PosixTimersTest'
+        [ 50%] Building C object CMakeFiles/posixtimerstest.dir/posixtimerstest.c.o
+        /usr/bin/gcc-12   -g -o CMakeFiles/posixtimerstest.dir/posixtimerstest.c.o -c /home/andrew/Documents/GitHub/surface/HBV-BioRT/build/dep/cvode/PosixTimersTest/posixtimerstest.c
+        [100%] Linking C executable posixtimerstest
+        /usr/local/bin/cmake -E cmake_link_script CMakeFiles/posixtimerstest.dir/link.txt --verbose=1
+        /usr/bin/gcc-12 -g -rdynamic CMakeFiles/posixtimerstest.dir/posixtimerstest.c.o -o posixtimerstest  -Wl,-Bstatic -lrt -Wl,-Bdynamic 
+        gmake[2]: Leaving directory '/home/andrew/Documents/GitHub/surface/HBV-BioRT/build/dep/cvode/PosixTimersTest'
+        [100%] Built target posixtimerstest
+        gmake[1]: Leaving directory '/home/andrew/Documents/GitHub/surface/HBV-BioRT/build/dep/cvode/PosixTimersTest'
+        /usr/local/bin/cmake -E cmake_progress_start /home/andrew/Documents/GitHub/surface/HBV-BioRT/build/dep/cvode/PosixTimersTest/CMakeFiles 0
+        
+      exitCode: 0
+...

@@ -77,8 +77,8 @@ int main(int argc, char *argv[])
     timestamp = localtime(&rawtime);
     strftime(timestr, 11, "%y%m%d%H%M", timestamp);
 
-    printf("Surface zone chemistry before starting loops: \n");
-    PrintChemicalState(&subcatch.chms[SURFACE]);
+    // printf("Surface zone chemistry before starting loops: \n");
+    // PrintChemicalState(&subcatch.chms[SURFACE]);
 
     // Open output file
     {
@@ -101,8 +101,8 @@ int main(int argc, char *argv[])
             // Loop through model steps to calculate reactive transport
             for (int kstep = 0; kstep < nsteps; kstep++)
             {
-                printf("\n\nSurface zone at the start of step %d: \n", kstep);
-                PrintChemicalState(&subcatch.chms[SURFACE]);
+                // printf("\n\nSurface zone at the start of step %d: \n", kstep);
+                // PrintChemicalState(&subcatch.chms[SURFACE]);
 
                 ErrOnZeroRanged("main.c", "subcatch.chms[SURFACE].sec_conc", 99, subcatch.chms[SURFACE].sec_conc, 2);
                 // Transport and routing
@@ -121,8 +121,8 @@ int main(int argc, char *argv[])
                 
                 if (ctrl.transport_only == KIN_REACTION)
                 {
-                    printf("\n\nSurface zone before 'Reaction' at step %d: \n", kstep);
-                    PrintChemicalState(&subcatch.chms[SURFACE]);
+                    // printf("\n\nSurface zone before 'Reaction' at step %d: \n", kstep);
+                    // PrintChemicalState(&subcatch.chms[SURFACE]);
                     // In reaction mode, simulate reaction for soil, and speciation for stream
                     Reaction(kstep, 86400.0, chemtbl, kintbl, &rttbl, &subcatch);
                 }

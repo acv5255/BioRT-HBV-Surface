@@ -1,9 +1,5 @@
 #include "biort.h"
 
-const double SATN_MINIMUM = 1e-4;       // Minimum saturation to initiate kinetic reactions
-const int MAX_ITERATIONS = 25;
-const double MINIMUM_SUBSTEP = 1e-20;
-
 void GetIAP(double iap[MAXSPS], const double activity[MAXSPS], const double dep_kin[MAXSPS][MAXSPS], int num_reactions, int num_stc) {
     for (int i = 0; i < num_reactions; i++) {
         iap[i] = 0.0;

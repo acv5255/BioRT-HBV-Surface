@@ -13,33 +13,21 @@ void ReadChem(const char dir[], ControlData *ctrl, ReactionNetwork *rttbl, ChemT
     FILE           *file_pointer;
 
     // READ CHEM.TXT FILE
-    sprintf(file_name, "input/%s/chem.txt", dir);
+    sprintf(file_name, CHEM_FILE_DIR, dir);
     file_pointer = fopen(file_name, "r");
 
     biort_printf(VL_NORMAL, "\nBIORT CONTROL PARAMETERS\n");
 
     NextLine(file_pointer, cmdstr, &lno);
-    ReadParam(cmdstr, "RECYCLE", 'i', file_name, lno, &ctrl->recycle);
+    ctrl->recycle = ReadParamToInt(cmdstr, CHEM_RECYCLE_ID, file_name, lno);
     biort_printf(VL_NORMAL, "  Forcing recycle %d time(s). \n", ctrl->recycle);
 
     NextLine(file_pointer, cmdstr, &lno);
-    ReadParam(cmdstr, "ACTIVITY", 'i', file_name, lno, &ctrl->use_activity);
+    ctrl->use_activity = ReadParamToInt(cmdstr, CHEM_ACTIVITY_ID, file_name, lno);
     biort_printf(VL_NORMAL, "  Activity correction is set to %d. \n", ctrl->use_activity);
 
     NextLine(file_pointer, cmdstr, &lno);
-    ReadParam(cmdstr, "TRANSPORT_ONLY", 'i', file_name, lno, &ctrl->transport_only);
-    // switch (ctrl->transpt)
-    // {
-    //     case KIN_REACTION:
-    //         biort_printf(VL_NORMAL, "  Transport only mode disabled.\n");
-    //         break;
-    //     case TRANSPORT_ONLY:
-    //         biort_printf(VL_NORMAL, "  Transport only mode enabled. \n");
-    //         break;
-    //         // under construction.
-    //     default:
-    //         break;
-    // }
+    ctrl->transport_only = ReadParamToInt(cmdstr, CHEM_TRANSPORT_ONLY_ID, file_name, lno);
 
     if (ctrl->transport_only == KIN_REACTION) {
         biort_printf(VL_NORMAL, "  Transport only mode disabled.\n");
@@ -53,7 +41,7 @@ void ReadChem(const char dir[], ControlData *ctrl, ReactionNetwork *rttbl, ChemT
     }
 
     NextLine(file_pointer, cmdstr, &lno);  // 2021-05-20
-    ReadParam(cmdstr, "PRECIPCHEM", 'i', file_name, lno, &ctrl->variable_precipchem);
+    ctrl->variable_precipchem = ReadParamToInt(cmdstr, CHEM_PRECIPCHEM_ID, file_name, lno);
     switch (ctrl->variable_precipchem)
     {
         case 0:
@@ -67,7 +55,7 @@ void ReadChem(const char dir[], ControlData *ctrl, ReactionNetwork *rttbl, ChemT
     }
 
     NextLine(file_pointer, cmdstr, &lno);  // 2021-09-09
-    ReadParam(cmdstr, "NUMEXP", 'i', file_name, lno, &ctrl->precipchem_numexp);
+    ctrl->precipchem_numexp = ReadParamToInt(cmdstr, CHEM_NUMEXP_ID, file_name, lno);
     switch (ctrl->precipchem_numexp)
     {
         case 0:
@@ -81,23 +69,11 @@ void ReadChem(const char dir[], ControlData *ctrl, ReactionNetwork *rttbl, ChemT
     }
 
     NextLine(file_pointer, cmdstr, &lno);
-    ReadParam(cmdstr, "TEMPERATURE", 'd', file_name, lno, &rttbl->tmp);
+    rttbl->tmp = ReadParamToDouble(cmdstr, CHEM_TEMPERATURE_ID, file_name, lno);
     biort_printf(VL_NORMAL, "  Temperature = %3.1f \n", rttbl->tmp);
 
-    //NextLine(fp, cmdstr, &lno);
-    //ReadParam(cmdstr, "SW_THRESHOLD", 'd', fn, lno, &rttbl->sw_thld);
-    //biort_printf(VL_NORMAL, "  SW threshold = %.2f\n", rttbl->sw_thld);
-
-    //NextLine(fp, cmdstr, &lno);
-    //ReadParam(cmdstr, "SW_EXP", 'd', fn, lno, &rttbl->sw_exp);
-    //biort_printf(VL_NORMAL, "  SW exponent = %.2f\n", rttbl->sw_exp);
-
-    //NextLine(fp, cmdstr, &lno);
-    //ReadParam(cmdstr, "Q10", 'd', fn, lno, &rttbl->q10);
-    //biort_printf(VL_NORMAL, "  Q10 factor = %.2f\n", rttbl->q10);
-
     // Count numbers of species and reactions
-    FindLine(file_pointer, "PRIMARY_SPECIES", &lno, file_name);
+    FindLine(file_pointer, CHEM_PRIMARY_SPECIES_ID, &lno, file_name);
     rttbl->num_stc = CountLines(file_pointer, cmdstr, 1, "SECONDARY_SPECIES");
     rttbl->num_ssc = CountLines(file_pointer, cmdstr, 1, "MINERAL_KINETICS");
     rttbl->num_mkr = CountLines(file_pointer, cmdstr, 1, "PRECIPITATION_CONC");
@@ -107,7 +83,7 @@ void ReadChem(const char dir[], ControlData *ctrl, ReactionNetwork *rttbl, ChemT
     biort_printf(VL_NORMAL, "\nPRIMARY SPECIES\n");
     biort_printf(VL_NORMAL, "  %d chemical species specified. \n", rttbl->num_stc);
     FindLine(file_pointer, "BOF", &lno, file_name);
-    FindLine(file_pointer, "PRIMARY_SPECIES", &lno, file_name);
+    FindLine(file_pointer, CHEM_PRIMARY_SPECIES_ID, &lno, file_name);
 
     rttbl->num_spc = 0;
     rttbl->num_ads = 0;
@@ -163,7 +139,7 @@ void ReadChem(const char dir[], ControlData *ctrl, ReactionNetwork *rttbl, ChemT
     // Secondary_species block
     biort_printf(VL_NORMAL, "\nSECONDARY SPECIES\n");
     biort_printf(VL_NORMAL, "  %d secondary species specified. \n", rttbl->num_ssc);
-    FindLine(file_pointer, "SECONDARY_SPECIES", &lno, file_name);
+    FindLine(file_pointer, CHEM_SECONDARY_SPECIES_ID, &lno, file_name);
     for (i = 0; i < rttbl->num_ssc; i++)
     {
         NextLine(file_pointer, cmdstr, &lno);
@@ -183,7 +159,7 @@ void ReadChem(const char dir[], ControlData *ctrl, ReactionNetwork *rttbl, ChemT
     // Minerals block
     biort_printf(VL_NORMAL, "\nMINERAL KINETIC REACTIONS\n");
     biort_printf(VL_NORMAL, "  %d mineral kinetic reaction(s) specified. \n", rttbl->num_mkr);
-    FindLine(file_pointer, "MINERAL_KINETICS", &lno, file_name);
+    FindLine(file_pointer, CHEM_MINERAL_KINETICS_ID, &lno, file_name);
 
     for (i = 0; i < rttbl->num_mkr; i++)
     {

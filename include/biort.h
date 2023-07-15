@@ -1,5 +1,4 @@
-#ifndef BIORT_HEADER
-#define BIORT_HEADER
+#pragma once
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -242,7 +241,6 @@ void            ReadPrecipChem(const char [], int *, int **, Subcatchment* subca
 void            ReadMinerals(const char [], int, int, double [MAXSPS][MAXSPS], double [], ChemTableEntry [],
     ReactionNetwork *);
 void            ReadMinKin(FILE *, int, double, int *, char [], ChemTableEntry [], KineticTableEntry *);
-int             ReadParam(const char [], const char [], char, const char [], int, void *);
 void            ReadPrimary(const char [], int, ChemTableEntry []);
 void            ReadSecondary(const char [], int, int, ChemTableEntry [], ReactionNetwork *);
 void            ReadSoil(const char [], Subcatchment* sub);
@@ -296,4 +294,22 @@ void            TransportSurfaceZone(const ReactionNetwork* rttbl, const Control
 void            PrintChemicalState(const ChemicalState* chms);
 
 bool            CompareSubcatch(const Subcatchment* lhs, const Subcatchment* rhs, const int num);
-#endif
+double          ReadParamToDouble(const char buffer[], const char keyword[], const char fn[], int line_number);
+int             ReadParamToInt(const char buffer[], const char keyword[], const char fn[], int line_number);
+//===== Constant definitions =====//
+// Chem file things
+static const char CHEM_FILE_DIR[] = "input/%s/chem.txt";
+static const char CHEM_RECYCLE_ID[] = "RECYCLE";
+static const char CHEM_ACTIVITY_ID[] = "ACTIVITY";
+static const char CHEM_TRANSPORT_ONLY_ID[] = "TRANSPORT_ONLY";
+static const char CHEM_PRECIPCHEM_ID[] = "PRECIPCHEM";
+static const char CHEM_NUMEXP_ID[] = "NUMEXP";
+static const char CHEM_TEMPERATURE_ID[] = "TEMPERATURE";
+
+static const char CHEM_PRIMARY_SPECIES_ID[] = "PRIMARY_SPECIES";
+static const char CHEM_SECONDARY_SPECIES_ID[] = "SECONDARY_SPECIES";
+static const char CHEM_MINERAL_KINETICS_ID[] = "MINERAL_KINETICS";
+
+static const double SATN_MINIMUM = 1e-4;       // Minimum saturation to initiate kinetic reactions
+static const int MAX_ITERATIONS = 25;
+static const double MINIMUM_SUBSTEP = 1e-20;

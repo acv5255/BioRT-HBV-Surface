@@ -1,5 +1,4 @@
-#ifndef OPTPARSE_H
-#define OPTPARSE_H
+#pragma once
 
 /**
  * Optparse -- portable, reentrant, embeddable, getopt-like option parser
@@ -106,5 +105,3 @@ optparse_long(struct optparse *options,
  * ignore the value of optind.
  */
 char           *optparse_arg(struct optparse *options);
-
-#endif

@@ -65,7 +65,7 @@ void TransportSurfaceZone(const ReactionNetwork* rttbl, const ControlData ctrl, 
     for (int kspc = 0; kspc < rttbl->num_spc; kspc++)
     {
 
-        double c_prcp_i;        // Concentration in precipitation
+        double c_prcp_i;        // Concentration in precipitation of species (i)
         if (ctrl.variable_precipchem == false) {
             c_prcp_i = subcatch->prcp_conc[kspc];
         }
@@ -73,9 +73,9 @@ void TransportSurfaceZone(const ReactionNetwork* rttbl, const ControlData ctrl, 
             c_prcp_i = subcatch->prcp_conc_time[step][kspc];
         }
         // Precipitation
-        double dm_rain = c_prcp_i * q_rain;             // Input of mass from rain
-        double dm_snow = c_prcp_i * q_snow;             // Change in mass of snow reservoir
-        subcatch->chms[SNOW].tot_mol[kspc] += dm_snow;  
+        double dm_rain = c_prcp_i * q_rain;             // Input of mass of chemical species i from rain - note: 1 mm water = 1 L water
+        double dm_snow = c_prcp_i * q_snow;             // Change in mass of chemical species i in snow reservoir
+        subcatch->chms[SNOW].tot_mol[kspc] += dm_snow;
 
         double c_snow = ZERO_CONC;
         double dm_snowmelt = 0.0;
@@ -135,7 +135,7 @@ void TransportSurfaceZone(const ReactionNetwork* rttbl, const ControlData ctrl, 
         /*
             Note from Andrew - since HBV does not have an infiltration term, I just use all precipitation + snowmelt
             entering from the surface zone to the shallow zone. That way, the entire water volume can react both at the
-            surface and then move into the shallow zone
+            surface and then move into the shallow zone and because I'm not sure how to remove the dependence on the surface zone
          */
         subcatch->chms[SURFACE].tot_conc[kspc] = subcatch->chms[SURFACE].tot_mol[kspc] / ws_surf_tot;
         subcatch->chms[UZ].tot_conc[kspc] = subcatch->chms[UZ].tot_mol[kspc] / ws_sz_tot;

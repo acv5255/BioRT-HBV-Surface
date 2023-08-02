@@ -99,6 +99,34 @@ void ReactZone(const int kzone, const double temp, const SoilConstants soil, con
     }
 }
 
+void ReactSurfaceZone(const double temp, const SoilConstants soil, const double tot_water, const ChemTableEntry chemtbl[],
+        const KineticTableEntry kintbl[], const ReactionNetwork* rttbl, double stepsize, Subcatchment* subcatch) {
+    
+    const double Zw = soil.depth - tot_water / soil.porosity;     // UZ or LZ or SURFACE
+    double substep;
+
+    for (int kspc = 0; kspc < MAXSPS; kspc++)
+    {
+        subcatch->react_rate[SURFACE][kspc] = BADVAL;   // Set reaction rate to -999
+    }
+
+    double satn = tot_water / (soil.depth * soil.porosity);  // add porosity for saturation calculation
+    satn = MIN(satn, 1.0);
+
+    CheckChmsForNonFinite(&subcatch->chms[SURFACE], "react.c", 80);
+
+    if (satn > SATN_MINIMUM)
+    {
+        substep = ReactControl(chemtbl, kintbl, rttbl, stepsize, soil.porosity, soil.depth, satn, temp, Zw,
+            subcatch->react_rate[SURFACE], &subcatch->chms[SURFACE]);
+        CheckChmsForNonFinite(&subcatch->chms[SURFACE], "react.c", 89);
+        
+        if (substep < 0.0) {
+            printf("Surface failed to converge...\n");
+        }
+    }
+}
+
 void GetRates(double rate[MAXSPS], double rate_spe[MAXSPS], const double area[MAXSPS], const double ftemp[MAXSPS], const double fsw[MAXSPS], const double fzw[MAXSPS],
     const ReactionNetwork* rttbl, const KineticTableEntry kintbl[MAXSPS], const ChemicalState* chms) {
         
@@ -141,11 +169,12 @@ void Reaction(int kstep, double stepsize, const ChemTableEntry chemtbl[],
 {
     const double temp = subcatch->tmp[kstep];
     if (subcatch->q[kstep][Q0] >= 0.1) {
-        // printf("Starting surface reactions with a water value of %g mm\n", subcatch->q[kstep][Q0]);
+        const double tot_water_surf = subcatch->ws[kstep][SURFACE] + subcatch->q[kstep][Q0];
+        printf("Starting surface reactions with a water value of %g mm\n", tot_water_surf);
         // printf("Surface zone chemical state before reactions: \n");
         // PrintChemicalState(&subcatch->chms[SURFACE]);
-        ErrOnZeroRanged("react.c", "subcatch->chms[SURFACE].sec_conc", 150, subcatch->chms[SURFACE].sec_conc, rttbl->num_ssc);
-        ReactZone(SURFACE, temp, subcatch->soil_surface, subcatch->q[kstep][Q0], chemtbl, kintbl, rttbl, stepsize, subcatch);
+        // ErrOnZeroRanged("react.c", "subcatch->chms[SURFACE].sec_conc", 150, subcatch->chms[SURFACE].sec_conc, rttbl->num_ssc);
+        ReactZone(SURFACE, temp, subcatch->soil_surface, tot_water_surf, chemtbl, kintbl, rttbl, stepsize, subcatch);
     }
     CheckChmsForNonFinite(&subcatch->chms[SURFACE], "react.c", 153);
 
@@ -171,7 +200,7 @@ int SolveReact(double stepsize, const ChemTableEntry chemtbl[], const KineticTab
     const double    inv_sat = 1.0 / satn;//inv_sat(L of porous space/L of water)= 1/sat(L of water/L of porous space)
     SetZero(tmpconc); SetZero(tot_conc);
     CheckChmsForNonFinite(chms, "react.c", 174);
-    ErrOnZeroRanged("react.c", "chms->sec_conc", 175, chms->sec_conc, rttbl->num_ssc);
+    // ErrOnZeroRanged("react.c", "chms->sec_conc", 175, chms->sec_conc, rttbl->num_ssc);
     {
         int start = rttbl->num_stc - rttbl->num_min;
         int end = rttbl->num_stc;
@@ -211,7 +240,6 @@ int SolveReact(double stepsize, const ChemTableEntry chemtbl[], const KineticTab
     double ionic_strength = 0.0;
     for (int i = 0; i < rttbl->num_stc + rttbl->num_ssc; i++)
     {
-        ErrorOnArrayNan(tmpconc, "tmpconc", "react.c", 215);
         double conc_val = (i < rttbl->num_stc) ? log10(chms->prim_conc[i]) : log10(chms->sec_conc[i - rttbl->num_stc]);
         if (!isfinite(conc_val)) {
             printf("Got non-finite value for log10(conc) for species '%s' with index %d\n", chemtbl[i].name, i);
@@ -221,7 +249,6 @@ int SolveReact(double stepsize, const ChemTableEntry chemtbl[], const KineticTab
         tot_cec += (chemtbl[i].itype == CATION_ECHG) ? pow(10.0, tmpconc[i]) : 0.0;
 
         ionic_strength += 0.5 * pow(10, tmpconc[i]) * chemtbl[i].charge * chemtbl[i].charge;
-        ErrorOnArrayNan(tmpconc, "tmpconc", "react.c", 221);
     }
     double root_ionic_strength = sqrt(ionic_strength);
     
@@ -244,8 +271,6 @@ int SolveReact(double stepsize, const ChemTableEntry chemtbl[], const KineticTab
                 break;
         }
     }
-    ErrorOnArrayNan(tmpconc, "tmpconc", "react.c", 244);
-    ErrorOnArrayNan(gamma, "gamma", "react.c", 245);
     CheckChmsForNonFinite(chms, "react.c", 246);
 
     int control = 0;
@@ -259,13 +284,9 @@ int SolveReact(double stepsize, const ChemTableEntry chemtbl[], const KineticTab
         sunindextype    p[MAXSPS];
         realtype        x[MAXSPS];
 
-        ErrorOnArrayNanIter(tmpconc, "tmpconc", "react.c", 249, control);
-        ErrorOnArrayNanIter(gamma, "gamma", "react.c", 250, control);
         GetSecondarySpecies(tmpconc, gamma, rttbl);
-        ErrorOnArrayNanIter(tmpconc, "tmpconc", "react.c", 252, control);
 
         SetZeroRange(rate_spet, 0, rttbl->num_stc);
-        ErrorOnArrayNanIter(tmpconc, "tmpconc", "react.c", 255, control);
         for (int i = 0; i < rttbl->num_mkr; i++)
         {
             double iap[MAXSPS];
@@ -315,7 +336,6 @@ int SolveReact(double stepsize, const ChemTableEntry chemtbl[], const KineticTab
             // concentration are mol/L porous media. For the aqueous species, the unit of the rate and the unit of the
             // concentration are mol/L pm and mol/L water respectively.
         }
-        ErrorOnArrayNanIter(tmpconc, "tmpconc", "react.c", 301, control);
         for (int i = 0; i < rttbl->num_spc; i++)
         {
             // rate(mol/m2 water/s)= rate(mol/m2 pm/s)*inv_sat(L of porous space/L of water)/porosity(L of porous space/L of pm)
@@ -323,7 +343,6 @@ int SolveReact(double stepsize, const ChemTableEntry chemtbl[], const KineticTab
         }
 
         // Calculate the residual for each aqueous primary species
-        ErrorOnArrayNanIter(tmpconc, "tmpconc", "react.c", 309, control);
         for (int i = 0; i < rttbl->num_stc - rttbl->num_min; i++)
         {
             double tmpval = 0.0;
@@ -334,7 +353,6 @@ int SolveReact(double stepsize, const ChemTableEntry chemtbl[], const KineticTab
             tot_conc[i] = tmpval;
             residue[i] = tmpval - (chms->tot_conc[i] + (rate_spe[i] + rate_spet[i]) * stepsize * 0.5);
         }
-        ErrorOnArrayNan(tmpconc, "tmpconc", "react.c", 320);
 
         // Calculate the concentrations with a perturbation TMPPRB to calculate the numerical Jacobian
         for (int k = 0; k < rttbl->num_stc - rttbl->num_min; k++)
@@ -408,9 +426,6 @@ int SolveReact(double stepsize, const ChemTableEntry chemtbl[], const KineticTab
         destroyMat(jcb);
     } while (max_error > TOLERANCE);
 
-    ErrorOnArrayNan(tmpconc, "tmpconc", "react.c", 385);
-    ErrorOnArrayNan(gamma, "gamma", "react.c", 386);
-    ErrorOnArrayNan(tot_conc, "tot_conc", "react.c", 388);
     CheckChmsForNonFinite(chms, "react.c", 389);
 
     // Update secondary species here

@@ -26,7 +26,7 @@
 #define STORAGE_MIN             1.0         // minimum water storage (mm)
 #define ZERO_CONC               1.0E-20     // minimum concentration
 
-#define TOLERANCE               1E-7        // tolerance for reaction calculation
+static const double TOLERANCE = 1E-8;       // Tolerance for iterative methods
 
 static const int PRECIP = 0;
 static const int RECHG = 1;
@@ -246,8 +246,6 @@ void            ReadSecondary(const char [], int, int, ChemTableEntry [], Reacti
 void            ReadSoil(const char [], Subcatchment* sub);
 void            ReadTempPoints(const char [], double, int *, int *);
 int             roundi(double);
-//void            RunNumExp(int, int, const chemtbl_struct [], const kintbl_struct [], rttbl_struct *, const ctrl_struct *,
-//    subcatch_struct [], FILE *);//2021-09-09
 double          SoilTempFactor(double, double);
 double          SoilMoistFactor(double, double, double);
 int             SolveReact(double, const ChemTableEntry [], const KineticTableEntry [], const ReactionNetwork *, double, double,
@@ -295,9 +293,10 @@ void            PrintChemicalState(const ChemicalState* chms);
 
 bool            CompareSubcatch(const Subcatchment* lhs, const Subcatchment* rhs, const int num);
 double          ReadParamToDouble(const char buffer[], const char keyword[], const char fn[], int line_number);
+void            ResetReactionRates(Subcatchment * subcatch);
 int             ReadParamToInt(const char buffer[], const char keyword[], const char fn[], int line_number);
+
 //===== Constant definitions =====//
-// Chem file things
 static const char CHEM_FILE_DIR[] = "input/%s/chem.txt";
 static const char CHEM_RECYCLE_ID[] = "RECYCLE";
 static const char CHEM_ACTIVITY_ID[] = "ACTIVITY";

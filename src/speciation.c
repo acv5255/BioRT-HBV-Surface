@@ -1,5 +1,8 @@
 #include "biort.h"
 
+const int MAX_SPECIATION_ITERS = 25;
+const double MAX_STEP = 1.0;
+
 void GetSecondarySpeciesRange(const ReactionNetwork* rttbl, double tmpconc[MAXSPS], double gamma[MAXSPS]) {
     for (int i = 0; i < rttbl->num_ssc; i++)
     {
@@ -10,6 +13,7 @@ void GetSecondarySpeciesRange(const ReactionNetwork* rttbl, double tmpconc[MAXSP
         }
         tmpconc[i + rttbl->num_stc] -= rttbl->keq[i] + gamma[i + rttbl->num_stc];
     }
+    return;
 }
 
 double GetIonicStrength(const ReactionNetwork* rttbl, const ChemTableEntry chemtbl[], const double conc[MAXSPS]) {
@@ -28,9 +32,9 @@ int SolveSpeciation(const ChemTableEntry chemtbl[], const ControlData ctrl, cons
     double          residue[MAXSPS];
     double          tmpconc[MAXSPS];
     double          tot_conc[MAXSPS];
-    double          gamma[MAXSPS];
+    double          log10gamma[MAXSPS];
     double          maxerror;
-    const double    TMPPRB = 1E-4;
+    const double    TMPPRB = 1E-2;
 
     // If speciation flg = 1, pH is defined. Total concentration is calculated from the activity of H+. Dependency is
     // the same but the total concentration for H+ does not need to be solved.
@@ -38,18 +42,23 @@ int SolveSpeciation(const ChemTableEntry chemtbl[], const ControlData ctrl, cons
     SetZero(residue);
     SetZero(tmpconc);
     SetZero(tot_conc);
-    SetZero(gamma);
+    SetZero(log10gamma);
 
     Log10Arr(chms->prim_conc, tmpconc, rttbl->num_stc);
+    if (!CheckArrayForNan(chms->prim_conc)) {
+        printf("chms->prim_conc contains nan value in speciation.c near line 45\n");
+        exit(-1);
+    }
 
     ComputeDependence(tmpconc, rttbl->dep_mtx, rttbl->keq, rttbl->num_ssc, rttbl->num_sdc, rttbl->num_stc);
 
     const int jcb_dim = (speciation_flg == 1) ? rttbl->num_stc - 1: rttbl->num_stc;
 
+    int cur_iter = 0;
     do
     {
-        sunindextype    p[MAXSPS];
-        realtype        x[MAXSPS];
+        sunindextype    pivots[MAXSPS];     // Whether any rows had to be swapped (???)
+        realtype        x[MAXSPS];          // Solution to the problem
         int             row, col;
         realtype** jcb = newDenseMat(jcb_dim, jcb_dim);
 
@@ -63,18 +72,18 @@ int SolveSpeciation(const ChemTableEntry chemtbl[], const ControlData ctrl, cons
                 // Aqueous species in the unit of mol/L, however the solids are in the unit of mol/L porous media.
                 // Activity of solid is 1, log10 of activity is 0. By assigning gamma[minerals] to negative of the
                 // tmpconc[minerals], we ensured the log10 of activity of solids are 0. gamma stores log10gamma[i]
-                gamma[i] = (chemtbl[i].itype == MINERAL) ? -tmpconc[i] :
+                log10gamma[i] = (chemtbl[i].itype == MINERAL) ? -tmpconc[i] :
                     (-rttbl->adh * root_ion_str * chemtbl[i].charge * chemtbl[i].charge) /
                     (1.0 + rttbl->bdh * chemtbl[i].size_fac * root_ion_str) + rttbl->bdt * ionic_strength;
 
                 if (speciation_flg == 1 && strcmp(chemtbl[i].name, "'H+'") == 0)
                 {
-                    tmpconc[i] = log10(chms->prim_actv[i]) - gamma[i];
+                    tmpconc[i] = log10(chms->prim_actv[i]) - log10gamma[i];
                 }
             }
         }
 
-        GetLogActivity(tmpconc, gamma,rttbl->dep_mtx, rttbl->keq,  rttbl->num_ssc, rttbl->num_sdc, rttbl->num_stc);
+        GetLogActivity(tmpconc, log10gamma,rttbl->dep_mtx, rttbl->keq,  rttbl->num_ssc, rttbl->num_sdc, rttbl->num_stc);
 
         for (int i = 0; i < rttbl->num_stc; i++)
         {
@@ -108,9 +117,9 @@ int SolveSpeciation(const ChemTableEntry chemtbl[], const ControlData ctrl, cons
                 tmpconc[i + rttbl->num_stc] = 0.0;
                 for (int j = 0; j < rttbl->num_sdc; j++)
                 {
-                    tmpconc[i + rttbl->num_stc] += (tmpconc[j] + gamma[j]) * rttbl->dep_mtx[i][j];
+                    tmpconc[i + rttbl->num_stc] += (tmpconc[j] + log10gamma[j]) * rttbl->dep_mtx[i][j];
                 }
-                tmpconc[i + rttbl->num_stc] -= rttbl->keq[i] + gamma[i + rttbl->num_stc];
+                tmpconc[i + rttbl->num_stc] -= rttbl->keq[i] + log10gamma[i + rttbl->num_stc];
             }
 
             row = 0;
@@ -150,13 +159,13 @@ int SolveSpeciation(const ChemTableEntry chemtbl[], const ControlData ctrl, cons
             x[row++] = -residue[i];
         }
 
-        if (denseGETRF(jcb, jcb_dim, jcb_dim, p) != 0)
+        if (denseGETRF(jcb, jcb_dim, jcb_dim, pivots) != 0)
         {
             biort_printf(VL_ERROR, "Speciation error.\n");
             exit(EXIT_FAILURE);
         }
 
-        denseGETRS(jcb, jcb_dim, p, x);
+        denseGETRS(jcb, jcb_dim, pivots, x);
 
         maxerror = 0.0;
         row = 0;
@@ -167,17 +176,32 @@ int SolveSpeciation(const ChemTableEntry chemtbl[], const ControlData ctrl, cons
                 continue;
             }
 
-            tmpconc[i] += x[row++];
+            tmpconc[i] += x[row] > 0 ? MIN(x[row], MAX_STEP) : MAX(x[row], -MAX_STEP);
             maxerror = MAX(fabs(residue[i] / tot_conc[i]), maxerror);
+            row += 1;
         }
 
         destroyMat(jcb);
-    } while (maxerror > TOLERANCE);
 
-    GetSecondarySpeciesRange(rttbl, tmpconc, gamma);    // Compute secondary species
+        // printf("Speciation errors: \n");
+        // for (int i = 0; i < rttbl->num_stc; i++) {
+        //     printf("%g ", fabs(residue[i] / tot_conc[i]));
+        // }
+        // printf("\n");
 
-    for (int i = 0; i < rttbl->num_stc; i++)
-    {
+        // printf("Speciation error: %g\n", maxerror);
+        cur_iter += 1;
+    } while ((maxerror > TOLERANCE) && (cur_iter < MAX_SPECIATION_ITERS));
+    // printf("\n");
+
+    if (cur_iter == MAX_SPECIATION_ITERS) {
+        printf("Speciation exceeded maximum iterations and failed to converge...\n");
+        exit(-1);
+    }
+
+    GetSecondarySpeciesRange(rttbl, tmpconc, log10gamma);    // Compute secondary species
+
+    for (int i = 0; i < rttbl->num_stc; i++) {
         tot_conc[i] = 0.0;
         for (int j = 0; j < rttbl->num_stc + rttbl->num_ssc; j++)
         {
@@ -186,6 +210,7 @@ int SolveSpeciation(const ChemTableEntry chemtbl[], const ControlData ctrl, cons
         residue[i] = tot_conc[i] - chms->tot_conc[i];
     }
 
+    // Set species concentrations now
     for (int i = 0; i < rttbl->num_stc + rttbl->num_ssc; i++)
     {
         if (i < rttbl->num_stc)
@@ -198,7 +223,7 @@ int SolveSpeciation(const ChemTableEntry chemtbl[], const ControlData ctrl, cons
             else
             {
                 chms->prim_conc[i] = pow(10, tmpconc[i]);
-                chms->prim_actv[i] = pow(10, (tmpconc[i] + gamma[i]));
+                chms->prim_actv[i] = pow(10, (tmpconc[i] + log10gamma[i]));
             }
         }
         else
@@ -206,7 +231,7 @@ int SolveSpeciation(const ChemTableEntry chemtbl[], const ControlData ctrl, cons
             chms->sec_conc[i - rttbl->num_stc] = pow(10, tmpconc[i]);
         }
     }
-
+    CheckChmsForNonFinite(chms, "speciation.c", 217);
 
     return 0;
 }

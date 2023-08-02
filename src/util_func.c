@@ -351,20 +351,29 @@ void PrintChemicalState(const ChemicalState* chms) {
     printf("Secondary concentration: ");
     PrintArray(chms->sec_conc);
 
-    printf("SSA: ");
-    PrintArray(chms->ssa);
+    // printf("SSA: ");
+    // PrintArray(chms->ssa);
 
-    printf("SW Threshold: ");
-    PrintArray(chms->sw_thld);
+    // printf("SW Threshold: ");
+    // PrintArray(chms->sw_thld);
 
-    printf("SW Exponent: ");
-    PrintArray(chms->sw_exp);
+    // printf("SW Exponent: ");
+    // PrintArray(chms->sw_exp);
 
-    printf("Q10: ");
-    PrintArray(chms->q10);
+    // printf("Q10: ");
+    // PrintArray(chms->q10);
 
-    printf("N_alpha: ");
-    PrintArray(chms->n_alpha);
+    // printf("N_alpha: ");
+    // PrintArray(chms->n_alpha);
 
     return;
+}
+
+void ResetReactionRates(Subcatchment * subcatch) {
+    /* Reset the reaction rates to zero at the end of the timestep*/
+    for (int i = 0; i < NWS; i++) {
+        for (int j = 0; j < MAXSPS; j++) {
+            subcatch->react_rate[i][j] = 0.0;
+        }
+    }
 }

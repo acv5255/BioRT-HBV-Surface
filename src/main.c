@@ -67,10 +67,10 @@ int main(int argc, char *argv[])
     // Create output directory when necessary
     mkdir("output");
 
-    {
-        printf("Surface total concentration at before starting: \n");
-        PrintArray(subcatch.chms[SURFACE].tot_conc);
-    }
+    // {
+    //     printf("Surface total concentration at before starting: \n");
+    //     PrintArray(subcatch.chms[SURFACE].tot_conc);
+    // }
 
     //
     time(&rawtime);
@@ -101,28 +101,18 @@ int main(int argc, char *argv[])
             // Loop through model steps to calculate reactive transport
             for (int kstep = 0; kstep < nsteps; kstep++)
             {
-                // printf("\n\nSurface zone at the start of step %d: \n", kstep);
-                // PrintChemicalState(&subcatch.chms[SURFACE]);
-
-                ErrOnZeroRanged("main.c", "subcatch.chms[SURFACE].sec_conc", 99, subcatch.chms[SURFACE].sec_conc, 2);
                 // Transport and routing
                 Transport(kstep, chemtbl, &rttbl, ctrl, &subcatch); // 2021-05-20
-                ErrOnZeroRanged("main.c", "subcatch.chms[SURFACE].sec_conc", 102, subcatch.chms[SURFACE].sec_conc, 2);
+                // printf("Finished Transport for step %d\n", kstep);
                 // Transport changes total concentrations. Primary concentrations needs to be updated using total
                 // concentrations
                 
                 UpdatePrimConc(&rttbl, ctrl, &subcatch);
-                ErrOnZeroRanged("main.c", "subcatch.chms[SURFACE].sec_conc", 106, subcatch.chms[SURFACE].sec_conc, 2);
                 
                 StreamSpeciation(kstep, chemtbl, ctrl, &rttbl, &subcatch);
-                ErrOnZeroRanged("main.c", "subcatch.chms[SURFACE].sec_conc", 109, subcatch.chms[SURFACE].sec_conc, 2);
 
-                ErrOnZeroRanged("main.c", "subcatch.chms[SURFACE].sec_conc", 112, subcatch.chms[SURFACE].sec_conc, 2);
-                
                 if (ctrl.transport_only == KIN_REACTION)
                 {
-                    // printf("\n\nSurface zone before 'Reaction' at step %d: \n", kstep);
-                    // PrintChemicalState(&subcatch.chms[SURFACE]);
                     // In reaction mode, simulate reaction for soil, and speciation for stream
                     Reaction(kstep, 86400.0, chemtbl, kintbl, &rttbl, &subcatch);
                 }
@@ -130,8 +120,8 @@ int main(int argc, char *argv[])
                 {
                     Speciation(chemtbl, ctrl, &rttbl, &subcatch);
                 }
-                ErrOnZeroRanged("main.c", "subcatch.chms[SURFACE].sec_conc", 130, subcatch.chms[SURFACE].sec_conc, 2);
                 PrintDailyResults(file_pointer, ctrl.transport_only, steps[kstep], &rttbl, &subcatch);
+                ResetReactionRates(&subcatch);
             }
         }
 
@@ -168,7 +158,6 @@ int main(int argc, char *argv[])
                 
                 StreamSpeciation(kstep, chemtbl, ctrl, &rttbl, &subcatch_numexp);
 
-                PrintDailyResults(file_pointer, ctrl.transport_only, steps_numexp[kstep], &rttbl, &subcatch_numexp);
 
                 if (ctrl.transport_only == KIN_REACTION)
                 {
@@ -179,6 +168,9 @@ int main(int argc, char *argv[])
                 {
                     Speciation(chemtbl, ctrl, &rttbl, &subcatch_numexp);
                 }
+                
+                PrintDailyResults(file_pointer, ctrl.transport_only, steps_numexp[kstep], &rttbl, &subcatch_numexp);
+                ResetReactionRates(&subcatch_numexp);
 
             }
             biort_printf(VL_NORMAL, "\nHBV-BioRT %s numerical experiment succeeded.\n", dir);

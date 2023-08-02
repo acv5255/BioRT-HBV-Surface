@@ -39,71 +39,6 @@ MINERAL KINETIC REACTIONS
   1 mineral kinetic reaction(s) specified. 
   Kinetic reaction on 'SOC' is specified, label 'test'.
   Position_check (num_mkr[i] vs num_stc[j]) (0, 4)
-INITIAL CONCENTRATIONS:
-	PRECIPITATION:
-		AQUEOUS: pH
-			Concentration       : 4.3
-		AQUEOUS: Cl-
-			Concentration       : 1e-05
-		AQUEOUS: DOC
-			Concentration       : 1e-07
-		MINERAL: SOC
-			Volume Fraction     : 1e-10
-			SSA                 : 0
-			Q10                 : 0
-			SW Threshold        : 0
-			SW Exponent         : 0
-			N_alpha             : 0
-		AQUEOUS: X-
-			Concentration       : 1e-10
-	SURFACE:
-		AQUEOUS: pH
-			Concentration       : 4.3
-		AQUEOUS: Cl-
-			Concentration       : 1e-05
-		AQUEOUS: DOC
-			Concentration       : 0.01
-		MINERAL: SOC
-			Volume Fraction     : 0.01
-			SSA                 : 5
-			Q10                 : 1
-			SW Threshold        : 1
-			SW Exponent         : 0
-			N_alpha             : 0
-		AQUEOUS: X-
-			Concentration       : 1e-06
-	SHALLOW ZONE:
-		AQUEOUS: pH
-			Concentration       : 4.56
-		AQUEOUS: Cl-
-			Concentration       : 3.69e-05
-		AQUEOUS: DOC
-			Concentration       : 2e-05
-		MINERAL: SOC
-			Volume Fraction     : 0.02
-			SSA                 : 5
-			Q10                 : 2
-			SW Threshold        : 0.7
-			SW Exponent         : 1.5
-			N_alpha             : 0.002
-		AQUEOUS: X-
-			Concentration       : 5.2e-05
-	DEEP ZONE:
-		AQUEOUS: pH
-			Concentration       : 4.56
-		AQUEOUS: Cl-
-			Concentration       : 3.69e-05
-		AQUEOUS: DOC
-			Concentration       : 2e-05
-		MINERAL: SOC
-			Volume Fraction     : 0.002
-			SSA                 : 5
-			Q10                 : 2
-			SW Threshold        : 0.7
-			SW Exponent         : 1.5
-			N_alpha             : 0
-		AQUEOUS: X-
-			Concentration       : 5.2e-05
 
 
 
@@ -184,43 +119,41 @@ DATABASE
         'SOC'             4
         'OH-'             1
        'XDOC'             3
-Surface total concentration at before starting: 
-5.044e-05  1e-05  0.01  0.001325  0.0024  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0  
-Surface zone chemistry before starting loops: 
-Total concentration: 5.044e-05  1e-05  0.01  0.001325  0.0024  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0  
-Total moles: 5.044e-06  1e-06  0.001  0.0001325  0.00024  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0  
-Primary concentration: 5.044e-05  1e-05  0.009979  0.001304  0.0024  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0  
-Secondary concentration: 2.031e-10  2.063e-05  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0  
-SSA: 0  0  0  0  5  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0  
-SW Threshold: 0  0  0  0  1  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0  
-SW Exponent: 0  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0  
-Q10: 0  0  0  0  1  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0  
-N_alpha: 0  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0  
 
 HBV-BioRT KonzaSurface simulation started.
+Starting surface reactions with a water value of 9.125 mm
+Starting surface reactions with a water value of 3.351 mm
+Starting surface reactions with a water value of 2.393 mm
+Starting surface reactions with a water value of 9.652 mm
+Starting surface reactions with a water value of 7.067 mm
+Starting surface reactions with a water value of 2.065 mm
+Starting surface reactions with a water value of 1.119 mm
+Starting surface reactions with a water value of 6.992 mm
+Starting surface reactions with a water value of 2.734 mm
+Starting surface reactions with a water value of 1.276 mm
+Starting surface reactions with a water value of 9.125 mm
+Starting surface reactions with a water value of 3.351 mm
+Starting surface reactions with a water value of 2.393 mm
+Starting surface reactions with a water value of 9.652 mm
+Starting surface reactions with a water value of 7.067 mm
+Starting surface reactions with a water value of 2.065 mm
+Starting surface reactions with a water value of 1.119 mm
+Starting surface reactions with a water value of 6.992 mm
+Starting surface reactions with a water value of 2.734 mm
+Starting surface reactions with a water value of 1.276 mm
 
+HBV-BioRT KonzaSurface simulation succeeded.
 
-Surface zone at the start of step 0: 
-Total concentration: 5.044e-05  1e-05  0.01  0.001325  0.0024  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0  
-Total moles: 5.044e-06  1e-06  0.001  0.0001325  0.00024  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0  
-Primary concentration: 5.044e-05  1e-05  0.009979  0.001304  0.0024  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0  
-Secondary concentration: 2.031e-10  2.063e-05  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0  
-SSA: 0  0  0  0  5  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0  
-SW Threshold: 0  0  0  0  1  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0  
-SW Exponent: 0  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0  
-Q10: 0  0  0  0  1  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0  
-N_alpha: 0  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0  
+HBV-BioRT KonzaSurface numerical experiment started.
+Starting surface reactions with a water value of 9.125 mm
+Starting surface reactions with a water value of 3.351 mm
+Starting surface reactions with a water value of 2.393 mm
+Starting surface reactions with a water value of 9.652 mm
+Starting surface reactions with a water value of 7.067 mm
+Starting surface reactions with a water value of 2.065 mm
+Starting surface reactions with a water value of 1.119 mm
+Starting surface reactions with a water value of 6.992 mm
+Starting surface reactions with a water value of 2.734 mm
+Starting surface reactions with a water value of 1.276 mm
 
-
-Surface zone before 'Reaction' at step 0: 
-Total concentration: -nan  -nan  -nan  0.001325  0.0024  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0  
-Total moles: -nan  -nan  -nan  0.0001325  0.00024  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0  
-Primary concentration: -nan  -nan  -nan  0.001304  0.0024  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0  
-Secondary concentration: 2.031e-10  2.063e-05  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0  
-SSA: 0  0  0  0  5  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0  
-SW Threshold: 0  0  0  0  1  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0  
-SW Exponent: 0  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0  
-Q10: 0  0  0  0  1  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0  
-N_alpha: 0  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0  
-Chemical state entry ChemicalState->tot_conc contained nonfinite value in file 'react.c' near line 80: 
--nan  -nan  -nan  0.001325  0.0024  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0  
+HBV-BioRT KonzaSurface numerical experiment succeeded.

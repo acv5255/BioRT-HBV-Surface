@@ -295,6 +295,13 @@ bool            CompareSubcatch(const Subcatchment* lhs, const Subcatchment* rhs
 double          ReadParamToDouble(const char buffer[], const char keyword[], const char fn[], int line_number);
 void            ResetReactionRates(Subcatchment * subcatch);
 int             ReadParamToInt(const char buffer[], const char keyword[], const char fn[], int line_number);
+void            ReactSurfaceZone(const double temp, const SoilConstants soil, const double tot_water, const ChemTableEntry chemtbl[],
+                    const KineticTableEntry kintbl[], const ReactionNetwork* rttbl, double stepsize, Subcatchment* subcatch);
+int             SolveSurfaceReact(double stepsize, const ChemTableEntry chemtbl[], const KineticTableEntry kintbl[], const ReactionNetwork *rttbl,
+                    double tot_water, double temp, double porosity, ChemicalState *chms);
+double          ReactSurfaceControl(const ChemTableEntry chemtbl[], const KineticTableEntry kintbl[], const ReactionNetwork *rttbl,
+                    double stepsize, double porosity, double depth, double satn, double temp, double react_rate[],
+                    ChemicalState *chms);
 
 //===== Constant definitions =====//
 static const char CHEM_FILE_DIR[] = "input/%s/chem.txt";

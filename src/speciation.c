@@ -1,6 +1,6 @@
 #include "biort.h"
 
-const int MAX_SPECIATION_ITERS = 25;
+const int MAX_SPECIATION_ITERS = 100;
 const double MAX_STEP = 1.0;
 
 void GetSecondarySpeciesRange(const ReactionNetwork* rttbl, double tmpconc[MAXSPS], double gamma[MAXSPS]) {

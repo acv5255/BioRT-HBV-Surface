@@ -121,39 +121,69 @@ DATABASE
        'XDOC'             3
 
 HBV-BioRT KonzaSurface simulation started.
-Starting surface reactions with a water value of 9.125 mm
-Starting surface reactions with a water value of 3.351 mm
-Starting surface reactions with a water value of 2.393 mm
-Starting surface reactions with a water value of 9.652 mm
-Starting surface reactions with a water value of 7.067 mm
-Starting surface reactions with a water value of 2.065 mm
-Starting surface reactions with a water value of 1.119 mm
-Starting surface reactions with a water value of 6.992 mm
-Starting surface reactions with a water value of 2.734 mm
-Starting surface reactions with a water value of 1.276 mm
-Starting surface reactions with a water value of 9.125 mm
-Starting surface reactions with a water value of 3.351 mm
-Starting surface reactions with a water value of 2.393 mm
-Starting surface reactions with a water value of 9.652 mm
-Starting surface reactions with a water value of 7.067 mm
-Starting surface reactions with a water value of 2.065 mm
-Starting surface reactions with a water value of 1.119 mm
-Starting surface reactions with a water value of 6.992 mm
-Starting surface reactions with a water value of 2.734 mm
-Starting surface reactions with a water value of 1.276 mm
+fsw for species 0: 9.125
+
+fsw for species 0: 3.351
+
+fsw for species 0: 2.393
+
+fsw for species 0: 9.652
+
+fsw for species 0: 7.067
+
+fsw for species 0: 2.065
+
+fsw for species 0: 1.119
+
+fsw for species 0: 6.992
+
+fsw for species 0: 2.734
+
+fsw for species 0: 1.276
+
+fsw for species 0: 9.125
+
+fsw for species 0: 3.351
+
+fsw for species 0: 2.393
+
+fsw for species 0: 9.652
+
+fsw for species 0: 7.067
+
+fsw for species 0: 2.065
+
+fsw for species 0: 1.119
+
+fsw for species 0: 6.992
+
+fsw for species 0: 2.734
+
+fsw for species 0: 1.276
+
 
 HBV-BioRT KonzaSurface simulation succeeded.
 
 HBV-BioRT KonzaSurface numerical experiment started.
-Starting surface reactions with a water value of 9.125 mm
-Starting surface reactions with a water value of 3.351 mm
-Starting surface reactions with a water value of 2.393 mm
-Starting surface reactions with a water value of 9.652 mm
-Starting surface reactions with a water value of 7.067 mm
-Starting surface reactions with a water value of 2.065 mm
-Starting surface reactions with a water value of 1.119 mm
-Starting surface reactions with a water value of 6.992 mm
-Starting surface reactions with a water value of 2.734 mm
-Starting surface reactions with a water value of 1.276 mm
+fsw for species 0: 9.125
+
+fsw for species 0: 3.351
+
+fsw for species 0: 2.393
+
+fsw for species 0: 9.652
+
+fsw for species 0: 7.067
+
+fsw for species 0: 2.065
+
+fsw for species 0: 1.119
+
+fsw for species 0: 6.992
+
+fsw for species 0: 2.734
+
+fsw for species 0: 1.276
+
 
 HBV-BioRT KonzaSurface numerical experiment succeeded.

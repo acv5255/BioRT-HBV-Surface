@@ -1,4 +1,4 @@
-# Install script for directory: /home/andrew/Documents/GitHub/surface/HBV-BioRT/build/dep/cvode/PosixTimersTest
+# Install script for directory: /home/andrew/Documents/GitHub/biort-surface-cpp/BioRT-HBV-Surface/build/dep/cvode/PosixTimersTest
 
 # Set the install prefix
 if(NOT DEFINED CMAKE_INSTALL_PREFIX)
@@ -45,5 +45,5 @@ endif()
 
 string(REPLACE ";" "\n" CMAKE_INSTALL_MANIFEST_CONTENT
        "${CMAKE_INSTALL_MANIFEST_FILES}")
-file(WRITE "/home/andrew/Documents/GitHub/surface/HBV-BioRT/build/dep/cvode/PosixTimersTest/${CMAKE_INSTALL_MANIFEST}"
+file(WRITE "/home/andrew/Documents/GitHub/biort-surface-cpp/BioRT-HBV-Surface/build/dep/cvode/PosixTimersTest/${CMAKE_INSTALL_MANIFEST}"
      "${CMAKE_INSTALL_MANIFEST_CONTENT}")

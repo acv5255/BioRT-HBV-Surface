@@ -4,8 +4,8 @@
 
 
 # Configuration directories and files
-SourceDirectory: /home/andrew/Documents/GitHub/surface/HBV-BioRT/dep/cvode
-BuildDirectory: /home/andrew/Documents/GitHub/surface/HBV-BioRT/build/dep/cvode
+SourceDirectory: /home/andrew/Documents/GitHub/biort-surface-cpp/BioRT-HBV-Surface/dep/cvode
+BuildDirectory: /home/andrew/Documents/GitHub/biort-surface-cpp/BioRT-HBV-Surface/build/dep/cvode
 
 # Where to place the cost data store
 CostDataFile: 
@@ -27,8 +27,8 @@ SubmitInactivityTimeout:
 NightlyStartTime: 00:00:00 EDT
 
 # Commands for the build/test/submit cycle
-ConfigureCommand: "/usr/local/bin/cmake" "/home/andrew/Documents/GitHub/surface/HBV-BioRT/dep/cvode"
-MakeCommand: /usr/local/bin/cmake --build . --config "${CTEST_CONFIGURATION_TYPE}" -- -i
+ConfigureCommand: "/usr/local/bin/cmake" "/home/andrew/Documents/GitHub/biort-surface-cpp/BioRT-HBV-Surface/dep/cvode"
+MakeCommand: /usr/local/bin/cmake --build . --config "${CTEST_CONFIGURATION_TYPE}"
 DefaultCTestConfigurationType: Release
 
 # version control
@@ -64,7 +64,7 @@ UpdateType:
 
 # Compiler info
 Compiler: /usr/bin/c++
-CompilerVersion: 11.3.0
+CompilerVersion: 11.4.0
 
 # Dynamic analysis (MemCheck)
 PurifyCommand: 

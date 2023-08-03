@@ -53,10 +53,10 @@ RM = /usr/local/bin/cmake -E rm -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /home/andrew/Documents/GitHub/surface/HBV-BioRT
+CMAKE_SOURCE_DIR = /home/andrew/Documents/GitHub/biort-surface-cpp/BioRT-HBV-Surface
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /home/andrew/Documents/GitHub/surface/HBV-BioRT/build
+CMAKE_BINARY_DIR = /home/andrew/Documents/GitHub/biort-surface-cpp/BioRT-HBV-Surface/build
 
 # Utility rule file for cvode_test_install.
 
@@ -67,10 +67,10 @@ include dep/cvode/examples/cvode/serial/CMakeFiles/cvode_test_install.dir/compil
 include dep/cvode/examples/cvode/serial/CMakeFiles/cvode_test_install.dir/progress.make
 
 dep/cvode/examples/cvode/serial/CMakeFiles/cvode_test_install:
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --blue --bold --progress-dir=/home/andrew/Documents/GitHub/surface/HBV-BioRT/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Running cvode installation tests"
-	cd /home/andrew/Documents/GitHub/surface/HBV-BioRT/build/dep/cvode/Testing_Install/cvode && /usr/local/bin/cmake /usr/local/examples/cvode/serial > cmake.out
-	cd /home/andrew/Documents/GitHub/surface/HBV-BioRT/build/dep/cvode/Testing_Install/cvode && make cvRoberts_dns > make.out
-	cd /home/andrew/Documents/GitHub/surface/HBV-BioRT/build/dep/cvode/Testing_Install/cvode && ctest
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --blue --bold --progress-dir=/home/andrew/Documents/GitHub/biort-surface-cpp/BioRT-HBV-Surface/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Running cvode installation tests"
+	cd /home/andrew/Documents/GitHub/biort-surface-cpp/BioRT-HBV-Surface/build/dep/cvode/Testing_Install/cvode && /usr/local/bin/cmake /usr/local/examples/cvode/serial > cmake.out
+	cd /home/andrew/Documents/GitHub/biort-surface-cpp/BioRT-HBV-Surface/build/dep/cvode/Testing_Install/cvode && make cvRoberts_dns > make.out
+	cd /home/andrew/Documents/GitHub/biort-surface-cpp/BioRT-HBV-Surface/build/dep/cvode/Testing_Install/cvode && ctest
 
 cvode_test_install: dep/cvode/examples/cvode/serial/CMakeFiles/cvode_test_install
 cvode_test_install: dep/cvode/examples/cvode/serial/CMakeFiles/cvode_test_install.dir/build.make
@@ -81,10 +81,10 @@ dep/cvode/examples/cvode/serial/CMakeFiles/cvode_test_install.dir/build: cvode_t
 .PHONY : dep/cvode/examples/cvode/serial/CMakeFiles/cvode_test_install.dir/build
 
 dep/cvode/examples/cvode/serial/CMakeFiles/cvode_test_install.dir/clean:
-	cd /home/andrew/Documents/GitHub/surface/HBV-BioRT/build/dep/cvode/examples/cvode/serial && $(CMAKE_COMMAND) -P CMakeFiles/cvode_test_install.dir/cmake_clean.cmake
+	cd /home/andrew/Documents/GitHub/biort-surface-cpp/BioRT-HBV-Surface/build/dep/cvode/examples/cvode/serial && $(CMAKE_COMMAND) -P CMakeFiles/cvode_test_install.dir/cmake_clean.cmake
 .PHONY : dep/cvode/examples/cvode/serial/CMakeFiles/cvode_test_install.dir/clean
 
 dep/cvode/examples/cvode/serial/CMakeFiles/cvode_test_install.dir/depend:
-	cd /home/andrew/Documents/GitHub/surface/HBV-BioRT/build && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /home/andrew/Documents/GitHub/surface/HBV-BioRT /home/andrew/Documents/GitHub/surface/HBV-BioRT/dep/cvode/examples/cvode/serial /home/andrew/Documents/GitHub/surface/HBV-BioRT/build /home/andrew/Documents/GitHub/surface/HBV-BioRT/build/dep/cvode/examples/cvode/serial /home/andrew/Documents/GitHub/surface/HBV-BioRT/build/dep/cvode/examples/cvode/serial/CMakeFiles/cvode_test_install.dir/DependInfo.cmake "--color=$(COLOR)"
+	cd /home/andrew/Documents/GitHub/biort-surface-cpp/BioRT-HBV-Surface/build && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /home/andrew/Documents/GitHub/biort-surface-cpp/BioRT-HBV-Surface /home/andrew/Documents/GitHub/biort-surface-cpp/BioRT-HBV-Surface/dep/cvode/examples/cvode/serial /home/andrew/Documents/GitHub/biort-surface-cpp/BioRT-HBV-Surface/build /home/andrew/Documents/GitHub/biort-surface-cpp/BioRT-HBV-Surface/build/dep/cvode/examples/cvode/serial /home/andrew/Documents/GitHub/biort-surface-cpp/BioRT-HBV-Surface/build/dep/cvode/examples/cvode/serial/CMakeFiles/cvode_test_install.dir/DependInfo.cmake "--color=$(COLOR)"
 .PHONY : dep/cvode/examples/cvode/serial/CMakeFiles/cvode_test_install.dir/depend
 

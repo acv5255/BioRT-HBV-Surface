@@ -57,10 +57,10 @@ RM = /usr/local/bin/cmake -E rm -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /home/andrew/Documents/GitHub/surface/HBV-BioRT
+CMAKE_SOURCE_DIR = /home/andrew/Documents/GitHub/biort-surface-cpp/BioRT-HBV-Surface
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /home/andrew/Documents/GitHub/surface/HBV-BioRT/build
+CMAKE_BINARY_DIR = /home/andrew/Documents/GitHub/biort-surface-cpp/BioRT-HBV-Surface/build
 
 #=============================================================================
 # Targets provided globally by CMake.
@@ -132,14 +132,14 @@ install/strip/fast: preinstall/fast
 
 # The main all target
 all: cmake_check_build_system
-	cd /home/andrew/Documents/GitHub/surface/HBV-BioRT/build && $(CMAKE_COMMAND) -E cmake_progress_start /home/andrew/Documents/GitHub/surface/HBV-BioRT/build/CMakeFiles /home/andrew/Documents/GitHub/surface/HBV-BioRT/build/dep/cvode/src//CMakeFiles/progress.marks
-	cd /home/andrew/Documents/GitHub/surface/HBV-BioRT/build && $(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 dep/cvode/src/all
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/andrew/Documents/GitHub/surface/HBV-BioRT/build/CMakeFiles 0
+	cd /home/andrew/Documents/GitHub/biort-surface-cpp/BioRT-HBV-Surface/build && $(CMAKE_COMMAND) -E cmake_progress_start /home/andrew/Documents/GitHub/biort-surface-cpp/BioRT-HBV-Surface/build/CMakeFiles /home/andrew/Documents/GitHub/biort-surface-cpp/BioRT-HBV-Surface/build/dep/cvode/src//CMakeFiles/progress.marks
+	cd /home/andrew/Documents/GitHub/biort-surface-cpp/BioRT-HBV-Surface/build && $(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 dep/cvode/src/all
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/andrew/Documents/GitHub/biort-surface-cpp/BioRT-HBV-Surface/build/CMakeFiles 0
 .PHONY : all
 
 # The main clean target
 clean:
-	cd /home/andrew/Documents/GitHub/surface/HBV-BioRT/build && $(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 dep/cvode/src/clean
+	cd /home/andrew/Documents/GitHub/biort-surface-cpp/BioRT-HBV-Surface/build && $(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 dep/cvode/src/clean
 .PHONY : clean
 
 # The main clean target
@@ -148,17 +148,17 @@ clean/fast: clean
 
 # Prepare targets for installation.
 preinstall: all
-	cd /home/andrew/Documents/GitHub/surface/HBV-BioRT/build && $(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 dep/cvode/src/preinstall
+	cd /home/andrew/Documents/GitHub/biort-surface-cpp/BioRT-HBV-Surface/build && $(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 dep/cvode/src/preinstall
 .PHONY : preinstall
 
 # Prepare targets for installation.
 preinstall/fast:
-	cd /home/andrew/Documents/GitHub/surface/HBV-BioRT/build && $(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 dep/cvode/src/preinstall
+	cd /home/andrew/Documents/GitHub/biort-surface-cpp/BioRT-HBV-Surface/build && $(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 dep/cvode/src/preinstall
 .PHONY : preinstall/fast
 
 # clear depends
 depend:
-	cd /home/andrew/Documents/GitHub/surface/HBV-BioRT/build && $(CMAKE_COMMAND) -S$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR) --check-build-system CMakeFiles/Makefile.cmake 1
+	cd /home/andrew/Documents/GitHub/biort-surface-cpp/BioRT-HBV-Surface/build && $(CMAKE_COMMAND) -S$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR) --check-build-system CMakeFiles/Makefile.cmake 1
 .PHONY : depend
 
 # Help Target
@@ -184,6 +184,6 @@ help:
 # No rule that depends on this can have commands that come from listfiles
 # because they might be regenerated.
 cmake_check_build_system:
-	cd /home/andrew/Documents/GitHub/surface/HBV-BioRT/build && $(CMAKE_COMMAND) -S$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR) --check-build-system CMakeFiles/Makefile.cmake 0
+	cd /home/andrew/Documents/GitHub/biort-surface-cpp/BioRT-HBV-Surface/build && $(CMAKE_COMMAND) -S$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR) --check-build-system CMakeFiles/Makefile.cmake 0
 .PHONY : cmake_check_build_system
 

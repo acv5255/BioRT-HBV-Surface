@@ -1,4 +1,4 @@
-# Install script for directory: /home/andrew/Documents/GitHub/surface/HBV-BioRT/dep/cvode/src/sunnonlinsol/newton
+# Install script for directory: /home/andrew/Documents/GitHub/biort-surface-cpp/BioRT-HBV-Surface/dep/cvode/src/sunnonlinsol/newton
 
 # Set the install prefix
 if(NOT DEFINED CMAKE_INSTALL_PREFIX)
@@ -49,7 +49,7 @@ Install SUNNONLINSOL_NEWTON
 endif()
 
 if(CMAKE_INSTALL_COMPONENT STREQUAL "Unspecified" OR NOT CMAKE_INSTALL_COMPONENT)
-  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/lib" TYPE STATIC_LIBRARY FILES "/home/andrew/Documents/GitHub/surface/HBV-BioRT/build/dep/cvode/src/sunnonlinsol/newton/libsundials_sunnonlinsolnewton.a")
+  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/lib" TYPE STATIC_LIBRARY FILES "/home/andrew/Documents/GitHub/biort-surface-cpp/BioRT-HBV-Surface/build/dep/cvode/src/sunnonlinsol/newton/libsundials_sunnonlinsolnewton.a")
 endif()
 
 if(CMAKE_INSTALL_COMPONENT STREQUAL "Unspecified" OR NOT CMAKE_INSTALL_COMPONENT)
@@ -65,8 +65,8 @@ if(CMAKE_INSTALL_COMPONENT STREQUAL "Unspecified" OR NOT CMAKE_INSTALL_COMPONENT
     endif()
   endforeach()
   file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/lib" TYPE SHARED_LIBRARY FILES
-    "/home/andrew/Documents/GitHub/surface/HBV-BioRT/build/dep/cvode/src/sunnonlinsol/newton/libsundials_sunnonlinsolnewton.so.1.1.0"
-    "/home/andrew/Documents/GitHub/surface/HBV-BioRT/build/dep/cvode/src/sunnonlinsol/newton/libsundials_sunnonlinsolnewton.so.1"
+    "/home/andrew/Documents/GitHub/biort-surface-cpp/BioRT-HBV-Surface/build/dep/cvode/src/sunnonlinsol/newton/libsundials_sunnonlinsolnewton.so.1.1.0"
+    "/home/andrew/Documents/GitHub/biort-surface-cpp/BioRT-HBV-Surface/build/dep/cvode/src/sunnonlinsol/newton/libsundials_sunnonlinsolnewton.so.1"
     )
   foreach(file
       "$ENV{DESTDIR}${CMAKE_INSTALL_PREFIX}/lib/libsundials_sunnonlinsolnewton.so.1.1.0"
@@ -82,10 +82,10 @@ if(CMAKE_INSTALL_COMPONENT STREQUAL "Unspecified" OR NOT CMAKE_INSTALL_COMPONENT
 endif()
 
 if(CMAKE_INSTALL_COMPONENT STREQUAL "Unspecified" OR NOT CMAKE_INSTALL_COMPONENT)
-  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/lib" TYPE SHARED_LIBRARY FILES "/home/andrew/Documents/GitHub/surface/HBV-BioRT/build/dep/cvode/src/sunnonlinsol/newton/libsundials_sunnonlinsolnewton.so")
+  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/lib" TYPE SHARED_LIBRARY FILES "/home/andrew/Documents/GitHub/biort-surface-cpp/BioRT-HBV-Surface/build/dep/cvode/src/sunnonlinsol/newton/libsundials_sunnonlinsolnewton.so")
 endif()
 
 if(CMAKE_INSTALL_COMPONENT STREQUAL "Unspecified" OR NOT CMAKE_INSTALL_COMPONENT)
-  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/include/sunnonlinsol" TYPE FILE FILES "/home/andrew/Documents/GitHub/surface/HBV-BioRT/dep/cvode/include/sunnonlinsol/sunnonlinsol_newton.h")
+  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/include/sunnonlinsol" TYPE FILE FILES "/home/andrew/Documents/GitHub/biort-surface-cpp/BioRT-HBV-Surface/dep/cvode/include/sunnonlinsol/sunnonlinsol_newton.h")
 endif()
 

@@ -8,7 +8,7 @@ set(CMAKE_DEPENDS_LANGUAGES
 
 # The set of dependency files which are needed:
 set(CMAKE_DEPENDS_DEPENDENCY_FILES
-  "/home/andrew/Documents/GitHub/surface/HBV-BioRT/dep/cvode/examples/cvode/serial/cvDiurnal_kry_bp.c" "dep/cvode/examples/cvode/serial/CMakeFiles/cvDiurnal_kry_bp.dir/cvDiurnal_kry_bp.c.o" "gcc" "dep/cvode/examples/cvode/serial/CMakeFiles/cvDiurnal_kry_bp.dir/cvDiurnal_kry_bp.c.o.d"
+  "/home/andrew/Documents/GitHub/biort-surface-cpp/BioRT-HBV-Surface/dep/cvode/examples/cvode/serial/cvDiurnal_kry_bp.c" "dep/cvode/examples/cvode/serial/CMakeFiles/cvDiurnal_kry_bp.dir/cvDiurnal_kry_bp.c.o" "gcc" "dep/cvode/examples/cvode/serial/CMakeFiles/cvDiurnal_kry_bp.dir/cvDiurnal_kry_bp.c.o.d"
   )
 
 # Targets to which this target links which contain Fortran sources.

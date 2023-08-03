@@ -53,10 +53,10 @@ RM = /usr/local/bin/cmake -E rm -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /home/andrew/Documents/GitHub/surface/HBV-BioRT
+CMAKE_SOURCE_DIR = /home/andrew/Documents/GitHub/biort-surface-cpp/BioRT-HBV-Surface
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /home/andrew/Documents/GitHub/surface/HBV-BioRT/build
+CMAKE_BINARY_DIR = /home/andrew/Documents/GitHub/biort-surface-cpp/BioRT-HBV-Surface/build
 
 # Include any dependencies generated for this target.
 include dep/cvode/src/sunmatrix/dense/CMakeFiles/sundials_sunmatrixdense_shared.dir/depend.make
@@ -70,60 +70,60 @@ include dep/cvode/src/sunmatrix/dense/CMakeFiles/sundials_sunmatrixdense_shared.
 include dep/cvode/src/sunmatrix/dense/CMakeFiles/sundials_sunmatrixdense_shared.dir/flags.make
 
 dep/cvode/src/sunmatrix/dense/CMakeFiles/sundials_sunmatrixdense_shared.dir/sunmatrix_dense.c.o: dep/cvode/src/sunmatrix/dense/CMakeFiles/sundials_sunmatrixdense_shared.dir/flags.make
-dep/cvode/src/sunmatrix/dense/CMakeFiles/sundials_sunmatrixdense_shared.dir/sunmatrix_dense.c.o: /home/andrew/Documents/GitHub/surface/HBV-BioRT/dep/cvode/src/sunmatrix/dense/sunmatrix_dense.c
+dep/cvode/src/sunmatrix/dense/CMakeFiles/sundials_sunmatrixdense_shared.dir/sunmatrix_dense.c.o: /home/andrew/Documents/GitHub/biort-surface-cpp/BioRT-HBV-Surface/dep/cvode/src/sunmatrix/dense/sunmatrix_dense.c
 dep/cvode/src/sunmatrix/dense/CMakeFiles/sundials_sunmatrixdense_shared.dir/sunmatrix_dense.c.o: dep/cvode/src/sunmatrix/dense/CMakeFiles/sundials_sunmatrixdense_shared.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/andrew/Documents/GitHub/surface/HBV-BioRT/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building C object dep/cvode/src/sunmatrix/dense/CMakeFiles/sundials_sunmatrixdense_shared.dir/sunmatrix_dense.c.o"
-	cd /home/andrew/Documents/GitHub/surface/HBV-BioRT/build/dep/cvode/src/sunmatrix/dense && /usr/bin/gcc-12 $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT dep/cvode/src/sunmatrix/dense/CMakeFiles/sundials_sunmatrixdense_shared.dir/sunmatrix_dense.c.o -MF CMakeFiles/sundials_sunmatrixdense_shared.dir/sunmatrix_dense.c.o.d -o CMakeFiles/sundials_sunmatrixdense_shared.dir/sunmatrix_dense.c.o -c /home/andrew/Documents/GitHub/surface/HBV-BioRT/dep/cvode/src/sunmatrix/dense/sunmatrix_dense.c
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/andrew/Documents/GitHub/biort-surface-cpp/BioRT-HBV-Surface/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building C object dep/cvode/src/sunmatrix/dense/CMakeFiles/sundials_sunmatrixdense_shared.dir/sunmatrix_dense.c.o"
+	cd /home/andrew/Documents/GitHub/biort-surface-cpp/BioRT-HBV-Surface/build/dep/cvode/src/sunmatrix/dense && /usr/bin/gcc-12 $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT dep/cvode/src/sunmatrix/dense/CMakeFiles/sundials_sunmatrixdense_shared.dir/sunmatrix_dense.c.o -MF CMakeFiles/sundials_sunmatrixdense_shared.dir/sunmatrix_dense.c.o.d -o CMakeFiles/sundials_sunmatrixdense_shared.dir/sunmatrix_dense.c.o -c /home/andrew/Documents/GitHub/biort-surface-cpp/BioRT-HBV-Surface/dep/cvode/src/sunmatrix/dense/sunmatrix_dense.c
 
 dep/cvode/src/sunmatrix/dense/CMakeFiles/sundials_sunmatrixdense_shared.dir/sunmatrix_dense.c.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing C source to CMakeFiles/sundials_sunmatrixdense_shared.dir/sunmatrix_dense.c.i"
-	cd /home/andrew/Documents/GitHub/surface/HBV-BioRT/build/dep/cvode/src/sunmatrix/dense && /usr/bin/gcc-12 $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /home/andrew/Documents/GitHub/surface/HBV-BioRT/dep/cvode/src/sunmatrix/dense/sunmatrix_dense.c > CMakeFiles/sundials_sunmatrixdense_shared.dir/sunmatrix_dense.c.i
+	cd /home/andrew/Documents/GitHub/biort-surface-cpp/BioRT-HBV-Surface/build/dep/cvode/src/sunmatrix/dense && /usr/bin/gcc-12 $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /home/andrew/Documents/GitHub/biort-surface-cpp/BioRT-HBV-Surface/dep/cvode/src/sunmatrix/dense/sunmatrix_dense.c > CMakeFiles/sundials_sunmatrixdense_shared.dir/sunmatrix_dense.c.i
 
 dep/cvode/src/sunmatrix/dense/CMakeFiles/sundials_sunmatrixdense_shared.dir/sunmatrix_dense.c.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling C source to assembly CMakeFiles/sundials_sunmatrixdense_shared.dir/sunmatrix_dense.c.s"
-	cd /home/andrew/Documents/GitHub/surface/HBV-BioRT/build/dep/cvode/src/sunmatrix/dense && /usr/bin/gcc-12 $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /home/andrew/Documents/GitHub/surface/HBV-BioRT/dep/cvode/src/sunmatrix/dense/sunmatrix_dense.c -o CMakeFiles/sundials_sunmatrixdense_shared.dir/sunmatrix_dense.c.s
+	cd /home/andrew/Documents/GitHub/biort-surface-cpp/BioRT-HBV-Surface/build/dep/cvode/src/sunmatrix/dense && /usr/bin/gcc-12 $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /home/andrew/Documents/GitHub/biort-surface-cpp/BioRT-HBV-Surface/dep/cvode/src/sunmatrix/dense/sunmatrix_dense.c -o CMakeFiles/sundials_sunmatrixdense_shared.dir/sunmatrix_dense.c.s
 
 dep/cvode/src/sunmatrix/dense/CMakeFiles/sundials_sunmatrixdense_shared.dir/__/__/sundials/sundials_nvector.c.o: dep/cvode/src/sunmatrix/dense/CMakeFiles/sundials_sunmatrixdense_shared.dir/flags.make
-dep/cvode/src/sunmatrix/dense/CMakeFiles/sundials_sunmatrixdense_shared.dir/__/__/sundials/sundials_nvector.c.o: /home/andrew/Documents/GitHub/surface/HBV-BioRT/dep/cvode/src/sundials/sundials_nvector.c
+dep/cvode/src/sunmatrix/dense/CMakeFiles/sundials_sunmatrixdense_shared.dir/__/__/sundials/sundials_nvector.c.o: /home/andrew/Documents/GitHub/biort-surface-cpp/BioRT-HBV-Surface/dep/cvode/src/sundials/sundials_nvector.c
 dep/cvode/src/sunmatrix/dense/CMakeFiles/sundials_sunmatrixdense_shared.dir/__/__/sundials/sundials_nvector.c.o: dep/cvode/src/sunmatrix/dense/CMakeFiles/sundials_sunmatrixdense_shared.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/andrew/Documents/GitHub/surface/HBV-BioRT/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Building C object dep/cvode/src/sunmatrix/dense/CMakeFiles/sundials_sunmatrixdense_shared.dir/__/__/sundials/sundials_nvector.c.o"
-	cd /home/andrew/Documents/GitHub/surface/HBV-BioRT/build/dep/cvode/src/sunmatrix/dense && /usr/bin/gcc-12 $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT dep/cvode/src/sunmatrix/dense/CMakeFiles/sundials_sunmatrixdense_shared.dir/__/__/sundials/sundials_nvector.c.o -MF CMakeFiles/sundials_sunmatrixdense_shared.dir/__/__/sundials/sundials_nvector.c.o.d -o CMakeFiles/sundials_sunmatrixdense_shared.dir/__/__/sundials/sundials_nvector.c.o -c /home/andrew/Documents/GitHub/surface/HBV-BioRT/dep/cvode/src/sundials/sundials_nvector.c
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/andrew/Documents/GitHub/biort-surface-cpp/BioRT-HBV-Surface/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Building C object dep/cvode/src/sunmatrix/dense/CMakeFiles/sundials_sunmatrixdense_shared.dir/__/__/sundials/sundials_nvector.c.o"
+	cd /home/andrew/Documents/GitHub/biort-surface-cpp/BioRT-HBV-Surface/build/dep/cvode/src/sunmatrix/dense && /usr/bin/gcc-12 $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT dep/cvode/src/sunmatrix/dense/CMakeFiles/sundials_sunmatrixdense_shared.dir/__/__/sundials/sundials_nvector.c.o -MF CMakeFiles/sundials_sunmatrixdense_shared.dir/__/__/sundials/sundials_nvector.c.o.d -o CMakeFiles/sundials_sunmatrixdense_shared.dir/__/__/sundials/sundials_nvector.c.o -c /home/andrew/Documents/GitHub/biort-surface-cpp/BioRT-HBV-Surface/dep/cvode/src/sundials/sundials_nvector.c
 
 dep/cvode/src/sunmatrix/dense/CMakeFiles/sundials_sunmatrixdense_shared.dir/__/__/sundials/sundials_nvector.c.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing C source to CMakeFiles/sundials_sunmatrixdense_shared.dir/__/__/sundials/sundials_nvector.c.i"
-	cd /home/andrew/Documents/GitHub/surface/HBV-BioRT/build/dep/cvode/src/sunmatrix/dense && /usr/bin/gcc-12 $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /home/andrew/Documents/GitHub/surface/HBV-BioRT/dep/cvode/src/sundials/sundials_nvector.c > CMakeFiles/sundials_sunmatrixdense_shared.dir/__/__/sundials/sundials_nvector.c.i
+	cd /home/andrew/Documents/GitHub/biort-surface-cpp/BioRT-HBV-Surface/build/dep/cvode/src/sunmatrix/dense && /usr/bin/gcc-12 $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /home/andrew/Documents/GitHub/biort-surface-cpp/BioRT-HBV-Surface/dep/cvode/src/sundials/sundials_nvector.c > CMakeFiles/sundials_sunmatrixdense_shared.dir/__/__/sundials/sundials_nvector.c.i
 
 dep/cvode/src/sunmatrix/dense/CMakeFiles/sundials_sunmatrixdense_shared.dir/__/__/sundials/sundials_nvector.c.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling C source to assembly CMakeFiles/sundials_sunmatrixdense_shared.dir/__/__/sundials/sundials_nvector.c.s"
-	cd /home/andrew/Documents/GitHub/surface/HBV-BioRT/build/dep/cvode/src/sunmatrix/dense && /usr/bin/gcc-12 $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /home/andrew/Documents/GitHub/surface/HBV-BioRT/dep/cvode/src/sundials/sundials_nvector.c -o CMakeFiles/sundials_sunmatrixdense_shared.dir/__/__/sundials/sundials_nvector.c.s
+	cd /home/andrew/Documents/GitHub/biort-surface-cpp/BioRT-HBV-Surface/build/dep/cvode/src/sunmatrix/dense && /usr/bin/gcc-12 $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /home/andrew/Documents/GitHub/biort-surface-cpp/BioRT-HBV-Surface/dep/cvode/src/sundials/sundials_nvector.c -o CMakeFiles/sundials_sunmatrixdense_shared.dir/__/__/sundials/sundials_nvector.c.s
 
 dep/cvode/src/sunmatrix/dense/CMakeFiles/sundials_sunmatrixdense_shared.dir/__/__/sundials/sundials_matrix.c.o: dep/cvode/src/sunmatrix/dense/CMakeFiles/sundials_sunmatrixdense_shared.dir/flags.make
-dep/cvode/src/sunmatrix/dense/CMakeFiles/sundials_sunmatrixdense_shared.dir/__/__/sundials/sundials_matrix.c.o: /home/andrew/Documents/GitHub/surface/HBV-BioRT/dep/cvode/src/sundials/sundials_matrix.c
+dep/cvode/src/sunmatrix/dense/CMakeFiles/sundials_sunmatrixdense_shared.dir/__/__/sundials/sundials_matrix.c.o: /home/andrew/Documents/GitHub/biort-surface-cpp/BioRT-HBV-Surface/dep/cvode/src/sundials/sundials_matrix.c
 dep/cvode/src/sunmatrix/dense/CMakeFiles/sundials_sunmatrixdense_shared.dir/__/__/sundials/sundials_matrix.c.o: dep/cvode/src/sunmatrix/dense/CMakeFiles/sundials_sunmatrixdense_shared.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/andrew/Documents/GitHub/surface/HBV-BioRT/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Building C object dep/cvode/src/sunmatrix/dense/CMakeFiles/sundials_sunmatrixdense_shared.dir/__/__/sundials/sundials_matrix.c.o"
-	cd /home/andrew/Documents/GitHub/surface/HBV-BioRT/build/dep/cvode/src/sunmatrix/dense && /usr/bin/gcc-12 $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT dep/cvode/src/sunmatrix/dense/CMakeFiles/sundials_sunmatrixdense_shared.dir/__/__/sundials/sundials_matrix.c.o -MF CMakeFiles/sundials_sunmatrixdense_shared.dir/__/__/sundials/sundials_matrix.c.o.d -o CMakeFiles/sundials_sunmatrixdense_shared.dir/__/__/sundials/sundials_matrix.c.o -c /home/andrew/Documents/GitHub/surface/HBV-BioRT/dep/cvode/src/sundials/sundials_matrix.c
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/andrew/Documents/GitHub/biort-surface-cpp/BioRT-HBV-Surface/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Building C object dep/cvode/src/sunmatrix/dense/CMakeFiles/sundials_sunmatrixdense_shared.dir/__/__/sundials/sundials_matrix.c.o"
+	cd /home/andrew/Documents/GitHub/biort-surface-cpp/BioRT-HBV-Surface/build/dep/cvode/src/sunmatrix/dense && /usr/bin/gcc-12 $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT dep/cvode/src/sunmatrix/dense/CMakeFiles/sundials_sunmatrixdense_shared.dir/__/__/sundials/sundials_matrix.c.o -MF CMakeFiles/sundials_sunmatrixdense_shared.dir/__/__/sundials/sundials_matrix.c.o.d -o CMakeFiles/sundials_sunmatrixdense_shared.dir/__/__/sundials/sundials_matrix.c.o -c /home/andrew/Documents/GitHub/biort-surface-cpp/BioRT-HBV-Surface/dep/cvode/src/sundials/sundials_matrix.c
 
 dep/cvode/src/sunmatrix/dense/CMakeFiles/sundials_sunmatrixdense_shared.dir/__/__/sundials/sundials_matrix.c.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing C source to CMakeFiles/sundials_sunmatrixdense_shared.dir/__/__/sundials/sundials_matrix.c.i"
-	cd /home/andrew/Documents/GitHub/surface/HBV-BioRT/build/dep/cvode/src/sunmatrix/dense && /usr/bin/gcc-12 $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /home/andrew/Documents/GitHub/surface/HBV-BioRT/dep/cvode/src/sundials/sundials_matrix.c > CMakeFiles/sundials_sunmatrixdense_shared.dir/__/__/sundials/sundials_matrix.c.i
+	cd /home/andrew/Documents/GitHub/biort-surface-cpp/BioRT-HBV-Surface/build/dep/cvode/src/sunmatrix/dense && /usr/bin/gcc-12 $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /home/andrew/Documents/GitHub/biort-surface-cpp/BioRT-HBV-Surface/dep/cvode/src/sundials/sundials_matrix.c > CMakeFiles/sundials_sunmatrixdense_shared.dir/__/__/sundials/sundials_matrix.c.i
 
 dep/cvode/src/sunmatrix/dense/CMakeFiles/sundials_sunmatrixdense_shared.dir/__/__/sundials/sundials_matrix.c.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling C source to assembly CMakeFiles/sundials_sunmatrixdense_shared.dir/__/__/sundials/sundials_matrix.c.s"
-	cd /home/andrew/Documents/GitHub/surface/HBV-BioRT/build/dep/cvode/src/sunmatrix/dense && /usr/bin/gcc-12 $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /home/andrew/Documents/GitHub/surface/HBV-BioRT/dep/cvode/src/sundials/sundials_matrix.c -o CMakeFiles/sundials_sunmatrixdense_shared.dir/__/__/sundials/sundials_matrix.c.s
+	cd /home/andrew/Documents/GitHub/biort-surface-cpp/BioRT-HBV-Surface/build/dep/cvode/src/sunmatrix/dense && /usr/bin/gcc-12 $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /home/andrew/Documents/GitHub/biort-surface-cpp/BioRT-HBV-Surface/dep/cvode/src/sundials/sundials_matrix.c -o CMakeFiles/sundials_sunmatrixdense_shared.dir/__/__/sundials/sundials_matrix.c.s
 
 dep/cvode/src/sunmatrix/dense/CMakeFiles/sundials_sunmatrixdense_shared.dir/__/__/sundials/sundials_math.c.o: dep/cvode/src/sunmatrix/dense/CMakeFiles/sundials_sunmatrixdense_shared.dir/flags.make
-dep/cvode/src/sunmatrix/dense/CMakeFiles/sundials_sunmatrixdense_shared.dir/__/__/sundials/sundials_math.c.o: /home/andrew/Documents/GitHub/surface/HBV-BioRT/dep/cvode/src/sundials/sundials_math.c
+dep/cvode/src/sunmatrix/dense/CMakeFiles/sundials_sunmatrixdense_shared.dir/__/__/sundials/sundials_math.c.o: /home/andrew/Documents/GitHub/biort-surface-cpp/BioRT-HBV-Surface/dep/cvode/src/sundials/sundials_math.c
 dep/cvode/src/sunmatrix/dense/CMakeFiles/sundials_sunmatrixdense_shared.dir/__/__/sundials/sundials_math.c.o: dep/cvode/src/sunmatrix/dense/CMakeFiles/sundials_sunmatrixdense_shared.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/andrew/Documents/GitHub/surface/HBV-BioRT/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_4) "Building C object dep/cvode/src/sunmatrix/dense/CMakeFiles/sundials_sunmatrixdense_shared.dir/__/__/sundials/sundials_math.c.o"
-	cd /home/andrew/Documents/GitHub/surface/HBV-BioRT/build/dep/cvode/src/sunmatrix/dense && /usr/bin/gcc-12 $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT dep/cvode/src/sunmatrix/dense/CMakeFiles/sundials_sunmatrixdense_shared.dir/__/__/sundials/sundials_math.c.o -MF CMakeFiles/sundials_sunmatrixdense_shared.dir/__/__/sundials/sundials_math.c.o.d -o CMakeFiles/sundials_sunmatrixdense_shared.dir/__/__/sundials/sundials_math.c.o -c /home/andrew/Documents/GitHub/surface/HBV-BioRT/dep/cvode/src/sundials/sundials_math.c
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/andrew/Documents/GitHub/biort-surface-cpp/BioRT-HBV-Surface/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_4) "Building C object dep/cvode/src/sunmatrix/dense/CMakeFiles/sundials_sunmatrixdense_shared.dir/__/__/sundials/sundials_math.c.o"
+	cd /home/andrew/Documents/GitHub/biort-surface-cpp/BioRT-HBV-Surface/build/dep/cvode/src/sunmatrix/dense && /usr/bin/gcc-12 $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT dep/cvode/src/sunmatrix/dense/CMakeFiles/sundials_sunmatrixdense_shared.dir/__/__/sundials/sundials_math.c.o -MF CMakeFiles/sundials_sunmatrixdense_shared.dir/__/__/sundials/sundials_math.c.o.d -o CMakeFiles/sundials_sunmatrixdense_shared.dir/__/__/sundials/sundials_math.c.o -c /home/andrew/Documents/GitHub/biort-surface-cpp/BioRT-HBV-Surface/dep/cvode/src/sundials/sundials_math.c
 
 dep/cvode/src/sunmatrix/dense/CMakeFiles/sundials_sunmatrixdense_shared.dir/__/__/sundials/sundials_math.c.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing C source to CMakeFiles/sundials_sunmatrixdense_shared.dir/__/__/sundials/sundials_math.c.i"
-	cd /home/andrew/Documents/GitHub/surface/HBV-BioRT/build/dep/cvode/src/sunmatrix/dense && /usr/bin/gcc-12 $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /home/andrew/Documents/GitHub/surface/HBV-BioRT/dep/cvode/src/sundials/sundials_math.c > CMakeFiles/sundials_sunmatrixdense_shared.dir/__/__/sundials/sundials_math.c.i
+	cd /home/andrew/Documents/GitHub/biort-surface-cpp/BioRT-HBV-Surface/build/dep/cvode/src/sunmatrix/dense && /usr/bin/gcc-12 $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /home/andrew/Documents/GitHub/biort-surface-cpp/BioRT-HBV-Surface/dep/cvode/src/sundials/sundials_math.c > CMakeFiles/sundials_sunmatrixdense_shared.dir/__/__/sundials/sundials_math.c.i
 
 dep/cvode/src/sunmatrix/dense/CMakeFiles/sundials_sunmatrixdense_shared.dir/__/__/sundials/sundials_math.c.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling C source to assembly CMakeFiles/sundials_sunmatrixdense_shared.dir/__/__/sundials/sundials_math.c.s"
-	cd /home/andrew/Documents/GitHub/surface/HBV-BioRT/build/dep/cvode/src/sunmatrix/dense && /usr/bin/gcc-12 $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /home/andrew/Documents/GitHub/surface/HBV-BioRT/dep/cvode/src/sundials/sundials_math.c -o CMakeFiles/sundials_sunmatrixdense_shared.dir/__/__/sundials/sundials_math.c.s
+	cd /home/andrew/Documents/GitHub/biort-surface-cpp/BioRT-HBV-Surface/build/dep/cvode/src/sunmatrix/dense && /usr/bin/gcc-12 $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /home/andrew/Documents/GitHub/biort-surface-cpp/BioRT-HBV-Surface/dep/cvode/src/sundials/sundials_math.c -o CMakeFiles/sundials_sunmatrixdense_shared.dir/__/__/sundials/sundials_math.c.s
 
 # Object files for target sundials_sunmatrixdense_shared
 sundials_sunmatrixdense_shared_OBJECTS = \
@@ -141,9 +141,9 @@ dep/cvode/src/sunmatrix/dense/libsundials_sunmatrixdense.so.2.1.0: dep/cvode/src
 dep/cvode/src/sunmatrix/dense/libsundials_sunmatrixdense.so.2.1.0: dep/cvode/src/sunmatrix/dense/CMakeFiles/sundials_sunmatrixdense_shared.dir/__/__/sundials/sundials_math.c.o
 dep/cvode/src/sunmatrix/dense/libsundials_sunmatrixdense.so.2.1.0: dep/cvode/src/sunmatrix/dense/CMakeFiles/sundials_sunmatrixdense_shared.dir/build.make
 dep/cvode/src/sunmatrix/dense/libsundials_sunmatrixdense.so.2.1.0: dep/cvode/src/sunmatrix/dense/CMakeFiles/sundials_sunmatrixdense_shared.dir/link.txt
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --bold --progress-dir=/home/andrew/Documents/GitHub/surface/HBV-BioRT/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_5) "Linking C shared library libsundials_sunmatrixdense.so"
-	cd /home/andrew/Documents/GitHub/surface/HBV-BioRT/build/dep/cvode/src/sunmatrix/dense && $(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/sundials_sunmatrixdense_shared.dir/link.txt --verbose=$(VERBOSE)
-	cd /home/andrew/Documents/GitHub/surface/HBV-BioRT/build/dep/cvode/src/sunmatrix/dense && $(CMAKE_COMMAND) -E cmake_symlink_library libsundials_sunmatrixdense.so.2.1.0 libsundials_sunmatrixdense.so.2 libsundials_sunmatrixdense.so
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --bold --progress-dir=/home/andrew/Documents/GitHub/biort-surface-cpp/BioRT-HBV-Surface/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_5) "Linking C shared library libsundials_sunmatrixdense.so"
+	cd /home/andrew/Documents/GitHub/biort-surface-cpp/BioRT-HBV-Surface/build/dep/cvode/src/sunmatrix/dense && $(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/sundials_sunmatrixdense_shared.dir/link.txt --verbose=$(VERBOSE)
+	cd /home/andrew/Documents/GitHub/biort-surface-cpp/BioRT-HBV-Surface/build/dep/cvode/src/sunmatrix/dense && $(CMAKE_COMMAND) -E cmake_symlink_library libsundials_sunmatrixdense.so.2.1.0 libsundials_sunmatrixdense.so.2 libsundials_sunmatrixdense.so
 
 dep/cvode/src/sunmatrix/dense/libsundials_sunmatrixdense.so.2: dep/cvode/src/sunmatrix/dense/libsundials_sunmatrixdense.so.2.1.0
 	@$(CMAKE_COMMAND) -E touch_nocreate dep/cvode/src/sunmatrix/dense/libsundials_sunmatrixdense.so.2
@@ -156,10 +156,10 @@ dep/cvode/src/sunmatrix/dense/CMakeFiles/sundials_sunmatrixdense_shared.dir/buil
 .PHONY : dep/cvode/src/sunmatrix/dense/CMakeFiles/sundials_sunmatrixdense_shared.dir/build
 
 dep/cvode/src/sunmatrix/dense/CMakeFiles/sundials_sunmatrixdense_shared.dir/clean:
-	cd /home/andrew/Documents/GitHub/surface/HBV-BioRT/build/dep/cvode/src/sunmatrix/dense && $(CMAKE_COMMAND) -P CMakeFiles/sundials_sunmatrixdense_shared.dir/cmake_clean.cmake
+	cd /home/andrew/Documents/GitHub/biort-surface-cpp/BioRT-HBV-Surface/build/dep/cvode/src/sunmatrix/dense && $(CMAKE_COMMAND) -P CMakeFiles/sundials_sunmatrixdense_shared.dir/cmake_clean.cmake
 .PHONY : dep/cvode/src/sunmatrix/dense/CMakeFiles/sundials_sunmatrixdense_shared.dir/clean
 
 dep/cvode/src/sunmatrix/dense/CMakeFiles/sundials_sunmatrixdense_shared.dir/depend:
-	cd /home/andrew/Documents/GitHub/surface/HBV-BioRT/build && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /home/andrew/Documents/GitHub/surface/HBV-BioRT /home/andrew/Documents/GitHub/surface/HBV-BioRT/dep/cvode/src/sunmatrix/dense /home/andrew/Documents/GitHub/surface/HBV-BioRT/build /home/andrew/Documents/GitHub/surface/HBV-BioRT/build/dep/cvode/src/sunmatrix/dense /home/andrew/Documents/GitHub/surface/HBV-BioRT/build/dep/cvode/src/sunmatrix/dense/CMakeFiles/sundials_sunmatrixdense_shared.dir/DependInfo.cmake "--color=$(COLOR)"
+	cd /home/andrew/Documents/GitHub/biort-surface-cpp/BioRT-HBV-Surface/build && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /home/andrew/Documents/GitHub/biort-surface-cpp/BioRT-HBV-Surface /home/andrew/Documents/GitHub/biort-surface-cpp/BioRT-HBV-Surface/dep/cvode/src/sunmatrix/dense /home/andrew/Documents/GitHub/biort-surface-cpp/BioRT-HBV-Surface/build /home/andrew/Documents/GitHub/biort-surface-cpp/BioRT-HBV-Surface/build/dep/cvode/src/sunmatrix/dense /home/andrew/Documents/GitHub/biort-surface-cpp/BioRT-HBV-Surface/build/dep/cvode/src/sunmatrix/dense/CMakeFiles/sundials_sunmatrixdense_shared.dir/DependInfo.cmake "--color=$(COLOR)"
 .PHONY : dep/cvode/src/sunmatrix/dense/CMakeFiles/sundials_sunmatrixdense_shared.dir/depend
 

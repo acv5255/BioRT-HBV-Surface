@@ -1,4 +1,4 @@
-# Install script for directory: /home/andrew/Documents/GitHub/surface/HBV-BioRT/dep/cvode/examples/sunmatrix
+# Install script for directory: /home/andrew/Documents/GitHub/biort-surface-cpp/BioRT-HBV-Surface/dep/cvode/examples/sunmatrix
 
 # Set the install prefix
 if(NOT DEFINED CMAKE_INSTALL_PREFIX)
@@ -44,9 +44,9 @@ endif()
 
 if(NOT CMAKE_INSTALL_LOCAL_ONLY)
   # Include the install script for each subdirectory.
-  include("/home/andrew/Documents/GitHub/surface/HBV-BioRT/build/dep/cvode/examples/sunmatrix/dense/cmake_install.cmake")
-  include("/home/andrew/Documents/GitHub/surface/HBV-BioRT/build/dep/cvode/examples/sunmatrix/band/cmake_install.cmake")
-  include("/home/andrew/Documents/GitHub/surface/HBV-BioRT/build/dep/cvode/examples/sunmatrix/sparse/cmake_install.cmake")
+  include("/home/andrew/Documents/GitHub/biort-surface-cpp/BioRT-HBV-Surface/build/dep/cvode/examples/sunmatrix/dense/cmake_install.cmake")
+  include("/home/andrew/Documents/GitHub/biort-surface-cpp/BioRT-HBV-Surface/build/dep/cvode/examples/sunmatrix/band/cmake_install.cmake")
+  include("/home/andrew/Documents/GitHub/biort-surface-cpp/BioRT-HBV-Surface/build/dep/cvode/examples/sunmatrix/sparse/cmake_install.cmake")
 
 endif()
 

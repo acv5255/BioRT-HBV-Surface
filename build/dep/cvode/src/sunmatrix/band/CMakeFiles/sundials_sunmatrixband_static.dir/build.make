@@ -53,10 +53,10 @@ RM = /usr/local/bin/cmake -E rm -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /home/andrew/Documents/GitHub/surface/HBV-BioRT
+CMAKE_SOURCE_DIR = /home/andrew/Documents/GitHub/biort-surface-cpp/BioRT-HBV-Surface
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /home/andrew/Documents/GitHub/surface/HBV-BioRT/build
+CMAKE_BINARY_DIR = /home/andrew/Documents/GitHub/biort-surface-cpp/BioRT-HBV-Surface/build
 
 # Include any dependencies generated for this target.
 include dep/cvode/src/sunmatrix/band/CMakeFiles/sundials_sunmatrixband_static.dir/depend.make
@@ -70,60 +70,60 @@ include dep/cvode/src/sunmatrix/band/CMakeFiles/sundials_sunmatrixband_static.di
 include dep/cvode/src/sunmatrix/band/CMakeFiles/sundials_sunmatrixband_static.dir/flags.make
 
 dep/cvode/src/sunmatrix/band/CMakeFiles/sundials_sunmatrixband_static.dir/sunmatrix_band.c.o: dep/cvode/src/sunmatrix/band/CMakeFiles/sundials_sunmatrixband_static.dir/flags.make
-dep/cvode/src/sunmatrix/band/CMakeFiles/sundials_sunmatrixband_static.dir/sunmatrix_band.c.o: /home/andrew/Documents/GitHub/surface/HBV-BioRT/dep/cvode/src/sunmatrix/band/sunmatrix_band.c
+dep/cvode/src/sunmatrix/band/CMakeFiles/sundials_sunmatrixband_static.dir/sunmatrix_band.c.o: /home/andrew/Documents/GitHub/biort-surface-cpp/BioRT-HBV-Surface/dep/cvode/src/sunmatrix/band/sunmatrix_band.c
 dep/cvode/src/sunmatrix/band/CMakeFiles/sundials_sunmatrixband_static.dir/sunmatrix_band.c.o: dep/cvode/src/sunmatrix/band/CMakeFiles/sundials_sunmatrixband_static.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/andrew/Documents/GitHub/surface/HBV-BioRT/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building C object dep/cvode/src/sunmatrix/band/CMakeFiles/sundials_sunmatrixband_static.dir/sunmatrix_band.c.o"
-	cd /home/andrew/Documents/GitHub/surface/HBV-BioRT/build/dep/cvode/src/sunmatrix/band && /usr/bin/gcc-12 $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT dep/cvode/src/sunmatrix/band/CMakeFiles/sundials_sunmatrixband_static.dir/sunmatrix_band.c.o -MF CMakeFiles/sundials_sunmatrixband_static.dir/sunmatrix_band.c.o.d -o CMakeFiles/sundials_sunmatrixband_static.dir/sunmatrix_band.c.o -c /home/andrew/Documents/GitHub/surface/HBV-BioRT/dep/cvode/src/sunmatrix/band/sunmatrix_band.c
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/andrew/Documents/GitHub/biort-surface-cpp/BioRT-HBV-Surface/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building C object dep/cvode/src/sunmatrix/band/CMakeFiles/sundials_sunmatrixband_static.dir/sunmatrix_band.c.o"
+	cd /home/andrew/Documents/GitHub/biort-surface-cpp/BioRT-HBV-Surface/build/dep/cvode/src/sunmatrix/band && /usr/bin/gcc-12 $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT dep/cvode/src/sunmatrix/band/CMakeFiles/sundials_sunmatrixband_static.dir/sunmatrix_band.c.o -MF CMakeFiles/sundials_sunmatrixband_static.dir/sunmatrix_band.c.o.d -o CMakeFiles/sundials_sunmatrixband_static.dir/sunmatrix_band.c.o -c /home/andrew/Documents/GitHub/biort-surface-cpp/BioRT-HBV-Surface/dep/cvode/src/sunmatrix/band/sunmatrix_band.c
 
 dep/cvode/src/sunmatrix/band/CMakeFiles/sundials_sunmatrixband_static.dir/sunmatrix_band.c.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing C source to CMakeFiles/sundials_sunmatrixband_static.dir/sunmatrix_band.c.i"
-	cd /home/andrew/Documents/GitHub/surface/HBV-BioRT/build/dep/cvode/src/sunmatrix/band && /usr/bin/gcc-12 $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /home/andrew/Documents/GitHub/surface/HBV-BioRT/dep/cvode/src/sunmatrix/band/sunmatrix_band.c > CMakeFiles/sundials_sunmatrixband_static.dir/sunmatrix_band.c.i
+	cd /home/andrew/Documents/GitHub/biort-surface-cpp/BioRT-HBV-Surface/build/dep/cvode/src/sunmatrix/band && /usr/bin/gcc-12 $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /home/andrew/Documents/GitHub/biort-surface-cpp/BioRT-HBV-Surface/dep/cvode/src/sunmatrix/band/sunmatrix_band.c > CMakeFiles/sundials_sunmatrixband_static.dir/sunmatrix_band.c.i
 
 dep/cvode/src/sunmatrix/band/CMakeFiles/sundials_sunmatrixband_static.dir/sunmatrix_band.c.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling C source to assembly CMakeFiles/sundials_sunmatrixband_static.dir/sunmatrix_band.c.s"
-	cd /home/andrew/Documents/GitHub/surface/HBV-BioRT/build/dep/cvode/src/sunmatrix/band && /usr/bin/gcc-12 $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /home/andrew/Documents/GitHub/surface/HBV-BioRT/dep/cvode/src/sunmatrix/band/sunmatrix_band.c -o CMakeFiles/sundials_sunmatrixband_static.dir/sunmatrix_band.c.s
+	cd /home/andrew/Documents/GitHub/biort-surface-cpp/BioRT-HBV-Surface/build/dep/cvode/src/sunmatrix/band && /usr/bin/gcc-12 $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /home/andrew/Documents/GitHub/biort-surface-cpp/BioRT-HBV-Surface/dep/cvode/src/sunmatrix/band/sunmatrix_band.c -o CMakeFiles/sundials_sunmatrixband_static.dir/sunmatrix_band.c.s
 
 dep/cvode/src/sunmatrix/band/CMakeFiles/sundials_sunmatrixband_static.dir/__/__/sundials/sundials_nvector.c.o: dep/cvode/src/sunmatrix/band/CMakeFiles/sundials_sunmatrixband_static.dir/flags.make
-dep/cvode/src/sunmatrix/band/CMakeFiles/sundials_sunmatrixband_static.dir/__/__/sundials/sundials_nvector.c.o: /home/andrew/Documents/GitHub/surface/HBV-BioRT/dep/cvode/src/sundials/sundials_nvector.c
+dep/cvode/src/sunmatrix/band/CMakeFiles/sundials_sunmatrixband_static.dir/__/__/sundials/sundials_nvector.c.o: /home/andrew/Documents/GitHub/biort-surface-cpp/BioRT-HBV-Surface/dep/cvode/src/sundials/sundials_nvector.c
 dep/cvode/src/sunmatrix/band/CMakeFiles/sundials_sunmatrixband_static.dir/__/__/sundials/sundials_nvector.c.o: dep/cvode/src/sunmatrix/band/CMakeFiles/sundials_sunmatrixband_static.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/andrew/Documents/GitHub/surface/HBV-BioRT/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Building C object dep/cvode/src/sunmatrix/band/CMakeFiles/sundials_sunmatrixband_static.dir/__/__/sundials/sundials_nvector.c.o"
-	cd /home/andrew/Documents/GitHub/surface/HBV-BioRT/build/dep/cvode/src/sunmatrix/band && /usr/bin/gcc-12 $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT dep/cvode/src/sunmatrix/band/CMakeFiles/sundials_sunmatrixband_static.dir/__/__/sundials/sundials_nvector.c.o -MF CMakeFiles/sundials_sunmatrixband_static.dir/__/__/sundials/sundials_nvector.c.o.d -o CMakeFiles/sundials_sunmatrixband_static.dir/__/__/sundials/sundials_nvector.c.o -c /home/andrew/Documents/GitHub/surface/HBV-BioRT/dep/cvode/src/sundials/sundials_nvector.c
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/andrew/Documents/GitHub/biort-surface-cpp/BioRT-HBV-Surface/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Building C object dep/cvode/src/sunmatrix/band/CMakeFiles/sundials_sunmatrixband_static.dir/__/__/sundials/sundials_nvector.c.o"
+	cd /home/andrew/Documents/GitHub/biort-surface-cpp/BioRT-HBV-Surface/build/dep/cvode/src/sunmatrix/band && /usr/bin/gcc-12 $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT dep/cvode/src/sunmatrix/band/CMakeFiles/sundials_sunmatrixband_static.dir/__/__/sundials/sundials_nvector.c.o -MF CMakeFiles/sundials_sunmatrixband_static.dir/__/__/sundials/sundials_nvector.c.o.d -o CMakeFiles/sundials_sunmatrixband_static.dir/__/__/sundials/sundials_nvector.c.o -c /home/andrew/Documents/GitHub/biort-surface-cpp/BioRT-HBV-Surface/dep/cvode/src/sundials/sundials_nvector.c
 
 dep/cvode/src/sunmatrix/band/CMakeFiles/sundials_sunmatrixband_static.dir/__/__/sundials/sundials_nvector.c.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing C source to CMakeFiles/sundials_sunmatrixband_static.dir/__/__/sundials/sundials_nvector.c.i"
-	cd /home/andrew/Documents/GitHub/surface/HBV-BioRT/build/dep/cvode/src/sunmatrix/band && /usr/bin/gcc-12 $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /home/andrew/Documents/GitHub/surface/HBV-BioRT/dep/cvode/src/sundials/sundials_nvector.c > CMakeFiles/sundials_sunmatrixband_static.dir/__/__/sundials/sundials_nvector.c.i
+	cd /home/andrew/Documents/GitHub/biort-surface-cpp/BioRT-HBV-Surface/build/dep/cvode/src/sunmatrix/band && /usr/bin/gcc-12 $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /home/andrew/Documents/GitHub/biort-surface-cpp/BioRT-HBV-Surface/dep/cvode/src/sundials/sundials_nvector.c > CMakeFiles/sundials_sunmatrixband_static.dir/__/__/sundials/sundials_nvector.c.i
 
 dep/cvode/src/sunmatrix/band/CMakeFiles/sundials_sunmatrixband_static.dir/__/__/sundials/sundials_nvector.c.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling C source to assembly CMakeFiles/sundials_sunmatrixband_static.dir/__/__/sundials/sundials_nvector.c.s"
-	cd /home/andrew/Documents/GitHub/surface/HBV-BioRT/build/dep/cvode/src/sunmatrix/band && /usr/bin/gcc-12 $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /home/andrew/Documents/GitHub/surface/HBV-BioRT/dep/cvode/src/sundials/sundials_nvector.c -o CMakeFiles/sundials_sunmatrixband_static.dir/__/__/sundials/sundials_nvector.c.s
+	cd /home/andrew/Documents/GitHub/biort-surface-cpp/BioRT-HBV-Surface/build/dep/cvode/src/sunmatrix/band && /usr/bin/gcc-12 $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /home/andrew/Documents/GitHub/biort-surface-cpp/BioRT-HBV-Surface/dep/cvode/src/sundials/sundials_nvector.c -o CMakeFiles/sundials_sunmatrixband_static.dir/__/__/sundials/sundials_nvector.c.s
 
 dep/cvode/src/sunmatrix/band/CMakeFiles/sundials_sunmatrixband_static.dir/__/__/sundials/sundials_matrix.c.o: dep/cvode/src/sunmatrix/band/CMakeFiles/sundials_sunmatrixband_static.dir/flags.make
-dep/cvode/src/sunmatrix/band/CMakeFiles/sundials_sunmatrixband_static.dir/__/__/sundials/sundials_matrix.c.o: /home/andrew/Documents/GitHub/surface/HBV-BioRT/dep/cvode/src/sundials/sundials_matrix.c
+dep/cvode/src/sunmatrix/band/CMakeFiles/sundials_sunmatrixband_static.dir/__/__/sundials/sundials_matrix.c.o: /home/andrew/Documents/GitHub/biort-surface-cpp/BioRT-HBV-Surface/dep/cvode/src/sundials/sundials_matrix.c
 dep/cvode/src/sunmatrix/band/CMakeFiles/sundials_sunmatrixband_static.dir/__/__/sundials/sundials_matrix.c.o: dep/cvode/src/sunmatrix/band/CMakeFiles/sundials_sunmatrixband_static.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/andrew/Documents/GitHub/surface/HBV-BioRT/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Building C object dep/cvode/src/sunmatrix/band/CMakeFiles/sundials_sunmatrixband_static.dir/__/__/sundials/sundials_matrix.c.o"
-	cd /home/andrew/Documents/GitHub/surface/HBV-BioRT/build/dep/cvode/src/sunmatrix/band && /usr/bin/gcc-12 $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT dep/cvode/src/sunmatrix/band/CMakeFiles/sundials_sunmatrixband_static.dir/__/__/sundials/sundials_matrix.c.o -MF CMakeFiles/sundials_sunmatrixband_static.dir/__/__/sundials/sundials_matrix.c.o.d -o CMakeFiles/sundials_sunmatrixband_static.dir/__/__/sundials/sundials_matrix.c.o -c /home/andrew/Documents/GitHub/surface/HBV-BioRT/dep/cvode/src/sundials/sundials_matrix.c
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/andrew/Documents/GitHub/biort-surface-cpp/BioRT-HBV-Surface/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Building C object dep/cvode/src/sunmatrix/band/CMakeFiles/sundials_sunmatrixband_static.dir/__/__/sundials/sundials_matrix.c.o"
+	cd /home/andrew/Documents/GitHub/biort-surface-cpp/BioRT-HBV-Surface/build/dep/cvode/src/sunmatrix/band && /usr/bin/gcc-12 $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT dep/cvode/src/sunmatrix/band/CMakeFiles/sundials_sunmatrixband_static.dir/__/__/sundials/sundials_matrix.c.o -MF CMakeFiles/sundials_sunmatrixband_static.dir/__/__/sundials/sundials_matrix.c.o.d -o CMakeFiles/sundials_sunmatrixband_static.dir/__/__/sundials/sundials_matrix.c.o -c /home/andrew/Documents/GitHub/biort-surface-cpp/BioRT-HBV-Surface/dep/cvode/src/sundials/sundials_matrix.c
 
 dep/cvode/src/sunmatrix/band/CMakeFiles/sundials_sunmatrixband_static.dir/__/__/sundials/sundials_matrix.c.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing C source to CMakeFiles/sundials_sunmatrixband_static.dir/__/__/sundials/sundials_matrix.c.i"
-	cd /home/andrew/Documents/GitHub/surface/HBV-BioRT/build/dep/cvode/src/sunmatrix/band && /usr/bin/gcc-12 $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /home/andrew/Documents/GitHub/surface/HBV-BioRT/dep/cvode/src/sundials/sundials_matrix.c > CMakeFiles/sundials_sunmatrixband_static.dir/__/__/sundials/sundials_matrix.c.i
+	cd /home/andrew/Documents/GitHub/biort-surface-cpp/BioRT-HBV-Surface/build/dep/cvode/src/sunmatrix/band && /usr/bin/gcc-12 $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /home/andrew/Documents/GitHub/biort-surface-cpp/BioRT-HBV-Surface/dep/cvode/src/sundials/sundials_matrix.c > CMakeFiles/sundials_sunmatrixband_static.dir/__/__/sundials/sundials_matrix.c.i
 
 dep/cvode/src/sunmatrix/band/CMakeFiles/sundials_sunmatrixband_static.dir/__/__/sundials/sundials_matrix.c.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling C source to assembly CMakeFiles/sundials_sunmatrixband_static.dir/__/__/sundials/sundials_matrix.c.s"
-	cd /home/andrew/Documents/GitHub/surface/HBV-BioRT/build/dep/cvode/src/sunmatrix/band && /usr/bin/gcc-12 $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /home/andrew/Documents/GitHub/surface/HBV-BioRT/dep/cvode/src/sundials/sundials_matrix.c -o CMakeFiles/sundials_sunmatrixband_static.dir/__/__/sundials/sundials_matrix.c.s
+	cd /home/andrew/Documents/GitHub/biort-surface-cpp/BioRT-HBV-Surface/build/dep/cvode/src/sunmatrix/band && /usr/bin/gcc-12 $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /home/andrew/Documents/GitHub/biort-surface-cpp/BioRT-HBV-Surface/dep/cvode/src/sundials/sundials_matrix.c -o CMakeFiles/sundials_sunmatrixband_static.dir/__/__/sundials/sundials_matrix.c.s
 
 dep/cvode/src/sunmatrix/band/CMakeFiles/sundials_sunmatrixband_static.dir/__/__/sundials/sundials_math.c.o: dep/cvode/src/sunmatrix/band/CMakeFiles/sundials_sunmatrixband_static.dir/flags.make
-dep/cvode/src/sunmatrix/band/CMakeFiles/sundials_sunmatrixband_static.dir/__/__/sundials/sundials_math.c.o: /home/andrew/Documents/GitHub/surface/HBV-BioRT/dep/cvode/src/sundials/sundials_math.c
+dep/cvode/src/sunmatrix/band/CMakeFiles/sundials_sunmatrixband_static.dir/__/__/sundials/sundials_math.c.o: /home/andrew/Documents/GitHub/biort-surface-cpp/BioRT-HBV-Surface/dep/cvode/src/sundials/sundials_math.c
 dep/cvode/src/sunmatrix/band/CMakeFiles/sundials_sunmatrixband_static.dir/__/__/sundials/sundials_math.c.o: dep/cvode/src/sunmatrix/band/CMakeFiles/sundials_sunmatrixband_static.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/andrew/Documents/GitHub/surface/HBV-BioRT/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_4) "Building C object dep/cvode/src/sunmatrix/band/CMakeFiles/sundials_sunmatrixband_static.dir/__/__/sundials/sundials_math.c.o"
-	cd /home/andrew/Documents/GitHub/surface/HBV-BioRT/build/dep/cvode/src/sunmatrix/band && /usr/bin/gcc-12 $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT dep/cvode/src/sunmatrix/band/CMakeFiles/sundials_sunmatrixband_static.dir/__/__/sundials/sundials_math.c.o -MF CMakeFiles/sundials_sunmatrixband_static.dir/__/__/sundials/sundials_math.c.o.d -o CMakeFiles/sundials_sunmatrixband_static.dir/__/__/sundials/sundials_math.c.o -c /home/andrew/Documents/GitHub/surface/HBV-BioRT/dep/cvode/src/sundials/sundials_math.c
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/andrew/Documents/GitHub/biort-surface-cpp/BioRT-HBV-Surface/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_4) "Building C object dep/cvode/src/sunmatrix/band/CMakeFiles/sundials_sunmatrixband_static.dir/__/__/sundials/sundials_math.c.o"
+	cd /home/andrew/Documents/GitHub/biort-surface-cpp/BioRT-HBV-Surface/build/dep/cvode/src/sunmatrix/band && /usr/bin/gcc-12 $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT dep/cvode/src/sunmatrix/band/CMakeFiles/sundials_sunmatrixband_static.dir/__/__/sundials/sundials_math.c.o -MF CMakeFiles/sundials_sunmatrixband_static.dir/__/__/sundials/sundials_math.c.o.d -o CMakeFiles/sundials_sunmatrixband_static.dir/__/__/sundials/sundials_math.c.o -c /home/andrew/Documents/GitHub/biort-surface-cpp/BioRT-HBV-Surface/dep/cvode/src/sundials/sundials_math.c
 
 dep/cvode/src/sunmatrix/band/CMakeFiles/sundials_sunmatrixband_static.dir/__/__/sundials/sundials_math.c.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing C source to CMakeFiles/sundials_sunmatrixband_static.dir/__/__/sundials/sundials_math.c.i"
-	cd /home/andrew/Documents/GitHub/surface/HBV-BioRT/build/dep/cvode/src/sunmatrix/band && /usr/bin/gcc-12 $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /home/andrew/Documents/GitHub/surface/HBV-BioRT/dep/cvode/src/sundials/sundials_math.c > CMakeFiles/sundials_sunmatrixband_static.dir/__/__/sundials/sundials_math.c.i
+	cd /home/andrew/Documents/GitHub/biort-surface-cpp/BioRT-HBV-Surface/build/dep/cvode/src/sunmatrix/band && /usr/bin/gcc-12 $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /home/andrew/Documents/GitHub/biort-surface-cpp/BioRT-HBV-Surface/dep/cvode/src/sundials/sundials_math.c > CMakeFiles/sundials_sunmatrixband_static.dir/__/__/sundials/sundials_math.c.i
 
 dep/cvode/src/sunmatrix/band/CMakeFiles/sundials_sunmatrixband_static.dir/__/__/sundials/sundials_math.c.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling C source to assembly CMakeFiles/sundials_sunmatrixband_static.dir/__/__/sundials/sundials_math.c.s"
-	cd /home/andrew/Documents/GitHub/surface/HBV-BioRT/build/dep/cvode/src/sunmatrix/band && /usr/bin/gcc-12 $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /home/andrew/Documents/GitHub/surface/HBV-BioRT/dep/cvode/src/sundials/sundials_math.c -o CMakeFiles/sundials_sunmatrixband_static.dir/__/__/sundials/sundials_math.c.s
+	cd /home/andrew/Documents/GitHub/biort-surface-cpp/BioRT-HBV-Surface/build/dep/cvode/src/sunmatrix/band && /usr/bin/gcc-12 $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /home/andrew/Documents/GitHub/biort-surface-cpp/BioRT-HBV-Surface/dep/cvode/src/sundials/sundials_math.c -o CMakeFiles/sundials_sunmatrixband_static.dir/__/__/sundials/sundials_math.c.s
 
 # Object files for target sundials_sunmatrixband_static
 sundials_sunmatrixband_static_OBJECTS = \
@@ -141,19 +141,19 @@ dep/cvode/src/sunmatrix/band/libsundials_sunmatrixband.a: dep/cvode/src/sunmatri
 dep/cvode/src/sunmatrix/band/libsundials_sunmatrixband.a: dep/cvode/src/sunmatrix/band/CMakeFiles/sundials_sunmatrixband_static.dir/__/__/sundials/sundials_math.c.o
 dep/cvode/src/sunmatrix/band/libsundials_sunmatrixband.a: dep/cvode/src/sunmatrix/band/CMakeFiles/sundials_sunmatrixband_static.dir/build.make
 dep/cvode/src/sunmatrix/band/libsundials_sunmatrixband.a: dep/cvode/src/sunmatrix/band/CMakeFiles/sundials_sunmatrixband_static.dir/link.txt
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --bold --progress-dir=/home/andrew/Documents/GitHub/surface/HBV-BioRT/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_5) "Linking C static library libsundials_sunmatrixband.a"
-	cd /home/andrew/Documents/GitHub/surface/HBV-BioRT/build/dep/cvode/src/sunmatrix/band && $(CMAKE_COMMAND) -P CMakeFiles/sundials_sunmatrixband_static.dir/cmake_clean_target.cmake
-	cd /home/andrew/Documents/GitHub/surface/HBV-BioRT/build/dep/cvode/src/sunmatrix/band && $(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/sundials_sunmatrixband_static.dir/link.txt --verbose=$(VERBOSE)
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --bold --progress-dir=/home/andrew/Documents/GitHub/biort-surface-cpp/BioRT-HBV-Surface/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_5) "Linking C static library libsundials_sunmatrixband.a"
+	cd /home/andrew/Documents/GitHub/biort-surface-cpp/BioRT-HBV-Surface/build/dep/cvode/src/sunmatrix/band && $(CMAKE_COMMAND) -P CMakeFiles/sundials_sunmatrixband_static.dir/cmake_clean_target.cmake
+	cd /home/andrew/Documents/GitHub/biort-surface-cpp/BioRT-HBV-Surface/build/dep/cvode/src/sunmatrix/band && $(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/sundials_sunmatrixband_static.dir/link.txt --verbose=$(VERBOSE)
 
 # Rule to build all files generated by this target.
 dep/cvode/src/sunmatrix/band/CMakeFiles/sundials_sunmatrixband_static.dir/build: dep/cvode/src/sunmatrix/band/libsundials_sunmatrixband.a
 .PHONY : dep/cvode/src/sunmatrix/band/CMakeFiles/sundials_sunmatrixband_static.dir/build
 
 dep/cvode/src/sunmatrix/band/CMakeFiles/sundials_sunmatrixband_static.dir/clean:
-	cd /home/andrew/Documents/GitHub/surface/HBV-BioRT/build/dep/cvode/src/sunmatrix/band && $(CMAKE_COMMAND) -P CMakeFiles/sundials_sunmatrixband_static.dir/cmake_clean.cmake
+	cd /home/andrew/Documents/GitHub/biort-surface-cpp/BioRT-HBV-Surface/build/dep/cvode/src/sunmatrix/band && $(CMAKE_COMMAND) -P CMakeFiles/sundials_sunmatrixband_static.dir/cmake_clean.cmake
 .PHONY : dep/cvode/src/sunmatrix/band/CMakeFiles/sundials_sunmatrixband_static.dir/clean
 
 dep/cvode/src/sunmatrix/band/CMakeFiles/sundials_sunmatrixband_static.dir/depend:
-	cd /home/andrew/Documents/GitHub/surface/HBV-BioRT/build && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /home/andrew/Documents/GitHub/surface/HBV-BioRT /home/andrew/Documents/GitHub/surface/HBV-BioRT/dep/cvode/src/sunmatrix/band /home/andrew/Documents/GitHub/surface/HBV-BioRT/build /home/andrew/Documents/GitHub/surface/HBV-BioRT/build/dep/cvode/src/sunmatrix/band /home/andrew/Documents/GitHub/surface/HBV-BioRT/build/dep/cvode/src/sunmatrix/band/CMakeFiles/sundials_sunmatrixband_static.dir/DependInfo.cmake "--color=$(COLOR)"
+	cd /home/andrew/Documents/GitHub/biort-surface-cpp/BioRT-HBV-Surface/build && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /home/andrew/Documents/GitHub/biort-surface-cpp/BioRT-HBV-Surface /home/andrew/Documents/GitHub/biort-surface-cpp/BioRT-HBV-Surface/dep/cvode/src/sunmatrix/band /home/andrew/Documents/GitHub/biort-surface-cpp/BioRT-HBV-Surface/build /home/andrew/Documents/GitHub/biort-surface-cpp/BioRT-HBV-Surface/build/dep/cvode/src/sunmatrix/band /home/andrew/Documents/GitHub/biort-surface-cpp/BioRT-HBV-Surface/build/dep/cvode/src/sunmatrix/band/CMakeFiles/sundials_sunmatrixband_static.dir/DependInfo.cmake "--color=$(COLOR)"
 .PHONY : dep/cvode/src/sunmatrix/band/CMakeFiles/sundials_sunmatrixband_static.dir/depend
 

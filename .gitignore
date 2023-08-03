@@ -32,6 +32,7 @@
 # Cvode files
 /cvode/instdir/
 /cvode/builddir/
+/build
 
 # Executables
 /biort

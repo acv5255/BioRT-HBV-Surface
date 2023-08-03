@@ -3,25 +3,27 @@ cmake_minimum_required(VERSION 3.26)
 project(biort)
 
 add_executable(biort
-    main.c
-    custom_io.c
-    init.c
-    lookup.c
-    optparse.c
-    print.c
-    react.c
-    read_chem.c
-    read_cini.c
-    read_hbv.c
-    read_param.c
-    read_precipchem.c
-    read_soil.c
-    set_numexp.c
-    speciation.c
-    time_func.c
-    transpt.c
-    util_func.c
+    main.cpp
+    custom_io.cpp
+    init.cpp
+    lookup.cpp
+    optparse.cpp
+    print.cpp
+    react.cpp
+    read_chem.cpp
+    read_cini.cpp
+    read_hbv.cpp
+    read_param.cpp
+    read_precipchem.cpp
+    read_soil.cpp
+    set_numexp.cpp
+    speciation.cpp
+    time_func.cpp
+    transport.cpp
+    util_func.cpp
 )
+
+set_property(TARGET biort PROPERTY CXX_STANDARD 20)
 
 target_compile_options(
     biort

@@ -53,10 +53,10 @@ RM = /usr/local/bin/cmake -E rm -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /home/andrew/Documents/GitHub/surface/HBV-BioRT
+CMAKE_SOURCE_DIR = /home/andrew/Documents/GitHub/biort-surface-cpp/BioRT-HBV-Surface
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /home/andrew/Documents/GitHub/surface/HBV-BioRT/build
+CMAKE_BINARY_DIR = /home/andrew/Documents/GitHub/biort-surface-cpp/BioRT-HBV-Surface/build
 
 # Utility rule file for NightlySubmit.
 
@@ -67,7 +67,7 @@ include dep/cvode/CMakeFiles/NightlySubmit.dir/compiler_depend.make
 include dep/cvode/CMakeFiles/NightlySubmit.dir/progress.make
 
 dep/cvode/CMakeFiles/NightlySubmit:
-	cd /home/andrew/Documents/GitHub/surface/HBV-BioRT/build/dep/cvode && /usr/local/bin/ctest -D NightlySubmit
+	cd /home/andrew/Documents/GitHub/biort-surface-cpp/BioRT-HBV-Surface/build/dep/cvode && /usr/local/bin/ctest -D NightlySubmit
 
 NightlySubmit: dep/cvode/CMakeFiles/NightlySubmit
 NightlySubmit: dep/cvode/CMakeFiles/NightlySubmit.dir/build.make
@@ -78,10 +78,10 @@ dep/cvode/CMakeFiles/NightlySubmit.dir/build: NightlySubmit
 .PHONY : dep/cvode/CMakeFiles/NightlySubmit.dir/build
 
 dep/cvode/CMakeFiles/NightlySubmit.dir/clean:
-	cd /home/andrew/Documents/GitHub/surface/HBV-BioRT/build/dep/cvode && $(CMAKE_COMMAND) -P CMakeFiles/NightlySubmit.dir/cmake_clean.cmake
+	cd /home/andrew/Documents/GitHub/biort-surface-cpp/BioRT-HBV-Surface/build/dep/cvode && $(CMAKE_COMMAND) -P CMakeFiles/NightlySubmit.dir/cmake_clean.cmake
 .PHONY : dep/cvode/CMakeFiles/NightlySubmit.dir/clean
 
 dep/cvode/CMakeFiles/NightlySubmit.dir/depend:
-	cd /home/andrew/Documents/GitHub/surface/HBV-BioRT/build && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /home/andrew/Documents/GitHub/surface/HBV-BioRT /home/andrew/Documents/GitHub/surface/HBV-BioRT/dep/cvode /home/andrew/Documents/GitHub/surface/HBV-BioRT/build /home/andrew/Documents/GitHub/surface/HBV-BioRT/build/dep/cvode /home/andrew/Documents/GitHub/surface/HBV-BioRT/build/dep/cvode/CMakeFiles/NightlySubmit.dir/DependInfo.cmake "--color=$(COLOR)"
+	cd /home/andrew/Documents/GitHub/biort-surface-cpp/BioRT-HBV-Surface/build && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /home/andrew/Documents/GitHub/biort-surface-cpp/BioRT-HBV-Surface /home/andrew/Documents/GitHub/biort-surface-cpp/BioRT-HBV-Surface/dep/cvode /home/andrew/Documents/GitHub/biort-surface-cpp/BioRT-HBV-Surface/build /home/andrew/Documents/GitHub/biort-surface-cpp/BioRT-HBV-Surface/build/dep/cvode /home/andrew/Documents/GitHub/biort-surface-cpp/BioRT-HBV-Surface/build/dep/cvode/CMakeFiles/NightlySubmit.dir/DependInfo.cmake "--color=$(COLOR)"
 .PHONY : dep/cvode/CMakeFiles/NightlySubmit.dir/depend
 

@@ -53,10 +53,10 @@ RM = /usr/local/bin/cmake -E rm -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /home/andrew/Documents/GitHub/surface/HBV-BioRT
+CMAKE_SOURCE_DIR = /home/andrew/Documents/GitHub/biort-surface-cpp/BioRT-HBV-Surface
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /home/andrew/Documents/GitHub/surface/HBV-BioRT/build
+CMAKE_BINARY_DIR = /home/andrew/Documents/GitHub/biort-surface-cpp/BioRT-HBV-Surface/build
 
 # Include any dependencies generated for this target.
 include src/CMakeFiles/biort.dir/depend.make
@@ -69,314 +69,314 @@ include src/CMakeFiles/biort.dir/progress.make
 # Include the compile flags for this target's objects.
 include src/CMakeFiles/biort.dir/flags.make
 
-src/CMakeFiles/biort.dir/main.c.o: src/CMakeFiles/biort.dir/flags.make
-src/CMakeFiles/biort.dir/main.c.o: /home/andrew/Documents/GitHub/surface/HBV-BioRT/src/main.c
-src/CMakeFiles/biort.dir/main.c.o: src/CMakeFiles/biort.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/andrew/Documents/GitHub/surface/HBV-BioRT/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building C object src/CMakeFiles/biort.dir/main.c.o"
-	cd /home/andrew/Documents/GitHub/surface/HBV-BioRT/build/src && /usr/bin/gcc-12 $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT src/CMakeFiles/biort.dir/main.c.o -MF CMakeFiles/biort.dir/main.c.o.d -o CMakeFiles/biort.dir/main.c.o -c /home/andrew/Documents/GitHub/surface/HBV-BioRT/src/main.c
+src/CMakeFiles/biort.dir/main.cpp.o: src/CMakeFiles/biort.dir/flags.make
+src/CMakeFiles/biort.dir/main.cpp.o: /home/andrew/Documents/GitHub/biort-surface-cpp/BioRT-HBV-Surface/src/main.cpp
+src/CMakeFiles/biort.dir/main.cpp.o: src/CMakeFiles/biort.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/andrew/Documents/GitHub/biort-surface-cpp/BioRT-HBV-Surface/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building CXX object src/CMakeFiles/biort.dir/main.cpp.o"
+	cd /home/andrew/Documents/GitHub/biort-surface-cpp/BioRT-HBV-Surface/build/src && /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT src/CMakeFiles/biort.dir/main.cpp.o -MF CMakeFiles/biort.dir/main.cpp.o.d -o CMakeFiles/biort.dir/main.cpp.o -c /home/andrew/Documents/GitHub/biort-surface-cpp/BioRT-HBV-Surface/src/main.cpp
 
-src/CMakeFiles/biort.dir/main.c.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing C source to CMakeFiles/biort.dir/main.c.i"
-	cd /home/andrew/Documents/GitHub/surface/HBV-BioRT/build/src && /usr/bin/gcc-12 $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /home/andrew/Documents/GitHub/surface/HBV-BioRT/src/main.c > CMakeFiles/biort.dir/main.c.i
+src/CMakeFiles/biort.dir/main.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/biort.dir/main.cpp.i"
+	cd /home/andrew/Documents/GitHub/biort-surface-cpp/BioRT-HBV-Surface/build/src && /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/andrew/Documents/GitHub/biort-surface-cpp/BioRT-HBV-Surface/src/main.cpp > CMakeFiles/biort.dir/main.cpp.i
 
-src/CMakeFiles/biort.dir/main.c.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling C source to assembly CMakeFiles/biort.dir/main.c.s"
-	cd /home/andrew/Documents/GitHub/surface/HBV-BioRT/build/src && /usr/bin/gcc-12 $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /home/andrew/Documents/GitHub/surface/HBV-BioRT/src/main.c -o CMakeFiles/biort.dir/main.c.s
+src/CMakeFiles/biort.dir/main.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/biort.dir/main.cpp.s"
+	cd /home/andrew/Documents/GitHub/biort-surface-cpp/BioRT-HBV-Surface/build/src && /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/andrew/Documents/GitHub/biort-surface-cpp/BioRT-HBV-Surface/src/main.cpp -o CMakeFiles/biort.dir/main.cpp.s
 
-src/CMakeFiles/biort.dir/custom_io.c.o: src/CMakeFiles/biort.dir/flags.make
-src/CMakeFiles/biort.dir/custom_io.c.o: /home/andrew/Documents/GitHub/surface/HBV-BioRT/src/custom_io.c
-src/CMakeFiles/biort.dir/custom_io.c.o: src/CMakeFiles/biort.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/andrew/Documents/GitHub/surface/HBV-BioRT/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Building C object src/CMakeFiles/biort.dir/custom_io.c.o"
-	cd /home/andrew/Documents/GitHub/surface/HBV-BioRT/build/src && /usr/bin/gcc-12 $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT src/CMakeFiles/biort.dir/custom_io.c.o -MF CMakeFiles/biort.dir/custom_io.c.o.d -o CMakeFiles/biort.dir/custom_io.c.o -c /home/andrew/Documents/GitHub/surface/HBV-BioRT/src/custom_io.c
+src/CMakeFiles/biort.dir/custom_io.cpp.o: src/CMakeFiles/biort.dir/flags.make
+src/CMakeFiles/biort.dir/custom_io.cpp.o: /home/andrew/Documents/GitHub/biort-surface-cpp/BioRT-HBV-Surface/src/custom_io.cpp
+src/CMakeFiles/biort.dir/custom_io.cpp.o: src/CMakeFiles/biort.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/andrew/Documents/GitHub/biort-surface-cpp/BioRT-HBV-Surface/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Building CXX object src/CMakeFiles/biort.dir/custom_io.cpp.o"
+	cd /home/andrew/Documents/GitHub/biort-surface-cpp/BioRT-HBV-Surface/build/src && /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT src/CMakeFiles/biort.dir/custom_io.cpp.o -MF CMakeFiles/biort.dir/custom_io.cpp.o.d -o CMakeFiles/biort.dir/custom_io.cpp.o -c /home/andrew/Documents/GitHub/biort-surface-cpp/BioRT-HBV-Surface/src/custom_io.cpp
 
-src/CMakeFiles/biort.dir/custom_io.c.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing C source to CMakeFiles/biort.dir/custom_io.c.i"
-	cd /home/andrew/Documents/GitHub/surface/HBV-BioRT/build/src && /usr/bin/gcc-12 $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /home/andrew/Documents/GitHub/surface/HBV-BioRT/src/custom_io.c > CMakeFiles/biort.dir/custom_io.c.i
+src/CMakeFiles/biort.dir/custom_io.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/biort.dir/custom_io.cpp.i"
+	cd /home/andrew/Documents/GitHub/biort-surface-cpp/BioRT-HBV-Surface/build/src && /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/andrew/Documents/GitHub/biort-surface-cpp/BioRT-HBV-Surface/src/custom_io.cpp > CMakeFiles/biort.dir/custom_io.cpp.i
 
-src/CMakeFiles/biort.dir/custom_io.c.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling C source to assembly CMakeFiles/biort.dir/custom_io.c.s"
-	cd /home/andrew/Documents/GitHub/surface/HBV-BioRT/build/src && /usr/bin/gcc-12 $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /home/andrew/Documents/GitHub/surface/HBV-BioRT/src/custom_io.c -o CMakeFiles/biort.dir/custom_io.c.s
+src/CMakeFiles/biort.dir/custom_io.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/biort.dir/custom_io.cpp.s"
+	cd /home/andrew/Documents/GitHub/biort-surface-cpp/BioRT-HBV-Surface/build/src && /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/andrew/Documents/GitHub/biort-surface-cpp/BioRT-HBV-Surface/src/custom_io.cpp -o CMakeFiles/biort.dir/custom_io.cpp.s
 
-src/CMakeFiles/biort.dir/init.c.o: src/CMakeFiles/biort.dir/flags.make
-src/CMakeFiles/biort.dir/init.c.o: /home/andrew/Documents/GitHub/surface/HBV-BioRT/src/init.c
-src/CMakeFiles/biort.dir/init.c.o: src/CMakeFiles/biort.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/andrew/Documents/GitHub/surface/HBV-BioRT/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Building C object src/CMakeFiles/biort.dir/init.c.o"
-	cd /home/andrew/Documents/GitHub/surface/HBV-BioRT/build/src && /usr/bin/gcc-12 $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT src/CMakeFiles/biort.dir/init.c.o -MF CMakeFiles/biort.dir/init.c.o.d -o CMakeFiles/biort.dir/init.c.o -c /home/andrew/Documents/GitHub/surface/HBV-BioRT/src/init.c
+src/CMakeFiles/biort.dir/init.cpp.o: src/CMakeFiles/biort.dir/flags.make
+src/CMakeFiles/biort.dir/init.cpp.o: /home/andrew/Documents/GitHub/biort-surface-cpp/BioRT-HBV-Surface/src/init.cpp
+src/CMakeFiles/biort.dir/init.cpp.o: src/CMakeFiles/biort.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/andrew/Documents/GitHub/biort-surface-cpp/BioRT-HBV-Surface/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Building CXX object src/CMakeFiles/biort.dir/init.cpp.o"
+	cd /home/andrew/Documents/GitHub/biort-surface-cpp/BioRT-HBV-Surface/build/src && /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT src/CMakeFiles/biort.dir/init.cpp.o -MF CMakeFiles/biort.dir/init.cpp.o.d -o CMakeFiles/biort.dir/init.cpp.o -c /home/andrew/Documents/GitHub/biort-surface-cpp/BioRT-HBV-Surface/src/init.cpp
 
-src/CMakeFiles/biort.dir/init.c.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing C source to CMakeFiles/biort.dir/init.c.i"
-	cd /home/andrew/Documents/GitHub/surface/HBV-BioRT/build/src && /usr/bin/gcc-12 $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /home/andrew/Documents/GitHub/surface/HBV-BioRT/src/init.c > CMakeFiles/biort.dir/init.c.i
+src/CMakeFiles/biort.dir/init.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/biort.dir/init.cpp.i"
+	cd /home/andrew/Documents/GitHub/biort-surface-cpp/BioRT-HBV-Surface/build/src && /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/andrew/Documents/GitHub/biort-surface-cpp/BioRT-HBV-Surface/src/init.cpp > CMakeFiles/biort.dir/init.cpp.i
 
-src/CMakeFiles/biort.dir/init.c.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling C source to assembly CMakeFiles/biort.dir/init.c.s"
-	cd /home/andrew/Documents/GitHub/surface/HBV-BioRT/build/src && /usr/bin/gcc-12 $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /home/andrew/Documents/GitHub/surface/HBV-BioRT/src/init.c -o CMakeFiles/biort.dir/init.c.s
+src/CMakeFiles/biort.dir/init.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/biort.dir/init.cpp.s"
+	cd /home/andrew/Documents/GitHub/biort-surface-cpp/BioRT-HBV-Surface/build/src && /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/andrew/Documents/GitHub/biort-surface-cpp/BioRT-HBV-Surface/src/init.cpp -o CMakeFiles/biort.dir/init.cpp.s
 
-src/CMakeFiles/biort.dir/lookup.c.o: src/CMakeFiles/biort.dir/flags.make
-src/CMakeFiles/biort.dir/lookup.c.o: /home/andrew/Documents/GitHub/surface/HBV-BioRT/src/lookup.c
-src/CMakeFiles/biort.dir/lookup.c.o: src/CMakeFiles/biort.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/andrew/Documents/GitHub/surface/HBV-BioRT/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_4) "Building C object src/CMakeFiles/biort.dir/lookup.c.o"
-	cd /home/andrew/Documents/GitHub/surface/HBV-BioRT/build/src && /usr/bin/gcc-12 $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT src/CMakeFiles/biort.dir/lookup.c.o -MF CMakeFiles/biort.dir/lookup.c.o.d -o CMakeFiles/biort.dir/lookup.c.o -c /home/andrew/Documents/GitHub/surface/HBV-BioRT/src/lookup.c
+src/CMakeFiles/biort.dir/lookup.cpp.o: src/CMakeFiles/biort.dir/flags.make
+src/CMakeFiles/biort.dir/lookup.cpp.o: /home/andrew/Documents/GitHub/biort-surface-cpp/BioRT-HBV-Surface/src/lookup.cpp
+src/CMakeFiles/biort.dir/lookup.cpp.o: src/CMakeFiles/biort.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/andrew/Documents/GitHub/biort-surface-cpp/BioRT-HBV-Surface/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_4) "Building CXX object src/CMakeFiles/biort.dir/lookup.cpp.o"
+	cd /home/andrew/Documents/GitHub/biort-surface-cpp/BioRT-HBV-Surface/build/src && /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT src/CMakeFiles/biort.dir/lookup.cpp.o -MF CMakeFiles/biort.dir/lookup.cpp.o.d -o CMakeFiles/biort.dir/lookup.cpp.o -c /home/andrew/Documents/GitHub/biort-surface-cpp/BioRT-HBV-Surface/src/lookup.cpp
 
-src/CMakeFiles/biort.dir/lookup.c.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing C source to CMakeFiles/biort.dir/lookup.c.i"
-	cd /home/andrew/Documents/GitHub/surface/HBV-BioRT/build/src && /usr/bin/gcc-12 $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /home/andrew/Documents/GitHub/surface/HBV-BioRT/src/lookup.c > CMakeFiles/biort.dir/lookup.c.i
+src/CMakeFiles/biort.dir/lookup.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/biort.dir/lookup.cpp.i"
+	cd /home/andrew/Documents/GitHub/biort-surface-cpp/BioRT-HBV-Surface/build/src && /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/andrew/Documents/GitHub/biort-surface-cpp/BioRT-HBV-Surface/src/lookup.cpp > CMakeFiles/biort.dir/lookup.cpp.i
 
-src/CMakeFiles/biort.dir/lookup.c.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling C source to assembly CMakeFiles/biort.dir/lookup.c.s"
-	cd /home/andrew/Documents/GitHub/surface/HBV-BioRT/build/src && /usr/bin/gcc-12 $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /home/andrew/Documents/GitHub/surface/HBV-BioRT/src/lookup.c -o CMakeFiles/biort.dir/lookup.c.s
+src/CMakeFiles/biort.dir/lookup.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/biort.dir/lookup.cpp.s"
+	cd /home/andrew/Documents/GitHub/biort-surface-cpp/BioRT-HBV-Surface/build/src && /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/andrew/Documents/GitHub/biort-surface-cpp/BioRT-HBV-Surface/src/lookup.cpp -o CMakeFiles/biort.dir/lookup.cpp.s
 
-src/CMakeFiles/biort.dir/optparse.c.o: src/CMakeFiles/biort.dir/flags.make
-src/CMakeFiles/biort.dir/optparse.c.o: /home/andrew/Documents/GitHub/surface/HBV-BioRT/src/optparse.c
-src/CMakeFiles/biort.dir/optparse.c.o: src/CMakeFiles/biort.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/andrew/Documents/GitHub/surface/HBV-BioRT/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_5) "Building C object src/CMakeFiles/biort.dir/optparse.c.o"
-	cd /home/andrew/Documents/GitHub/surface/HBV-BioRT/build/src && /usr/bin/gcc-12 $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT src/CMakeFiles/biort.dir/optparse.c.o -MF CMakeFiles/biort.dir/optparse.c.o.d -o CMakeFiles/biort.dir/optparse.c.o -c /home/andrew/Documents/GitHub/surface/HBV-BioRT/src/optparse.c
+src/CMakeFiles/biort.dir/optparse.cpp.o: src/CMakeFiles/biort.dir/flags.make
+src/CMakeFiles/biort.dir/optparse.cpp.o: /home/andrew/Documents/GitHub/biort-surface-cpp/BioRT-HBV-Surface/src/optparse.cpp
+src/CMakeFiles/biort.dir/optparse.cpp.o: src/CMakeFiles/biort.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/andrew/Documents/GitHub/biort-surface-cpp/BioRT-HBV-Surface/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_5) "Building CXX object src/CMakeFiles/biort.dir/optparse.cpp.o"
+	cd /home/andrew/Documents/GitHub/biort-surface-cpp/BioRT-HBV-Surface/build/src && /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT src/CMakeFiles/biort.dir/optparse.cpp.o -MF CMakeFiles/biort.dir/optparse.cpp.o.d -o CMakeFiles/biort.dir/optparse.cpp.o -c /home/andrew/Documents/GitHub/biort-surface-cpp/BioRT-HBV-Surface/src/optparse.cpp
 
-src/CMakeFiles/biort.dir/optparse.c.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing C source to CMakeFiles/biort.dir/optparse.c.i"
-	cd /home/andrew/Documents/GitHub/surface/HBV-BioRT/build/src && /usr/bin/gcc-12 $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /home/andrew/Documents/GitHub/surface/HBV-BioRT/src/optparse.c > CMakeFiles/biort.dir/optparse.c.i
+src/CMakeFiles/biort.dir/optparse.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/biort.dir/optparse.cpp.i"
+	cd /home/andrew/Documents/GitHub/biort-surface-cpp/BioRT-HBV-Surface/build/src && /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/andrew/Documents/GitHub/biort-surface-cpp/BioRT-HBV-Surface/src/optparse.cpp > CMakeFiles/biort.dir/optparse.cpp.i
 
-src/CMakeFiles/biort.dir/optparse.c.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling C source to assembly CMakeFiles/biort.dir/optparse.c.s"
-	cd /home/andrew/Documents/GitHub/surface/HBV-BioRT/build/src && /usr/bin/gcc-12 $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /home/andrew/Documents/GitHub/surface/HBV-BioRT/src/optparse.c -o CMakeFiles/biort.dir/optparse.c.s
+src/CMakeFiles/biort.dir/optparse.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/biort.dir/optparse.cpp.s"
+	cd /home/andrew/Documents/GitHub/biort-surface-cpp/BioRT-HBV-Surface/build/src && /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/andrew/Documents/GitHub/biort-surface-cpp/BioRT-HBV-Surface/src/optparse.cpp -o CMakeFiles/biort.dir/optparse.cpp.s
 
-src/CMakeFiles/biort.dir/print.c.o: src/CMakeFiles/biort.dir/flags.make
-src/CMakeFiles/biort.dir/print.c.o: /home/andrew/Documents/GitHub/surface/HBV-BioRT/src/print.c
-src/CMakeFiles/biort.dir/print.c.o: src/CMakeFiles/biort.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/andrew/Documents/GitHub/surface/HBV-BioRT/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_6) "Building C object src/CMakeFiles/biort.dir/print.c.o"
-	cd /home/andrew/Documents/GitHub/surface/HBV-BioRT/build/src && /usr/bin/gcc-12 $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT src/CMakeFiles/biort.dir/print.c.o -MF CMakeFiles/biort.dir/print.c.o.d -o CMakeFiles/biort.dir/print.c.o -c /home/andrew/Documents/GitHub/surface/HBV-BioRT/src/print.c
+src/CMakeFiles/biort.dir/print.cpp.o: src/CMakeFiles/biort.dir/flags.make
+src/CMakeFiles/biort.dir/print.cpp.o: /home/andrew/Documents/GitHub/biort-surface-cpp/BioRT-HBV-Surface/src/print.cpp
+src/CMakeFiles/biort.dir/print.cpp.o: src/CMakeFiles/biort.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/andrew/Documents/GitHub/biort-surface-cpp/BioRT-HBV-Surface/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_6) "Building CXX object src/CMakeFiles/biort.dir/print.cpp.o"
+	cd /home/andrew/Documents/GitHub/biort-surface-cpp/BioRT-HBV-Surface/build/src && /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT src/CMakeFiles/biort.dir/print.cpp.o -MF CMakeFiles/biort.dir/print.cpp.o.d -o CMakeFiles/biort.dir/print.cpp.o -c /home/andrew/Documents/GitHub/biort-surface-cpp/BioRT-HBV-Surface/src/print.cpp
 
-src/CMakeFiles/biort.dir/print.c.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing C source to CMakeFiles/biort.dir/print.c.i"
-	cd /home/andrew/Documents/GitHub/surface/HBV-BioRT/build/src && /usr/bin/gcc-12 $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /home/andrew/Documents/GitHub/surface/HBV-BioRT/src/print.c > CMakeFiles/biort.dir/print.c.i
+src/CMakeFiles/biort.dir/print.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/biort.dir/print.cpp.i"
+	cd /home/andrew/Documents/GitHub/biort-surface-cpp/BioRT-HBV-Surface/build/src && /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/andrew/Documents/GitHub/biort-surface-cpp/BioRT-HBV-Surface/src/print.cpp > CMakeFiles/biort.dir/print.cpp.i
 
-src/CMakeFiles/biort.dir/print.c.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling C source to assembly CMakeFiles/biort.dir/print.c.s"
-	cd /home/andrew/Documents/GitHub/surface/HBV-BioRT/build/src && /usr/bin/gcc-12 $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /home/andrew/Documents/GitHub/surface/HBV-BioRT/src/print.c -o CMakeFiles/biort.dir/print.c.s
+src/CMakeFiles/biort.dir/print.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/biort.dir/print.cpp.s"
+	cd /home/andrew/Documents/GitHub/biort-surface-cpp/BioRT-HBV-Surface/build/src && /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/andrew/Documents/GitHub/biort-surface-cpp/BioRT-HBV-Surface/src/print.cpp -o CMakeFiles/biort.dir/print.cpp.s
 
-src/CMakeFiles/biort.dir/react.c.o: src/CMakeFiles/biort.dir/flags.make
-src/CMakeFiles/biort.dir/react.c.o: /home/andrew/Documents/GitHub/surface/HBV-BioRT/src/react.c
-src/CMakeFiles/biort.dir/react.c.o: src/CMakeFiles/biort.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/andrew/Documents/GitHub/surface/HBV-BioRT/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_7) "Building C object src/CMakeFiles/biort.dir/react.c.o"
-	cd /home/andrew/Documents/GitHub/surface/HBV-BioRT/build/src && /usr/bin/gcc-12 $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT src/CMakeFiles/biort.dir/react.c.o -MF CMakeFiles/biort.dir/react.c.o.d -o CMakeFiles/biort.dir/react.c.o -c /home/andrew/Documents/GitHub/surface/HBV-BioRT/src/react.c
+src/CMakeFiles/biort.dir/react.cpp.o: src/CMakeFiles/biort.dir/flags.make
+src/CMakeFiles/biort.dir/react.cpp.o: /home/andrew/Documents/GitHub/biort-surface-cpp/BioRT-HBV-Surface/src/react.cpp
+src/CMakeFiles/biort.dir/react.cpp.o: src/CMakeFiles/biort.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/andrew/Documents/GitHub/biort-surface-cpp/BioRT-HBV-Surface/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_7) "Building CXX object src/CMakeFiles/biort.dir/react.cpp.o"
+	cd /home/andrew/Documents/GitHub/biort-surface-cpp/BioRT-HBV-Surface/build/src && /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT src/CMakeFiles/biort.dir/react.cpp.o -MF CMakeFiles/biort.dir/react.cpp.o.d -o CMakeFiles/biort.dir/react.cpp.o -c /home/andrew/Documents/GitHub/biort-surface-cpp/BioRT-HBV-Surface/src/react.cpp
 
-src/CMakeFiles/biort.dir/react.c.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing C source to CMakeFiles/biort.dir/react.c.i"
-	cd /home/andrew/Documents/GitHub/surface/HBV-BioRT/build/src && /usr/bin/gcc-12 $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /home/andrew/Documents/GitHub/surface/HBV-BioRT/src/react.c > CMakeFiles/biort.dir/react.c.i
+src/CMakeFiles/biort.dir/react.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/biort.dir/react.cpp.i"
+	cd /home/andrew/Documents/GitHub/biort-surface-cpp/BioRT-HBV-Surface/build/src && /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/andrew/Documents/GitHub/biort-surface-cpp/BioRT-HBV-Surface/src/react.cpp > CMakeFiles/biort.dir/react.cpp.i
 
-src/CMakeFiles/biort.dir/react.c.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling C source to assembly CMakeFiles/biort.dir/react.c.s"
-	cd /home/andrew/Documents/GitHub/surface/HBV-BioRT/build/src && /usr/bin/gcc-12 $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /home/andrew/Documents/GitHub/surface/HBV-BioRT/src/react.c -o CMakeFiles/biort.dir/react.c.s
+src/CMakeFiles/biort.dir/react.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/biort.dir/react.cpp.s"
+	cd /home/andrew/Documents/GitHub/biort-surface-cpp/BioRT-HBV-Surface/build/src && /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/andrew/Documents/GitHub/biort-surface-cpp/BioRT-HBV-Surface/src/react.cpp -o CMakeFiles/biort.dir/react.cpp.s
 
-src/CMakeFiles/biort.dir/read_chem.c.o: src/CMakeFiles/biort.dir/flags.make
-src/CMakeFiles/biort.dir/read_chem.c.o: /home/andrew/Documents/GitHub/surface/HBV-BioRT/src/read_chem.c
-src/CMakeFiles/biort.dir/read_chem.c.o: src/CMakeFiles/biort.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/andrew/Documents/GitHub/surface/HBV-BioRT/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_8) "Building C object src/CMakeFiles/biort.dir/read_chem.c.o"
-	cd /home/andrew/Documents/GitHub/surface/HBV-BioRT/build/src && /usr/bin/gcc-12 $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT src/CMakeFiles/biort.dir/read_chem.c.o -MF CMakeFiles/biort.dir/read_chem.c.o.d -o CMakeFiles/biort.dir/read_chem.c.o -c /home/andrew/Documents/GitHub/surface/HBV-BioRT/src/read_chem.c
+src/CMakeFiles/biort.dir/read_chem.cpp.o: src/CMakeFiles/biort.dir/flags.make
+src/CMakeFiles/biort.dir/read_chem.cpp.o: /home/andrew/Documents/GitHub/biort-surface-cpp/BioRT-HBV-Surface/src/read_chem.cpp
+src/CMakeFiles/biort.dir/read_chem.cpp.o: src/CMakeFiles/biort.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/andrew/Documents/GitHub/biort-surface-cpp/BioRT-HBV-Surface/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_8) "Building CXX object src/CMakeFiles/biort.dir/read_chem.cpp.o"
+	cd /home/andrew/Documents/GitHub/biort-surface-cpp/BioRT-HBV-Surface/build/src && /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT src/CMakeFiles/biort.dir/read_chem.cpp.o -MF CMakeFiles/biort.dir/read_chem.cpp.o.d -o CMakeFiles/biort.dir/read_chem.cpp.o -c /home/andrew/Documents/GitHub/biort-surface-cpp/BioRT-HBV-Surface/src/read_chem.cpp
 
-src/CMakeFiles/biort.dir/read_chem.c.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing C source to CMakeFiles/biort.dir/read_chem.c.i"
-	cd /home/andrew/Documents/GitHub/surface/HBV-BioRT/build/src && /usr/bin/gcc-12 $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /home/andrew/Documents/GitHub/surface/HBV-BioRT/src/read_chem.c > CMakeFiles/biort.dir/read_chem.c.i
+src/CMakeFiles/biort.dir/read_chem.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/biort.dir/read_chem.cpp.i"
+	cd /home/andrew/Documents/GitHub/biort-surface-cpp/BioRT-HBV-Surface/build/src && /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/andrew/Documents/GitHub/biort-surface-cpp/BioRT-HBV-Surface/src/read_chem.cpp > CMakeFiles/biort.dir/read_chem.cpp.i
 
-src/CMakeFiles/biort.dir/read_chem.c.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling C source to assembly CMakeFiles/biort.dir/read_chem.c.s"
-	cd /home/andrew/Documents/GitHub/surface/HBV-BioRT/build/src && /usr/bin/gcc-12 $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /home/andrew/Documents/GitHub/surface/HBV-BioRT/src/read_chem.c -o CMakeFiles/biort.dir/read_chem.c.s
+src/CMakeFiles/biort.dir/read_chem.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/biort.dir/read_chem.cpp.s"
+	cd /home/andrew/Documents/GitHub/biort-surface-cpp/BioRT-HBV-Surface/build/src && /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/andrew/Documents/GitHub/biort-surface-cpp/BioRT-HBV-Surface/src/read_chem.cpp -o CMakeFiles/biort.dir/read_chem.cpp.s
 
-src/CMakeFiles/biort.dir/read_cini.c.o: src/CMakeFiles/biort.dir/flags.make
-src/CMakeFiles/biort.dir/read_cini.c.o: /home/andrew/Documents/GitHub/surface/HBV-BioRT/src/read_cini.c
-src/CMakeFiles/biort.dir/read_cini.c.o: src/CMakeFiles/biort.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/andrew/Documents/GitHub/surface/HBV-BioRT/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_9) "Building C object src/CMakeFiles/biort.dir/read_cini.c.o"
-	cd /home/andrew/Documents/GitHub/surface/HBV-BioRT/build/src && /usr/bin/gcc-12 $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT src/CMakeFiles/biort.dir/read_cini.c.o -MF CMakeFiles/biort.dir/read_cini.c.o.d -o CMakeFiles/biort.dir/read_cini.c.o -c /home/andrew/Documents/GitHub/surface/HBV-BioRT/src/read_cini.c
+src/CMakeFiles/biort.dir/read_cini.cpp.o: src/CMakeFiles/biort.dir/flags.make
+src/CMakeFiles/biort.dir/read_cini.cpp.o: /home/andrew/Documents/GitHub/biort-surface-cpp/BioRT-HBV-Surface/src/read_cini.cpp
+src/CMakeFiles/biort.dir/read_cini.cpp.o: src/CMakeFiles/biort.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/andrew/Documents/GitHub/biort-surface-cpp/BioRT-HBV-Surface/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_9) "Building CXX object src/CMakeFiles/biort.dir/read_cini.cpp.o"
+	cd /home/andrew/Documents/GitHub/biort-surface-cpp/BioRT-HBV-Surface/build/src && /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT src/CMakeFiles/biort.dir/read_cini.cpp.o -MF CMakeFiles/biort.dir/read_cini.cpp.o.d -o CMakeFiles/biort.dir/read_cini.cpp.o -c /home/andrew/Documents/GitHub/biort-surface-cpp/BioRT-HBV-Surface/src/read_cini.cpp
 
-src/CMakeFiles/biort.dir/read_cini.c.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing C source to CMakeFiles/biort.dir/read_cini.c.i"
-	cd /home/andrew/Documents/GitHub/surface/HBV-BioRT/build/src && /usr/bin/gcc-12 $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /home/andrew/Documents/GitHub/surface/HBV-BioRT/src/read_cini.c > CMakeFiles/biort.dir/read_cini.c.i
+src/CMakeFiles/biort.dir/read_cini.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/biort.dir/read_cini.cpp.i"
+	cd /home/andrew/Documents/GitHub/biort-surface-cpp/BioRT-HBV-Surface/build/src && /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/andrew/Documents/GitHub/biort-surface-cpp/BioRT-HBV-Surface/src/read_cini.cpp > CMakeFiles/biort.dir/read_cini.cpp.i
 
-src/CMakeFiles/biort.dir/read_cini.c.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling C source to assembly CMakeFiles/biort.dir/read_cini.c.s"
-	cd /home/andrew/Documents/GitHub/surface/HBV-BioRT/build/src && /usr/bin/gcc-12 $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /home/andrew/Documents/GitHub/surface/HBV-BioRT/src/read_cini.c -o CMakeFiles/biort.dir/read_cini.c.s
+src/CMakeFiles/biort.dir/read_cini.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/biort.dir/read_cini.cpp.s"
+	cd /home/andrew/Documents/GitHub/biort-surface-cpp/BioRT-HBV-Surface/build/src && /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/andrew/Documents/GitHub/biort-surface-cpp/BioRT-HBV-Surface/src/read_cini.cpp -o CMakeFiles/biort.dir/read_cini.cpp.s
 
-src/CMakeFiles/biort.dir/read_hbv.c.o: src/CMakeFiles/biort.dir/flags.make
-src/CMakeFiles/biort.dir/read_hbv.c.o: /home/andrew/Documents/GitHub/surface/HBV-BioRT/src/read_hbv.c
-src/CMakeFiles/biort.dir/read_hbv.c.o: src/CMakeFiles/biort.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/andrew/Documents/GitHub/surface/HBV-BioRT/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_10) "Building C object src/CMakeFiles/biort.dir/read_hbv.c.o"
-	cd /home/andrew/Documents/GitHub/surface/HBV-BioRT/build/src && /usr/bin/gcc-12 $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT src/CMakeFiles/biort.dir/read_hbv.c.o -MF CMakeFiles/biort.dir/read_hbv.c.o.d -o CMakeFiles/biort.dir/read_hbv.c.o -c /home/andrew/Documents/GitHub/surface/HBV-BioRT/src/read_hbv.c
+src/CMakeFiles/biort.dir/read_hbv.cpp.o: src/CMakeFiles/biort.dir/flags.make
+src/CMakeFiles/biort.dir/read_hbv.cpp.o: /home/andrew/Documents/GitHub/biort-surface-cpp/BioRT-HBV-Surface/src/read_hbv.cpp
+src/CMakeFiles/biort.dir/read_hbv.cpp.o: src/CMakeFiles/biort.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/andrew/Documents/GitHub/biort-surface-cpp/BioRT-HBV-Surface/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_10) "Building CXX object src/CMakeFiles/biort.dir/read_hbv.cpp.o"
+	cd /home/andrew/Documents/GitHub/biort-surface-cpp/BioRT-HBV-Surface/build/src && /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT src/CMakeFiles/biort.dir/read_hbv.cpp.o -MF CMakeFiles/biort.dir/read_hbv.cpp.o.d -o CMakeFiles/biort.dir/read_hbv.cpp.o -c /home/andrew/Documents/GitHub/biort-surface-cpp/BioRT-HBV-Surface/src/read_hbv.cpp
 
-src/CMakeFiles/biort.dir/read_hbv.c.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing C source to CMakeFiles/biort.dir/read_hbv.c.i"
-	cd /home/andrew/Documents/GitHub/surface/HBV-BioRT/build/src && /usr/bin/gcc-12 $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /home/andrew/Documents/GitHub/surface/HBV-BioRT/src/read_hbv.c > CMakeFiles/biort.dir/read_hbv.c.i
+src/CMakeFiles/biort.dir/read_hbv.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/biort.dir/read_hbv.cpp.i"
+	cd /home/andrew/Documents/GitHub/biort-surface-cpp/BioRT-HBV-Surface/build/src && /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/andrew/Documents/GitHub/biort-surface-cpp/BioRT-HBV-Surface/src/read_hbv.cpp > CMakeFiles/biort.dir/read_hbv.cpp.i
 
-src/CMakeFiles/biort.dir/read_hbv.c.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling C source to assembly CMakeFiles/biort.dir/read_hbv.c.s"
-	cd /home/andrew/Documents/GitHub/surface/HBV-BioRT/build/src && /usr/bin/gcc-12 $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /home/andrew/Documents/GitHub/surface/HBV-BioRT/src/read_hbv.c -o CMakeFiles/biort.dir/read_hbv.c.s
+src/CMakeFiles/biort.dir/read_hbv.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/biort.dir/read_hbv.cpp.s"
+	cd /home/andrew/Documents/GitHub/biort-surface-cpp/BioRT-HBV-Surface/build/src && /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/andrew/Documents/GitHub/biort-surface-cpp/BioRT-HBV-Surface/src/read_hbv.cpp -o CMakeFiles/biort.dir/read_hbv.cpp.s
 
-src/CMakeFiles/biort.dir/read_param.c.o: src/CMakeFiles/biort.dir/flags.make
-src/CMakeFiles/biort.dir/read_param.c.o: /home/andrew/Documents/GitHub/surface/HBV-BioRT/src/read_param.c
-src/CMakeFiles/biort.dir/read_param.c.o: src/CMakeFiles/biort.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/andrew/Documents/GitHub/surface/HBV-BioRT/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_11) "Building C object src/CMakeFiles/biort.dir/read_param.c.o"
-	cd /home/andrew/Documents/GitHub/surface/HBV-BioRT/build/src && /usr/bin/gcc-12 $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT src/CMakeFiles/biort.dir/read_param.c.o -MF CMakeFiles/biort.dir/read_param.c.o.d -o CMakeFiles/biort.dir/read_param.c.o -c /home/andrew/Documents/GitHub/surface/HBV-BioRT/src/read_param.c
+src/CMakeFiles/biort.dir/read_param.cpp.o: src/CMakeFiles/biort.dir/flags.make
+src/CMakeFiles/biort.dir/read_param.cpp.o: /home/andrew/Documents/GitHub/biort-surface-cpp/BioRT-HBV-Surface/src/read_param.cpp
+src/CMakeFiles/biort.dir/read_param.cpp.o: src/CMakeFiles/biort.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/andrew/Documents/GitHub/biort-surface-cpp/BioRT-HBV-Surface/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_11) "Building CXX object src/CMakeFiles/biort.dir/read_param.cpp.o"
+	cd /home/andrew/Documents/GitHub/biort-surface-cpp/BioRT-HBV-Surface/build/src && /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT src/CMakeFiles/biort.dir/read_param.cpp.o -MF CMakeFiles/biort.dir/read_param.cpp.o.d -o CMakeFiles/biort.dir/read_param.cpp.o -c /home/andrew/Documents/GitHub/biort-surface-cpp/BioRT-HBV-Surface/src/read_param.cpp
 
-src/CMakeFiles/biort.dir/read_param.c.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing C source to CMakeFiles/biort.dir/read_param.c.i"
-	cd /home/andrew/Documents/GitHub/surface/HBV-BioRT/build/src && /usr/bin/gcc-12 $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /home/andrew/Documents/GitHub/surface/HBV-BioRT/src/read_param.c > CMakeFiles/biort.dir/read_param.c.i
+src/CMakeFiles/biort.dir/read_param.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/biort.dir/read_param.cpp.i"
+	cd /home/andrew/Documents/GitHub/biort-surface-cpp/BioRT-HBV-Surface/build/src && /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/andrew/Documents/GitHub/biort-surface-cpp/BioRT-HBV-Surface/src/read_param.cpp > CMakeFiles/biort.dir/read_param.cpp.i
 
-src/CMakeFiles/biort.dir/read_param.c.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling C source to assembly CMakeFiles/biort.dir/read_param.c.s"
-	cd /home/andrew/Documents/GitHub/surface/HBV-BioRT/build/src && /usr/bin/gcc-12 $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /home/andrew/Documents/GitHub/surface/HBV-BioRT/src/read_param.c -o CMakeFiles/biort.dir/read_param.c.s
+src/CMakeFiles/biort.dir/read_param.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/biort.dir/read_param.cpp.s"
+	cd /home/andrew/Documents/GitHub/biort-surface-cpp/BioRT-HBV-Surface/build/src && /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/andrew/Documents/GitHub/biort-surface-cpp/BioRT-HBV-Surface/src/read_param.cpp -o CMakeFiles/biort.dir/read_param.cpp.s
 
-src/CMakeFiles/biort.dir/read_precipchem.c.o: src/CMakeFiles/biort.dir/flags.make
-src/CMakeFiles/biort.dir/read_precipchem.c.o: /home/andrew/Documents/GitHub/surface/HBV-BioRT/src/read_precipchem.c
-src/CMakeFiles/biort.dir/read_precipchem.c.o: src/CMakeFiles/biort.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/andrew/Documents/GitHub/surface/HBV-BioRT/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_12) "Building C object src/CMakeFiles/biort.dir/read_precipchem.c.o"
-	cd /home/andrew/Documents/GitHub/surface/HBV-BioRT/build/src && /usr/bin/gcc-12 $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT src/CMakeFiles/biort.dir/read_precipchem.c.o -MF CMakeFiles/biort.dir/read_precipchem.c.o.d -o CMakeFiles/biort.dir/read_precipchem.c.o -c /home/andrew/Documents/GitHub/surface/HBV-BioRT/src/read_precipchem.c
+src/CMakeFiles/biort.dir/read_precipchem.cpp.o: src/CMakeFiles/biort.dir/flags.make
+src/CMakeFiles/biort.dir/read_precipchem.cpp.o: /home/andrew/Documents/GitHub/biort-surface-cpp/BioRT-HBV-Surface/src/read_precipchem.cpp
+src/CMakeFiles/biort.dir/read_precipchem.cpp.o: src/CMakeFiles/biort.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/andrew/Documents/GitHub/biort-surface-cpp/BioRT-HBV-Surface/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_12) "Building CXX object src/CMakeFiles/biort.dir/read_precipchem.cpp.o"
+	cd /home/andrew/Documents/GitHub/biort-surface-cpp/BioRT-HBV-Surface/build/src && /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT src/CMakeFiles/biort.dir/read_precipchem.cpp.o -MF CMakeFiles/biort.dir/read_precipchem.cpp.o.d -o CMakeFiles/biort.dir/read_precipchem.cpp.o -c /home/andrew/Documents/GitHub/biort-surface-cpp/BioRT-HBV-Surface/src/read_precipchem.cpp
 
-src/CMakeFiles/biort.dir/read_precipchem.c.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing C source to CMakeFiles/biort.dir/read_precipchem.c.i"
-	cd /home/andrew/Documents/GitHub/surface/HBV-BioRT/build/src && /usr/bin/gcc-12 $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /home/andrew/Documents/GitHub/surface/HBV-BioRT/src/read_precipchem.c > CMakeFiles/biort.dir/read_precipchem.c.i
+src/CMakeFiles/biort.dir/read_precipchem.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/biort.dir/read_precipchem.cpp.i"
+	cd /home/andrew/Documents/GitHub/biort-surface-cpp/BioRT-HBV-Surface/build/src && /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/andrew/Documents/GitHub/biort-surface-cpp/BioRT-HBV-Surface/src/read_precipchem.cpp > CMakeFiles/biort.dir/read_precipchem.cpp.i
 
-src/CMakeFiles/biort.dir/read_precipchem.c.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling C source to assembly CMakeFiles/biort.dir/read_precipchem.c.s"
-	cd /home/andrew/Documents/GitHub/surface/HBV-BioRT/build/src && /usr/bin/gcc-12 $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /home/andrew/Documents/GitHub/surface/HBV-BioRT/src/read_precipchem.c -o CMakeFiles/biort.dir/read_precipchem.c.s
+src/CMakeFiles/biort.dir/read_precipchem.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/biort.dir/read_precipchem.cpp.s"
+	cd /home/andrew/Documents/GitHub/biort-surface-cpp/BioRT-HBV-Surface/build/src && /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/andrew/Documents/GitHub/biort-surface-cpp/BioRT-HBV-Surface/src/read_precipchem.cpp -o CMakeFiles/biort.dir/read_precipchem.cpp.s
 
-src/CMakeFiles/biort.dir/read_soil.c.o: src/CMakeFiles/biort.dir/flags.make
-src/CMakeFiles/biort.dir/read_soil.c.o: /home/andrew/Documents/GitHub/surface/HBV-BioRT/src/read_soil.c
-src/CMakeFiles/biort.dir/read_soil.c.o: src/CMakeFiles/biort.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/andrew/Documents/GitHub/surface/HBV-BioRT/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_13) "Building C object src/CMakeFiles/biort.dir/read_soil.c.o"
-	cd /home/andrew/Documents/GitHub/surface/HBV-BioRT/build/src && /usr/bin/gcc-12 $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT src/CMakeFiles/biort.dir/read_soil.c.o -MF CMakeFiles/biort.dir/read_soil.c.o.d -o CMakeFiles/biort.dir/read_soil.c.o -c /home/andrew/Documents/GitHub/surface/HBV-BioRT/src/read_soil.c
+src/CMakeFiles/biort.dir/read_soil.cpp.o: src/CMakeFiles/biort.dir/flags.make
+src/CMakeFiles/biort.dir/read_soil.cpp.o: /home/andrew/Documents/GitHub/biort-surface-cpp/BioRT-HBV-Surface/src/read_soil.cpp
+src/CMakeFiles/biort.dir/read_soil.cpp.o: src/CMakeFiles/biort.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/andrew/Documents/GitHub/biort-surface-cpp/BioRT-HBV-Surface/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_13) "Building CXX object src/CMakeFiles/biort.dir/read_soil.cpp.o"
+	cd /home/andrew/Documents/GitHub/biort-surface-cpp/BioRT-HBV-Surface/build/src && /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT src/CMakeFiles/biort.dir/read_soil.cpp.o -MF CMakeFiles/biort.dir/read_soil.cpp.o.d -o CMakeFiles/biort.dir/read_soil.cpp.o -c /home/andrew/Documents/GitHub/biort-surface-cpp/BioRT-HBV-Surface/src/read_soil.cpp
 
-src/CMakeFiles/biort.dir/read_soil.c.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing C source to CMakeFiles/biort.dir/read_soil.c.i"
-	cd /home/andrew/Documents/GitHub/surface/HBV-BioRT/build/src && /usr/bin/gcc-12 $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /home/andrew/Documents/GitHub/surface/HBV-BioRT/src/read_soil.c > CMakeFiles/biort.dir/read_soil.c.i
+src/CMakeFiles/biort.dir/read_soil.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/biort.dir/read_soil.cpp.i"
+	cd /home/andrew/Documents/GitHub/biort-surface-cpp/BioRT-HBV-Surface/build/src && /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/andrew/Documents/GitHub/biort-surface-cpp/BioRT-HBV-Surface/src/read_soil.cpp > CMakeFiles/biort.dir/read_soil.cpp.i
 
-src/CMakeFiles/biort.dir/read_soil.c.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling C source to assembly CMakeFiles/biort.dir/read_soil.c.s"
-	cd /home/andrew/Documents/GitHub/surface/HBV-BioRT/build/src && /usr/bin/gcc-12 $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /home/andrew/Documents/GitHub/surface/HBV-BioRT/src/read_soil.c -o CMakeFiles/biort.dir/read_soil.c.s
+src/CMakeFiles/biort.dir/read_soil.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/biort.dir/read_soil.cpp.s"
+	cd /home/andrew/Documents/GitHub/biort-surface-cpp/BioRT-HBV-Surface/build/src && /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/andrew/Documents/GitHub/biort-surface-cpp/BioRT-HBV-Surface/src/read_soil.cpp -o CMakeFiles/biort.dir/read_soil.cpp.s
 
-src/CMakeFiles/biort.dir/set_numexp.c.o: src/CMakeFiles/biort.dir/flags.make
-src/CMakeFiles/biort.dir/set_numexp.c.o: /home/andrew/Documents/GitHub/surface/HBV-BioRT/src/set_numexp.c
-src/CMakeFiles/biort.dir/set_numexp.c.o: src/CMakeFiles/biort.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/andrew/Documents/GitHub/surface/HBV-BioRT/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_14) "Building C object src/CMakeFiles/biort.dir/set_numexp.c.o"
-	cd /home/andrew/Documents/GitHub/surface/HBV-BioRT/build/src && /usr/bin/gcc-12 $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT src/CMakeFiles/biort.dir/set_numexp.c.o -MF CMakeFiles/biort.dir/set_numexp.c.o.d -o CMakeFiles/biort.dir/set_numexp.c.o -c /home/andrew/Documents/GitHub/surface/HBV-BioRT/src/set_numexp.c
+src/CMakeFiles/biort.dir/set_numexp.cpp.o: src/CMakeFiles/biort.dir/flags.make
+src/CMakeFiles/biort.dir/set_numexp.cpp.o: /home/andrew/Documents/GitHub/biort-surface-cpp/BioRT-HBV-Surface/src/set_numexp.cpp
+src/CMakeFiles/biort.dir/set_numexp.cpp.o: src/CMakeFiles/biort.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/andrew/Documents/GitHub/biort-surface-cpp/BioRT-HBV-Surface/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_14) "Building CXX object src/CMakeFiles/biort.dir/set_numexp.cpp.o"
+	cd /home/andrew/Documents/GitHub/biort-surface-cpp/BioRT-HBV-Surface/build/src && /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT src/CMakeFiles/biort.dir/set_numexp.cpp.o -MF CMakeFiles/biort.dir/set_numexp.cpp.o.d -o CMakeFiles/biort.dir/set_numexp.cpp.o -c /home/andrew/Documents/GitHub/biort-surface-cpp/BioRT-HBV-Surface/src/set_numexp.cpp
 
-src/CMakeFiles/biort.dir/set_numexp.c.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing C source to CMakeFiles/biort.dir/set_numexp.c.i"
-	cd /home/andrew/Documents/GitHub/surface/HBV-BioRT/build/src && /usr/bin/gcc-12 $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /home/andrew/Documents/GitHub/surface/HBV-BioRT/src/set_numexp.c > CMakeFiles/biort.dir/set_numexp.c.i
+src/CMakeFiles/biort.dir/set_numexp.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/biort.dir/set_numexp.cpp.i"
+	cd /home/andrew/Documents/GitHub/biort-surface-cpp/BioRT-HBV-Surface/build/src && /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/andrew/Documents/GitHub/biort-surface-cpp/BioRT-HBV-Surface/src/set_numexp.cpp > CMakeFiles/biort.dir/set_numexp.cpp.i
 
-src/CMakeFiles/biort.dir/set_numexp.c.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling C source to assembly CMakeFiles/biort.dir/set_numexp.c.s"
-	cd /home/andrew/Documents/GitHub/surface/HBV-BioRT/build/src && /usr/bin/gcc-12 $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /home/andrew/Documents/GitHub/surface/HBV-BioRT/src/set_numexp.c -o CMakeFiles/biort.dir/set_numexp.c.s
+src/CMakeFiles/biort.dir/set_numexp.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/biort.dir/set_numexp.cpp.s"
+	cd /home/andrew/Documents/GitHub/biort-surface-cpp/BioRT-HBV-Surface/build/src && /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/andrew/Documents/GitHub/biort-surface-cpp/BioRT-HBV-Surface/src/set_numexp.cpp -o CMakeFiles/biort.dir/set_numexp.cpp.s
 
-src/CMakeFiles/biort.dir/speciation.c.o: src/CMakeFiles/biort.dir/flags.make
-src/CMakeFiles/biort.dir/speciation.c.o: /home/andrew/Documents/GitHub/surface/HBV-BioRT/src/speciation.c
-src/CMakeFiles/biort.dir/speciation.c.o: src/CMakeFiles/biort.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/andrew/Documents/GitHub/surface/HBV-BioRT/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_15) "Building C object src/CMakeFiles/biort.dir/speciation.c.o"
-	cd /home/andrew/Documents/GitHub/surface/HBV-BioRT/build/src && /usr/bin/gcc-12 $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT src/CMakeFiles/biort.dir/speciation.c.o -MF CMakeFiles/biort.dir/speciation.c.o.d -o CMakeFiles/biort.dir/speciation.c.o -c /home/andrew/Documents/GitHub/surface/HBV-BioRT/src/speciation.c
+src/CMakeFiles/biort.dir/speciation.cpp.o: src/CMakeFiles/biort.dir/flags.make
+src/CMakeFiles/biort.dir/speciation.cpp.o: /home/andrew/Documents/GitHub/biort-surface-cpp/BioRT-HBV-Surface/src/speciation.cpp
+src/CMakeFiles/biort.dir/speciation.cpp.o: src/CMakeFiles/biort.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/andrew/Documents/GitHub/biort-surface-cpp/BioRT-HBV-Surface/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_15) "Building CXX object src/CMakeFiles/biort.dir/speciation.cpp.o"
+	cd /home/andrew/Documents/GitHub/biort-surface-cpp/BioRT-HBV-Surface/build/src && /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT src/CMakeFiles/biort.dir/speciation.cpp.o -MF CMakeFiles/biort.dir/speciation.cpp.o.d -o CMakeFiles/biort.dir/speciation.cpp.o -c /home/andrew/Documents/GitHub/biort-surface-cpp/BioRT-HBV-Surface/src/speciation.cpp
 
-src/CMakeFiles/biort.dir/speciation.c.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing C source to CMakeFiles/biort.dir/speciation.c.i"
-	cd /home/andrew/Documents/GitHub/surface/HBV-BioRT/build/src && /usr/bin/gcc-12 $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /home/andrew/Documents/GitHub/surface/HBV-BioRT/src/speciation.c > CMakeFiles/biort.dir/speciation.c.i
+src/CMakeFiles/biort.dir/speciation.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/biort.dir/speciation.cpp.i"
+	cd /home/andrew/Documents/GitHub/biort-surface-cpp/BioRT-HBV-Surface/build/src && /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/andrew/Documents/GitHub/biort-surface-cpp/BioRT-HBV-Surface/src/speciation.cpp > CMakeFiles/biort.dir/speciation.cpp.i
 
-src/CMakeFiles/biort.dir/speciation.c.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling C source to assembly CMakeFiles/biort.dir/speciation.c.s"
-	cd /home/andrew/Documents/GitHub/surface/HBV-BioRT/build/src && /usr/bin/gcc-12 $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /home/andrew/Documents/GitHub/surface/HBV-BioRT/src/speciation.c -o CMakeFiles/biort.dir/speciation.c.s
+src/CMakeFiles/biort.dir/speciation.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/biort.dir/speciation.cpp.s"
+	cd /home/andrew/Documents/GitHub/biort-surface-cpp/BioRT-HBV-Surface/build/src && /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/andrew/Documents/GitHub/biort-surface-cpp/BioRT-HBV-Surface/src/speciation.cpp -o CMakeFiles/biort.dir/speciation.cpp.s
 
-src/CMakeFiles/biort.dir/time_func.c.o: src/CMakeFiles/biort.dir/flags.make
-src/CMakeFiles/biort.dir/time_func.c.o: /home/andrew/Documents/GitHub/surface/HBV-BioRT/src/time_func.c
-src/CMakeFiles/biort.dir/time_func.c.o: src/CMakeFiles/biort.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/andrew/Documents/GitHub/surface/HBV-BioRT/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_16) "Building C object src/CMakeFiles/biort.dir/time_func.c.o"
-	cd /home/andrew/Documents/GitHub/surface/HBV-BioRT/build/src && /usr/bin/gcc-12 $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT src/CMakeFiles/biort.dir/time_func.c.o -MF CMakeFiles/biort.dir/time_func.c.o.d -o CMakeFiles/biort.dir/time_func.c.o -c /home/andrew/Documents/GitHub/surface/HBV-BioRT/src/time_func.c
+src/CMakeFiles/biort.dir/time_func.cpp.o: src/CMakeFiles/biort.dir/flags.make
+src/CMakeFiles/biort.dir/time_func.cpp.o: /home/andrew/Documents/GitHub/biort-surface-cpp/BioRT-HBV-Surface/src/time_func.cpp
+src/CMakeFiles/biort.dir/time_func.cpp.o: src/CMakeFiles/biort.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/andrew/Documents/GitHub/biort-surface-cpp/BioRT-HBV-Surface/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_16) "Building CXX object src/CMakeFiles/biort.dir/time_func.cpp.o"
+	cd /home/andrew/Documents/GitHub/biort-surface-cpp/BioRT-HBV-Surface/build/src && /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT src/CMakeFiles/biort.dir/time_func.cpp.o -MF CMakeFiles/biort.dir/time_func.cpp.o.d -o CMakeFiles/biort.dir/time_func.cpp.o -c /home/andrew/Documents/GitHub/biort-surface-cpp/BioRT-HBV-Surface/src/time_func.cpp
 
-src/CMakeFiles/biort.dir/time_func.c.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing C source to CMakeFiles/biort.dir/time_func.c.i"
-	cd /home/andrew/Documents/GitHub/surface/HBV-BioRT/build/src && /usr/bin/gcc-12 $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /home/andrew/Documents/GitHub/surface/HBV-BioRT/src/time_func.c > CMakeFiles/biort.dir/time_func.c.i
+src/CMakeFiles/biort.dir/time_func.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/biort.dir/time_func.cpp.i"
+	cd /home/andrew/Documents/GitHub/biort-surface-cpp/BioRT-HBV-Surface/build/src && /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/andrew/Documents/GitHub/biort-surface-cpp/BioRT-HBV-Surface/src/time_func.cpp > CMakeFiles/biort.dir/time_func.cpp.i
 
-src/CMakeFiles/biort.dir/time_func.c.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling C source to assembly CMakeFiles/biort.dir/time_func.c.s"
-	cd /home/andrew/Documents/GitHub/surface/HBV-BioRT/build/src && /usr/bin/gcc-12 $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /home/andrew/Documents/GitHub/surface/HBV-BioRT/src/time_func.c -o CMakeFiles/biort.dir/time_func.c.s
+src/CMakeFiles/biort.dir/time_func.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/biort.dir/time_func.cpp.s"
+	cd /home/andrew/Documents/GitHub/biort-surface-cpp/BioRT-HBV-Surface/build/src && /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/andrew/Documents/GitHub/biort-surface-cpp/BioRT-HBV-Surface/src/time_func.cpp -o CMakeFiles/biort.dir/time_func.cpp.s
 
-src/CMakeFiles/biort.dir/transpt.c.o: src/CMakeFiles/biort.dir/flags.make
-src/CMakeFiles/biort.dir/transpt.c.o: /home/andrew/Documents/GitHub/surface/HBV-BioRT/src/transpt.c
-src/CMakeFiles/biort.dir/transpt.c.o: src/CMakeFiles/biort.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/andrew/Documents/GitHub/surface/HBV-BioRT/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_17) "Building C object src/CMakeFiles/biort.dir/transpt.c.o"
-	cd /home/andrew/Documents/GitHub/surface/HBV-BioRT/build/src && /usr/bin/gcc-12 $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT src/CMakeFiles/biort.dir/transpt.c.o -MF CMakeFiles/biort.dir/transpt.c.o.d -o CMakeFiles/biort.dir/transpt.c.o -c /home/andrew/Documents/GitHub/surface/HBV-BioRT/src/transpt.c
+src/CMakeFiles/biort.dir/transport.cpp.o: src/CMakeFiles/biort.dir/flags.make
+src/CMakeFiles/biort.dir/transport.cpp.o: /home/andrew/Documents/GitHub/biort-surface-cpp/BioRT-HBV-Surface/src/transport.cpp
+src/CMakeFiles/biort.dir/transport.cpp.o: src/CMakeFiles/biort.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/andrew/Documents/GitHub/biort-surface-cpp/BioRT-HBV-Surface/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_17) "Building CXX object src/CMakeFiles/biort.dir/transport.cpp.o"
+	cd /home/andrew/Documents/GitHub/biort-surface-cpp/BioRT-HBV-Surface/build/src && /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT src/CMakeFiles/biort.dir/transport.cpp.o -MF CMakeFiles/biort.dir/transport.cpp.o.d -o CMakeFiles/biort.dir/transport.cpp.o -c /home/andrew/Documents/GitHub/biort-surface-cpp/BioRT-HBV-Surface/src/transport.cpp
 
-src/CMakeFiles/biort.dir/transpt.c.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing C source to CMakeFiles/biort.dir/transpt.c.i"
-	cd /home/andrew/Documents/GitHub/surface/HBV-BioRT/build/src && /usr/bin/gcc-12 $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /home/andrew/Documents/GitHub/surface/HBV-BioRT/src/transpt.c > CMakeFiles/biort.dir/transpt.c.i
+src/CMakeFiles/biort.dir/transport.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/biort.dir/transport.cpp.i"
+	cd /home/andrew/Documents/GitHub/biort-surface-cpp/BioRT-HBV-Surface/build/src && /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/andrew/Documents/GitHub/biort-surface-cpp/BioRT-HBV-Surface/src/transport.cpp > CMakeFiles/biort.dir/transport.cpp.i
 
-src/CMakeFiles/biort.dir/transpt.c.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling C source to assembly CMakeFiles/biort.dir/transpt.c.s"
-	cd /home/andrew/Documents/GitHub/surface/HBV-BioRT/build/src && /usr/bin/gcc-12 $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /home/andrew/Documents/GitHub/surface/HBV-BioRT/src/transpt.c -o CMakeFiles/biort.dir/transpt.c.s
+src/CMakeFiles/biort.dir/transport.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/biort.dir/transport.cpp.s"
+	cd /home/andrew/Documents/GitHub/biort-surface-cpp/BioRT-HBV-Surface/build/src && /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/andrew/Documents/GitHub/biort-surface-cpp/BioRT-HBV-Surface/src/transport.cpp -o CMakeFiles/biort.dir/transport.cpp.s
 
-src/CMakeFiles/biort.dir/util_func.c.o: src/CMakeFiles/biort.dir/flags.make
-src/CMakeFiles/biort.dir/util_func.c.o: /home/andrew/Documents/GitHub/surface/HBV-BioRT/src/util_func.c
-src/CMakeFiles/biort.dir/util_func.c.o: src/CMakeFiles/biort.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/andrew/Documents/GitHub/surface/HBV-BioRT/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_18) "Building C object src/CMakeFiles/biort.dir/util_func.c.o"
-	cd /home/andrew/Documents/GitHub/surface/HBV-BioRT/build/src && /usr/bin/gcc-12 $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT src/CMakeFiles/biort.dir/util_func.c.o -MF CMakeFiles/biort.dir/util_func.c.o.d -o CMakeFiles/biort.dir/util_func.c.o -c /home/andrew/Documents/GitHub/surface/HBV-BioRT/src/util_func.c
+src/CMakeFiles/biort.dir/util_func.cpp.o: src/CMakeFiles/biort.dir/flags.make
+src/CMakeFiles/biort.dir/util_func.cpp.o: /home/andrew/Documents/GitHub/biort-surface-cpp/BioRT-HBV-Surface/src/util_func.cpp
+src/CMakeFiles/biort.dir/util_func.cpp.o: src/CMakeFiles/biort.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/andrew/Documents/GitHub/biort-surface-cpp/BioRT-HBV-Surface/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_18) "Building CXX object src/CMakeFiles/biort.dir/util_func.cpp.o"
+	cd /home/andrew/Documents/GitHub/biort-surface-cpp/BioRT-HBV-Surface/build/src && /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT src/CMakeFiles/biort.dir/util_func.cpp.o -MF CMakeFiles/biort.dir/util_func.cpp.o.d -o CMakeFiles/biort.dir/util_func.cpp.o -c /home/andrew/Documents/GitHub/biort-surface-cpp/BioRT-HBV-Surface/src/util_func.cpp
 
-src/CMakeFiles/biort.dir/util_func.c.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing C source to CMakeFiles/biort.dir/util_func.c.i"
-	cd /home/andrew/Documents/GitHub/surface/HBV-BioRT/build/src && /usr/bin/gcc-12 $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /home/andrew/Documents/GitHub/surface/HBV-BioRT/src/util_func.c > CMakeFiles/biort.dir/util_func.c.i
+src/CMakeFiles/biort.dir/util_func.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/biort.dir/util_func.cpp.i"
+	cd /home/andrew/Documents/GitHub/biort-surface-cpp/BioRT-HBV-Surface/build/src && /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/andrew/Documents/GitHub/biort-surface-cpp/BioRT-HBV-Surface/src/util_func.cpp > CMakeFiles/biort.dir/util_func.cpp.i
 
-src/CMakeFiles/biort.dir/util_func.c.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling C source to assembly CMakeFiles/biort.dir/util_func.c.s"
-	cd /home/andrew/Documents/GitHub/surface/HBV-BioRT/build/src && /usr/bin/gcc-12 $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /home/andrew/Documents/GitHub/surface/HBV-BioRT/src/util_func.c -o CMakeFiles/biort.dir/util_func.c.s
+src/CMakeFiles/biort.dir/util_func.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/biort.dir/util_func.cpp.s"
+	cd /home/andrew/Documents/GitHub/biort-surface-cpp/BioRT-HBV-Surface/build/src && /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/andrew/Documents/GitHub/biort-surface-cpp/BioRT-HBV-Surface/src/util_func.cpp -o CMakeFiles/biort.dir/util_func.cpp.s
 
 # Object files for target biort
 biort_OBJECTS = \
-"CMakeFiles/biort.dir/main.c.o" \
-"CMakeFiles/biort.dir/custom_io.c.o" \
-"CMakeFiles/biort.dir/init.c.o" \
-"CMakeFiles/biort.dir/lookup.c.o" \
-"CMakeFiles/biort.dir/optparse.c.o" \
-"CMakeFiles/biort.dir/print.c.o" \
-"CMakeFiles/biort.dir/react.c.o" \
-"CMakeFiles/biort.dir/read_chem.c.o" \
-"CMakeFiles/biort.dir/read_cini.c.o" \
-"CMakeFiles/biort.dir/read_hbv.c.o" \
-"CMakeFiles/biort.dir/read_param.c.o" \
-"CMakeFiles/biort.dir/read_precipchem.c.o" \
-"CMakeFiles/biort.dir/read_soil.c.o" \
-"CMakeFiles/biort.dir/set_numexp.c.o" \
-"CMakeFiles/biort.dir/speciation.c.o" \
-"CMakeFiles/biort.dir/time_func.c.o" \
-"CMakeFiles/biort.dir/transpt.c.o" \
-"CMakeFiles/biort.dir/util_func.c.o"
+"CMakeFiles/biort.dir/main.cpp.o" \
+"CMakeFiles/biort.dir/custom_io.cpp.o" \
+"CMakeFiles/biort.dir/init.cpp.o" \
+"CMakeFiles/biort.dir/lookup.cpp.o" \
+"CMakeFiles/biort.dir/optparse.cpp.o" \
+"CMakeFiles/biort.dir/print.cpp.o" \
+"CMakeFiles/biort.dir/react.cpp.o" \
+"CMakeFiles/biort.dir/read_chem.cpp.o" \
+"CMakeFiles/biort.dir/read_cini.cpp.o" \
+"CMakeFiles/biort.dir/read_hbv.cpp.o" \
+"CMakeFiles/biort.dir/read_param.cpp.o" \
+"CMakeFiles/biort.dir/read_precipchem.cpp.o" \
+"CMakeFiles/biort.dir/read_soil.cpp.o" \
+"CMakeFiles/biort.dir/set_numexp.cpp.o" \
+"CMakeFiles/biort.dir/speciation.cpp.o" \
+"CMakeFiles/biort.dir/time_func.cpp.o" \
+"CMakeFiles/biort.dir/transport.cpp.o" \
+"CMakeFiles/biort.dir/util_func.cpp.o"
 
 # External object files for target biort
 biort_EXTERNAL_OBJECTS =
 
-src/biort: src/CMakeFiles/biort.dir/main.c.o
-src/biort: src/CMakeFiles/biort.dir/custom_io.c.o
-src/biort: src/CMakeFiles/biort.dir/init.c.o
-src/biort: src/CMakeFiles/biort.dir/lookup.c.o
-src/biort: src/CMakeFiles/biort.dir/optparse.c.o
-src/biort: src/CMakeFiles/biort.dir/print.c.o
-src/biort: src/CMakeFiles/biort.dir/react.c.o
-src/biort: src/CMakeFiles/biort.dir/read_chem.c.o
-src/biort: src/CMakeFiles/biort.dir/read_cini.c.o
-src/biort: src/CMakeFiles/biort.dir/read_hbv.c.o
-src/biort: src/CMakeFiles/biort.dir/read_param.c.o
-src/biort: src/CMakeFiles/biort.dir/read_precipchem.c.o
-src/biort: src/CMakeFiles/biort.dir/read_soil.c.o
-src/biort: src/CMakeFiles/biort.dir/set_numexp.c.o
-src/biort: src/CMakeFiles/biort.dir/speciation.c.o
-src/biort: src/CMakeFiles/biort.dir/time_func.c.o
-src/biort: src/CMakeFiles/biort.dir/transpt.c.o
-src/biort: src/CMakeFiles/biort.dir/util_func.c.o
+src/biort: src/CMakeFiles/biort.dir/main.cpp.o
+src/biort: src/CMakeFiles/biort.dir/custom_io.cpp.o
+src/biort: src/CMakeFiles/biort.dir/init.cpp.o
+src/biort: src/CMakeFiles/biort.dir/lookup.cpp.o
+src/biort: src/CMakeFiles/biort.dir/optparse.cpp.o
+src/biort: src/CMakeFiles/biort.dir/print.cpp.o
+src/biort: src/CMakeFiles/biort.dir/react.cpp.o
+src/biort: src/CMakeFiles/biort.dir/read_chem.cpp.o
+src/biort: src/CMakeFiles/biort.dir/read_cini.cpp.o
+src/biort: src/CMakeFiles/biort.dir/read_hbv.cpp.o
+src/biort: src/CMakeFiles/biort.dir/read_param.cpp.o
+src/biort: src/CMakeFiles/biort.dir/read_precipchem.cpp.o
+src/biort: src/CMakeFiles/biort.dir/read_soil.cpp.o
+src/biort: src/CMakeFiles/biort.dir/set_numexp.cpp.o
+src/biort: src/CMakeFiles/biort.dir/speciation.cpp.o
+src/biort: src/CMakeFiles/biort.dir/time_func.cpp.o
+src/biort: src/CMakeFiles/biort.dir/transport.cpp.o
+src/biort: src/CMakeFiles/biort.dir/util_func.cpp.o
 src/biort: src/CMakeFiles/biort.dir/build.make
 src/biort: src/CMakeFiles/biort.dir/link.txt
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --bold --progress-dir=/home/andrew/Documents/GitHub/surface/HBV-BioRT/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_19) "Linking C executable biort"
-	cd /home/andrew/Documents/GitHub/surface/HBV-BioRT/build/src && $(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/biort.dir/link.txt --verbose=$(VERBOSE)
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --bold --progress-dir=/home/andrew/Documents/GitHub/biort-surface-cpp/BioRT-HBV-Surface/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_19) "Linking CXX executable biort"
+	cd /home/andrew/Documents/GitHub/biort-surface-cpp/BioRT-HBV-Surface/build/src && $(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/biort.dir/link.txt --verbose=$(VERBOSE)
 
 # Rule to build all files generated by this target.
 src/CMakeFiles/biort.dir/build: src/biort
 .PHONY : src/CMakeFiles/biort.dir/build
 
 src/CMakeFiles/biort.dir/clean:
-	cd /home/andrew/Documents/GitHub/surface/HBV-BioRT/build/src && $(CMAKE_COMMAND) -P CMakeFiles/biort.dir/cmake_clean.cmake
+	cd /home/andrew/Documents/GitHub/biort-surface-cpp/BioRT-HBV-Surface/build/src && $(CMAKE_COMMAND) -P CMakeFiles/biort.dir/cmake_clean.cmake
 .PHONY : src/CMakeFiles/biort.dir/clean
 
 src/CMakeFiles/biort.dir/depend:
-	cd /home/andrew/Documents/GitHub/surface/HBV-BioRT/build && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /home/andrew/Documents/GitHub/surface/HBV-BioRT /home/andrew/Documents/GitHub/surface/HBV-BioRT/src /home/andrew/Documents/GitHub/surface/HBV-BioRT/build /home/andrew/Documents/GitHub/surface/HBV-BioRT/build/src /home/andrew/Documents/GitHub/surface/HBV-BioRT/build/src/CMakeFiles/biort.dir/DependInfo.cmake "--color=$(COLOR)"
+	cd /home/andrew/Documents/GitHub/biort-surface-cpp/BioRT-HBV-Surface/build && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /home/andrew/Documents/GitHub/biort-surface-cpp/BioRT-HBV-Surface /home/andrew/Documents/GitHub/biort-surface-cpp/BioRT-HBV-Surface/src /home/andrew/Documents/GitHub/biort-surface-cpp/BioRT-HBV-Surface/build /home/andrew/Documents/GitHub/biort-surface-cpp/BioRT-HBV-Surface/build/src /home/andrew/Documents/GitHub/biort-surface-cpp/BioRT-HBV-Surface/build/src/CMakeFiles/biort.dir/DependInfo.cmake "--color=$(COLOR)"
 .PHONY : src/CMakeFiles/biort.dir/depend
 

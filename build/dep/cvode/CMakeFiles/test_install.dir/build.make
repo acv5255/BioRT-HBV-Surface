@@ -53,10 +53,10 @@ RM = /usr/local/bin/cmake -E rm -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /home/andrew/Documents/GitHub/surface/HBV-BioRT
+CMAKE_SOURCE_DIR = /home/andrew/Documents/GitHub/biort-surface-cpp/BioRT-HBV-Surface
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /home/andrew/Documents/GitHub/surface/HBV-BioRT/build
+CMAKE_BINARY_DIR = /home/andrew/Documents/GitHub/biort-surface-cpp/BioRT-HBV-Surface/build
 
 # Utility rule file for test_install.
 
@@ -67,7 +67,7 @@ include dep/cvode/CMakeFiles/test_install.dir/compiler_depend.make
 include dep/cvode/CMakeFiles/test_install.dir/progress.make
 
 dep/cvode/CMakeFiles/test_install:
-	cd /home/andrew/Documents/GitHub/surface/HBV-BioRT/build/dep/cvode && /usr/local/bin/cmake -E cmake_echo_color --cyan All\ installation\ tests\ complete.
+	cd /home/andrew/Documents/GitHub/biort-surface-cpp/BioRT-HBV-Surface/build/dep/cvode && /usr/local/bin/cmake -E cmake_echo_color --cyan All\ installation\ tests\ complete.
 
 test_install: dep/cvode/CMakeFiles/test_install
 test_install: dep/cvode/CMakeFiles/test_install.dir/build.make
@@ -78,10 +78,10 @@ dep/cvode/CMakeFiles/test_install.dir/build: test_install
 .PHONY : dep/cvode/CMakeFiles/test_install.dir/build
 
 dep/cvode/CMakeFiles/test_install.dir/clean:
-	cd /home/andrew/Documents/GitHub/surface/HBV-BioRT/build/dep/cvode && $(CMAKE_COMMAND) -P CMakeFiles/test_install.dir/cmake_clean.cmake
+	cd /home/andrew/Documents/GitHub/biort-surface-cpp/BioRT-HBV-Surface/build/dep/cvode && $(CMAKE_COMMAND) -P CMakeFiles/test_install.dir/cmake_clean.cmake
 .PHONY : dep/cvode/CMakeFiles/test_install.dir/clean
 
 dep/cvode/CMakeFiles/test_install.dir/depend:
-	cd /home/andrew/Documents/GitHub/surface/HBV-BioRT/build && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /home/andrew/Documents/GitHub/surface/HBV-BioRT /home/andrew/Documents/GitHub/surface/HBV-BioRT/dep/cvode /home/andrew/Documents/GitHub/surface/HBV-BioRT/build /home/andrew/Documents/GitHub/surface/HBV-BioRT/build/dep/cvode /home/andrew/Documents/GitHub/surface/HBV-BioRT/build/dep/cvode/CMakeFiles/test_install.dir/DependInfo.cmake "--color=$(COLOR)"
+	cd /home/andrew/Documents/GitHub/biort-surface-cpp/BioRT-HBV-Surface/build && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /home/andrew/Documents/GitHub/biort-surface-cpp/BioRT-HBV-Surface /home/andrew/Documents/GitHub/biort-surface-cpp/BioRT-HBV-Surface/dep/cvode /home/andrew/Documents/GitHub/biort-surface-cpp/BioRT-HBV-Surface/build /home/andrew/Documents/GitHub/biort-surface-cpp/BioRT-HBV-Surface/build/dep/cvode /home/andrew/Documents/GitHub/biort-surface-cpp/BioRT-HBV-Surface/build/dep/cvode/CMakeFiles/test_install.dir/DependInfo.cmake "--color=$(COLOR)"
 .PHONY : dep/cvode/CMakeFiles/test_install.dir/depend
 

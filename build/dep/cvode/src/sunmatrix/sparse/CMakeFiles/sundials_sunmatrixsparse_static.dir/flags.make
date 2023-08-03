@@ -4,7 +4,7 @@
 # compile C with /usr/bin/gcc-12
 C_DEFINES = -DBUILD_SUNDIALS_LIBRARY
 
-C_INCLUDES = -I/home/andrew/Documents/GitHub/surface/HBV-BioRT/dep/cvode/include -I/home/andrew/Documents/GitHub/surface/HBV-BioRT/build/dep/cvode/include -I/home/andrew/Documents/GitHub/surface/HBV-BioRT/dep/cvode/src/sunmatrix/sparse/.
+C_INCLUDES = -I/home/andrew/Documents/GitHub/biort-surface-cpp/BioRT-HBV-Surface/dep/cvode/include -I/home/andrew/Documents/GitHub/biort-surface-cpp/BioRT-HBV-Surface/build/dep/cvode/include -I/home/andrew/Documents/GitHub/biort-surface-cpp/BioRT-HBV-Surface/dep/cvode/src/sunmatrix/sparse/.
 
 C_FLAGS = -g
 

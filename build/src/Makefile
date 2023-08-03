@@ -57,10 +57,10 @@ RM = /usr/local/bin/cmake -E rm -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /home/andrew/Documents/GitHub/surface/HBV-BioRT
+CMAKE_SOURCE_DIR = /home/andrew/Documents/GitHub/biort-surface-cpp/BioRT-HBV-Surface
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /home/andrew/Documents/GitHub/surface/HBV-BioRT/build
+CMAKE_BINARY_DIR = /home/andrew/Documents/GitHub/biort-surface-cpp/BioRT-HBV-Surface/build
 
 #=============================================================================
 # Targets provided globally by CMake.
@@ -132,14 +132,14 @@ install/strip/fast: preinstall/fast
 
 # The main all target
 all: cmake_check_build_system
-	cd /home/andrew/Documents/GitHub/surface/HBV-BioRT/build && $(CMAKE_COMMAND) -E cmake_progress_start /home/andrew/Documents/GitHub/surface/HBV-BioRT/build/CMakeFiles /home/andrew/Documents/GitHub/surface/HBV-BioRT/build/src//CMakeFiles/progress.marks
-	cd /home/andrew/Documents/GitHub/surface/HBV-BioRT/build && $(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 src/all
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/andrew/Documents/GitHub/surface/HBV-BioRT/build/CMakeFiles 0
+	cd /home/andrew/Documents/GitHub/biort-surface-cpp/BioRT-HBV-Surface/build && $(CMAKE_COMMAND) -E cmake_progress_start /home/andrew/Documents/GitHub/biort-surface-cpp/BioRT-HBV-Surface/build/CMakeFiles /home/andrew/Documents/GitHub/biort-surface-cpp/BioRT-HBV-Surface/build/src//CMakeFiles/progress.marks
+	cd /home/andrew/Documents/GitHub/biort-surface-cpp/BioRT-HBV-Surface/build && $(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 src/all
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/andrew/Documents/GitHub/biort-surface-cpp/BioRT-HBV-Surface/build/CMakeFiles 0
 .PHONY : all
 
 # The main clean target
 clean:
-	cd /home/andrew/Documents/GitHub/surface/HBV-BioRT/build && $(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 src/clean
+	cd /home/andrew/Documents/GitHub/biort-surface-cpp/BioRT-HBV-Surface/build && $(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 src/clean
 .PHONY : clean
 
 # The main clean target
@@ -148,22 +148,22 @@ clean/fast: clean
 
 # Prepare targets for installation.
 preinstall: all
-	cd /home/andrew/Documents/GitHub/surface/HBV-BioRT/build && $(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 src/preinstall
+	cd /home/andrew/Documents/GitHub/biort-surface-cpp/BioRT-HBV-Surface/build && $(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 src/preinstall
 .PHONY : preinstall
 
 # Prepare targets for installation.
 preinstall/fast:
-	cd /home/andrew/Documents/GitHub/surface/HBV-BioRT/build && $(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 src/preinstall
+	cd /home/andrew/Documents/GitHub/biort-surface-cpp/BioRT-HBV-Surface/build && $(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 src/preinstall
 .PHONY : preinstall/fast
 
 # clear depends
 depend:
-	cd /home/andrew/Documents/GitHub/surface/HBV-BioRT/build && $(CMAKE_COMMAND) -S$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR) --check-build-system CMakeFiles/Makefile.cmake 1
+	cd /home/andrew/Documents/GitHub/biort-surface-cpp/BioRT-HBV-Surface/build && $(CMAKE_COMMAND) -S$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR) --check-build-system CMakeFiles/Makefile.cmake 1
 .PHONY : depend
 
 # Convenience name for target.
 src/CMakeFiles/biort.dir/rule:
-	cd /home/andrew/Documents/GitHub/surface/HBV-BioRT/build && $(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 src/CMakeFiles/biort.dir/rule
+	cd /home/andrew/Documents/GitHub/biort-surface-cpp/BioRT-HBV-Surface/build && $(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 src/CMakeFiles/biort.dir/rule
 .PHONY : src/CMakeFiles/biort.dir/rule
 
 # Convenience name for target.
@@ -172,440 +172,440 @@ biort: src/CMakeFiles/biort.dir/rule
 
 # fast build rule for target.
 biort/fast:
-	cd /home/andrew/Documents/GitHub/surface/HBV-BioRT/build && $(MAKE) $(MAKESILENT) -f src/CMakeFiles/biort.dir/build.make src/CMakeFiles/biort.dir/build
+	cd /home/andrew/Documents/GitHub/biort-surface-cpp/BioRT-HBV-Surface/build && $(MAKE) $(MAKESILENT) -f src/CMakeFiles/biort.dir/build.make src/CMakeFiles/biort.dir/build
 .PHONY : biort/fast
 
-custom_io.o: custom_io.c.o
+custom_io.o: custom_io.cpp.o
 .PHONY : custom_io.o
 
 # target to build an object file
-custom_io.c.o:
-	cd /home/andrew/Documents/GitHub/surface/HBV-BioRT/build && $(MAKE) $(MAKESILENT) -f src/CMakeFiles/biort.dir/build.make src/CMakeFiles/biort.dir/custom_io.c.o
-.PHONY : custom_io.c.o
+custom_io.cpp.o:
+	cd /home/andrew/Documents/GitHub/biort-surface-cpp/BioRT-HBV-Surface/build && $(MAKE) $(MAKESILENT) -f src/CMakeFiles/biort.dir/build.make src/CMakeFiles/biort.dir/custom_io.cpp.o
+.PHONY : custom_io.cpp.o
 
-custom_io.i: custom_io.c.i
+custom_io.i: custom_io.cpp.i
 .PHONY : custom_io.i
 
 # target to preprocess a source file
-custom_io.c.i:
-	cd /home/andrew/Documents/GitHub/surface/HBV-BioRT/build && $(MAKE) $(MAKESILENT) -f src/CMakeFiles/biort.dir/build.make src/CMakeFiles/biort.dir/custom_io.c.i
-.PHONY : custom_io.c.i
+custom_io.cpp.i:
+	cd /home/andrew/Documents/GitHub/biort-surface-cpp/BioRT-HBV-Surface/build && $(MAKE) $(MAKESILENT) -f src/CMakeFiles/biort.dir/build.make src/CMakeFiles/biort.dir/custom_io.cpp.i
+.PHONY : custom_io.cpp.i
 
-custom_io.s: custom_io.c.s
+custom_io.s: custom_io.cpp.s
 .PHONY : custom_io.s
 
 # target to generate assembly for a file
-custom_io.c.s:
-	cd /home/andrew/Documents/GitHub/surface/HBV-BioRT/build && $(MAKE) $(MAKESILENT) -f src/CMakeFiles/biort.dir/build.make src/CMakeFiles/biort.dir/custom_io.c.s
-.PHONY : custom_io.c.s
+custom_io.cpp.s:
+	cd /home/andrew/Documents/GitHub/biort-surface-cpp/BioRT-HBV-Surface/build && $(MAKE) $(MAKESILENT) -f src/CMakeFiles/biort.dir/build.make src/CMakeFiles/biort.dir/custom_io.cpp.s
+.PHONY : custom_io.cpp.s
 
-init.o: init.c.o
+init.o: init.cpp.o
 .PHONY : init.o
 
 # target to build an object file
-init.c.o:
-	cd /home/andrew/Documents/GitHub/surface/HBV-BioRT/build && $(MAKE) $(MAKESILENT) -f src/CMakeFiles/biort.dir/build.make src/CMakeFiles/biort.dir/init.c.o
-.PHONY : init.c.o
+init.cpp.o:
+	cd /home/andrew/Documents/GitHub/biort-surface-cpp/BioRT-HBV-Surface/build && $(MAKE) $(MAKESILENT) -f src/CMakeFiles/biort.dir/build.make src/CMakeFiles/biort.dir/init.cpp.o
+.PHONY : init.cpp.o
 
-init.i: init.c.i
+init.i: init.cpp.i
 .PHONY : init.i
 
 # target to preprocess a source file
-init.c.i:
-	cd /home/andrew/Documents/GitHub/surface/HBV-BioRT/build && $(MAKE) $(MAKESILENT) -f src/CMakeFiles/biort.dir/build.make src/CMakeFiles/biort.dir/init.c.i
-.PHONY : init.c.i
+init.cpp.i:
+	cd /home/andrew/Documents/GitHub/biort-surface-cpp/BioRT-HBV-Surface/build && $(MAKE) $(MAKESILENT) -f src/CMakeFiles/biort.dir/build.make src/CMakeFiles/biort.dir/init.cpp.i
+.PHONY : init.cpp.i
 
-init.s: init.c.s
+init.s: init.cpp.s
 .PHONY : init.s
 
 # target to generate assembly for a file
-init.c.s:
-	cd /home/andrew/Documents/GitHub/surface/HBV-BioRT/build && $(MAKE) $(MAKESILENT) -f src/CMakeFiles/biort.dir/build.make src/CMakeFiles/biort.dir/init.c.s
-.PHONY : init.c.s
+init.cpp.s:
+	cd /home/andrew/Documents/GitHub/biort-surface-cpp/BioRT-HBV-Surface/build && $(MAKE) $(MAKESILENT) -f src/CMakeFiles/biort.dir/build.make src/CMakeFiles/biort.dir/init.cpp.s
+.PHONY : init.cpp.s
 
-lookup.o: lookup.c.o
+lookup.o: lookup.cpp.o
 .PHONY : lookup.o
 
 # target to build an object file
-lookup.c.o:
-	cd /home/andrew/Documents/GitHub/surface/HBV-BioRT/build && $(MAKE) $(MAKESILENT) -f src/CMakeFiles/biort.dir/build.make src/CMakeFiles/biort.dir/lookup.c.o
-.PHONY : lookup.c.o
+lookup.cpp.o:
+	cd /home/andrew/Documents/GitHub/biort-surface-cpp/BioRT-HBV-Surface/build && $(MAKE) $(MAKESILENT) -f src/CMakeFiles/biort.dir/build.make src/CMakeFiles/biort.dir/lookup.cpp.o
+.PHONY : lookup.cpp.o
 
-lookup.i: lookup.c.i
+lookup.i: lookup.cpp.i
 .PHONY : lookup.i
 
 # target to preprocess a source file
-lookup.c.i:
-	cd /home/andrew/Documents/GitHub/surface/HBV-BioRT/build && $(MAKE) $(MAKESILENT) -f src/CMakeFiles/biort.dir/build.make src/CMakeFiles/biort.dir/lookup.c.i
-.PHONY : lookup.c.i
+lookup.cpp.i:
+	cd /home/andrew/Documents/GitHub/biort-surface-cpp/BioRT-HBV-Surface/build && $(MAKE) $(MAKESILENT) -f src/CMakeFiles/biort.dir/build.make src/CMakeFiles/biort.dir/lookup.cpp.i
+.PHONY : lookup.cpp.i
 
-lookup.s: lookup.c.s
+lookup.s: lookup.cpp.s
 .PHONY : lookup.s
 
 # target to generate assembly for a file
-lookup.c.s:
-	cd /home/andrew/Documents/GitHub/surface/HBV-BioRT/build && $(MAKE) $(MAKESILENT) -f src/CMakeFiles/biort.dir/build.make src/CMakeFiles/biort.dir/lookup.c.s
-.PHONY : lookup.c.s
+lookup.cpp.s:
+	cd /home/andrew/Documents/GitHub/biort-surface-cpp/BioRT-HBV-Surface/build && $(MAKE) $(MAKESILENT) -f src/CMakeFiles/biort.dir/build.make src/CMakeFiles/biort.dir/lookup.cpp.s
+.PHONY : lookup.cpp.s
 
-main.o: main.c.o
+main.o: main.cpp.o
 .PHONY : main.o
 
 # target to build an object file
-main.c.o:
-	cd /home/andrew/Documents/GitHub/surface/HBV-BioRT/build && $(MAKE) $(MAKESILENT) -f src/CMakeFiles/biort.dir/build.make src/CMakeFiles/biort.dir/main.c.o
-.PHONY : main.c.o
+main.cpp.o:
+	cd /home/andrew/Documents/GitHub/biort-surface-cpp/BioRT-HBV-Surface/build && $(MAKE) $(MAKESILENT) -f src/CMakeFiles/biort.dir/build.make src/CMakeFiles/biort.dir/main.cpp.o
+.PHONY : main.cpp.o
 
-main.i: main.c.i
+main.i: main.cpp.i
 .PHONY : main.i
 
 # target to preprocess a source file
-main.c.i:
-	cd /home/andrew/Documents/GitHub/surface/HBV-BioRT/build && $(MAKE) $(MAKESILENT) -f src/CMakeFiles/biort.dir/build.make src/CMakeFiles/biort.dir/main.c.i
-.PHONY : main.c.i
+main.cpp.i:
+	cd /home/andrew/Documents/GitHub/biort-surface-cpp/BioRT-HBV-Surface/build && $(MAKE) $(MAKESILENT) -f src/CMakeFiles/biort.dir/build.make src/CMakeFiles/biort.dir/main.cpp.i
+.PHONY : main.cpp.i
 
-main.s: main.c.s
+main.s: main.cpp.s
 .PHONY : main.s
 
 # target to generate assembly for a file
-main.c.s:
-	cd /home/andrew/Documents/GitHub/surface/HBV-BioRT/build && $(MAKE) $(MAKESILENT) -f src/CMakeFiles/biort.dir/build.make src/CMakeFiles/biort.dir/main.c.s
-.PHONY : main.c.s
+main.cpp.s:
+	cd /home/andrew/Documents/GitHub/biort-surface-cpp/BioRT-HBV-Surface/build && $(MAKE) $(MAKESILENT) -f src/CMakeFiles/biort.dir/build.make src/CMakeFiles/biort.dir/main.cpp.s
+.PHONY : main.cpp.s
 
-optparse.o: optparse.c.o
+optparse.o: optparse.cpp.o
 .PHONY : optparse.o
 
 # target to build an object file
-optparse.c.o:
-	cd /home/andrew/Documents/GitHub/surface/HBV-BioRT/build && $(MAKE) $(MAKESILENT) -f src/CMakeFiles/biort.dir/build.make src/CMakeFiles/biort.dir/optparse.c.o
-.PHONY : optparse.c.o
+optparse.cpp.o:
+	cd /home/andrew/Documents/GitHub/biort-surface-cpp/BioRT-HBV-Surface/build && $(MAKE) $(MAKESILENT) -f src/CMakeFiles/biort.dir/build.make src/CMakeFiles/biort.dir/optparse.cpp.o
+.PHONY : optparse.cpp.o
 
-optparse.i: optparse.c.i
+optparse.i: optparse.cpp.i
 .PHONY : optparse.i
 
 # target to preprocess a source file
-optparse.c.i:
-	cd /home/andrew/Documents/GitHub/surface/HBV-BioRT/build && $(MAKE) $(MAKESILENT) -f src/CMakeFiles/biort.dir/build.make src/CMakeFiles/biort.dir/optparse.c.i
-.PHONY : optparse.c.i
+optparse.cpp.i:
+	cd /home/andrew/Documents/GitHub/biort-surface-cpp/BioRT-HBV-Surface/build && $(MAKE) $(MAKESILENT) -f src/CMakeFiles/biort.dir/build.make src/CMakeFiles/biort.dir/optparse.cpp.i
+.PHONY : optparse.cpp.i
 
-optparse.s: optparse.c.s
+optparse.s: optparse.cpp.s
 .PHONY : optparse.s
 
 # target to generate assembly for a file
-optparse.c.s:
-	cd /home/andrew/Documents/GitHub/surface/HBV-BioRT/build && $(MAKE) $(MAKESILENT) -f src/CMakeFiles/biort.dir/build.make src/CMakeFiles/biort.dir/optparse.c.s
-.PHONY : optparse.c.s
+optparse.cpp.s:
+	cd /home/andrew/Documents/GitHub/biort-surface-cpp/BioRT-HBV-Surface/build && $(MAKE) $(MAKESILENT) -f src/CMakeFiles/biort.dir/build.make src/CMakeFiles/biort.dir/optparse.cpp.s
+.PHONY : optparse.cpp.s
 
-print.o: print.c.o
+print.o: print.cpp.o
 .PHONY : print.o
 
 # target to build an object file
-print.c.o:
-	cd /home/andrew/Documents/GitHub/surface/HBV-BioRT/build && $(MAKE) $(MAKESILENT) -f src/CMakeFiles/biort.dir/build.make src/CMakeFiles/biort.dir/print.c.o
-.PHONY : print.c.o
+print.cpp.o:
+	cd /home/andrew/Documents/GitHub/biort-surface-cpp/BioRT-HBV-Surface/build && $(MAKE) $(MAKESILENT) -f src/CMakeFiles/biort.dir/build.make src/CMakeFiles/biort.dir/print.cpp.o
+.PHONY : print.cpp.o
 
-print.i: print.c.i
+print.i: print.cpp.i
 .PHONY : print.i
 
 # target to preprocess a source file
-print.c.i:
-	cd /home/andrew/Documents/GitHub/surface/HBV-BioRT/build && $(MAKE) $(MAKESILENT) -f src/CMakeFiles/biort.dir/build.make src/CMakeFiles/biort.dir/print.c.i
-.PHONY : print.c.i
+print.cpp.i:
+	cd /home/andrew/Documents/GitHub/biort-surface-cpp/BioRT-HBV-Surface/build && $(MAKE) $(MAKESILENT) -f src/CMakeFiles/biort.dir/build.make src/CMakeFiles/biort.dir/print.cpp.i
+.PHONY : print.cpp.i
 
-print.s: print.c.s
+print.s: print.cpp.s
 .PHONY : print.s
 
 # target to generate assembly for a file
-print.c.s:
-	cd /home/andrew/Documents/GitHub/surface/HBV-BioRT/build && $(MAKE) $(MAKESILENT) -f src/CMakeFiles/biort.dir/build.make src/CMakeFiles/biort.dir/print.c.s
-.PHONY : print.c.s
+print.cpp.s:
+	cd /home/andrew/Documents/GitHub/biort-surface-cpp/BioRT-HBV-Surface/build && $(MAKE) $(MAKESILENT) -f src/CMakeFiles/biort.dir/build.make src/CMakeFiles/biort.dir/print.cpp.s
+.PHONY : print.cpp.s
 
-react.o: react.c.o
+react.o: react.cpp.o
 .PHONY : react.o
 
 # target to build an object file
-react.c.o:
-	cd /home/andrew/Documents/GitHub/surface/HBV-BioRT/build && $(MAKE) $(MAKESILENT) -f src/CMakeFiles/biort.dir/build.make src/CMakeFiles/biort.dir/react.c.o
-.PHONY : react.c.o
+react.cpp.o:
+	cd /home/andrew/Documents/GitHub/biort-surface-cpp/BioRT-HBV-Surface/build && $(MAKE) $(MAKESILENT) -f src/CMakeFiles/biort.dir/build.make src/CMakeFiles/biort.dir/react.cpp.o
+.PHONY : react.cpp.o
 
-react.i: react.c.i
+react.i: react.cpp.i
 .PHONY : react.i
 
 # target to preprocess a source file
-react.c.i:
-	cd /home/andrew/Documents/GitHub/surface/HBV-BioRT/build && $(MAKE) $(MAKESILENT) -f src/CMakeFiles/biort.dir/build.make src/CMakeFiles/biort.dir/react.c.i
-.PHONY : react.c.i
+react.cpp.i:
+	cd /home/andrew/Documents/GitHub/biort-surface-cpp/BioRT-HBV-Surface/build && $(MAKE) $(MAKESILENT) -f src/CMakeFiles/biort.dir/build.make src/CMakeFiles/biort.dir/react.cpp.i
+.PHONY : react.cpp.i
 
-react.s: react.c.s
+react.s: react.cpp.s
 .PHONY : react.s
 
 # target to generate assembly for a file
-react.c.s:
-	cd /home/andrew/Documents/GitHub/surface/HBV-BioRT/build && $(MAKE) $(MAKESILENT) -f src/CMakeFiles/biort.dir/build.make src/CMakeFiles/biort.dir/react.c.s
-.PHONY : react.c.s
+react.cpp.s:
+	cd /home/andrew/Documents/GitHub/biort-surface-cpp/BioRT-HBV-Surface/build && $(MAKE) $(MAKESILENT) -f src/CMakeFiles/biort.dir/build.make src/CMakeFiles/biort.dir/react.cpp.s
+.PHONY : react.cpp.s
 
-read_chem.o: read_chem.c.o
+read_chem.o: read_chem.cpp.o
 .PHONY : read_chem.o
 
 # target to build an object file
-read_chem.c.o:
-	cd /home/andrew/Documents/GitHub/surface/HBV-BioRT/build && $(MAKE) $(MAKESILENT) -f src/CMakeFiles/biort.dir/build.make src/CMakeFiles/biort.dir/read_chem.c.o
-.PHONY : read_chem.c.o
+read_chem.cpp.o:
+	cd /home/andrew/Documents/GitHub/biort-surface-cpp/BioRT-HBV-Surface/build && $(MAKE) $(MAKESILENT) -f src/CMakeFiles/biort.dir/build.make src/CMakeFiles/biort.dir/read_chem.cpp.o
+.PHONY : read_chem.cpp.o
 
-read_chem.i: read_chem.c.i
+read_chem.i: read_chem.cpp.i
 .PHONY : read_chem.i
 
 # target to preprocess a source file
-read_chem.c.i:
-	cd /home/andrew/Documents/GitHub/surface/HBV-BioRT/build && $(MAKE) $(MAKESILENT) -f src/CMakeFiles/biort.dir/build.make src/CMakeFiles/biort.dir/read_chem.c.i
-.PHONY : read_chem.c.i
+read_chem.cpp.i:
+	cd /home/andrew/Documents/GitHub/biort-surface-cpp/BioRT-HBV-Surface/build && $(MAKE) $(MAKESILENT) -f src/CMakeFiles/biort.dir/build.make src/CMakeFiles/biort.dir/read_chem.cpp.i
+.PHONY : read_chem.cpp.i
 
-read_chem.s: read_chem.c.s
+read_chem.s: read_chem.cpp.s
 .PHONY : read_chem.s
 
 # target to generate assembly for a file
-read_chem.c.s:
-	cd /home/andrew/Documents/GitHub/surface/HBV-BioRT/build && $(MAKE) $(MAKESILENT) -f src/CMakeFiles/biort.dir/build.make src/CMakeFiles/biort.dir/read_chem.c.s
-.PHONY : read_chem.c.s
+read_chem.cpp.s:
+	cd /home/andrew/Documents/GitHub/biort-surface-cpp/BioRT-HBV-Surface/build && $(MAKE) $(MAKESILENT) -f src/CMakeFiles/biort.dir/build.make src/CMakeFiles/biort.dir/read_chem.cpp.s
+.PHONY : read_chem.cpp.s
 
-read_cini.o: read_cini.c.o
+read_cini.o: read_cini.cpp.o
 .PHONY : read_cini.o
 
 # target to build an object file
-read_cini.c.o:
-	cd /home/andrew/Documents/GitHub/surface/HBV-BioRT/build && $(MAKE) $(MAKESILENT) -f src/CMakeFiles/biort.dir/build.make src/CMakeFiles/biort.dir/read_cini.c.o
-.PHONY : read_cini.c.o
+read_cini.cpp.o:
+	cd /home/andrew/Documents/GitHub/biort-surface-cpp/BioRT-HBV-Surface/build && $(MAKE) $(MAKESILENT) -f src/CMakeFiles/biort.dir/build.make src/CMakeFiles/biort.dir/read_cini.cpp.o
+.PHONY : read_cini.cpp.o
 
-read_cini.i: read_cini.c.i
+read_cini.i: read_cini.cpp.i
 .PHONY : read_cini.i
 
 # target to preprocess a source file
-read_cini.c.i:
-	cd /home/andrew/Documents/GitHub/surface/HBV-BioRT/build && $(MAKE) $(MAKESILENT) -f src/CMakeFiles/biort.dir/build.make src/CMakeFiles/biort.dir/read_cini.c.i
-.PHONY : read_cini.c.i
+read_cini.cpp.i:
+	cd /home/andrew/Documents/GitHub/biort-surface-cpp/BioRT-HBV-Surface/build && $(MAKE) $(MAKESILENT) -f src/CMakeFiles/biort.dir/build.make src/CMakeFiles/biort.dir/read_cini.cpp.i
+.PHONY : read_cini.cpp.i
 
-read_cini.s: read_cini.c.s
+read_cini.s: read_cini.cpp.s
 .PHONY : read_cini.s
 
 # target to generate assembly for a file
-read_cini.c.s:
-	cd /home/andrew/Documents/GitHub/surface/HBV-BioRT/build && $(MAKE) $(MAKESILENT) -f src/CMakeFiles/biort.dir/build.make src/CMakeFiles/biort.dir/read_cini.c.s
-.PHONY : read_cini.c.s
+read_cini.cpp.s:
+	cd /home/andrew/Documents/GitHub/biort-surface-cpp/BioRT-HBV-Surface/build && $(MAKE) $(MAKESILENT) -f src/CMakeFiles/biort.dir/build.make src/CMakeFiles/biort.dir/read_cini.cpp.s
+.PHONY : read_cini.cpp.s
 
-read_hbv.o: read_hbv.c.o
+read_hbv.o: read_hbv.cpp.o
 .PHONY : read_hbv.o
 
 # target to build an object file
-read_hbv.c.o:
-	cd /home/andrew/Documents/GitHub/surface/HBV-BioRT/build && $(MAKE) $(MAKESILENT) -f src/CMakeFiles/biort.dir/build.make src/CMakeFiles/biort.dir/read_hbv.c.o
-.PHONY : read_hbv.c.o
+read_hbv.cpp.o:
+	cd /home/andrew/Documents/GitHub/biort-surface-cpp/BioRT-HBV-Surface/build && $(MAKE) $(MAKESILENT) -f src/CMakeFiles/biort.dir/build.make src/CMakeFiles/biort.dir/read_hbv.cpp.o
+.PHONY : read_hbv.cpp.o
 
-read_hbv.i: read_hbv.c.i
+read_hbv.i: read_hbv.cpp.i
 .PHONY : read_hbv.i
 
 # target to preprocess a source file
-read_hbv.c.i:
-	cd /home/andrew/Documents/GitHub/surface/HBV-BioRT/build && $(MAKE) $(MAKESILENT) -f src/CMakeFiles/biort.dir/build.make src/CMakeFiles/biort.dir/read_hbv.c.i
-.PHONY : read_hbv.c.i
+read_hbv.cpp.i:
+	cd /home/andrew/Documents/GitHub/biort-surface-cpp/BioRT-HBV-Surface/build && $(MAKE) $(MAKESILENT) -f src/CMakeFiles/biort.dir/build.make src/CMakeFiles/biort.dir/read_hbv.cpp.i
+.PHONY : read_hbv.cpp.i
 
-read_hbv.s: read_hbv.c.s
+read_hbv.s: read_hbv.cpp.s
 .PHONY : read_hbv.s
 
 # target to generate assembly for a file
-read_hbv.c.s:
-	cd /home/andrew/Documents/GitHub/surface/HBV-BioRT/build && $(MAKE) $(MAKESILENT) -f src/CMakeFiles/biort.dir/build.make src/CMakeFiles/biort.dir/read_hbv.c.s
-.PHONY : read_hbv.c.s
+read_hbv.cpp.s:
+	cd /home/andrew/Documents/GitHub/biort-surface-cpp/BioRT-HBV-Surface/build && $(MAKE) $(MAKESILENT) -f src/CMakeFiles/biort.dir/build.make src/CMakeFiles/biort.dir/read_hbv.cpp.s
+.PHONY : read_hbv.cpp.s
 
-read_param.o: read_param.c.o
+read_param.o: read_param.cpp.o
 .PHONY : read_param.o
 
 # target to build an object file
-read_param.c.o:
-	cd /home/andrew/Documents/GitHub/surface/HBV-BioRT/build && $(MAKE) $(MAKESILENT) -f src/CMakeFiles/biort.dir/build.make src/CMakeFiles/biort.dir/read_param.c.o
-.PHONY : read_param.c.o
+read_param.cpp.o:
+	cd /home/andrew/Documents/GitHub/biort-surface-cpp/BioRT-HBV-Surface/build && $(MAKE) $(MAKESILENT) -f src/CMakeFiles/biort.dir/build.make src/CMakeFiles/biort.dir/read_param.cpp.o
+.PHONY : read_param.cpp.o
 
-read_param.i: read_param.c.i
+read_param.i: read_param.cpp.i
 .PHONY : read_param.i
 
 # target to preprocess a source file
-read_param.c.i:
-	cd /home/andrew/Documents/GitHub/surface/HBV-BioRT/build && $(MAKE) $(MAKESILENT) -f src/CMakeFiles/biort.dir/build.make src/CMakeFiles/biort.dir/read_param.c.i
-.PHONY : read_param.c.i
+read_param.cpp.i:
+	cd /home/andrew/Documents/GitHub/biort-surface-cpp/BioRT-HBV-Surface/build && $(MAKE) $(MAKESILENT) -f src/CMakeFiles/biort.dir/build.make src/CMakeFiles/biort.dir/read_param.cpp.i
+.PHONY : read_param.cpp.i
 
-read_param.s: read_param.c.s
+read_param.s: read_param.cpp.s
 .PHONY : read_param.s
 
 # target to generate assembly for a file
-read_param.c.s:
-	cd /home/andrew/Documents/GitHub/surface/HBV-BioRT/build && $(MAKE) $(MAKESILENT) -f src/CMakeFiles/biort.dir/build.make src/CMakeFiles/biort.dir/read_param.c.s
-.PHONY : read_param.c.s
+read_param.cpp.s:
+	cd /home/andrew/Documents/GitHub/biort-surface-cpp/BioRT-HBV-Surface/build && $(MAKE) $(MAKESILENT) -f src/CMakeFiles/biort.dir/build.make src/CMakeFiles/biort.dir/read_param.cpp.s
+.PHONY : read_param.cpp.s
 
-read_precipchem.o: read_precipchem.c.o
+read_precipchem.o: read_precipchem.cpp.o
 .PHONY : read_precipchem.o
 
 # target to build an object file
-read_precipchem.c.o:
-	cd /home/andrew/Documents/GitHub/surface/HBV-BioRT/build && $(MAKE) $(MAKESILENT) -f src/CMakeFiles/biort.dir/build.make src/CMakeFiles/biort.dir/read_precipchem.c.o
-.PHONY : read_precipchem.c.o
+read_precipchem.cpp.o:
+	cd /home/andrew/Documents/GitHub/biort-surface-cpp/BioRT-HBV-Surface/build && $(MAKE) $(MAKESILENT) -f src/CMakeFiles/biort.dir/build.make src/CMakeFiles/biort.dir/read_precipchem.cpp.o
+.PHONY : read_precipchem.cpp.o
 
-read_precipchem.i: read_precipchem.c.i
+read_precipchem.i: read_precipchem.cpp.i
 .PHONY : read_precipchem.i
 
 # target to preprocess a source file
-read_precipchem.c.i:
-	cd /home/andrew/Documents/GitHub/surface/HBV-BioRT/build && $(MAKE) $(MAKESILENT) -f src/CMakeFiles/biort.dir/build.make src/CMakeFiles/biort.dir/read_precipchem.c.i
-.PHONY : read_precipchem.c.i
+read_precipchem.cpp.i:
+	cd /home/andrew/Documents/GitHub/biort-surface-cpp/BioRT-HBV-Surface/build && $(MAKE) $(MAKESILENT) -f src/CMakeFiles/biort.dir/build.make src/CMakeFiles/biort.dir/read_precipchem.cpp.i
+.PHONY : read_precipchem.cpp.i
 
-read_precipchem.s: read_precipchem.c.s
+read_precipchem.s: read_precipchem.cpp.s
 .PHONY : read_precipchem.s
 
 # target to generate assembly for a file
-read_precipchem.c.s:
-	cd /home/andrew/Documents/GitHub/surface/HBV-BioRT/build && $(MAKE) $(MAKESILENT) -f src/CMakeFiles/biort.dir/build.make src/CMakeFiles/biort.dir/read_precipchem.c.s
-.PHONY : read_precipchem.c.s
+read_precipchem.cpp.s:
+	cd /home/andrew/Documents/GitHub/biort-surface-cpp/BioRT-HBV-Surface/build && $(MAKE) $(MAKESILENT) -f src/CMakeFiles/biort.dir/build.make src/CMakeFiles/biort.dir/read_precipchem.cpp.s
+.PHONY : read_precipchem.cpp.s
 
-read_soil.o: read_soil.c.o
+read_soil.o: read_soil.cpp.o
 .PHONY : read_soil.o
 
 # target to build an object file
-read_soil.c.o:
-	cd /home/andrew/Documents/GitHub/surface/HBV-BioRT/build && $(MAKE) $(MAKESILENT) -f src/CMakeFiles/biort.dir/build.make src/CMakeFiles/biort.dir/read_soil.c.o
-.PHONY : read_soil.c.o
+read_soil.cpp.o:
+	cd /home/andrew/Documents/GitHub/biort-surface-cpp/BioRT-HBV-Surface/build && $(MAKE) $(MAKESILENT) -f src/CMakeFiles/biort.dir/build.make src/CMakeFiles/biort.dir/read_soil.cpp.o
+.PHONY : read_soil.cpp.o
 
-read_soil.i: read_soil.c.i
+read_soil.i: read_soil.cpp.i
 .PHONY : read_soil.i
 
 # target to preprocess a source file
-read_soil.c.i:
-	cd /home/andrew/Documents/GitHub/surface/HBV-BioRT/build && $(MAKE) $(MAKESILENT) -f src/CMakeFiles/biort.dir/build.make src/CMakeFiles/biort.dir/read_soil.c.i
-.PHONY : read_soil.c.i
+read_soil.cpp.i:
+	cd /home/andrew/Documents/GitHub/biort-surface-cpp/BioRT-HBV-Surface/build && $(MAKE) $(MAKESILENT) -f src/CMakeFiles/biort.dir/build.make src/CMakeFiles/biort.dir/read_soil.cpp.i
+.PHONY : read_soil.cpp.i
 
-read_soil.s: read_soil.c.s
+read_soil.s: read_soil.cpp.s
 .PHONY : read_soil.s
 
 # target to generate assembly for a file
-read_soil.c.s:
-	cd /home/andrew/Documents/GitHub/surface/HBV-BioRT/build && $(MAKE) $(MAKESILENT) -f src/CMakeFiles/biort.dir/build.make src/CMakeFiles/biort.dir/read_soil.c.s
-.PHONY : read_soil.c.s
+read_soil.cpp.s:
+	cd /home/andrew/Documents/GitHub/biort-surface-cpp/BioRT-HBV-Surface/build && $(MAKE) $(MAKESILENT) -f src/CMakeFiles/biort.dir/build.make src/CMakeFiles/biort.dir/read_soil.cpp.s
+.PHONY : read_soil.cpp.s
 
-set_numexp.o: set_numexp.c.o
+set_numexp.o: set_numexp.cpp.o
 .PHONY : set_numexp.o
 
 # target to build an object file
-set_numexp.c.o:
-	cd /home/andrew/Documents/GitHub/surface/HBV-BioRT/build && $(MAKE) $(MAKESILENT) -f src/CMakeFiles/biort.dir/build.make src/CMakeFiles/biort.dir/set_numexp.c.o
-.PHONY : set_numexp.c.o
+set_numexp.cpp.o:
+	cd /home/andrew/Documents/GitHub/biort-surface-cpp/BioRT-HBV-Surface/build && $(MAKE) $(MAKESILENT) -f src/CMakeFiles/biort.dir/build.make src/CMakeFiles/biort.dir/set_numexp.cpp.o
+.PHONY : set_numexp.cpp.o
 
-set_numexp.i: set_numexp.c.i
+set_numexp.i: set_numexp.cpp.i
 .PHONY : set_numexp.i
 
 # target to preprocess a source file
-set_numexp.c.i:
-	cd /home/andrew/Documents/GitHub/surface/HBV-BioRT/build && $(MAKE) $(MAKESILENT) -f src/CMakeFiles/biort.dir/build.make src/CMakeFiles/biort.dir/set_numexp.c.i
-.PHONY : set_numexp.c.i
+set_numexp.cpp.i:
+	cd /home/andrew/Documents/GitHub/biort-surface-cpp/BioRT-HBV-Surface/build && $(MAKE) $(MAKESILENT) -f src/CMakeFiles/biort.dir/build.make src/CMakeFiles/biort.dir/set_numexp.cpp.i
+.PHONY : set_numexp.cpp.i
 
-set_numexp.s: set_numexp.c.s
+set_numexp.s: set_numexp.cpp.s
 .PHONY : set_numexp.s
 
 # target to generate assembly for a file
-set_numexp.c.s:
-	cd /home/andrew/Documents/GitHub/surface/HBV-BioRT/build && $(MAKE) $(MAKESILENT) -f src/CMakeFiles/biort.dir/build.make src/CMakeFiles/biort.dir/set_numexp.c.s
-.PHONY : set_numexp.c.s
+set_numexp.cpp.s:
+	cd /home/andrew/Documents/GitHub/biort-surface-cpp/BioRT-HBV-Surface/build && $(MAKE) $(MAKESILENT) -f src/CMakeFiles/biort.dir/build.make src/CMakeFiles/biort.dir/set_numexp.cpp.s
+.PHONY : set_numexp.cpp.s
 
-speciation.o: speciation.c.o
+speciation.o: speciation.cpp.o
 .PHONY : speciation.o
 
 # target to build an object file
-speciation.c.o:
-	cd /home/andrew/Documents/GitHub/surface/HBV-BioRT/build && $(MAKE) $(MAKESILENT) -f src/CMakeFiles/biort.dir/build.make src/CMakeFiles/biort.dir/speciation.c.o
-.PHONY : speciation.c.o
+speciation.cpp.o:
+	cd /home/andrew/Documents/GitHub/biort-surface-cpp/BioRT-HBV-Surface/build && $(MAKE) $(MAKESILENT) -f src/CMakeFiles/biort.dir/build.make src/CMakeFiles/biort.dir/speciation.cpp.o
+.PHONY : speciation.cpp.o
 
-speciation.i: speciation.c.i
+speciation.i: speciation.cpp.i
 .PHONY : speciation.i
 
 # target to preprocess a source file
-speciation.c.i:
-	cd /home/andrew/Documents/GitHub/surface/HBV-BioRT/build && $(MAKE) $(MAKESILENT) -f src/CMakeFiles/biort.dir/build.make src/CMakeFiles/biort.dir/speciation.c.i
-.PHONY : speciation.c.i
+speciation.cpp.i:
+	cd /home/andrew/Documents/GitHub/biort-surface-cpp/BioRT-HBV-Surface/build && $(MAKE) $(MAKESILENT) -f src/CMakeFiles/biort.dir/build.make src/CMakeFiles/biort.dir/speciation.cpp.i
+.PHONY : speciation.cpp.i
 
-speciation.s: speciation.c.s
+speciation.s: speciation.cpp.s
 .PHONY : speciation.s
 
 # target to generate assembly for a file
-speciation.c.s:
-	cd /home/andrew/Documents/GitHub/surface/HBV-BioRT/build && $(MAKE) $(MAKESILENT) -f src/CMakeFiles/biort.dir/build.make src/CMakeFiles/biort.dir/speciation.c.s
-.PHONY : speciation.c.s
+speciation.cpp.s:
+	cd /home/andrew/Documents/GitHub/biort-surface-cpp/BioRT-HBV-Surface/build && $(MAKE) $(MAKESILENT) -f src/CMakeFiles/biort.dir/build.make src/CMakeFiles/biort.dir/speciation.cpp.s
+.PHONY : speciation.cpp.s
 
-time_func.o: time_func.c.o
+time_func.o: time_func.cpp.o
 .PHONY : time_func.o
 
 # target to build an object file
-time_func.c.o:
-	cd /home/andrew/Documents/GitHub/surface/HBV-BioRT/build && $(MAKE) $(MAKESILENT) -f src/CMakeFiles/biort.dir/build.make src/CMakeFiles/biort.dir/time_func.c.o
-.PHONY : time_func.c.o
+time_func.cpp.o:
+	cd /home/andrew/Documents/GitHub/biort-surface-cpp/BioRT-HBV-Surface/build && $(MAKE) $(MAKESILENT) -f src/CMakeFiles/biort.dir/build.make src/CMakeFiles/biort.dir/time_func.cpp.o
+.PHONY : time_func.cpp.o
 
-time_func.i: time_func.c.i
+time_func.i: time_func.cpp.i
 .PHONY : time_func.i
 
 # target to preprocess a source file
-time_func.c.i:
-	cd /home/andrew/Documents/GitHub/surface/HBV-BioRT/build && $(MAKE) $(MAKESILENT) -f src/CMakeFiles/biort.dir/build.make src/CMakeFiles/biort.dir/time_func.c.i
-.PHONY : time_func.c.i
+time_func.cpp.i:
+	cd /home/andrew/Documents/GitHub/biort-surface-cpp/BioRT-HBV-Surface/build && $(MAKE) $(MAKESILENT) -f src/CMakeFiles/biort.dir/build.make src/CMakeFiles/biort.dir/time_func.cpp.i
+.PHONY : time_func.cpp.i
 
-time_func.s: time_func.c.s
+time_func.s: time_func.cpp.s
 .PHONY : time_func.s
 
 # target to generate assembly for a file
-time_func.c.s:
-	cd /home/andrew/Documents/GitHub/surface/HBV-BioRT/build && $(MAKE) $(MAKESILENT) -f src/CMakeFiles/biort.dir/build.make src/CMakeFiles/biort.dir/time_func.c.s
-.PHONY : time_func.c.s
+time_func.cpp.s:
+	cd /home/andrew/Documents/GitHub/biort-surface-cpp/BioRT-HBV-Surface/build && $(MAKE) $(MAKESILENT) -f src/CMakeFiles/biort.dir/build.make src/CMakeFiles/biort.dir/time_func.cpp.s
+.PHONY : time_func.cpp.s
 
-transpt.o: transpt.c.o
-.PHONY : transpt.o
+transport.o: transport.cpp.o
+.PHONY : transport.o
 
 # target to build an object file
-transpt.c.o:
-	cd /home/andrew/Documents/GitHub/surface/HBV-BioRT/build && $(MAKE) $(MAKESILENT) -f src/CMakeFiles/biort.dir/build.make src/CMakeFiles/biort.dir/transpt.c.o
-.PHONY : transpt.c.o
+transport.cpp.o:
+	cd /home/andrew/Documents/GitHub/biort-surface-cpp/BioRT-HBV-Surface/build && $(MAKE) $(MAKESILENT) -f src/CMakeFiles/biort.dir/build.make src/CMakeFiles/biort.dir/transport.cpp.o
+.PHONY : transport.cpp.o
 
-transpt.i: transpt.c.i
-.PHONY : transpt.i
+transport.i: transport.cpp.i
+.PHONY : transport.i
 
 # target to preprocess a source file
-transpt.c.i:
-	cd /home/andrew/Documents/GitHub/surface/HBV-BioRT/build && $(MAKE) $(MAKESILENT) -f src/CMakeFiles/biort.dir/build.make src/CMakeFiles/biort.dir/transpt.c.i
-.PHONY : transpt.c.i
+transport.cpp.i:
+	cd /home/andrew/Documents/GitHub/biort-surface-cpp/BioRT-HBV-Surface/build && $(MAKE) $(MAKESILENT) -f src/CMakeFiles/biort.dir/build.make src/CMakeFiles/biort.dir/transport.cpp.i
+.PHONY : transport.cpp.i
 
-transpt.s: transpt.c.s
-.PHONY : transpt.s
+transport.s: transport.cpp.s
+.PHONY : transport.s
 
 # target to generate assembly for a file
-transpt.c.s:
-	cd /home/andrew/Documents/GitHub/surface/HBV-BioRT/build && $(MAKE) $(MAKESILENT) -f src/CMakeFiles/biort.dir/build.make src/CMakeFiles/biort.dir/transpt.c.s
-.PHONY : transpt.c.s
+transport.cpp.s:
+	cd /home/andrew/Documents/GitHub/biort-surface-cpp/BioRT-HBV-Surface/build && $(MAKE) $(MAKESILENT) -f src/CMakeFiles/biort.dir/build.make src/CMakeFiles/biort.dir/transport.cpp.s
+.PHONY : transport.cpp.s
 
-util_func.o: util_func.c.o
+util_func.o: util_func.cpp.o
 .PHONY : util_func.o
 
 # target to build an object file
-util_func.c.o:
-	cd /home/andrew/Documents/GitHub/surface/HBV-BioRT/build && $(MAKE) $(MAKESILENT) -f src/CMakeFiles/biort.dir/build.make src/CMakeFiles/biort.dir/util_func.c.o
-.PHONY : util_func.c.o
+util_func.cpp.o:
+	cd /home/andrew/Documents/GitHub/biort-surface-cpp/BioRT-HBV-Surface/build && $(MAKE) $(MAKESILENT) -f src/CMakeFiles/biort.dir/build.make src/CMakeFiles/biort.dir/util_func.cpp.o
+.PHONY : util_func.cpp.o
 
-util_func.i: util_func.c.i
+util_func.i: util_func.cpp.i
 .PHONY : util_func.i
 
 # target to preprocess a source file
-util_func.c.i:
-	cd /home/andrew/Documents/GitHub/surface/HBV-BioRT/build && $(MAKE) $(MAKESILENT) -f src/CMakeFiles/biort.dir/build.make src/CMakeFiles/biort.dir/util_func.c.i
-.PHONY : util_func.c.i
+util_func.cpp.i:
+	cd /home/andrew/Documents/GitHub/biort-surface-cpp/BioRT-HBV-Surface/build && $(MAKE) $(MAKESILENT) -f src/CMakeFiles/biort.dir/build.make src/CMakeFiles/biort.dir/util_func.cpp.i
+.PHONY : util_func.cpp.i
 
-util_func.s: util_func.c.s
+util_func.s: util_func.cpp.s
 .PHONY : util_func.s
 
 # target to generate assembly for a file
-util_func.c.s:
-	cd /home/andrew/Documents/GitHub/surface/HBV-BioRT/build && $(MAKE) $(MAKESILENT) -f src/CMakeFiles/biort.dir/build.make src/CMakeFiles/biort.dir/util_func.c.s
-.PHONY : util_func.c.s
+util_func.cpp.s:
+	cd /home/andrew/Documents/GitHub/biort-surface-cpp/BioRT-HBV-Surface/build && $(MAKE) $(MAKESILENT) -f src/CMakeFiles/biort.dir/build.make src/CMakeFiles/biort.dir/util_func.cpp.s
+.PHONY : util_func.cpp.s
 
 # Help Target
 help:
@@ -668,9 +668,9 @@ help:
 	@echo "... time_func.o"
 	@echo "... time_func.i"
 	@echo "... time_func.s"
-	@echo "... transpt.o"
-	@echo "... transpt.i"
-	@echo "... transpt.s"
+	@echo "... transport.o"
+	@echo "... transport.i"
+	@echo "... transport.s"
 	@echo "... util_func.o"
 	@echo "... util_func.i"
 	@echo "... util_func.s"
@@ -685,6 +685,6 @@ help:
 # No rule that depends on this can have commands that come from listfiles
 # because they might be regenerated.
 cmake_check_build_system:
-	cd /home/andrew/Documents/GitHub/surface/HBV-BioRT/build && $(CMAKE_COMMAND) -S$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR) --check-build-system CMakeFiles/Makefile.cmake 0
+	cd /home/andrew/Documents/GitHub/biort-surface-cpp/BioRT-HBV-Surface/build && $(CMAKE_COMMAND) -S$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR) --check-build-system CMakeFiles/Makefile.cmake 0
 .PHONY : cmake_check_build_system
 

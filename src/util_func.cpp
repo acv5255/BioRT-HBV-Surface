@@ -159,7 +159,7 @@ void GetLogActivity(array<f64, MAXSPS>& tmpconc, double gamma[MAXSPS], const arr
 
 bool CheckArrayForNan(const array<f64, MAXSPS>& arr) {
     for (int i = 0; i < MAXSPS; i++) {
-        if (!isfinite(arr[i])) {
+        if (std::isinf(arr[i])) {
             return false;
         }
     }
@@ -210,29 +210,29 @@ void CheckChmsForNonFinite(const ChemicalState* chms, const char* filename, cons
         PrintArray(chms->prim_actv);
         exit(-1);
     }
-    if (!CheckArrayForNan(chms->ssa)) {
+    if (!CheckArrayForNan(chms->soil_parameters.ssa)) {
         printf(msg, "ssa", filename, line_number);
-        PrintArray(chms->ssa);
+        PrintArray(chms->soil_parameters.ssa);
         exit(-1);
     }
-    if (!CheckArrayForNan(chms->sw_thld)) {
+    if (!CheckArrayForNan(chms->soil_parameters.sw_thld)) {
         printf(msg, "sw_thld", filename, line_number);
-        PrintArray(chms->sw_thld);
+        PrintArray(chms->soil_parameters.sw_thld);
         exit(-1);
     }
-    if (!CheckArrayForNan(chms->sw_exp)) {
+    if (!CheckArrayForNan(chms->soil_parameters.sw_exp)) {
         printf(msg, "sw_exp", filename, line_number);
-        PrintArray(chms->sw_exp);
+        PrintArray(chms->soil_parameters.sw_exp);
         exit(-1);
     }
-    if (!CheckArrayForNan(chms->q10)) {
+    if (!CheckArrayForNan(chms->soil_parameters.q10)) {
         printf(msg, "q10", filename, line_number);
-        PrintArray(chms->q10);
+        PrintArray(chms->soil_parameters.q10);
         exit(-1);
     }
-    if (!CheckArrayForNan(chms->n_alpha)) {
+    if (!CheckArrayForNan(chms->soil_parameters.n_alpha)) {
         printf(msg, "n_alpha", filename, line_number);
-        PrintArray(chms->n_alpha);
+        PrintArray(chms->soil_parameters.n_alpha);
         exit(-1);
     }
     if (!CheckArrayForNan(chms->tot_mol)) {
@@ -289,11 +289,11 @@ bool CompareChemicalState(const ChemicalState* lhs, const ChemicalState* rhs) {
         && CompareArray(lhs->prim_conc, rhs->prim_conc)
         && CompareArray(lhs->prim_actv, rhs->prim_actv)
         && CompareArray(lhs->sec_conc, rhs->sec_conc)
-        && CompareArray(lhs->ssa, rhs->ssa)
-        && CompareArray(lhs->sw_thld, rhs->sw_thld)
-        && CompareArray(lhs->sw_exp, rhs->sw_exp)
-        && CompareArray(lhs->q10, rhs->q10)
-        && CompareArray(lhs->n_alpha, rhs->n_alpha)
+        && CompareArray(lhs->soil_parameters.ssa, rhs->soil_parameters.ssa)
+        && CompareArray(lhs->soil_parameters.sw_thld, rhs->soil_parameters.sw_thld)
+        && CompareArray(lhs->soil_parameters.sw_exp, rhs->soil_parameters.sw_exp)
+        && CompareArray(lhs->soil_parameters.q10, rhs->soil_parameters.q10)
+        && CompareArray(lhs->soil_parameters.n_alpha, rhs->soil_parameters.n_alpha)
         && CompareArray(lhs->tot_mol, rhs->tot_mol);
 }
 

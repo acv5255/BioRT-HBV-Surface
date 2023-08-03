@@ -53,7 +53,7 @@ void GetSecondarySpecies(double conc[MAXSPS], const double gamma[MAXSPS], const 
             tmpval += (conc[j] + gamma[j]) * rttbl->dep_mtx[i][j];
         }
         tmpval -= rttbl->keq[i] + gamma[i + rttbl->num_stc];
-        if (!isfinite(tmpval)) {
+        if (std::isinf(tmpval)) {
             printf("Value in 'GetSecondarySpecies is infinite, exiting...\n"); 
             printf("Gamma for secondary species: %g\n", gamma[i + rttbl->num_stc]);
             printf("Values leading up to this:\n");
@@ -197,12 +197,12 @@ int SolveReact(double stepsize, const ChemTableEntry chemtbl[], const KineticTab
         int start = rttbl->num_stc - rttbl->num_min;
         int end = rttbl->num_stc;
         int offset = start;
-        GetSurfaceAreaRange(area, chms->prim_conc, chms->ssa, chemtbl, rttbl->num_stc - rttbl->num_min, rttbl->num_stc, rttbl->num_stc - rttbl->num_min);
-        GetTempFactorRange(ftemp, chms->q10, temp, start, end, offset);
-        GetWTDepthFactorRange(fzw, Zw, chms->n_alpha, start, end, offset);
+        GetSurfaceAreaRange(area, chms->prim_conc, chms->soil_parameters.ssa, chemtbl, rttbl->num_stc - rttbl->num_min, rttbl->num_stc, rttbl->num_stc - rttbl->num_min);
+        GetTempFactorRange(ftemp, chms->soil_parameters.q10, temp, start, end, offset);
+        GetWTDepthFactorRange(fzw, Zw, chms->soil_parameters.n_alpha, start, end, offset);
     }
 
-    SoilMoistFactorRange(fsw, satn, chms->sw_thld, chms->sw_exp, rttbl->num_stc - rttbl->num_min, rttbl->num_stc, rttbl->num_stc - rttbl->num_min);
+    SoilMoistFactorRange(fsw, satn, chms->soil_parameters.sw_thld, chms->soil_parameters.sw_exp, rttbl->num_stc - rttbl->num_min, rttbl->num_stc, rttbl->num_stc - rttbl->num_min);
     SetZeroRange(rate_spe, 0, rttbl->num_stc);
     GetRates(rate_pre, rate_spe, area, ftemp, fsw, fzw, rttbl, kintbl, chms);
 
@@ -233,7 +233,7 @@ int SolveReact(double stepsize, const ChemTableEntry chemtbl[], const KineticTab
     for (int i = 0; i < rttbl->num_stc + rttbl->num_ssc; i++)
     {
         double conc_val = (i < rttbl->num_stc) ? log10(chms->prim_conc[i]) : log10(chms->sec_conc[i - rttbl->num_stc]);
-        if (!isfinite(conc_val)) {
+        if (std::isinf(conc_val)) {
             printf("Got non-finite value for log10(conc) for species '%s' with index %d\n", chemtbl[i].name, i);
         }
         tmpconc[i] = conc_val;
@@ -487,8 +487,8 @@ int SolveSurfaceReact(double stepsize, const ChemTableEntry chemtbl[], const Kin
         int start = rttbl->num_stc - rttbl->num_min;
         int end = rttbl->num_stc;
         int offset = start;
-        GetSurfaceAreaRange(area, chms->prim_conc, chms->ssa, chemtbl, rttbl->num_stc - rttbl->num_min, rttbl->num_stc, rttbl->num_stc - rttbl->num_min);
-        GetTempFactorRange(ftemp, chms->q10, temp, start, end, offset);
+        GetSurfaceAreaRange(area, chms->prim_conc, chms->soil_parameters.ssa, chemtbl, rttbl->num_stc - rttbl->num_min, rttbl->num_stc, rttbl->num_stc - rttbl->num_min);
+        GetTempFactorRange(ftemp, chms->soil_parameters.q10, temp, start, end, offset);
         // GetWTDepthFactorRange(fzw, Zw, chms->n_alpha, start, end, offset);
     }
 
@@ -499,7 +499,7 @@ int SolveSurfaceReact(double stepsize, const ChemTableEntry chemtbl[], const Kin
 
     for (int i = rttbl->num_stc - rttbl->num_min; i < rttbl->num_stc; i++) {
         int offset = rttbl->num_stc - rttbl->num_min;
-        fsw[i - offset] = pow(tot_water, chms->sw_exp[i]);
+        fsw[i - offset] = pow(tot_water, chms->soil_parameters.sw_exp[i]);
         // fsw[i - offset] = 1.0;
         // printf("fsw for species %d: %g\n", i - offset, fsw[i - offset]);
     }
@@ -535,7 +535,7 @@ int SolveSurfaceReact(double stepsize, const ChemTableEntry chemtbl[], const Kin
     for (int i = 0; i < rttbl->num_stc + rttbl->num_ssc; i++)
     {
         double conc_val = (i < rttbl->num_stc) ? log10(chms->prim_conc[i]) : log10(chms->sec_conc[i - rttbl->num_stc]);
-        if (!isfinite(conc_val)) {
+        if (std::isinf(conc_val)) {
             printf("Got non-finite value for log10(conc) for species '%s' with index %d\n", chemtbl[i].name, i);
         }
         tmpconc[i] = conc_val;

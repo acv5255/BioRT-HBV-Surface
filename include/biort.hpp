@@ -3,18 +3,22 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <unistd.h>
-#include <math.h>
 #include <string.h>
 #include <time.h>
-#include <errno.h>
 #include <stdarg.h>
-#include <float.h>
 #include <sys/stat.h>
 
 // C++ includes
 #include <cmath>
 #include <array>
 #include <vector>
+#include <stdexcept>
+
+// Not implemented error
+class NotImplemented : public std::logic_error {
+    public:
+        NotImplemented() : std::logic_error("Function not yet implemented") { };
+};
 
 // Usings
 using f64 = double;
@@ -87,12 +91,17 @@ class ControlData
 {
     public:
         int             recycle;                // number of times to recycle forcing
-        int             read_restart;           // flag to read rt restart file
         int             use_activity;           // activity coefficient mode: 0 = unity coefficient, 1 = DH equation
         int             transport_only;         // transport only flag: 0 = simulate kinetic reaction, 1 = transport only
         int             variable_precipchem;    // precipitation chemistry mode: 0 = constant precipitation chemistry, 1 = time-series precipitation chemistry   2021-05-20
         int             precipchem_numexp;      // Numerical experiment mode: 0 = same precipitation chemistry during warm-up and simulation
                                                 // 1 = different precipitation chemistry during warm-up and simulation useful for numerical experiment  2021-09-09
+        
+        // Methods
+        ControlData();
+        ControlData(const int recycle, const int use_activity, const int transport_only, const int variable_precipchem, const int precipchem_numexp) :
+            recycle(recycle), use_activity(use_activity), transport_only(transport_only), variable_precipchem(variable_precipchem), precipchem_numexp(precipchem_numexp) { };
+        ControlData copy();
 };
 
 class ReactionNetwork
@@ -116,6 +125,10 @@ class ReactionNetwork
         double          adh;                    // Debye Huckel parameter
         double          bdh;                    // Debye Huckel parameter
         double          bdt;                    // Debye Huckel parameter
+
+        // Methods
+        ReactionNetwork();
+        // ReactionNetwork copy();
 };
 
 class ChemTableEntry
@@ -132,6 +145,11 @@ class ChemTableEntry
         int             mtype;                  // type of the mass action species
                                                 // 0 = immobile mass action, 1 = mobile mass action,
                                                 // 2 = mixed mobility mass action
+
+        // Methods
+        ChemTableEntry();
+        ChemTableEntry(const char name[MAXSTRING], const f64 molar_mass, const f64 molar_vol, const f64 charge, const f64 size_fac, const int itype, const int mtype);
+        ChemTableEntry copy();
 };
 
 class KineticTableEntry
@@ -155,6 +173,25 @@ class KineticTableEntry
         int             ninhib;                 // number of inhibition species
         array<int, MAXDEP> inhib_index;         // position of inhibition species
         array<f64, MAXDEP> inhib_para;          // parameters that controls this inhibition
+
+        // Methods
+        // KineticTableEntry();
+        // KineticTableEntry copy();
+};
+
+class SoilParameters {
+    public:
+        array<f64, MAXSPS> ssa;
+        array<f64, MAXSPS> sw_thld;
+        array<f64, MAXSPS> sw_exp;
+        array<f64, MAXSPS> q10;
+        array<f64, MAXSPS> n_alpha;
+
+        // Methods
+        SoilParameters();
+        SoilParameters(const array<f64, MAXSPS> ssa, const array<f64, MAXSPS>  sw_thld, const array<f64, MAXSPS> sw_exp, const array<f64, MAXSPS> q10, const array<f64, MAXSPS> n_alpha) :
+            ssa(ssa), sw_thld(sw_thld), sw_exp(sw_exp), q10(q10), n_alpha(n_alpha) { };
+        SoilParameters copy();
 };
 
 class ChemicalState
@@ -164,27 +201,55 @@ class ChemicalState
         array<f64, MAXSPS> prim_conc;      // primary concentration (mol kgH2O-1)
         array<f64, MAXSPS> sec_conc;       // secondary concentration (mol kgH2O-1)
         array<f64, MAXSPS> prim_actv;      // activity of primary species
-        array<f64, MAXSPS> ssa;            // specific surface area (m2 g-1)
-        array<f64, MAXSPS> sw_thld;        // threshold in soil moisture function (-)
-        array<f64, MAXSPS> sw_exp;         // exponent in soil moisture function (-)
-        array<f64, MAXSPS> q10;            // Q10 factor (-)
-        array<f64, MAXSPS> n_alpha;        // n*alpha in depth function (-)
         array<f64, MAXSPS> tot_mol;        // total moles (mol m-2)
+        SoilParameters soil_parameters;
+
+        // Methods
+        ChemicalState();
+        ChemicalState(const array<f64, MAXSPS> tot_conc, const array<f64, MAXSPS> prim_conc, const array<f64, MAXSPS> sec_conc, const array<f64, MAXSPS> prim_actv, const array<f64, MAXSPS> tot_mol, SoilParameters& params) : 
+            tot_conc(tot_conc), prim_conc(prim_conc), sec_conc(sec_conc), prim_actv(prim_actv), tot_mol(tot_mol), soil_parameters(params.copy()) { };
+        ChemicalState copy();
 };
 
-class CalibrationStruct
-{
+class CalibrationStruct {
     public:
         double          xsorption;
         double          rate;
         double          ssa;
+
+        // Methods
+        CalibrationStruct();
+        CalibrationStruct(const f64 xsorption, const f64 rate, const f64 ssa) :
+            xsorption(xsorption), rate(rate), ssa(ssa) { };
+        CalibrationStruct copy();
 };
 
 class SoilConstants {
     public:
-        double porosity;
-        double depth;
-        double ws_passive;
+        f64 porosity;
+        f64 depth;
+        f64 ws_passive;
+
+        // Methods
+        SoilConstants();
+        SoilConstants(const f64 porosity, const f64 depth, const f64 ws_passive) : porosity(porosity), depth(depth), ws_passive(ws_passive) {};
+        SoilConstants copy();
+};
+
+class HBVParameters {
+    public:
+        f64 k1;
+        f64 k2;
+        f64 maxbas;
+        f64 perc;
+        f64 sfcf;
+        f64 tt;
+
+        // Methods
+        HBVParameters();
+        HBVParameters(const f64 k1, const f64 k2, const f64 maxbas, const f64 perc, const f64 sfcf, const f64 tt) :
+            k1(k1), k2(k2), maxbas(maxbas), perc(perc), sfcf(sfcf), tt(tt) { };
+        HBVParameters copy();
 };
 
 class Subcatchment
@@ -198,15 +263,13 @@ class Subcatchment
         SoilConstants   soil_surface;           // Surface soil parameters
         SoilConstants   soil_sz;                // Shallow zone soil parameters
         SoilConstants   soil_dz;                // Deep zone soil parameters
-        double          k1;                     // recession coefficient for upper zone (day -1)
-        double          k2;                     // recession coefficient for lower zone (day -1)
-        double          maxbas;                 // routing parameter
-        double          perc;                   // percolation rate (mm day-1)
-        double          sfcf;                   // snow fall correction factor
-        double          tt;                     // threshold temperature (degree C)
+        HBVParameters hbv_parameters;
         array<array<f64, MAXSPS>, NWS> react_rate;  // reaction rate (mol m-2 day-1)
         array<ChemicalState, NWS> chms;
         ChemicalState river_chms;
+
+        // Methods
+        // Subcatchment copy();
 };
 
 

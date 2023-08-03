@@ -859,15 +859,32 @@ dep/cvode/src/sunnonlinsol/newton/clean: dep/cvode/src/sunnonlinsol/newton/CMake
 
 # Recursive "all" directory target.
 src/all: src/CMakeFiles/biort.dir/all
+src/all: src/data_structures/all
 .PHONY : src/all
 
 # Recursive "preinstall" directory target.
-src/preinstall:
+src/preinstall: src/data_structures/preinstall
 .PHONY : src/preinstall
 
 # Recursive "clean" directory target.
 src/clean: src/CMakeFiles/biort.dir/clean
+src/clean: src/data_structures/clean
 .PHONY : src/clean
+
+#=============================================================================
+# Directory level rules for directory src/data_structures
+
+# Recursive "all" directory target.
+src/data_structures/all: src/data_structures/CMakeFiles/data_structures.dir/all
+.PHONY : src/data_structures/all
+
+# Recursive "preinstall" directory target.
+src/data_structures/preinstall:
+.PHONY : src/data_structures/preinstall
+
+# Recursive "clean" directory target.
+src/data_structures/clean: src/data_structures/CMakeFiles/data_structures.dir/clean
+.PHONY : src/data_structures/clean
 
 #=============================================================================
 # Target rules for target dep/cvode/CMakeFiles/Experimental.dir
@@ -1609,7 +1626,7 @@ dep/cvode/CMakeFiles/test_install.dir/all: dep/cvode/examples/cvode/serial/CMake
 
 # Build rule for subdir invocation for target.
 dep/cvode/CMakeFiles/test_install.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/andrew/Documents/GitHub/biort-surface-cpp/BioRT-HBV-Surface/build/CMakeFiles 0
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/andrew/Documents/GitHub/biort-surface-cpp/BioRT-HBV-Surface/build/CMakeFiles 1
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 dep/cvode/CMakeFiles/test_install.dir/all
 	$(CMAKE_COMMAND) -E cmake_progress_start /home/andrew/Documents/GitHub/biort-surface-cpp/BioRT-HBV-Surface/build/CMakeFiles 0
 .PHONY : dep/cvode/CMakeFiles/test_install.dir/rule
@@ -1630,7 +1647,7 @@ dep/cvode/CMakeFiles/test_install.dir/clean:
 dep/cvode/src/nvector/serial/CMakeFiles/sundials_nvecserial_static.dir/all:
 	$(MAKE) $(MAKESILENT) -f dep/cvode/src/nvector/serial/CMakeFiles/sundials_nvecserial_static.dir/build.make dep/cvode/src/nvector/serial/CMakeFiles/sundials_nvecserial_static.dir/depend
 	$(MAKE) $(MAKESILENT) -f dep/cvode/src/nvector/serial/CMakeFiles/sundials_nvecserial_static.dir/build.make dep/cvode/src/nvector/serial/CMakeFiles/sundials_nvecserial_static.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/home/andrew/Documents/GitHub/biort-surface-cpp/BioRT-HBV-Surface/build/CMakeFiles --progress-num=37 "Built target sundials_nvecserial_static"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/home/andrew/Documents/GitHub/biort-surface-cpp/BioRT-HBV-Surface/build/CMakeFiles --progress-num=39 "Built target sundials_nvecserial_static"
 .PHONY : dep/cvode/src/nvector/serial/CMakeFiles/sundials_nvecserial_static.dir/all
 
 # Build rule for subdir invocation for target.
@@ -1656,7 +1673,7 @@ dep/cvode/src/nvector/serial/CMakeFiles/sundials_nvecserial_static.dir/clean:
 dep/cvode/src/nvector/serial/CMakeFiles/sundials_nvecserial_shared.dir/all:
 	$(MAKE) $(MAKESILENT) -f dep/cvode/src/nvector/serial/CMakeFiles/sundials_nvecserial_shared.dir/build.make dep/cvode/src/nvector/serial/CMakeFiles/sundials_nvecserial_shared.dir/depend
 	$(MAKE) $(MAKESILENT) -f dep/cvode/src/nvector/serial/CMakeFiles/sundials_nvecserial_shared.dir/build.make dep/cvode/src/nvector/serial/CMakeFiles/sundials_nvecserial_shared.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/home/andrew/Documents/GitHub/biort-surface-cpp/BioRT-HBV-Surface/build/CMakeFiles --progress-num=36 "Built target sundials_nvecserial_shared"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/home/andrew/Documents/GitHub/biort-surface-cpp/BioRT-HBV-Surface/build/CMakeFiles --progress-num=38 "Built target sundials_nvecserial_shared"
 .PHONY : dep/cvode/src/nvector/serial/CMakeFiles/sundials_nvecserial_shared.dir/all
 
 # Build rule for subdir invocation for target.
@@ -1682,7 +1699,7 @@ dep/cvode/src/nvector/serial/CMakeFiles/sundials_nvecserial_shared.dir/clean:
 dep/cvode/src/sunmatrix/band/CMakeFiles/sundials_sunmatrixband_static.dir/all:
 	$(MAKE) $(MAKESILENT) -f dep/cvode/src/sunmatrix/band/CMakeFiles/sundials_sunmatrixband_static.dir/build.make dep/cvode/src/sunmatrix/band/CMakeFiles/sundials_sunmatrixband_static.dir/depend
 	$(MAKE) $(MAKESILENT) -f dep/cvode/src/sunmatrix/band/CMakeFiles/sundials_sunmatrixband_static.dir/build.make dep/cvode/src/sunmatrix/band/CMakeFiles/sundials_sunmatrixband_static.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/home/andrew/Documents/GitHub/biort-surface-cpp/BioRT-HBV-Surface/build/CMakeFiles --progress-num=64 "Built target sundials_sunmatrixband_static"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/home/andrew/Documents/GitHub/biort-surface-cpp/BioRT-HBV-Surface/build/CMakeFiles --progress-num=65 "Built target sundials_sunmatrixband_static"
 .PHONY : dep/cvode/src/sunmatrix/band/CMakeFiles/sundials_sunmatrixband_static.dir/all
 
 # Build rule for subdir invocation for target.
@@ -1708,7 +1725,7 @@ dep/cvode/src/sunmatrix/band/CMakeFiles/sundials_sunmatrixband_static.dir/clean:
 dep/cvode/src/sunmatrix/band/CMakeFiles/sundials_sunmatrixband_shared.dir/all:
 	$(MAKE) $(MAKESILENT) -f dep/cvode/src/sunmatrix/band/CMakeFiles/sundials_sunmatrixband_shared.dir/build.make dep/cvode/src/sunmatrix/band/CMakeFiles/sundials_sunmatrixband_shared.dir/depend
 	$(MAKE) $(MAKESILENT) -f dep/cvode/src/sunmatrix/band/CMakeFiles/sundials_sunmatrixband_shared.dir/build.make dep/cvode/src/sunmatrix/band/CMakeFiles/sundials_sunmatrixband_shared.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/home/andrew/Documents/GitHub/biort-surface-cpp/BioRT-HBV-Surface/build/CMakeFiles --progress-num=62,63 "Built target sundials_sunmatrixband_shared"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/home/andrew/Documents/GitHub/biort-surface-cpp/BioRT-HBV-Surface/build/CMakeFiles --progress-num=63,64 "Built target sundials_sunmatrixband_shared"
 .PHONY : dep/cvode/src/sunmatrix/band/CMakeFiles/sundials_sunmatrixband_shared.dir/all
 
 # Build rule for subdir invocation for target.
@@ -1734,12 +1751,12 @@ dep/cvode/src/sunmatrix/band/CMakeFiles/sundials_sunmatrixband_shared.dir/clean:
 dep/cvode/src/sunmatrix/dense/CMakeFiles/sundials_sunmatrixdense_static.dir/all:
 	$(MAKE) $(MAKESILENT) -f dep/cvode/src/sunmatrix/dense/CMakeFiles/sundials_sunmatrixdense_static.dir/build.make dep/cvode/src/sunmatrix/dense/CMakeFiles/sundials_sunmatrixdense_static.dir/depend
 	$(MAKE) $(MAKESILENT) -f dep/cvode/src/sunmatrix/dense/CMakeFiles/sundials_sunmatrixdense_static.dir/build.make dep/cvode/src/sunmatrix/dense/CMakeFiles/sundials_sunmatrixdense_static.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/home/andrew/Documents/GitHub/biort-surface-cpp/BioRT-HBV-Surface/build/CMakeFiles --progress-num=67 "Built target sundials_sunmatrixdense_static"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/home/andrew/Documents/GitHub/biort-surface-cpp/BioRT-HBV-Surface/build/CMakeFiles --progress-num=68,69 "Built target sundials_sunmatrixdense_static"
 .PHONY : dep/cvode/src/sunmatrix/dense/CMakeFiles/sundials_sunmatrixdense_static.dir/all
 
 # Build rule for subdir invocation for target.
 dep/cvode/src/sunmatrix/dense/CMakeFiles/sundials_sunmatrixdense_static.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/andrew/Documents/GitHub/biort-surface-cpp/BioRT-HBV-Surface/build/CMakeFiles 1
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/andrew/Documents/GitHub/biort-surface-cpp/BioRT-HBV-Surface/build/CMakeFiles 2
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 dep/cvode/src/sunmatrix/dense/CMakeFiles/sundials_sunmatrixdense_static.dir/all
 	$(CMAKE_COMMAND) -E cmake_progress_start /home/andrew/Documents/GitHub/biort-surface-cpp/BioRT-HBV-Surface/build/CMakeFiles 0
 .PHONY : dep/cvode/src/sunmatrix/dense/CMakeFiles/sundials_sunmatrixdense_static.dir/rule
@@ -1760,7 +1777,7 @@ dep/cvode/src/sunmatrix/dense/CMakeFiles/sundials_sunmatrixdense_static.dir/clea
 dep/cvode/src/sunmatrix/dense/CMakeFiles/sundials_sunmatrixdense_shared.dir/all:
 	$(MAKE) $(MAKESILENT) -f dep/cvode/src/sunmatrix/dense/CMakeFiles/sundials_sunmatrixdense_shared.dir/build.make dep/cvode/src/sunmatrix/dense/CMakeFiles/sundials_sunmatrixdense_shared.dir/depend
 	$(MAKE) $(MAKESILENT) -f dep/cvode/src/sunmatrix/dense/CMakeFiles/sundials_sunmatrixdense_shared.dir/build.make dep/cvode/src/sunmatrix/dense/CMakeFiles/sundials_sunmatrixdense_shared.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/home/andrew/Documents/GitHub/biort-surface-cpp/BioRT-HBV-Surface/build/CMakeFiles --progress-num=65,66 "Built target sundials_sunmatrixdense_shared"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/home/andrew/Documents/GitHub/biort-surface-cpp/BioRT-HBV-Surface/build/CMakeFiles --progress-num=66,67 "Built target sundials_sunmatrixdense_shared"
 .PHONY : dep/cvode/src/sunmatrix/dense/CMakeFiles/sundials_sunmatrixdense_shared.dir/all
 
 # Build rule for subdir invocation for target.
@@ -1786,7 +1803,7 @@ dep/cvode/src/sunmatrix/dense/CMakeFiles/sundials_sunmatrixdense_shared.dir/clea
 dep/cvode/src/sunmatrix/sparse/CMakeFiles/sundials_sunmatrixsparse_static.dir/all:
 	$(MAKE) $(MAKESILENT) -f dep/cvode/src/sunmatrix/sparse/CMakeFiles/sundials_sunmatrixsparse_static.dir/build.make dep/cvode/src/sunmatrix/sparse/CMakeFiles/sundials_sunmatrixsparse_static.dir/depend
 	$(MAKE) $(MAKESILENT) -f dep/cvode/src/sunmatrix/sparse/CMakeFiles/sundials_sunmatrixsparse_static.dir/build.make dep/cvode/src/sunmatrix/sparse/CMakeFiles/sundials_sunmatrixsparse_static.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/home/andrew/Documents/GitHub/biort-surface-cpp/BioRT-HBV-Surface/build/CMakeFiles --progress-num=70,71 "Built target sundials_sunmatrixsparse_static"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/home/andrew/Documents/GitHub/biort-surface-cpp/BioRT-HBV-Surface/build/CMakeFiles --progress-num=71,72 "Built target sundials_sunmatrixsparse_static"
 .PHONY : dep/cvode/src/sunmatrix/sparse/CMakeFiles/sundials_sunmatrixsparse_static.dir/all
 
 # Build rule for subdir invocation for target.
@@ -1812,12 +1829,12 @@ dep/cvode/src/sunmatrix/sparse/CMakeFiles/sundials_sunmatrixsparse_static.dir/cl
 dep/cvode/src/sunmatrix/sparse/CMakeFiles/sundials_sunmatrixsparse_shared.dir/all:
 	$(MAKE) $(MAKESILENT) -f dep/cvode/src/sunmatrix/sparse/CMakeFiles/sundials_sunmatrixsparse_shared.dir/build.make dep/cvode/src/sunmatrix/sparse/CMakeFiles/sundials_sunmatrixsparse_shared.dir/depend
 	$(MAKE) $(MAKESILENT) -f dep/cvode/src/sunmatrix/sparse/CMakeFiles/sundials_sunmatrixsparse_shared.dir/build.make dep/cvode/src/sunmatrix/sparse/CMakeFiles/sundials_sunmatrixsparse_shared.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/home/andrew/Documents/GitHub/biort-surface-cpp/BioRT-HBV-Surface/build/CMakeFiles --progress-num=68,69 "Built target sundials_sunmatrixsparse_shared"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/home/andrew/Documents/GitHub/biort-surface-cpp/BioRT-HBV-Surface/build/CMakeFiles --progress-num=70 "Built target sundials_sunmatrixsparse_shared"
 .PHONY : dep/cvode/src/sunmatrix/sparse/CMakeFiles/sundials_sunmatrixsparse_shared.dir/all
 
 # Build rule for subdir invocation for target.
 dep/cvode/src/sunmatrix/sparse/CMakeFiles/sundials_sunmatrixsparse_shared.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/andrew/Documents/GitHub/biort-surface-cpp/BioRT-HBV-Surface/build/CMakeFiles 2
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/andrew/Documents/GitHub/biort-surface-cpp/BioRT-HBV-Surface/build/CMakeFiles 1
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 dep/cvode/src/sunmatrix/sparse/CMakeFiles/sundials_sunmatrixsparse_shared.dir/all
 	$(CMAKE_COMMAND) -E cmake_progress_start /home/andrew/Documents/GitHub/biort-surface-cpp/BioRT-HBV-Surface/build/CMakeFiles 0
 .PHONY : dep/cvode/src/sunmatrix/sparse/CMakeFiles/sundials_sunmatrixsparse_shared.dir/rule
@@ -1838,7 +1855,7 @@ dep/cvode/src/sunmatrix/sparse/CMakeFiles/sundials_sunmatrixsparse_shared.dir/cl
 dep/cvode/src/sunlinsol/band/CMakeFiles/sundials_sunlinsolband_static.dir/all:
 	$(MAKE) $(MAKESILENT) -f dep/cvode/src/sunlinsol/band/CMakeFiles/sundials_sunlinsolband_static.dir/build.make dep/cvode/src/sunlinsol/band/CMakeFiles/sundials_sunlinsolband_static.dir/depend
 	$(MAKE) $(MAKESILENT) -f dep/cvode/src/sunlinsol/band/CMakeFiles/sundials_sunlinsolband_static.dir/build.make dep/cvode/src/sunlinsol/band/CMakeFiles/sundials_sunlinsolband_static.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/home/andrew/Documents/GitHub/biort-surface-cpp/BioRT-HBV-Surface/build/CMakeFiles --progress-num=39 "Built target sundials_sunlinsolband_static"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/home/andrew/Documents/GitHub/biort-surface-cpp/BioRT-HBV-Surface/build/CMakeFiles --progress-num=41 "Built target sundials_sunlinsolband_static"
 .PHONY : dep/cvode/src/sunlinsol/band/CMakeFiles/sundials_sunlinsolband_static.dir/all
 
 # Build rule for subdir invocation for target.
@@ -1864,7 +1881,7 @@ dep/cvode/src/sunlinsol/band/CMakeFiles/sundials_sunlinsolband_static.dir/clean:
 dep/cvode/src/sunlinsol/band/CMakeFiles/sundials_sunlinsolband_shared.dir/all: dep/cvode/src/sunmatrix/band/CMakeFiles/sundials_sunmatrixband_shared.dir/all
 	$(MAKE) $(MAKESILENT) -f dep/cvode/src/sunlinsol/band/CMakeFiles/sundials_sunlinsolband_shared.dir/build.make dep/cvode/src/sunlinsol/band/CMakeFiles/sundials_sunlinsolband_shared.dir/depend
 	$(MAKE) $(MAKESILENT) -f dep/cvode/src/sunlinsol/band/CMakeFiles/sundials_sunlinsolband_shared.dir/build.make dep/cvode/src/sunlinsol/band/CMakeFiles/sundials_sunlinsolband_shared.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/home/andrew/Documents/GitHub/biort-surface-cpp/BioRT-HBV-Surface/build/CMakeFiles --progress-num=38 "Built target sundials_sunlinsolband_shared"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/home/andrew/Documents/GitHub/biort-surface-cpp/BioRT-HBV-Surface/build/CMakeFiles --progress-num=40 "Built target sundials_sunlinsolband_shared"
 .PHONY : dep/cvode/src/sunlinsol/band/CMakeFiles/sundials_sunlinsolband_shared.dir/all
 
 # Build rule for subdir invocation for target.
@@ -1890,7 +1907,7 @@ dep/cvode/src/sunlinsol/band/CMakeFiles/sundials_sunlinsolband_shared.dir/clean:
 dep/cvode/src/sunlinsol/dense/CMakeFiles/sundials_sunlinsoldense_static.dir/all:
 	$(MAKE) $(MAKESILENT) -f dep/cvode/src/sunlinsol/dense/CMakeFiles/sundials_sunlinsoldense_static.dir/build.make dep/cvode/src/sunlinsol/dense/CMakeFiles/sundials_sunlinsoldense_static.dir/depend
 	$(MAKE) $(MAKESILENT) -f dep/cvode/src/sunlinsol/dense/CMakeFiles/sundials_sunlinsoldense_static.dir/build.make dep/cvode/src/sunlinsol/dense/CMakeFiles/sundials_sunlinsoldense_static.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/home/andrew/Documents/GitHub/biort-surface-cpp/BioRT-HBV-Surface/build/CMakeFiles --progress-num=42 "Built target sundials_sunlinsoldense_static"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/home/andrew/Documents/GitHub/biort-surface-cpp/BioRT-HBV-Surface/build/CMakeFiles --progress-num=44 "Built target sundials_sunlinsoldense_static"
 .PHONY : dep/cvode/src/sunlinsol/dense/CMakeFiles/sundials_sunlinsoldense_static.dir/all
 
 # Build rule for subdir invocation for target.
@@ -1916,7 +1933,7 @@ dep/cvode/src/sunlinsol/dense/CMakeFiles/sundials_sunlinsoldense_static.dir/clea
 dep/cvode/src/sunlinsol/dense/CMakeFiles/sundials_sunlinsoldense_shared.dir/all: dep/cvode/src/sunmatrix/dense/CMakeFiles/sundials_sunmatrixdense_shared.dir/all
 	$(MAKE) $(MAKESILENT) -f dep/cvode/src/sunlinsol/dense/CMakeFiles/sundials_sunlinsoldense_shared.dir/build.make dep/cvode/src/sunlinsol/dense/CMakeFiles/sundials_sunlinsoldense_shared.dir/depend
 	$(MAKE) $(MAKESILENT) -f dep/cvode/src/sunlinsol/dense/CMakeFiles/sundials_sunlinsoldense_shared.dir/build.make dep/cvode/src/sunlinsol/dense/CMakeFiles/sundials_sunlinsoldense_shared.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/home/andrew/Documents/GitHub/biort-surface-cpp/BioRT-HBV-Surface/build/CMakeFiles --progress-num=40,41 "Built target sundials_sunlinsoldense_shared"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/home/andrew/Documents/GitHub/biort-surface-cpp/BioRT-HBV-Surface/build/CMakeFiles --progress-num=42,43 "Built target sundials_sunlinsoldense_shared"
 .PHONY : dep/cvode/src/sunlinsol/dense/CMakeFiles/sundials_sunlinsoldense_shared.dir/all
 
 # Build rule for subdir invocation for target.
@@ -1942,12 +1959,12 @@ dep/cvode/src/sunlinsol/dense/CMakeFiles/sundials_sunlinsoldense_shared.dir/clea
 dep/cvode/src/sunlinsol/pcg/CMakeFiles/sundials_sunlinsolpcg_static.dir/all:
 	$(MAKE) $(MAKESILENT) -f dep/cvode/src/sunlinsol/pcg/CMakeFiles/sundials_sunlinsolpcg_static.dir/build.make dep/cvode/src/sunlinsol/pcg/CMakeFiles/sundials_sunlinsolpcg_static.dir/depend
 	$(MAKE) $(MAKESILENT) -f dep/cvode/src/sunlinsol/pcg/CMakeFiles/sundials_sunlinsolpcg_static.dir/build.make dep/cvode/src/sunlinsol/pcg/CMakeFiles/sundials_sunlinsolpcg_static.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/home/andrew/Documents/GitHub/biort-surface-cpp/BioRT-HBV-Surface/build/CMakeFiles --progress-num=45,46 "Built target sundials_sunlinsolpcg_static"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/home/andrew/Documents/GitHub/biort-surface-cpp/BioRT-HBV-Surface/build/CMakeFiles --progress-num=47 "Built target sundials_sunlinsolpcg_static"
 .PHONY : dep/cvode/src/sunlinsol/pcg/CMakeFiles/sundials_sunlinsolpcg_static.dir/all
 
 # Build rule for subdir invocation for target.
 dep/cvode/src/sunlinsol/pcg/CMakeFiles/sundials_sunlinsolpcg_static.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/andrew/Documents/GitHub/biort-surface-cpp/BioRT-HBV-Surface/build/CMakeFiles 2
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/andrew/Documents/GitHub/biort-surface-cpp/BioRT-HBV-Surface/build/CMakeFiles 1
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 dep/cvode/src/sunlinsol/pcg/CMakeFiles/sundials_sunlinsolpcg_static.dir/all
 	$(CMAKE_COMMAND) -E cmake_progress_start /home/andrew/Documents/GitHub/biort-surface-cpp/BioRT-HBV-Surface/build/CMakeFiles 0
 .PHONY : dep/cvode/src/sunlinsol/pcg/CMakeFiles/sundials_sunlinsolpcg_static.dir/rule
@@ -1968,7 +1985,7 @@ dep/cvode/src/sunlinsol/pcg/CMakeFiles/sundials_sunlinsolpcg_static.dir/clean:
 dep/cvode/src/sunlinsol/pcg/CMakeFiles/sundials_sunlinsolpcg_shared.dir/all:
 	$(MAKE) $(MAKESILENT) -f dep/cvode/src/sunlinsol/pcg/CMakeFiles/sundials_sunlinsolpcg_shared.dir/build.make dep/cvode/src/sunlinsol/pcg/CMakeFiles/sundials_sunlinsolpcg_shared.dir/depend
 	$(MAKE) $(MAKESILENT) -f dep/cvode/src/sunlinsol/pcg/CMakeFiles/sundials_sunlinsolpcg_shared.dir/build.make dep/cvode/src/sunlinsol/pcg/CMakeFiles/sundials_sunlinsolpcg_shared.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/home/andrew/Documents/GitHub/biort-surface-cpp/BioRT-HBV-Surface/build/CMakeFiles --progress-num=43,44 "Built target sundials_sunlinsolpcg_shared"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/home/andrew/Documents/GitHub/biort-surface-cpp/BioRT-HBV-Surface/build/CMakeFiles --progress-num=45,46 "Built target sundials_sunlinsolpcg_shared"
 .PHONY : dep/cvode/src/sunlinsol/pcg/CMakeFiles/sundials_sunlinsolpcg_shared.dir/all
 
 # Build rule for subdir invocation for target.
@@ -1994,7 +2011,7 @@ dep/cvode/src/sunlinsol/pcg/CMakeFiles/sundials_sunlinsolpcg_shared.dir/clean:
 dep/cvode/src/sunlinsol/spbcgs/CMakeFiles/sundials_sunlinsolspbcgs_static.dir/all:
 	$(MAKE) $(MAKESILENT) -f dep/cvode/src/sunlinsol/spbcgs/CMakeFiles/sundials_sunlinsolspbcgs_static.dir/build.make dep/cvode/src/sunlinsol/spbcgs/CMakeFiles/sundials_sunlinsolspbcgs_static.dir/depend
 	$(MAKE) $(MAKESILENT) -f dep/cvode/src/sunlinsol/spbcgs/CMakeFiles/sundials_sunlinsolspbcgs_static.dir/build.make dep/cvode/src/sunlinsol/spbcgs/CMakeFiles/sundials_sunlinsolspbcgs_static.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/home/andrew/Documents/GitHub/biort-surface-cpp/BioRT-HBV-Surface/build/CMakeFiles --progress-num=49,50 "Built target sundials_sunlinsolspbcgs_static"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/home/andrew/Documents/GitHub/biort-surface-cpp/BioRT-HBV-Surface/build/CMakeFiles --progress-num=50,51 "Built target sundials_sunlinsolspbcgs_static"
 .PHONY : dep/cvode/src/sunlinsol/spbcgs/CMakeFiles/sundials_sunlinsolspbcgs_static.dir/all
 
 # Build rule for subdir invocation for target.
@@ -2020,7 +2037,7 @@ dep/cvode/src/sunlinsol/spbcgs/CMakeFiles/sundials_sunlinsolspbcgs_static.dir/cl
 dep/cvode/src/sunlinsol/spbcgs/CMakeFiles/sundials_sunlinsolspbcgs_shared.dir/all:
 	$(MAKE) $(MAKESILENT) -f dep/cvode/src/sunlinsol/spbcgs/CMakeFiles/sundials_sunlinsolspbcgs_shared.dir/build.make dep/cvode/src/sunlinsol/spbcgs/CMakeFiles/sundials_sunlinsolspbcgs_shared.dir/depend
 	$(MAKE) $(MAKESILENT) -f dep/cvode/src/sunlinsol/spbcgs/CMakeFiles/sundials_sunlinsolspbcgs_shared.dir/build.make dep/cvode/src/sunlinsol/spbcgs/CMakeFiles/sundials_sunlinsolspbcgs_shared.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/home/andrew/Documents/GitHub/biort-surface-cpp/BioRT-HBV-Surface/build/CMakeFiles --progress-num=47,48 "Built target sundials_sunlinsolspbcgs_shared"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/home/andrew/Documents/GitHub/biort-surface-cpp/BioRT-HBV-Surface/build/CMakeFiles --progress-num=48,49 "Built target sundials_sunlinsolspbcgs_shared"
 .PHONY : dep/cvode/src/sunlinsol/spbcgs/CMakeFiles/sundials_sunlinsolspbcgs_shared.dir/all
 
 # Build rule for subdir invocation for target.
@@ -2046,7 +2063,7 @@ dep/cvode/src/sunlinsol/spbcgs/CMakeFiles/sundials_sunlinsolspbcgs_shared.dir/cl
 dep/cvode/src/sunlinsol/spfgmr/CMakeFiles/sundials_sunlinsolspfgmr_static.dir/all:
 	$(MAKE) $(MAKESILENT) -f dep/cvode/src/sunlinsol/spfgmr/CMakeFiles/sundials_sunlinsolspfgmr_static.dir/build.make dep/cvode/src/sunlinsol/spfgmr/CMakeFiles/sundials_sunlinsolspfgmr_static.dir/depend
 	$(MAKE) $(MAKESILENT) -f dep/cvode/src/sunlinsol/spfgmr/CMakeFiles/sundials_sunlinsolspfgmr_static.dir/build.make dep/cvode/src/sunlinsol/spfgmr/CMakeFiles/sundials_sunlinsolspfgmr_static.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/home/andrew/Documents/GitHub/biort-surface-cpp/BioRT-HBV-Surface/build/CMakeFiles --progress-num=52,53 "Built target sundials_sunlinsolspfgmr_static"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/home/andrew/Documents/GitHub/biort-surface-cpp/BioRT-HBV-Surface/build/CMakeFiles --progress-num=54,55 "Built target sundials_sunlinsolspfgmr_static"
 .PHONY : dep/cvode/src/sunlinsol/spfgmr/CMakeFiles/sundials_sunlinsolspfgmr_static.dir/all
 
 # Build rule for subdir invocation for target.
@@ -2072,12 +2089,12 @@ dep/cvode/src/sunlinsol/spfgmr/CMakeFiles/sundials_sunlinsolspfgmr_static.dir/cl
 dep/cvode/src/sunlinsol/spfgmr/CMakeFiles/sundials_sunlinsolspfgmr_shared.dir/all:
 	$(MAKE) $(MAKESILENT) -f dep/cvode/src/sunlinsol/spfgmr/CMakeFiles/sundials_sunlinsolspfgmr_shared.dir/build.make dep/cvode/src/sunlinsol/spfgmr/CMakeFiles/sundials_sunlinsolspfgmr_shared.dir/depend
 	$(MAKE) $(MAKESILENT) -f dep/cvode/src/sunlinsol/spfgmr/CMakeFiles/sundials_sunlinsolspfgmr_shared.dir/build.make dep/cvode/src/sunlinsol/spfgmr/CMakeFiles/sundials_sunlinsolspfgmr_shared.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/home/andrew/Documents/GitHub/biort-surface-cpp/BioRT-HBV-Surface/build/CMakeFiles --progress-num=51 "Built target sundials_sunlinsolspfgmr_shared"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/home/andrew/Documents/GitHub/biort-surface-cpp/BioRT-HBV-Surface/build/CMakeFiles --progress-num=52,53 "Built target sundials_sunlinsolspfgmr_shared"
 .PHONY : dep/cvode/src/sunlinsol/spfgmr/CMakeFiles/sundials_sunlinsolspfgmr_shared.dir/all
 
 # Build rule for subdir invocation for target.
 dep/cvode/src/sunlinsol/spfgmr/CMakeFiles/sundials_sunlinsolspfgmr_shared.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/andrew/Documents/GitHub/biort-surface-cpp/BioRT-HBV-Surface/build/CMakeFiles 1
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/andrew/Documents/GitHub/biort-surface-cpp/BioRT-HBV-Surface/build/CMakeFiles 2
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 dep/cvode/src/sunlinsol/spfgmr/CMakeFiles/sundials_sunlinsolspfgmr_shared.dir/all
 	$(CMAKE_COMMAND) -E cmake_progress_start /home/andrew/Documents/GitHub/biort-surface-cpp/BioRT-HBV-Surface/build/CMakeFiles 0
 .PHONY : dep/cvode/src/sunlinsol/spfgmr/CMakeFiles/sundials_sunlinsolspfgmr_shared.dir/rule
@@ -2098,7 +2115,7 @@ dep/cvode/src/sunlinsol/spfgmr/CMakeFiles/sundials_sunlinsolspfgmr_shared.dir/cl
 dep/cvode/src/sunlinsol/spgmr/CMakeFiles/sundials_sunlinsolspgmr_static.dir/all:
 	$(MAKE) $(MAKESILENT) -f dep/cvode/src/sunlinsol/spgmr/CMakeFiles/sundials_sunlinsolspgmr_static.dir/build.make dep/cvode/src/sunlinsol/spgmr/CMakeFiles/sundials_sunlinsolspgmr_static.dir/depend
 	$(MAKE) $(MAKESILENT) -f dep/cvode/src/sunlinsol/spgmr/CMakeFiles/sundials_sunlinsolspgmr_static.dir/build.make dep/cvode/src/sunlinsol/spgmr/CMakeFiles/sundials_sunlinsolspgmr_static.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/home/andrew/Documents/GitHub/biort-surface-cpp/BioRT-HBV-Surface/build/CMakeFiles --progress-num=56,57 "Built target sundials_sunlinsolspgmr_static"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/home/andrew/Documents/GitHub/biort-surface-cpp/BioRT-HBV-Surface/build/CMakeFiles --progress-num=58,59 "Built target sundials_sunlinsolspgmr_static"
 .PHONY : dep/cvode/src/sunlinsol/spgmr/CMakeFiles/sundials_sunlinsolspgmr_static.dir/all
 
 # Build rule for subdir invocation for target.
@@ -2124,7 +2141,7 @@ dep/cvode/src/sunlinsol/spgmr/CMakeFiles/sundials_sunlinsolspgmr_static.dir/clea
 dep/cvode/src/sunlinsol/spgmr/CMakeFiles/sundials_sunlinsolspgmr_shared.dir/all:
 	$(MAKE) $(MAKESILENT) -f dep/cvode/src/sunlinsol/spgmr/CMakeFiles/sundials_sunlinsolspgmr_shared.dir/build.make dep/cvode/src/sunlinsol/spgmr/CMakeFiles/sundials_sunlinsolspgmr_shared.dir/depend
 	$(MAKE) $(MAKESILENT) -f dep/cvode/src/sunlinsol/spgmr/CMakeFiles/sundials_sunlinsolspgmr_shared.dir/build.make dep/cvode/src/sunlinsol/spgmr/CMakeFiles/sundials_sunlinsolspgmr_shared.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/home/andrew/Documents/GitHub/biort-surface-cpp/BioRT-HBV-Surface/build/CMakeFiles --progress-num=54,55 "Built target sundials_sunlinsolspgmr_shared"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/home/andrew/Documents/GitHub/biort-surface-cpp/BioRT-HBV-Surface/build/CMakeFiles --progress-num=56,57 "Built target sundials_sunlinsolspgmr_shared"
 .PHONY : dep/cvode/src/sunlinsol/spgmr/CMakeFiles/sundials_sunlinsolspgmr_shared.dir/all
 
 # Build rule for subdir invocation for target.
@@ -2150,7 +2167,7 @@ dep/cvode/src/sunlinsol/spgmr/CMakeFiles/sundials_sunlinsolspgmr_shared.dir/clea
 dep/cvode/src/sunlinsol/sptfqmr/CMakeFiles/sundials_sunlinsolsptfqmr_static.dir/all:
 	$(MAKE) $(MAKESILENT) -f dep/cvode/src/sunlinsol/sptfqmr/CMakeFiles/sundials_sunlinsolsptfqmr_static.dir/build.make dep/cvode/src/sunlinsol/sptfqmr/CMakeFiles/sundials_sunlinsolsptfqmr_static.dir/depend
 	$(MAKE) $(MAKESILENT) -f dep/cvode/src/sunlinsol/sptfqmr/CMakeFiles/sundials_sunlinsolsptfqmr_static.dir/build.make dep/cvode/src/sunlinsol/sptfqmr/CMakeFiles/sundials_sunlinsolsptfqmr_static.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/home/andrew/Documents/GitHub/biort-surface-cpp/BioRT-HBV-Surface/build/CMakeFiles --progress-num=60,61 "Built target sundials_sunlinsolsptfqmr_static"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/home/andrew/Documents/GitHub/biort-surface-cpp/BioRT-HBV-Surface/build/CMakeFiles --progress-num=61,62 "Built target sundials_sunlinsolsptfqmr_static"
 .PHONY : dep/cvode/src/sunlinsol/sptfqmr/CMakeFiles/sundials_sunlinsolsptfqmr_static.dir/all
 
 # Build rule for subdir invocation for target.
@@ -2176,12 +2193,12 @@ dep/cvode/src/sunlinsol/sptfqmr/CMakeFiles/sundials_sunlinsolsptfqmr_static.dir/
 dep/cvode/src/sunlinsol/sptfqmr/CMakeFiles/sundials_sunlinsolsptfqmr_shared.dir/all:
 	$(MAKE) $(MAKESILENT) -f dep/cvode/src/sunlinsol/sptfqmr/CMakeFiles/sundials_sunlinsolsptfqmr_shared.dir/build.make dep/cvode/src/sunlinsol/sptfqmr/CMakeFiles/sundials_sunlinsolsptfqmr_shared.dir/depend
 	$(MAKE) $(MAKESILENT) -f dep/cvode/src/sunlinsol/sptfqmr/CMakeFiles/sundials_sunlinsolsptfqmr_shared.dir/build.make dep/cvode/src/sunlinsol/sptfqmr/CMakeFiles/sundials_sunlinsolsptfqmr_shared.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/home/andrew/Documents/GitHub/biort-surface-cpp/BioRT-HBV-Surface/build/CMakeFiles --progress-num=58,59 "Built target sundials_sunlinsolsptfqmr_shared"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/home/andrew/Documents/GitHub/biort-surface-cpp/BioRT-HBV-Surface/build/CMakeFiles --progress-num=60 "Built target sundials_sunlinsolsptfqmr_shared"
 .PHONY : dep/cvode/src/sunlinsol/sptfqmr/CMakeFiles/sundials_sunlinsolsptfqmr_shared.dir/all
 
 # Build rule for subdir invocation for target.
 dep/cvode/src/sunlinsol/sptfqmr/CMakeFiles/sundials_sunlinsolsptfqmr_shared.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/andrew/Documents/GitHub/biort-surface-cpp/BioRT-HBV-Surface/build/CMakeFiles 2
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/andrew/Documents/GitHub/biort-surface-cpp/BioRT-HBV-Surface/build/CMakeFiles 1
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 dep/cvode/src/sunlinsol/sptfqmr/CMakeFiles/sundials_sunlinsolsptfqmr_shared.dir/all
 	$(CMAKE_COMMAND) -E cmake_progress_start /home/andrew/Documents/GitHub/biort-surface-cpp/BioRT-HBV-Surface/build/CMakeFiles 0
 .PHONY : dep/cvode/src/sunlinsol/sptfqmr/CMakeFiles/sundials_sunlinsolsptfqmr_shared.dir/rule
@@ -2202,7 +2219,7 @@ dep/cvode/src/sunlinsol/sptfqmr/CMakeFiles/sundials_sunlinsolsptfqmr_shared.dir/
 dep/cvode/src/sunnonlinsol/newton/CMakeFiles/sundials_sunnonlinsolnewton_static.dir/all:
 	$(MAKE) $(MAKESILENT) -f dep/cvode/src/sunnonlinsol/newton/CMakeFiles/sundials_sunnonlinsolnewton_static.dir/build.make dep/cvode/src/sunnonlinsol/newton/CMakeFiles/sundials_sunnonlinsolnewton_static.dir/depend
 	$(MAKE) $(MAKESILENT) -f dep/cvode/src/sunnonlinsol/newton/CMakeFiles/sundials_sunnonlinsolnewton_static.dir/build.make dep/cvode/src/sunnonlinsol/newton/CMakeFiles/sundials_sunnonlinsolnewton_static.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/home/andrew/Documents/GitHub/biort-surface-cpp/BioRT-HBV-Surface/build/CMakeFiles --progress-num=77,78 "Built target sundials_sunnonlinsolnewton_static"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/home/andrew/Documents/GitHub/biort-surface-cpp/BioRT-HBV-Surface/build/CMakeFiles --progress-num=78,79 "Built target sundials_sunnonlinsolnewton_static"
 .PHONY : dep/cvode/src/sunnonlinsol/newton/CMakeFiles/sundials_sunnonlinsolnewton_static.dir/all
 
 # Build rule for subdir invocation for target.
@@ -2228,12 +2245,12 @@ dep/cvode/src/sunnonlinsol/newton/CMakeFiles/sundials_sunnonlinsolnewton_static.
 dep/cvode/src/sunnonlinsol/newton/CMakeFiles/sundials_sunnonlinsolnewton_shared.dir/all:
 	$(MAKE) $(MAKESILENT) -f dep/cvode/src/sunnonlinsol/newton/CMakeFiles/sundials_sunnonlinsolnewton_shared.dir/build.make dep/cvode/src/sunnonlinsol/newton/CMakeFiles/sundials_sunnonlinsolnewton_shared.dir/depend
 	$(MAKE) $(MAKESILENT) -f dep/cvode/src/sunnonlinsol/newton/CMakeFiles/sundials_sunnonlinsolnewton_shared.dir/build.make dep/cvode/src/sunnonlinsol/newton/CMakeFiles/sundials_sunnonlinsolnewton_shared.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/home/andrew/Documents/GitHub/biort-surface-cpp/BioRT-HBV-Surface/build/CMakeFiles --progress-num=76 "Built target sundials_sunnonlinsolnewton_shared"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/home/andrew/Documents/GitHub/biort-surface-cpp/BioRT-HBV-Surface/build/CMakeFiles --progress-num=76,77 "Built target sundials_sunnonlinsolnewton_shared"
 .PHONY : dep/cvode/src/sunnonlinsol/newton/CMakeFiles/sundials_sunnonlinsolnewton_shared.dir/all
 
 # Build rule for subdir invocation for target.
 dep/cvode/src/sunnonlinsol/newton/CMakeFiles/sundials_sunnonlinsolnewton_shared.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/andrew/Documents/GitHub/biort-surface-cpp/BioRT-HBV-Surface/build/CMakeFiles 1
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/andrew/Documents/GitHub/biort-surface-cpp/BioRT-HBV-Surface/build/CMakeFiles 2
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 dep/cvode/src/sunnonlinsol/newton/CMakeFiles/sundials_sunnonlinsolnewton_shared.dir/all
 	$(CMAKE_COMMAND) -E cmake_progress_start /home/andrew/Documents/GitHub/biort-surface-cpp/BioRT-HBV-Surface/build/CMakeFiles 0
 .PHONY : dep/cvode/src/sunnonlinsol/newton/CMakeFiles/sundials_sunnonlinsolnewton_shared.dir/rule
@@ -2280,12 +2297,12 @@ dep/cvode/src/sunnonlinsol/fixedpoint/CMakeFiles/sundials_sunnonlinsolfixedpoint
 dep/cvode/src/sunnonlinsol/fixedpoint/CMakeFiles/sundials_sunnonlinsolfixedpoint_shared.dir/all:
 	$(MAKE) $(MAKESILENT) -f dep/cvode/src/sunnonlinsol/fixedpoint/CMakeFiles/sundials_sunnonlinsolfixedpoint_shared.dir/build.make dep/cvode/src/sunnonlinsol/fixedpoint/CMakeFiles/sundials_sunnonlinsolfixedpoint_shared.dir/depend
 	$(MAKE) $(MAKESILENT) -f dep/cvode/src/sunnonlinsol/fixedpoint/CMakeFiles/sundials_sunnonlinsolfixedpoint_shared.dir/build.make dep/cvode/src/sunnonlinsol/fixedpoint/CMakeFiles/sundials_sunnonlinsolfixedpoint_shared.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/home/andrew/Documents/GitHub/biort-surface-cpp/BioRT-HBV-Surface/build/CMakeFiles --progress-num=72,73 "Built target sundials_sunnonlinsolfixedpoint_shared"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/home/andrew/Documents/GitHub/biort-surface-cpp/BioRT-HBV-Surface/build/CMakeFiles --progress-num=73 "Built target sundials_sunnonlinsolfixedpoint_shared"
 .PHONY : dep/cvode/src/sunnonlinsol/fixedpoint/CMakeFiles/sundials_sunnonlinsolfixedpoint_shared.dir/all
 
 # Build rule for subdir invocation for target.
 dep/cvode/src/sunnonlinsol/fixedpoint/CMakeFiles/sundials_sunnonlinsolfixedpoint_shared.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/andrew/Documents/GitHub/biort-surface-cpp/BioRT-HBV-Surface/build/CMakeFiles 2
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/andrew/Documents/GitHub/biort-surface-cpp/BioRT-HBV-Surface/build/CMakeFiles 1
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 dep/cvode/src/sunnonlinsol/fixedpoint/CMakeFiles/sundials_sunnonlinsolfixedpoint_shared.dir/all
 	$(CMAKE_COMMAND) -E cmake_progress_start /home/andrew/Documents/GitHub/biort-surface-cpp/BioRT-HBV-Surface/build/CMakeFiles 0
 .PHONY : dep/cvode/src/sunnonlinsol/fixedpoint/CMakeFiles/sundials_sunnonlinsolfixedpoint_shared.dir/rule
@@ -2306,7 +2323,7 @@ dep/cvode/src/sunnonlinsol/fixedpoint/CMakeFiles/sundials_sunnonlinsolfixedpoint
 dep/cvode/src/cvode/CMakeFiles/sundials_cvode_static.dir/all:
 	$(MAKE) $(MAKESILENT) -f dep/cvode/src/cvode/CMakeFiles/sundials_cvode_static.dir/build.make dep/cvode/src/cvode/CMakeFiles/sundials_cvode_static.dir/depend
 	$(MAKE) $(MAKESILENT) -f dep/cvode/src/cvode/CMakeFiles/sundials_cvode_static.dir/build.make dep/cvode/src/cvode/CMakeFiles/sundials_cvode_static.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/home/andrew/Documents/GitHub/biort-surface-cpp/BioRT-HBV-Surface/build/CMakeFiles --progress-num=25,26,27,28,29,30,31,32,33,34,35 "Built target sundials_cvode_static"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/home/andrew/Documents/GitHub/biort-surface-cpp/BioRT-HBV-Surface/build/CMakeFiles --progress-num=27,28,29,30,31,32,33,34,35,36,37 "Built target sundials_cvode_static"
 .PHONY : dep/cvode/src/cvode/CMakeFiles/sundials_cvode_static.dir/all
 
 # Build rule for subdir invocation for target.
@@ -2332,12 +2349,12 @@ dep/cvode/src/cvode/CMakeFiles/sundials_cvode_static.dir/clean:
 dep/cvode/src/cvode/CMakeFiles/sundials_cvode_shared.dir/all:
 	$(MAKE) $(MAKESILENT) -f dep/cvode/src/cvode/CMakeFiles/sundials_cvode_shared.dir/build.make dep/cvode/src/cvode/CMakeFiles/sundials_cvode_shared.dir/depend
 	$(MAKE) $(MAKESILENT) -f dep/cvode/src/cvode/CMakeFiles/sundials_cvode_shared.dir/build.make dep/cvode/src/cvode/CMakeFiles/sundials_cvode_shared.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/home/andrew/Documents/GitHub/biort-surface-cpp/BioRT-HBV-Surface/build/CMakeFiles --progress-num=14,15,16,17,18,19,20,21,22,23,24 "Built target sundials_cvode_shared"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/home/andrew/Documents/GitHub/biort-surface-cpp/BioRT-HBV-Surface/build/CMakeFiles --progress-num=17,18,19,20,21,22,23,24,25,26 "Built target sundials_cvode_shared"
 .PHONY : dep/cvode/src/cvode/CMakeFiles/sundials_cvode_shared.dir/all
 
 # Build rule for subdir invocation for target.
 dep/cvode/src/cvode/CMakeFiles/sundials_cvode_shared.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/andrew/Documents/GitHub/biort-surface-cpp/BioRT-HBV-Surface/build/CMakeFiles 11
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/andrew/Documents/GitHub/biort-surface-cpp/BioRT-HBV-Surface/build/CMakeFiles 10
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 dep/cvode/src/cvode/CMakeFiles/sundials_cvode_shared.dir/all
 	$(CMAKE_COMMAND) -E cmake_progress_start /home/andrew/Documents/GitHub/biort-surface-cpp/BioRT-HBV-Surface/build/CMakeFiles 0
 .PHONY : dep/cvode/src/cvode/CMakeFiles/sundials_cvode_shared.dir/rule
@@ -2359,12 +2376,12 @@ dep/cvode/examples/cvode/serial/CMakeFiles/cvRoberts_dns.dir/all: dep/cvode/src/
 dep/cvode/examples/cvode/serial/CMakeFiles/cvRoberts_dns.dir/all: dep/cvode/src/cvode/CMakeFiles/sundials_cvode_shared.dir/all
 	$(MAKE) $(MAKESILENT) -f dep/cvode/examples/cvode/serial/CMakeFiles/cvRoberts_dns.dir/build.make dep/cvode/examples/cvode/serial/CMakeFiles/cvRoberts_dns.dir/depend
 	$(MAKE) $(MAKESILENT) -f dep/cvode/examples/cvode/serial/CMakeFiles/cvRoberts_dns.dir/build.make dep/cvode/examples/cvode/serial/CMakeFiles/cvRoberts_dns.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/home/andrew/Documents/GitHub/biort-surface-cpp/BioRT-HBV-Surface/build/CMakeFiles --progress-num=11 "Built target cvRoberts_dns"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/home/andrew/Documents/GitHub/biort-surface-cpp/BioRT-HBV-Surface/build/CMakeFiles --progress-num= "Built target cvRoberts_dns"
 .PHONY : dep/cvode/examples/cvode/serial/CMakeFiles/cvRoberts_dns.dir/all
 
 # Build rule for subdir invocation for target.
 dep/cvode/examples/cvode/serial/CMakeFiles/cvRoberts_dns.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/andrew/Documents/GitHub/biort-surface-cpp/BioRT-HBV-Surface/build/CMakeFiles 13
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/andrew/Documents/GitHub/biort-surface-cpp/BioRT-HBV-Surface/build/CMakeFiles 11
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 dep/cvode/examples/cvode/serial/CMakeFiles/cvRoberts_dns.dir/all
 	$(CMAKE_COMMAND) -E cmake_progress_start /home/andrew/Documents/GitHub/biort-surface-cpp/BioRT-HBV-Surface/build/CMakeFiles 0
 .PHONY : dep/cvode/examples/cvode/serial/CMakeFiles/cvRoberts_dns.dir/rule
@@ -2386,12 +2403,12 @@ dep/cvode/examples/cvode/serial/CMakeFiles/cvRoberts_dns_uw.dir/all: dep/cvode/s
 dep/cvode/examples/cvode/serial/CMakeFiles/cvRoberts_dns_uw.dir/all: dep/cvode/src/cvode/CMakeFiles/sundials_cvode_shared.dir/all
 	$(MAKE) $(MAKESILENT) -f dep/cvode/examples/cvode/serial/CMakeFiles/cvRoberts_dns_uw.dir/build.make dep/cvode/examples/cvode/serial/CMakeFiles/cvRoberts_dns_uw.dir/depend
 	$(MAKE) $(MAKESILENT) -f dep/cvode/examples/cvode/serial/CMakeFiles/cvRoberts_dns_uw.dir/build.make dep/cvode/examples/cvode/serial/CMakeFiles/cvRoberts_dns_uw.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/home/andrew/Documents/GitHub/biort-surface-cpp/BioRT-HBV-Surface/build/CMakeFiles --progress-num=13 "Built target cvRoberts_dns_uw"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/home/andrew/Documents/GitHub/biort-surface-cpp/BioRT-HBV-Surface/build/CMakeFiles --progress-num= "Built target cvRoberts_dns_uw"
 .PHONY : dep/cvode/examples/cvode/serial/CMakeFiles/cvRoberts_dns_uw.dir/all
 
 # Build rule for subdir invocation for target.
 dep/cvode/examples/cvode/serial/CMakeFiles/cvRoberts_dns_uw.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/andrew/Documents/GitHub/biort-surface-cpp/BioRT-HBV-Surface/build/CMakeFiles 13
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/andrew/Documents/GitHub/biort-surface-cpp/BioRT-HBV-Surface/build/CMakeFiles 11
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 dep/cvode/examples/cvode/serial/CMakeFiles/cvRoberts_dns_uw.dir/all
 	$(CMAKE_COMMAND) -E cmake_progress_start /home/andrew/Documents/GitHub/biort-surface-cpp/BioRT-HBV-Surface/build/CMakeFiles 0
 .PHONY : dep/cvode/examples/cvode/serial/CMakeFiles/cvRoberts_dns_uw.dir/rule
@@ -2418,7 +2435,7 @@ dep/cvode/examples/cvode/serial/CMakeFiles/cvRoberts_dns_negsol.dir/all: dep/cvo
 
 # Build rule for subdir invocation for target.
 dep/cvode/examples/cvode/serial/CMakeFiles/cvRoberts_dns_negsol.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/andrew/Documents/GitHub/biort-surface-cpp/BioRT-HBV-Surface/build/CMakeFiles 13
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/andrew/Documents/GitHub/biort-surface-cpp/BioRT-HBV-Surface/build/CMakeFiles 12
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 dep/cvode/examples/cvode/serial/CMakeFiles/cvRoberts_dns_negsol.dir/all
 	$(CMAKE_COMMAND) -E cmake_progress_start /home/andrew/Documents/GitHub/biort-surface-cpp/BioRT-HBV-Surface/build/CMakeFiles 0
 .PHONY : dep/cvode/examples/cvode/serial/CMakeFiles/cvRoberts_dns_negsol.dir/rule
@@ -2440,7 +2457,7 @@ dep/cvode/examples/cvode/serial/CMakeFiles/cvRoberts_dns_constraints.dir/all: de
 dep/cvode/examples/cvode/serial/CMakeFiles/cvRoberts_dns_constraints.dir/all: dep/cvode/src/cvode/CMakeFiles/sundials_cvode_shared.dir/all
 	$(MAKE) $(MAKESILENT) -f dep/cvode/examples/cvode/serial/CMakeFiles/cvRoberts_dns_constraints.dir/build.make dep/cvode/examples/cvode/serial/CMakeFiles/cvRoberts_dns_constraints.dir/depend
 	$(MAKE) $(MAKESILENT) -f dep/cvode/examples/cvode/serial/CMakeFiles/cvRoberts_dns_constraints.dir/build.make dep/cvode/examples/cvode/serial/CMakeFiles/cvRoberts_dns_constraints.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/home/andrew/Documents/GitHub/biort-surface-cpp/BioRT-HBV-Surface/build/CMakeFiles --progress-num= "Built target cvRoberts_dns_constraints"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/home/andrew/Documents/GitHub/biort-surface-cpp/BioRT-HBV-Surface/build/CMakeFiles --progress-num=11 "Built target cvRoberts_dns_constraints"
 .PHONY : dep/cvode/examples/cvode/serial/CMakeFiles/cvRoberts_dns_constraints.dir/all
 
 # Build rule for subdir invocation for target.
@@ -2467,7 +2484,7 @@ dep/cvode/examples/cvode/serial/CMakeFiles/cvAdvDiff_bnd.dir/all: dep/cvode/src/
 dep/cvode/examples/cvode/serial/CMakeFiles/cvAdvDiff_bnd.dir/all: dep/cvode/src/cvode/CMakeFiles/sundials_cvode_shared.dir/all
 	$(MAKE) $(MAKESILENT) -f dep/cvode/examples/cvode/serial/CMakeFiles/cvAdvDiff_bnd.dir/build.make dep/cvode/examples/cvode/serial/CMakeFiles/cvAdvDiff_bnd.dir/depend
 	$(MAKE) $(MAKESILENT) -f dep/cvode/examples/cvode/serial/CMakeFiles/cvAdvDiff_bnd.dir/build.make dep/cvode/examples/cvode/serial/CMakeFiles/cvAdvDiff_bnd.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/home/andrew/Documents/GitHub/biort-surface-cpp/BioRT-HBV-Surface/build/CMakeFiles --progress-num= "Built target cvAdvDiff_bnd"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/home/andrew/Documents/GitHub/biort-surface-cpp/BioRT-HBV-Surface/build/CMakeFiles --progress-num=6 "Built target cvAdvDiff_bnd"
 .PHONY : dep/cvode/examples/cvode/serial/CMakeFiles/cvAdvDiff_bnd.dir/all
 
 # Build rule for subdir invocation for target.
@@ -2499,7 +2516,7 @@ dep/cvode/examples/cvode/serial/CMakeFiles/cvDirectDemo_ls.dir/all: dep/cvode/sr
 
 # Build rule for subdir invocation for target.
 dep/cvode/examples/cvode/serial/CMakeFiles/cvDirectDemo_ls.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/andrew/Documents/GitHub/biort-surface-cpp/BioRT-HBV-Surface/build/CMakeFiles 13
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/andrew/Documents/GitHub/biort-surface-cpp/BioRT-HBV-Surface/build/CMakeFiles 12
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 dep/cvode/examples/cvode/serial/CMakeFiles/cvDirectDemo_ls.dir/all
 	$(CMAKE_COMMAND) -E cmake_progress_start /home/andrew/Documents/GitHub/biort-surface-cpp/BioRT-HBV-Surface/build/CMakeFiles 0
 .PHONY : dep/cvode/examples/cvode/serial/CMakeFiles/cvDirectDemo_ls.dir/rule
@@ -2521,12 +2538,12 @@ dep/cvode/examples/cvode/serial/CMakeFiles/cvDiurnal_kry_bp.dir/all: dep/cvode/s
 dep/cvode/examples/cvode/serial/CMakeFiles/cvDiurnal_kry_bp.dir/all: dep/cvode/src/cvode/CMakeFiles/sundials_cvode_shared.dir/all
 	$(MAKE) $(MAKESILENT) -f dep/cvode/examples/cvode/serial/CMakeFiles/cvDiurnal_kry_bp.dir/build.make dep/cvode/examples/cvode/serial/CMakeFiles/cvDiurnal_kry_bp.dir/depend
 	$(MAKE) $(MAKESILENT) -f dep/cvode/examples/cvode/serial/CMakeFiles/cvDiurnal_kry_bp.dir/build.make dep/cvode/examples/cvode/serial/CMakeFiles/cvDiurnal_kry_bp.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/home/andrew/Documents/GitHub/biort-surface-cpp/BioRT-HBV-Surface/build/CMakeFiles --progress-num=9 "Built target cvDiurnal_kry_bp"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/home/andrew/Documents/GitHub/biort-surface-cpp/BioRT-HBV-Surface/build/CMakeFiles --progress-num= "Built target cvDiurnal_kry_bp"
 .PHONY : dep/cvode/examples/cvode/serial/CMakeFiles/cvDiurnal_kry_bp.dir/all
 
 # Build rule for subdir invocation for target.
 dep/cvode/examples/cvode/serial/CMakeFiles/cvDiurnal_kry_bp.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/andrew/Documents/GitHub/biort-surface-cpp/BioRT-HBV-Surface/build/CMakeFiles 13
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/andrew/Documents/GitHub/biort-surface-cpp/BioRT-HBV-Surface/build/CMakeFiles 11
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 dep/cvode/examples/cvode/serial/CMakeFiles/cvDiurnal_kry_bp.dir/all
 	$(CMAKE_COMMAND) -E cmake_progress_start /home/andrew/Documents/GitHub/biort-surface-cpp/BioRT-HBV-Surface/build/CMakeFiles 0
 .PHONY : dep/cvode/examples/cvode/serial/CMakeFiles/cvDiurnal_kry_bp.dir/rule
@@ -2548,7 +2565,7 @@ dep/cvode/examples/cvode/serial/CMakeFiles/cvDiurnal_kry.dir/all: dep/cvode/src/
 dep/cvode/examples/cvode/serial/CMakeFiles/cvDiurnal_kry.dir/all: dep/cvode/src/cvode/CMakeFiles/sundials_cvode_shared.dir/all
 	$(MAKE) $(MAKESILENT) -f dep/cvode/examples/cvode/serial/CMakeFiles/cvDiurnal_kry.dir/build.make dep/cvode/examples/cvode/serial/CMakeFiles/cvDiurnal_kry.dir/depend
 	$(MAKE) $(MAKESILENT) -f dep/cvode/examples/cvode/serial/CMakeFiles/cvDiurnal_kry.dir/build.make dep/cvode/examples/cvode/serial/CMakeFiles/cvDiurnal_kry.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/home/andrew/Documents/GitHub/biort-surface-cpp/BioRT-HBV-Surface/build/CMakeFiles --progress-num= "Built target cvDiurnal_kry"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/home/andrew/Documents/GitHub/biort-surface-cpp/BioRT-HBV-Surface/build/CMakeFiles --progress-num=8 "Built target cvDiurnal_kry"
 .PHONY : dep/cvode/examples/cvode/serial/CMakeFiles/cvDiurnal_kry.dir/all
 
 # Build rule for subdir invocation for target.
@@ -2575,12 +2592,12 @@ dep/cvode/examples/cvode/serial/CMakeFiles/cvDisc_dns.dir/all: dep/cvode/src/nve
 dep/cvode/examples/cvode/serial/CMakeFiles/cvDisc_dns.dir/all: dep/cvode/src/cvode/CMakeFiles/sundials_cvode_shared.dir/all
 	$(MAKE) $(MAKESILENT) -f dep/cvode/examples/cvode/serial/CMakeFiles/cvDisc_dns.dir/build.make dep/cvode/examples/cvode/serial/CMakeFiles/cvDisc_dns.dir/depend
 	$(MAKE) $(MAKESILENT) -f dep/cvode/examples/cvode/serial/CMakeFiles/cvDisc_dns.dir/build.make dep/cvode/examples/cvode/serial/CMakeFiles/cvDisc_dns.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/home/andrew/Documents/GitHub/biort-surface-cpp/BioRT-HBV-Surface/build/CMakeFiles --progress-num=8 "Built target cvDisc_dns"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/home/andrew/Documents/GitHub/biort-surface-cpp/BioRT-HBV-Surface/build/CMakeFiles --progress-num= "Built target cvDisc_dns"
 .PHONY : dep/cvode/examples/cvode/serial/CMakeFiles/cvDisc_dns.dir/all
 
 # Build rule for subdir invocation for target.
 dep/cvode/examples/cvode/serial/CMakeFiles/cvDisc_dns.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/andrew/Documents/GitHub/biort-surface-cpp/BioRT-HBV-Surface/build/CMakeFiles 13
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/andrew/Documents/GitHub/biort-surface-cpp/BioRT-HBV-Surface/build/CMakeFiles 11
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 dep/cvode/examples/cvode/serial/CMakeFiles/cvDisc_dns.dir/all
 	$(CMAKE_COMMAND) -E cmake_progress_start /home/andrew/Documents/GitHub/biort-surface-cpp/BioRT-HBV-Surface/build/CMakeFiles 0
 .PHONY : dep/cvode/examples/cvode/serial/CMakeFiles/cvDisc_dns.dir/rule
@@ -2602,7 +2619,7 @@ dep/cvode/examples/cvode/serial/CMakeFiles/cvKrylovDemo_ls.dir/all: dep/cvode/sr
 dep/cvode/examples/cvode/serial/CMakeFiles/cvKrylovDemo_ls.dir/all: dep/cvode/src/cvode/CMakeFiles/sundials_cvode_shared.dir/all
 	$(MAKE) $(MAKESILENT) -f dep/cvode/examples/cvode/serial/CMakeFiles/cvKrylovDemo_ls.dir/build.make dep/cvode/examples/cvode/serial/CMakeFiles/cvKrylovDemo_ls.dir/depend
 	$(MAKE) $(MAKESILENT) -f dep/cvode/examples/cvode/serial/CMakeFiles/cvKrylovDemo_ls.dir/build.make dep/cvode/examples/cvode/serial/CMakeFiles/cvKrylovDemo_ls.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/home/andrew/Documents/GitHub/biort-surface-cpp/BioRT-HBV-Surface/build/CMakeFiles --progress-num= "Built target cvKrylovDemo_ls"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/home/andrew/Documents/GitHub/biort-surface-cpp/BioRT-HBV-Surface/build/CMakeFiles --progress-num=9 "Built target cvKrylovDemo_ls"
 .PHONY : dep/cvode/examples/cvode/serial/CMakeFiles/cvKrylovDemo_ls.dir/all
 
 # Build rule for subdir invocation for target.
@@ -2634,7 +2651,7 @@ dep/cvode/examples/cvode/serial/CMakeFiles/cvKrylovDemo_prec.dir/all: dep/cvode/
 
 # Build rule for subdir invocation for target.
 dep/cvode/examples/cvode/serial/CMakeFiles/cvKrylovDemo_prec.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/andrew/Documents/GitHub/biort-surface-cpp/BioRT-HBV-Surface/build/CMakeFiles 13
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/andrew/Documents/GitHub/biort-surface-cpp/BioRT-HBV-Surface/build/CMakeFiles 12
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 dep/cvode/examples/cvode/serial/CMakeFiles/cvKrylovDemo_prec.dir/all
 	$(CMAKE_COMMAND) -E cmake_progress_start /home/andrew/Documents/GitHub/biort-surface-cpp/BioRT-HBV-Surface/build/CMakeFiles 0
 .PHONY : dep/cvode/examples/cvode/serial/CMakeFiles/cvKrylovDemo_prec.dir/rule
@@ -2655,12 +2672,12 @@ dep/cvode/examples/cvode/serial/CMakeFiles/cvKrylovDemo_prec.dir/clean:
 dep/cvode/examples/cvode/serial/CMakeFiles/cvode_test_install.dir/all:
 	$(MAKE) $(MAKESILENT) -f dep/cvode/examples/cvode/serial/CMakeFiles/cvode_test_install.dir/build.make dep/cvode/examples/cvode/serial/CMakeFiles/cvode_test_install.dir/depend
 	$(MAKE) $(MAKESILENT) -f dep/cvode/examples/cvode/serial/CMakeFiles/cvode_test_install.dir/build.make dep/cvode/examples/cvode/serial/CMakeFiles/cvode_test_install.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/home/andrew/Documents/GitHub/biort-surface-cpp/BioRT-HBV-Surface/build/CMakeFiles --progress-num= "Built target cvode_test_install"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/home/andrew/Documents/GitHub/biort-surface-cpp/BioRT-HBV-Surface/build/CMakeFiles --progress-num=13 "Built target cvode_test_install"
 .PHONY : dep/cvode/examples/cvode/serial/CMakeFiles/cvode_test_install.dir/all
 
 # Build rule for subdir invocation for target.
 dep/cvode/examples/cvode/serial/CMakeFiles/cvode_test_install.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/andrew/Documents/GitHub/biort-surface-cpp/BioRT-HBV-Surface/build/CMakeFiles 0
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/andrew/Documents/GitHub/biort-surface-cpp/BioRT-HBV-Surface/build/CMakeFiles 1
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 dep/cvode/examples/cvode/serial/CMakeFiles/cvode_test_install.dir/all
 	$(CMAKE_COMMAND) -E cmake_progress_start /home/andrew/Documents/GitHub/biort-surface-cpp/BioRT-HBV-Surface/build/CMakeFiles 0
 .PHONY : dep/cvode/examples/cvode/serial/CMakeFiles/cvode_test_install.dir/rule
@@ -2681,12 +2698,12 @@ dep/cvode/examples/cvode/serial/CMakeFiles/cvode_test_install.dir/clean:
 dep/cvode/examples/nvector/serial/CMakeFiles/test_nvector_serial.dir/all: dep/cvode/src/nvector/serial/CMakeFiles/sundials_nvecserial_shared.dir/all
 	$(MAKE) $(MAKESILENT) -f dep/cvode/examples/nvector/serial/CMakeFiles/test_nvector_serial.dir/build.make dep/cvode/examples/nvector/serial/CMakeFiles/test_nvector_serial.dir/depend
 	$(MAKE) $(MAKESILENT) -f dep/cvode/examples/nvector/serial/CMakeFiles/test_nvector_serial.dir/build.make dep/cvode/examples/nvector/serial/CMakeFiles/test_nvector_serial.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/home/andrew/Documents/GitHub/biort-surface-cpp/BioRT-HBV-Surface/build/CMakeFiles --progress-num=79,80 "Built target test_nvector_serial"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/home/andrew/Documents/GitHub/biort-surface-cpp/BioRT-HBV-Surface/build/CMakeFiles --progress-num=80 "Built target test_nvector_serial"
 .PHONY : dep/cvode/examples/nvector/serial/CMakeFiles/test_nvector_serial.dir/all
 
 # Build rule for subdir invocation for target.
 dep/cvode/examples/nvector/serial/CMakeFiles/test_nvector_serial.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/andrew/Documents/GitHub/biort-surface-cpp/BioRT-HBV-Surface/build/CMakeFiles 3
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/andrew/Documents/GitHub/biort-surface-cpp/BioRT-HBV-Surface/build/CMakeFiles 2
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 dep/cvode/examples/nvector/serial/CMakeFiles/test_nvector_serial.dir/all
 	$(CMAKE_COMMAND) -E cmake_progress_start /home/andrew/Documents/GitHub/biort-surface-cpp/BioRT-HBV-Surface/build/CMakeFiles 0
 .PHONY : dep/cvode/examples/nvector/serial/CMakeFiles/test_nvector_serial.dir/rule
@@ -2735,12 +2752,12 @@ dep/cvode/examples/sunmatrix/band/CMakeFiles/test_sunmatrix_band.dir/all: dep/cv
 dep/cvode/examples/sunmatrix/band/CMakeFiles/test_sunmatrix_band.dir/all: dep/cvode/src/sunmatrix/band/CMakeFiles/sundials_sunmatrixband_shared.dir/all
 	$(MAKE) $(MAKESILENT) -f dep/cvode/examples/sunmatrix/band/CMakeFiles/test_sunmatrix_band.dir/build.make dep/cvode/examples/sunmatrix/band/CMakeFiles/test_sunmatrix_band.dir/depend
 	$(MAKE) $(MAKESILENT) -f dep/cvode/examples/sunmatrix/band/CMakeFiles/test_sunmatrix_band.dir/build.make dep/cvode/examples/sunmatrix/band/CMakeFiles/test_sunmatrix_band.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/home/andrew/Documents/GitHub/biort-surface-cpp/BioRT-HBV-Surface/build/CMakeFiles --progress-num=92,93 "Built target test_sunmatrix_band"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/home/andrew/Documents/GitHub/biort-surface-cpp/BioRT-HBV-Surface/build/CMakeFiles --progress-num=93 "Built target test_sunmatrix_band"
 .PHONY : dep/cvode/examples/sunmatrix/band/CMakeFiles/test_sunmatrix_band.dir/all
 
 # Build rule for subdir invocation for target.
 dep/cvode/examples/sunmatrix/band/CMakeFiles/test_sunmatrix_band.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/andrew/Documents/GitHub/biort-surface-cpp/BioRT-HBV-Surface/build/CMakeFiles 5
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/andrew/Documents/GitHub/biort-surface-cpp/BioRT-HBV-Surface/build/CMakeFiles 4
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 dep/cvode/examples/sunmatrix/band/CMakeFiles/test_sunmatrix_band.dir/all
 	$(CMAKE_COMMAND) -E cmake_progress_start /home/andrew/Documents/GitHub/biort-surface-cpp/BioRT-HBV-Surface/build/CMakeFiles 0
 .PHONY : dep/cvode/examples/sunmatrix/band/CMakeFiles/test_sunmatrix_band.dir/rule
@@ -2769,7 +2786,7 @@ dep/cvode/examples/sunmatrix/sparse/CMakeFiles/test_sunmatrix_sparse.dir/all: de
 
 # Build rule for subdir invocation for target.
 dep/cvode/examples/sunmatrix/sparse/CMakeFiles/test_sunmatrix_sparse.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/andrew/Documents/GitHub/biort-surface-cpp/BioRT-HBV-Surface/build/CMakeFiles 8
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/andrew/Documents/GitHub/biort-surface-cpp/BioRT-HBV-Surface/build/CMakeFiles 7
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 dep/cvode/examples/sunmatrix/sparse/CMakeFiles/test_sunmatrix_sparse.dir/all
 	$(CMAKE_COMMAND) -E cmake_progress_start /home/andrew/Documents/GitHub/biort-surface-cpp/BioRT-HBV-Surface/build/CMakeFiles 0
 .PHONY : dep/cvode/examples/sunmatrix/sparse/CMakeFiles/test_sunmatrix_sparse.dir/rule
@@ -2820,12 +2837,12 @@ dep/cvode/examples/sunlinsol/dense/CMakeFiles/test_sunlinsol_dense.dir/all: dep/
 dep/cvode/examples/sunlinsol/dense/CMakeFiles/test_sunlinsol_dense.dir/all: dep/cvode/src/sunlinsol/dense/CMakeFiles/sundials_sunlinsoldense_shared.dir/all
 	$(MAKE) $(MAKESILENT) -f dep/cvode/examples/sunlinsol/dense/CMakeFiles/test_sunlinsol_dense.dir/build.make dep/cvode/examples/sunlinsol/dense/CMakeFiles/test_sunlinsol_dense.dir/depend
 	$(MAKE) $(MAKESILENT) -f dep/cvode/examples/sunlinsol/dense/CMakeFiles/test_sunlinsol_dense.dir/build.make dep/cvode/examples/sunlinsol/dense/CMakeFiles/test_sunlinsol_dense.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/home/andrew/Documents/GitHub/biort-surface-cpp/BioRT-HBV-Surface/build/CMakeFiles --progress-num=83 "Built target test_sunlinsol_dense"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/home/andrew/Documents/GitHub/biort-surface-cpp/BioRT-HBV-Surface/build/CMakeFiles --progress-num=83,84 "Built target test_sunlinsol_dense"
 .PHONY : dep/cvode/examples/sunlinsol/dense/CMakeFiles/test_sunlinsol_dense.dir/all
 
 # Build rule for subdir invocation for target.
 dep/cvode/examples/sunlinsol/dense/CMakeFiles/test_sunlinsol_dense.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/andrew/Documents/GitHub/biort-surface-cpp/BioRT-HBV-Surface/build/CMakeFiles 6
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/andrew/Documents/GitHub/biort-surface-cpp/BioRT-HBV-Surface/build/CMakeFiles 7
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 dep/cvode/examples/sunlinsol/dense/CMakeFiles/test_sunlinsol_dense.dir/all
 	$(CMAKE_COMMAND) -E cmake_progress_start /home/andrew/Documents/GitHub/biort-surface-cpp/BioRT-HBV-Surface/build/CMakeFiles 0
 .PHONY : dep/cvode/examples/sunlinsol/dense/CMakeFiles/test_sunlinsol_dense.dir/rule
@@ -2847,12 +2864,12 @@ dep/cvode/examples/sunlinsol/spgmr/serial/CMakeFiles/test_sunlinsol_spgmr_serial
 dep/cvode/examples/sunlinsol/spgmr/serial/CMakeFiles/test_sunlinsol_spgmr_serial.dir/all: dep/cvode/src/sunlinsol/spgmr/CMakeFiles/sundials_sunlinsolspgmr_shared.dir/all
 	$(MAKE) $(MAKESILENT) -f dep/cvode/examples/sunlinsol/spgmr/serial/CMakeFiles/test_sunlinsol_spgmr_serial.dir/build.make dep/cvode/examples/sunlinsol/spgmr/serial/CMakeFiles/test_sunlinsol_spgmr_serial.dir/depend
 	$(MAKE) $(MAKESILENT) -f dep/cvode/examples/sunlinsol/spgmr/serial/CMakeFiles/test_sunlinsol_spgmr_serial.dir/build.make dep/cvode/examples/sunlinsol/spgmr/serial/CMakeFiles/test_sunlinsol_spgmr_serial.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/home/andrew/Documents/GitHub/biort-surface-cpp/BioRT-HBV-Surface/build/CMakeFiles --progress-num=89,90 "Built target test_sunlinsol_spgmr_serial"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/home/andrew/Documents/GitHub/biort-surface-cpp/BioRT-HBV-Surface/build/CMakeFiles --progress-num=90 "Built target test_sunlinsol_spgmr_serial"
 .PHONY : dep/cvode/examples/sunlinsol/spgmr/serial/CMakeFiles/test_sunlinsol_spgmr_serial.dir/all
 
 # Build rule for subdir invocation for target.
 dep/cvode/examples/sunlinsol/spgmr/serial/CMakeFiles/test_sunlinsol_spgmr_serial.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/andrew/Documents/GitHub/biort-surface-cpp/BioRT-HBV-Surface/build/CMakeFiles 5
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/andrew/Documents/GitHub/biort-surface-cpp/BioRT-HBV-Surface/build/CMakeFiles 4
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 dep/cvode/examples/sunlinsol/spgmr/serial/CMakeFiles/test_sunlinsol_spgmr_serial.dir/all
 	$(CMAKE_COMMAND) -E cmake_progress_start /home/andrew/Documents/GitHub/biort-surface-cpp/BioRT-HBV-Surface/build/CMakeFiles 0
 .PHONY : dep/cvode/examples/sunlinsol/spgmr/serial/CMakeFiles/test_sunlinsol_spgmr_serial.dir/rule
@@ -2874,12 +2891,12 @@ dep/cvode/examples/sunlinsol/spfgmr/serial/CMakeFiles/test_sunlinsol_spfgmr_seri
 dep/cvode/examples/sunlinsol/spfgmr/serial/CMakeFiles/test_sunlinsol_spfgmr_serial.dir/all: dep/cvode/src/sunlinsol/spfgmr/CMakeFiles/sundials_sunlinsolspfgmr_shared.dir/all
 	$(MAKE) $(MAKESILENT) -f dep/cvode/examples/sunlinsol/spfgmr/serial/CMakeFiles/test_sunlinsol_spfgmr_serial.dir/build.make dep/cvode/examples/sunlinsol/spfgmr/serial/CMakeFiles/test_sunlinsol_spfgmr_serial.dir/depend
 	$(MAKE) $(MAKESILENT) -f dep/cvode/examples/sunlinsol/spfgmr/serial/CMakeFiles/test_sunlinsol_spfgmr_serial.dir/build.make dep/cvode/examples/sunlinsol/spfgmr/serial/CMakeFiles/test_sunlinsol_spfgmr_serial.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/home/andrew/Documents/GitHub/biort-surface-cpp/BioRT-HBV-Surface/build/CMakeFiles --progress-num=88 "Built target test_sunlinsol_spfgmr_serial"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/home/andrew/Documents/GitHub/biort-surface-cpp/BioRT-HBV-Surface/build/CMakeFiles --progress-num=88,89 "Built target test_sunlinsol_spfgmr_serial"
 .PHONY : dep/cvode/examples/sunlinsol/spfgmr/serial/CMakeFiles/test_sunlinsol_spfgmr_serial.dir/all
 
 # Build rule for subdir invocation for target.
 dep/cvode/examples/sunlinsol/spfgmr/serial/CMakeFiles/test_sunlinsol_spfgmr_serial.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/andrew/Documents/GitHub/biort-surface-cpp/BioRT-HBV-Surface/build/CMakeFiles 3
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/andrew/Documents/GitHub/biort-surface-cpp/BioRT-HBV-Surface/build/CMakeFiles 5
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 dep/cvode/examples/sunlinsol/spfgmr/serial/CMakeFiles/test_sunlinsol_spfgmr_serial.dir/all
 	$(CMAKE_COMMAND) -E cmake_progress_start /home/andrew/Documents/GitHub/biort-surface-cpp/BioRT-HBV-Surface/build/CMakeFiles 0
 .PHONY : dep/cvode/examples/sunlinsol/spfgmr/serial/CMakeFiles/test_sunlinsol_spfgmr_serial.dir/rule
@@ -2901,12 +2918,12 @@ dep/cvode/examples/sunlinsol/spbcgs/serial/CMakeFiles/test_sunlinsol_spbcgs_seri
 dep/cvode/examples/sunlinsol/spbcgs/serial/CMakeFiles/test_sunlinsol_spbcgs_serial.dir/all: dep/cvode/src/sunlinsol/spbcgs/CMakeFiles/sundials_sunlinsolspbcgs_shared.dir/all
 	$(MAKE) $(MAKESILENT) -f dep/cvode/examples/sunlinsol/spbcgs/serial/CMakeFiles/test_sunlinsol_spbcgs_serial.dir/build.make dep/cvode/examples/sunlinsol/spbcgs/serial/CMakeFiles/test_sunlinsol_spbcgs_serial.dir/depend
 	$(MAKE) $(MAKESILENT) -f dep/cvode/examples/sunlinsol/spbcgs/serial/CMakeFiles/test_sunlinsol_spbcgs_serial.dir/build.make dep/cvode/examples/sunlinsol/spbcgs/serial/CMakeFiles/test_sunlinsol_spbcgs_serial.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/home/andrew/Documents/GitHub/biort-surface-cpp/BioRT-HBV-Surface/build/CMakeFiles --progress-num=86,87 "Built target test_sunlinsol_spbcgs_serial"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/home/andrew/Documents/GitHub/biort-surface-cpp/BioRT-HBV-Surface/build/CMakeFiles --progress-num=87 "Built target test_sunlinsol_spbcgs_serial"
 .PHONY : dep/cvode/examples/sunlinsol/spbcgs/serial/CMakeFiles/test_sunlinsol_spbcgs_serial.dir/all
 
 # Build rule for subdir invocation for target.
 dep/cvode/examples/sunlinsol/spbcgs/serial/CMakeFiles/test_sunlinsol_spbcgs_serial.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/andrew/Documents/GitHub/biort-surface-cpp/BioRT-HBV-Surface/build/CMakeFiles 5
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/andrew/Documents/GitHub/biort-surface-cpp/BioRT-HBV-Surface/build/CMakeFiles 4
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 dep/cvode/examples/sunlinsol/spbcgs/serial/CMakeFiles/test_sunlinsol_spbcgs_serial.dir/all
 	$(CMAKE_COMMAND) -E cmake_progress_start /home/andrew/Documents/GitHub/biort-surface-cpp/BioRT-HBV-Surface/build/CMakeFiles 0
 .PHONY : dep/cvode/examples/sunlinsol/spbcgs/serial/CMakeFiles/test_sunlinsol_spbcgs_serial.dir/rule
@@ -2928,7 +2945,7 @@ dep/cvode/examples/sunlinsol/sptfqmr/serial/CMakeFiles/test_sunlinsol_sptfqmr_se
 dep/cvode/examples/sunlinsol/sptfqmr/serial/CMakeFiles/test_sunlinsol_sptfqmr_serial.dir/all: dep/cvode/src/sunlinsol/sptfqmr/CMakeFiles/sundials_sunlinsolsptfqmr_shared.dir/all
 	$(MAKE) $(MAKESILENT) -f dep/cvode/examples/sunlinsol/sptfqmr/serial/CMakeFiles/test_sunlinsol_sptfqmr_serial.dir/build.make dep/cvode/examples/sunlinsol/sptfqmr/serial/CMakeFiles/test_sunlinsol_sptfqmr_serial.dir/depend
 	$(MAKE) $(MAKESILENT) -f dep/cvode/examples/sunlinsol/sptfqmr/serial/CMakeFiles/test_sunlinsol_sptfqmr_serial.dir/build.make dep/cvode/examples/sunlinsol/sptfqmr/serial/CMakeFiles/test_sunlinsol_sptfqmr_serial.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/home/andrew/Documents/GitHub/biort-surface-cpp/BioRT-HBV-Surface/build/CMakeFiles --progress-num=91 "Built target test_sunlinsol_sptfqmr_serial"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/home/andrew/Documents/GitHub/biort-surface-cpp/BioRT-HBV-Surface/build/CMakeFiles --progress-num=91,92 "Built target test_sunlinsol_sptfqmr_serial"
 .PHONY : dep/cvode/examples/sunlinsol/sptfqmr/serial/CMakeFiles/test_sunlinsol_sptfqmr_serial.dir/all
 
 # Build rule for subdir invocation for target.
@@ -2955,7 +2972,7 @@ dep/cvode/examples/sunlinsol/pcg/serial/CMakeFiles/test_sunlinsol_pcg_serial.dir
 dep/cvode/examples/sunlinsol/pcg/serial/CMakeFiles/test_sunlinsol_pcg_serial.dir/all: dep/cvode/src/sunlinsol/pcg/CMakeFiles/sundials_sunlinsolpcg_shared.dir/all
 	$(MAKE) $(MAKESILENT) -f dep/cvode/examples/sunlinsol/pcg/serial/CMakeFiles/test_sunlinsol_pcg_serial.dir/build.make dep/cvode/examples/sunlinsol/pcg/serial/CMakeFiles/test_sunlinsol_pcg_serial.dir/depend
 	$(MAKE) $(MAKESILENT) -f dep/cvode/examples/sunlinsol/pcg/serial/CMakeFiles/test_sunlinsol_pcg_serial.dir/build.make dep/cvode/examples/sunlinsol/pcg/serial/CMakeFiles/test_sunlinsol_pcg_serial.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/home/andrew/Documents/GitHub/biort-surface-cpp/BioRT-HBV-Surface/build/CMakeFiles --progress-num=84,85 "Built target test_sunlinsol_pcg_serial"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/home/andrew/Documents/GitHub/biort-surface-cpp/BioRT-HBV-Surface/build/CMakeFiles --progress-num=85,86 "Built target test_sunlinsol_pcg_serial"
 .PHONY : dep/cvode/examples/sunlinsol/pcg/serial/CMakeFiles/test_sunlinsol_pcg_serial.dir/all
 
 # Build rule for subdir invocation for target.
@@ -2989,7 +3006,7 @@ dep/cvode/examples/sunnonlinsol/newton/CMakeFiles/test_sunnonlinsol_newton.dir/a
 
 # Build rule for subdir invocation for target.
 dep/cvode/examples/sunnonlinsol/newton/CMakeFiles/test_sunnonlinsol_newton.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/andrew/Documents/GitHub/biort-surface-cpp/BioRT-HBV-Surface/build/CMakeFiles 8
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/andrew/Documents/GitHub/biort-surface-cpp/BioRT-HBV-Surface/build/CMakeFiles 9
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 dep/cvode/examples/sunnonlinsol/newton/CMakeFiles/test_sunnonlinsol_newton.dir/all
 	$(CMAKE_COMMAND) -E cmake_progress_start /home/andrew/Documents/GitHub/biort-surface-cpp/BioRT-HBV-Surface/build/CMakeFiles 0
 .PHONY : dep/cvode/examples/sunnonlinsol/newton/CMakeFiles/test_sunnonlinsol_newton.dir/rule
@@ -3016,7 +3033,7 @@ dep/cvode/examples/sunnonlinsol/fixedpoint/CMakeFiles/test_sunnonlinsol_fixedpoi
 
 # Build rule for subdir invocation for target.
 dep/cvode/examples/sunnonlinsol/fixedpoint/CMakeFiles/test_sunnonlinsol_fixedpoint.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/andrew/Documents/GitHub/biort-surface-cpp/BioRT-HBV-Surface/build/CMakeFiles 5
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/andrew/Documents/GitHub/biort-surface-cpp/BioRT-HBV-Surface/build/CMakeFiles 4
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 dep/cvode/examples/sunnonlinsol/fixedpoint/CMakeFiles/test_sunnonlinsol_fixedpoint.dir/all
 	$(CMAKE_COMMAND) -E cmake_progress_start /home/andrew/Documents/GitHub/biort-surface-cpp/BioRT-HBV-Surface/build/CMakeFiles 0
 .PHONY : dep/cvode/examples/sunnonlinsol/fixedpoint/CMakeFiles/test_sunnonlinsol_fixedpoint.dir/rule
@@ -3034,15 +3051,15 @@ dep/cvode/examples/sunnonlinsol/fixedpoint/CMakeFiles/test_sunnonlinsol_fixedpoi
 # Target rules for target src/CMakeFiles/biort.dir
 
 # All Build rule for target.
-src/CMakeFiles/biort.dir/all:
+src/CMakeFiles/biort.dir/all: src/data_structures/CMakeFiles/data_structures.dir/all
 	$(MAKE) $(MAKESILENT) -f src/CMakeFiles/biort.dir/build.make src/CMakeFiles/biort.dir/depend
 	$(MAKE) $(MAKESILENT) -f src/CMakeFiles/biort.dir/build.make src/CMakeFiles/biort.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/home/andrew/Documents/GitHub/biort-surface-cpp/BioRT-HBV-Surface/build/CMakeFiles --progress-num=1,2,3,4,5,6 "Built target biort"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/home/andrew/Documents/GitHub/biort-surface-cpp/BioRT-HBV-Surface/build/CMakeFiles --progress-num=1,2,3,4,5 "Built target biort"
 .PHONY : src/CMakeFiles/biort.dir/all
 
 # Build rule for subdir invocation for target.
 src/CMakeFiles/biort.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/andrew/Documents/GitHub/biort-surface-cpp/BioRT-HBV-Surface/build/CMakeFiles 6
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/andrew/Documents/GitHub/biort-surface-cpp/BioRT-HBV-Surface/build/CMakeFiles 8
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 src/CMakeFiles/biort.dir/all
 	$(CMAKE_COMMAND) -E cmake_progress_start /home/andrew/Documents/GitHub/biort-surface-cpp/BioRT-HBV-Surface/build/CMakeFiles 0
 .PHONY : src/CMakeFiles/biort.dir/rule
@@ -3055,6 +3072,32 @@ biort: src/CMakeFiles/biort.dir/rule
 src/CMakeFiles/biort.dir/clean:
 	$(MAKE) $(MAKESILENT) -f src/CMakeFiles/biort.dir/build.make src/CMakeFiles/biort.dir/clean
 .PHONY : src/CMakeFiles/biort.dir/clean
+
+#=============================================================================
+# Target rules for target src/data_structures/CMakeFiles/data_structures.dir
+
+# All Build rule for target.
+src/data_structures/CMakeFiles/data_structures.dir/all:
+	$(MAKE) $(MAKESILENT) -f src/data_structures/CMakeFiles/data_structures.dir/build.make src/data_structures/CMakeFiles/data_structures.dir/depend
+	$(MAKE) $(MAKESILENT) -f src/data_structures/CMakeFiles/data_structures.dir/build.make src/data_structures/CMakeFiles/data_structures.dir/build
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/home/andrew/Documents/GitHub/biort-surface-cpp/BioRT-HBV-Surface/build/CMakeFiles --progress-num=14,15,16 "Built target data_structures"
+.PHONY : src/data_structures/CMakeFiles/data_structures.dir/all
+
+# Build rule for subdir invocation for target.
+src/data_structures/CMakeFiles/data_structures.dir/rule: cmake_check_build_system
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/andrew/Documents/GitHub/biort-surface-cpp/BioRT-HBV-Surface/build/CMakeFiles 3
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 src/data_structures/CMakeFiles/data_structures.dir/all
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/andrew/Documents/GitHub/biort-surface-cpp/BioRT-HBV-Surface/build/CMakeFiles 0
+.PHONY : src/data_structures/CMakeFiles/data_structures.dir/rule
+
+# Convenience name for target.
+data_structures: src/data_structures/CMakeFiles/data_structures.dir/rule
+.PHONY : data_structures
+
+# clean rule for target.
+src/data_structures/CMakeFiles/data_structures.dir/clean:
+	$(MAKE) $(MAKESILENT) -f src/data_structures/CMakeFiles/data_structures.dir/build.make src/data_structures/CMakeFiles/data_structures.dir/clean
+.PHONY : src/data_structures/CMakeFiles/data_structures.dir/clean
 
 #=============================================================================
 # Special targets to cleanup operation of make.

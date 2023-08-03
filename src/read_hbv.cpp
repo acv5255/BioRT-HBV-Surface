@@ -84,11 +84,11 @@ void ReadHbvResults(const char dir[], int *nsteps, int *steps[], Subcatchment* s
         //
         // Solving the above equations,
         //
-        subcatch->q[kstep][Prain] = (subcatch->tmp[kstep] < subcatch->tt) ?
+        subcatch->q[kstep][Prain] = (subcatch->tmp[kstep] < subcatch->hbv_parameters.tt) ?
             0.0 : subcatch->q[kstep][PRECIP];
         
-        subcatch->q[kstep][Psnow] = (subcatch->tmp[kstep] < subcatch->tt) ?
-            subcatch->q[kstep][PRECIP] * subcatch->sfcf : 0.0;
+        subcatch->q[kstep][Psnow] = (subcatch->tmp[kstep] < subcatch->hbv_parameters.tt) ?
+            subcatch->q[kstep][PRECIP] * subcatch->hbv_parameters.sfcf : 0.0;
         
         subcatch->q[kstep][snowmelt] = (kstep == 0) ?
             0.0 : std::max(0.0, subcatch->q[kstep][Psnow] + subcatch->ws[kstep - 1][SNOW] - subcatch->ws[kstep][SNOW]);
@@ -110,18 +110,18 @@ void ReadHbvResults(const char dir[], int *nsteps, int *steps[], Subcatchment* s
         // HBV Light outputs SUZ and SLZ with low precision (one decimal digit), and does not output percolation
         // rate. Therefore, SUZ, SLZ, and percolation rate are calculated using Equations (1), (4), and (8).
 
-        subcatch->ws[kstep][UZ] = subcatch->q[kstep][Q1] / subcatch->k1 -
+        subcatch->ws[kstep][UZ] = subcatch->q[kstep][Q1] / subcatch->hbv_parameters.k1 -
             (subcatch->q[kstep][Q0] + subcatch->q[kstep][Q1]);
-        subcatch->ws[kstep][LZ] = subcatch->q[kstep][Q2] / subcatch->k2 -
+        subcatch->ws[kstep][LZ] = subcatch->q[kstep][Q2] / subcatch->hbv_parameters.k2 -
             subcatch->q[kstep][Q2];
         subcatch->q[kstep][PERC] = (kstep == 0) ?
-            0.0 : std::min(subcatch->perc, subcatch->ws[kstep - 1][UZ] + subcatch->q[kstep][RECHG]);
+            0.0 : std::min(subcatch->hbv_parameters.perc, subcatch->ws[kstep - 1][UZ] + subcatch->q[kstep][RECHG]);
 
     }
     
     //Change PERC value for 1st time step using water storage for last timestep
     
-    subcatch->q[0][PERC] = std::min(subcatch->perc, subcatch->ws[*nsteps - 1][UZ] + subcatch->q[0][RECHG]);
+    subcatch->q[0][PERC] = std::min(subcatch->hbv_parameters.perc, subcatch->ws[*nsteps - 1][UZ] + subcatch->q[0][RECHG]);
 
     // Add 1. residual moisture to LZ & UZ and 2. SM to UZ
     for (int kstep = 0; kstep < *nsteps; kstep++)
@@ -198,23 +198,23 @@ void ReadHbvParam(const char dir[], Subcatchment* subcatch)
         ParseLine(cmdstr, tag, &value);
         if (strcmp(tag, "PERC") == 0)
         {
-            subcatch->perc = value;
-            biort_printf(VL_NORMAL, "  Percolation rate is %.2lf mm day-1\n", subcatch->perc);
+            subcatch->hbv_parameters.perc = value;
+            biort_printf(VL_NORMAL, "  Percolation rate is %.2lf mm day-1\n", subcatch->hbv_parameters.perc);
         }
         else if (strcmp(tag, "K1") == 0)
         {
-            subcatch->k1 = value;
-            biort_printf(VL_NORMAL, "  K1 is %.2lf day-1\n", subcatch->k1);
+            subcatch->hbv_parameters.k1 = value;
+            biort_printf(VL_NORMAL, "  K1 is %.2lf day-1\n", subcatch->hbv_parameters.k1);
         }
         else if (strcmp(tag, "K2") == 0)
         {
-            subcatch->k2 = value;
-            biort_printf(VL_NORMAL, "  K2 is %.2lf day-1\n", subcatch->k2);
+            subcatch->hbv_parameters.k2 = value;
+            biort_printf(VL_NORMAL, "  K2 is %.2lf day-1\n", subcatch->hbv_parameters.k2);
         }
         else if (strcmp(tag, "MAXBAS") == 0)
         {
-            subcatch->maxbas = value;
-            biort_printf(VL_NORMAL, "  Routing parameter is %.2lf\n", subcatch->maxbas);
+            subcatch->hbv_parameters.maxbas = value;
+            biort_printf(VL_NORMAL, "  Routing parameter is %.2lf\n", subcatch->hbv_parameters.maxbas);
             break;
         }
     }
@@ -226,13 +226,13 @@ void ReadHbvParam(const char dir[], Subcatchment* subcatch)
         ParseLine(cmdstr, tag, &value);
         if (strcmp(tag,"TT") == 0)
         {
-            subcatch->tt = value;
-            biort_printf(VL_NORMAL, "  TT is %.2lf\n", subcatch->tt);
+            subcatch->hbv_parameters.tt = value;
+            biort_printf(VL_NORMAL, "  TT is %.2lf\n", subcatch->hbv_parameters.tt);
         }
         else if (strcmp(tag,"SFCF") == 0)
         {
-            subcatch->sfcf = value;
-            biort_printf(VL_NORMAL, "  SFCF is %.2lf\n", subcatch->sfcf);
+            subcatch->hbv_parameters.sfcf = value;
+            biort_printf(VL_NORMAL, "  SFCF is %.2lf\n", subcatch->hbv_parameters.sfcf);
             break;
         }
     }

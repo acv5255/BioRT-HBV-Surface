@@ -1240,6 +1240,19 @@ biort/fast:
 	$(MAKE) $(MAKESILENT) -f src/CMakeFiles/biort.dir/build.make src/CMakeFiles/biort.dir/build
 .PHONY : biort/fast
 
+#=============================================================================
+# Target rules for targets named data_structures
+
+# Build rule for target.
+data_structures: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 data_structures
+.PHONY : data_structures
+
+# fast build rule for target.
+data_structures/fast:
+	$(MAKE) $(MAKESILENT) -f src/data_structures/CMakeFiles/data_structures.dir/build.make src/data_structures/CMakeFiles/data_structures.dir/build
+.PHONY : data_structures/fast
+
 # Help Target
 help:
 	@echo "The following are some of the valid targets for this Makefile:"
@@ -1294,6 +1307,7 @@ help:
 	@echo "... cvRoberts_dns_constraints"
 	@echo "... cvRoberts_dns_negsol"
 	@echo "... cvRoberts_dns_uw"
+	@echo "... data_structures"
 	@echo "... sundials_cvode_shared"
 	@echo "... sundials_cvode_static"
 	@echo "... sundials_nvecserial_shared"

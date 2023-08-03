@@ -364,6 +364,7 @@ src/biort: src/CMakeFiles/biort.dir/time_func.cpp.o
 src/biort: src/CMakeFiles/biort.dir/transport.cpp.o
 src/biort: src/CMakeFiles/biort.dir/util_func.cpp.o
 src/biort: src/CMakeFiles/biort.dir/build.make
+src/biort: src/data_structures/libdata_structures.so
 src/biort: src/CMakeFiles/biort.dir/link.txt
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --bold --progress-dir=/home/andrew/Documents/GitHub/biort-surface-cpp/BioRT-HBV-Surface/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_19) "Linking CXX executable biort"
 	cd /home/andrew/Documents/GitHub/biort-surface-cpp/BioRT-HBV-Surface/build/src && $(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/biort.dir/link.txt --verbose=$(VERBOSE)

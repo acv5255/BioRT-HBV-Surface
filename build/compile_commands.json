@@ -1546,5 +1546,65 @@
   "command": "/usr/bin/c++  -I/home/andrew/Documents/GitHub/biort-surface-cpp/BioRT-HBV-Surface/build/dep/cvode/include -I/home/andrew/Documents/GitHub/biort-surface-cpp/BioRT-HBV-Surface/dep/cvode/include -I/home/andrew/Documents/GitHub/biort-surface-cpp/BioRT-HBV-Surface/include -g -std=gnu++20 -Wall -Wextra -Werror -o CMakeFiles/biort.dir/util_func.cpp.o -c /home/andrew/Documents/GitHub/biort-surface-cpp/BioRT-HBV-Surface/src/util_func.cpp",
   "file": "/home/andrew/Documents/GitHub/biort-surface-cpp/BioRT-HBV-Surface/src/util_func.cpp",
   "output": "src/CMakeFiles/biort.dir/util_func.cpp.o"
+},
+{
+  "directory": "/home/andrew/Documents/GitHub/biort-surface-cpp/BioRT-HBV-Surface/build/src/data_structures",
+  "command": "/usr/bin/c++ -Ddata_structures_EXPORTS -I/home/andrew/Documents/GitHub/biort-surface-cpp/BioRT-HBV-Surface/build/dep/cvode/include -I/home/andrew/Documents/GitHub/biort-surface-cpp/BioRT-HBV-Surface/dep/cvode/include -I/home/andrew/Documents/GitHub/biort-surface-cpp/BioRT-HBV-Surface/include -g -std=gnu++20 -fPIC -Wall -Wextra -Werror -o CMakeFiles/data_structures.dir/CalibrationStruct.cpp.o -c /home/andrew/Documents/GitHub/biort-surface-cpp/BioRT-HBV-Surface/src/data_structures/CalibrationStruct.cpp",
+  "file": "/home/andrew/Documents/GitHub/biort-surface-cpp/BioRT-HBV-Surface/src/data_structures/CalibrationStruct.cpp",
+  "output": "src/data_structures/CMakeFiles/data_structures.dir/CalibrationStruct.cpp.o"
+},
+{
+  "directory": "/home/andrew/Documents/GitHub/biort-surface-cpp/BioRT-HBV-Surface/build/src/data_structures",
+  "command": "/usr/bin/c++ -Ddata_structures_EXPORTS -I/home/andrew/Documents/GitHub/biort-surface-cpp/BioRT-HBV-Surface/build/dep/cvode/include -I/home/andrew/Documents/GitHub/biort-surface-cpp/BioRT-HBV-Surface/dep/cvode/include -I/home/andrew/Documents/GitHub/biort-surface-cpp/BioRT-HBV-Surface/include -g -std=gnu++20 -fPIC -Wall -Wextra -Werror -o CMakeFiles/data_structures.dir/ChemicalState.cpp.o -c /home/andrew/Documents/GitHub/biort-surface-cpp/BioRT-HBV-Surface/src/data_structures/ChemicalState.cpp",
+  "file": "/home/andrew/Documents/GitHub/biort-surface-cpp/BioRT-HBV-Surface/src/data_structures/ChemicalState.cpp",
+  "output": "src/data_structures/CMakeFiles/data_structures.dir/ChemicalState.cpp.o"
+},
+{
+  "directory": "/home/andrew/Documents/GitHub/biort-surface-cpp/BioRT-HBV-Surface/build/src/data_structures",
+  "command": "/usr/bin/c++ -Ddata_structures_EXPORTS -I/home/andrew/Documents/GitHub/biort-surface-cpp/BioRT-HBV-Surface/build/dep/cvode/include -I/home/andrew/Documents/GitHub/biort-surface-cpp/BioRT-HBV-Surface/dep/cvode/include -I/home/andrew/Documents/GitHub/biort-surface-cpp/BioRT-HBV-Surface/include -g -std=gnu++20 -fPIC -Wall -Wextra -Werror -o CMakeFiles/data_structures.dir/ChemTableEntry.cpp.o -c /home/andrew/Documents/GitHub/biort-surface-cpp/BioRT-HBV-Surface/src/data_structures/ChemTableEntry.cpp",
+  "file": "/home/andrew/Documents/GitHub/biort-surface-cpp/BioRT-HBV-Surface/src/data_structures/ChemTableEntry.cpp",
+  "output": "src/data_structures/CMakeFiles/data_structures.dir/ChemTableEntry.cpp.o"
+},
+{
+  "directory": "/home/andrew/Documents/GitHub/biort-surface-cpp/BioRT-HBV-Surface/build/src/data_structures",
+  "command": "/usr/bin/c++ -Ddata_structures_EXPORTS -I/home/andrew/Documents/GitHub/biort-surface-cpp/BioRT-HBV-Surface/build/dep/cvode/include -I/home/andrew/Documents/GitHub/biort-surface-cpp/BioRT-HBV-Surface/dep/cvode/include -I/home/andrew/Documents/GitHub/biort-surface-cpp/BioRT-HBV-Surface/include -g -std=gnu++20 -fPIC -Wall -Wextra -Werror -o CMakeFiles/data_structures.dir/ControlData.cpp.o -c /home/andrew/Documents/GitHub/biort-surface-cpp/BioRT-HBV-Surface/src/data_structures/ControlData.cpp",
+  "file": "/home/andrew/Documents/GitHub/biort-surface-cpp/BioRT-HBV-Surface/src/data_structures/ControlData.cpp",
+  "output": "src/data_structures/CMakeFiles/data_structures.dir/ControlData.cpp.o"
+},
+{
+  "directory": "/home/andrew/Documents/GitHub/biort-surface-cpp/BioRT-HBV-Surface/build/src/data_structures",
+  "command": "/usr/bin/c++ -Ddata_structures_EXPORTS -I/home/andrew/Documents/GitHub/biort-surface-cpp/BioRT-HBV-Surface/build/dep/cvode/include -I/home/andrew/Documents/GitHub/biort-surface-cpp/BioRT-HBV-Surface/dep/cvode/include -I/home/andrew/Documents/GitHub/biort-surface-cpp/BioRT-HBV-Surface/include -g -std=gnu++20 -fPIC -Wall -Wextra -Werror -o CMakeFiles/data_structures.dir/HBVParameters.cpp.o -c /home/andrew/Documents/GitHub/biort-surface-cpp/BioRT-HBV-Surface/src/data_structures/HBVParameters.cpp",
+  "file": "/home/andrew/Documents/GitHub/biort-surface-cpp/BioRT-HBV-Surface/src/data_structures/HBVParameters.cpp",
+  "output": "src/data_structures/CMakeFiles/data_structures.dir/HBVParameters.cpp.o"
+},
+{
+  "directory": "/home/andrew/Documents/GitHub/biort-surface-cpp/BioRT-HBV-Surface/build/src/data_structures",
+  "command": "/usr/bin/c++ -Ddata_structures_EXPORTS -I/home/andrew/Documents/GitHub/biort-surface-cpp/BioRT-HBV-Surface/build/dep/cvode/include -I/home/andrew/Documents/GitHub/biort-surface-cpp/BioRT-HBV-Surface/dep/cvode/include -I/home/andrew/Documents/GitHub/biort-surface-cpp/BioRT-HBV-Surface/include -g -std=gnu++20 -fPIC -Wall -Wextra -Werror -o CMakeFiles/data_structures.dir/KineticTableEntry.cpp.o -c /home/andrew/Documents/GitHub/biort-surface-cpp/BioRT-HBV-Surface/src/data_structures/KineticTableEntry.cpp",
+  "file": "/home/andrew/Documents/GitHub/biort-surface-cpp/BioRT-HBV-Surface/src/data_structures/KineticTableEntry.cpp",
+  "output": "src/data_structures/CMakeFiles/data_structures.dir/KineticTableEntry.cpp.o"
+},
+{
+  "directory": "/home/andrew/Documents/GitHub/biort-surface-cpp/BioRT-HBV-Surface/build/src/data_structures",
+  "command": "/usr/bin/c++ -Ddata_structures_EXPORTS -I/home/andrew/Documents/GitHub/biort-surface-cpp/BioRT-HBV-Surface/build/dep/cvode/include -I/home/andrew/Documents/GitHub/biort-surface-cpp/BioRT-HBV-Surface/dep/cvode/include -I/home/andrew/Documents/GitHub/biort-surface-cpp/BioRT-HBV-Surface/include -g -std=gnu++20 -fPIC -Wall -Wextra -Werror -o CMakeFiles/data_structures.dir/ReactionNetwork.cpp.o -c /home/andrew/Documents/GitHub/biort-surface-cpp/BioRT-HBV-Surface/src/data_structures/ReactionNetwork.cpp",
+  "file": "/home/andrew/Documents/GitHub/biort-surface-cpp/BioRT-HBV-Surface/src/data_structures/ReactionNetwork.cpp",
+  "output": "src/data_structures/CMakeFiles/data_structures.dir/ReactionNetwork.cpp.o"
+},
+{
+  "directory": "/home/andrew/Documents/GitHub/biort-surface-cpp/BioRT-HBV-Surface/build/src/data_structures",
+  "command": "/usr/bin/c++ -Ddata_structures_EXPORTS -I/home/andrew/Documents/GitHub/biort-surface-cpp/BioRT-HBV-Surface/build/dep/cvode/include -I/home/andrew/Documents/GitHub/biort-surface-cpp/BioRT-HBV-Surface/dep/cvode/include -I/home/andrew/Documents/GitHub/biort-surface-cpp/BioRT-HBV-Surface/include -g -std=gnu++20 -fPIC -Wall -Wextra -Werror -o CMakeFiles/data_structures.dir/SoilConstants.cpp.o -c /home/andrew/Documents/GitHub/biort-surface-cpp/BioRT-HBV-Surface/src/data_structures/SoilConstants.cpp",
+  "file": "/home/andrew/Documents/GitHub/biort-surface-cpp/BioRT-HBV-Surface/src/data_structures/SoilConstants.cpp",
+  "output": "src/data_structures/CMakeFiles/data_structures.dir/SoilConstants.cpp.o"
+},
+{
+  "directory": "/home/andrew/Documents/GitHub/biort-surface-cpp/BioRT-HBV-Surface/build/src/data_structures",
+  "command": "/usr/bin/c++ -Ddata_structures_EXPORTS -I/home/andrew/Documents/GitHub/biort-surface-cpp/BioRT-HBV-Surface/build/dep/cvode/include -I/home/andrew/Documents/GitHub/biort-surface-cpp/BioRT-HBV-Surface/dep/cvode/include -I/home/andrew/Documents/GitHub/biort-surface-cpp/BioRT-HBV-Surface/include -g -std=gnu++20 -fPIC -Wall -Wextra -Werror -o CMakeFiles/data_structures.dir/SoilParameters.cpp.o -c /home/andrew/Documents/GitHub/biort-surface-cpp/BioRT-HBV-Surface/src/data_structures/SoilParameters.cpp",
+  "file": "/home/andrew/Documents/GitHub/biort-surface-cpp/BioRT-HBV-Surface/src/data_structures/SoilParameters.cpp",
+  "output": "src/data_structures/CMakeFiles/data_structures.dir/SoilParameters.cpp.o"
+},
+{
+  "directory": "/home/andrew/Documents/GitHub/biort-surface-cpp/BioRT-HBV-Surface/build/src/data_structures",
+  "command": "/usr/bin/c++ -Ddata_structures_EXPORTS -I/home/andrew/Documents/GitHub/biort-surface-cpp/BioRT-HBV-Surface/build/dep/cvode/include -I/home/andrew/Documents/GitHub/biort-surface-cpp/BioRT-HBV-Surface/dep/cvode/include -I/home/andrew/Documents/GitHub/biort-surface-cpp/BioRT-HBV-Surface/include -g -std=gnu++20 -fPIC -Wall -Wextra -Werror -o CMakeFiles/data_structures.dir/Subcatchment.cpp.o -c /home/andrew/Documents/GitHub/biort-surface-cpp/BioRT-HBV-Surface/src/data_structures/Subcatchment.cpp",
+  "file": "/home/andrew/Documents/GitHub/biort-surface-cpp/BioRT-HBV-Surface/src/data_structures/Subcatchment.cpp",
+  "output": "src/data_structures/CMakeFiles/data_structures.dir/Subcatchment.cpp.o"
 }
 ]

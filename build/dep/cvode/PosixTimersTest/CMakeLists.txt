@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 3.7)
+CMAKE_MINIMUM_REQUIRED(VERSION 3.0.2)
 PROJECT(posixtimerstest C)
 SET(CMAKE_VERBOSE_MAKEFILE ON)
 SET(CMAKE_C_COMPILER "/usr/bin/gcc-12")

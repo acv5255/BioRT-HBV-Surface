@@ -2,6 +2,8 @@ cmake_minimum_required(VERSION 3.26)
 
 project(biort)
 
+add_subdirectory(data_structures)
+
 add_executable(biort
     main.cpp
     custom_io.cpp
@@ -51,4 +53,5 @@ target_link_libraries(
     m
     sundials_cvode
     sundials_nvecserial
+    data_structures
 )

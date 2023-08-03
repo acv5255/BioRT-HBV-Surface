@@ -18,13 +18,13 @@ void InitChem(const char dir[], const CalibrationStruct *calib, const ControlDat
     {
         // Apply calibration
         // subcatch->chms[SNOW].ssa[kspc] *= (chemtbl[kspc].itype == MINERAL) ? calib->ssa : 1.0;   // 2021-05-07
-        subcatch->chms[UZ].ssa[kspc] *= (chemtbl[kspc].itype == MINERAL) ? calib->ssa : 1.0;
-        subcatch->chms[LZ].ssa[kspc] *= (chemtbl[kspc].itype == MINERAL) ? calib->ssa : 1.0;
+        subcatch->chms[UZ].soil_parameters.ssa[kspc] *= (chemtbl[kspc].itype == MINERAL) ? calib->ssa : 1.0;
+        subcatch->chms[LZ].soil_parameters.ssa[kspc] *= (chemtbl[kspc].itype == MINERAL) ? calib->ssa : 1.0;
 
         // Snow and soil moisture zone should have the same concentrations as the upper zone at the beginning
         subcatch->chms[SNOW].tot_conc[kspc] = subcatch->chms[UZ].tot_conc[kspc];
         subcatch->chms[SNOW].prim_conc[kspc] = subcatch->chms[SNOW].tot_conc[kspc];
-        subcatch->chms[SNOW].ssa[kspc] = subcatch->chms[UZ].ssa[kspc];
+        subcatch->chms[SNOW].soil_parameters.ssa[kspc] = subcatch->chms[UZ].soil_parameters.ssa[kspc];
         subcatch->chms[SNOW].tot_mol[kspc] =
             subcatch->chms[SNOW].tot_conc[kspc] * subcatch->ws[0][SNOW];
     }

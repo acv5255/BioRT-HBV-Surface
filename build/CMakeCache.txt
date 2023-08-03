@@ -408,6 +408,15 @@ biort_IS_TOP_LEVEL:STATIC=OFF
 biort_SOURCE_DIR:STATIC=/home/andrew/Documents/GitHub/biort-surface-cpp/BioRT-HBV-Surface/src
 
 //Value Computed by CMake
+biort_data_structures_BINARY_DIR:STATIC=/home/andrew/Documents/GitHub/biort-surface-cpp/BioRT-HBV-Surface/build/src/data_structures
+
+//Value Computed by CMake
+biort_data_structures_IS_TOP_LEVEL:STATIC=OFF
+
+//Value Computed by CMake
+biort_data_structures_SOURCE_DIR:STATIC=/home/andrew/Documents/GitHub/biort-surface-cpp/BioRT-HBV-Surface/src/data_structures
+
+//Value Computed by CMake
 sundials_BINARY_DIR:STATIC=/home/andrew/Documents/GitHub/biort-surface-cpp/BioRT-HBV-Surface/build/dep/cvode
 
 //Value Computed by CMake
@@ -597,7 +606,7 @@ CMAKE_MODULE_LINKER_FLAGS_RELWITHDEBINFO-ADVANCED:INTERNAL=1
 //ADVANCED property for variable: CMAKE_NM
 CMAKE_NM-ADVANCED:INTERNAL=1
 //number of local generators
-CMAKE_NUMBER_OF_MAKEFILES:INTERNAL=43
+CMAKE_NUMBER_OF_MAKEFILES:INTERNAL=44
 //ADVANCED property for variable: CMAKE_OBJCOPY
 CMAKE_OBJCOPY-ADVANCED:INTERNAL=1
 //ADVANCED property for variable: CMAKE_OBJDUMP

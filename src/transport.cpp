@@ -121,7 +121,7 @@ void TransportSurfaceZone(const ReactionNetwork* rttbl, const ControlData ctrl, 
         // Mass transfer section
         const double m_0 = subcatch->chms[SURFACE].tot_mol[kspc];  // Initial number of moles
         double c_in = (dm_rain + dm_snowmelt) / (q_rain + q_snowmelt);  // Weighted average of snowmelt and rain concentrations
-        if (!isfinite(c_in)) c_in = ZERO_CONC;
+        if (std::isinf(c_in)) c_in = ZERO_CONC;
         
         const double c_0 = m_0 / (v_0 + q);
 

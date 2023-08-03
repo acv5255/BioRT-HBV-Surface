@@ -24,18 +24,48 @@ void ReadCini(const char dir[], const ChemTableEntry *chemtbl, ReactionNetwork *
     // Read surface concentration  2021-05-07
     // printf("\tSURFACE:\n");
     FindLine(file_pointer, "SURFACE", &line_number, cmdstr);
-    ReadConc(file_pointer, rttbl->num_stc, chemtbl, &line_number, subcatch->chms[SURFACE].tot_conc, subcatch->chms[SURFACE].ssa, subcatch->chms[SURFACE].q10, subcatch->chms[SURFACE].sw_thld, subcatch->chms[SURFACE].sw_exp, subcatch->chms[SURFACE].n_alpha);
+    ReadConc(
+        file_pointer, 
+        rttbl->num_stc, 
+        chemtbl, 
+        &line_number, 
+        subcatch->chms[SURFACE].tot_conc, 
+        subcatch->chms[SURFACE].soil_parameters.ssa, 
+        subcatch->chms[SURFACE].soil_parameters.q10, 
+        subcatch->chms[SURFACE].soil_parameters.sw_thld, 
+        subcatch->chms[SURFACE].soil_parameters.sw_exp, 
+        subcatch->chms[SURFACE].soil_parameters.n_alpha);
 
 
     // Read upper zone concentration
     // printf("\tSHALLOW ZONE:\n");
     FindLine(file_pointer, "UZ", &line_number, cmdstr);
-    ReadConc(file_pointer, rttbl->num_stc, chemtbl, &line_number, subcatch->chms[UZ].tot_conc, subcatch->chms[UZ].ssa, subcatch->chms[UZ].q10, subcatch->chms[UZ].sw_thld, subcatch->chms[UZ].sw_exp, subcatch->chms[UZ].n_alpha);
+    ReadConc(
+        file_pointer, 
+        rttbl->num_stc, 
+        chemtbl, 
+        &line_number, 
+        subcatch->chms[UZ].tot_conc, 
+        subcatch->chms[UZ].soil_parameters.ssa, 
+        subcatch->chms[UZ].soil_parameters.q10, 
+        subcatch->chms[UZ].soil_parameters.sw_thld, 
+        subcatch->chms[UZ].soil_parameters.sw_exp, 
+        subcatch->chms[UZ].soil_parameters.n_alpha);
 
     // Read lower zone concentration
     // printf("\tDEEP ZONE:\n");
     FindLine(file_pointer, "LZ", &line_number, cmdstr);
-    ReadConc(file_pointer, rttbl->num_stc, chemtbl, &line_number, subcatch->chms[LZ].tot_conc, subcatch->chms[LZ].ssa, subcatch->chms[LZ].q10, subcatch->chms[LZ].sw_thld, subcatch->chms[LZ].sw_exp, subcatch->chms[LZ].n_alpha);
+    ReadConc(
+        file_pointer, 
+        rttbl->num_stc, 
+        chemtbl, 
+        &line_number, 
+        subcatch->chms[LZ].tot_conc, 
+        subcatch->chms[LZ].soil_parameters.ssa, 
+        subcatch->chms[LZ].soil_parameters.q10, 
+        subcatch->chms[LZ].soil_parameters.sw_thld, 
+        subcatch->chms[LZ].soil_parameters.sw_exp, 
+        subcatch->chms[LZ].soil_parameters.n_alpha);
 
     printf("\n\n");
 

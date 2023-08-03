@@ -14,10 +14,12 @@
 // C++ includes
 #include <cmath>
 #include <array>
+#include <vector>
 
 // Usings
 using f64 = double;
 using std::array;
+using std::vector;
 
 // SUNDIAL Header Files
 #include "sundials/sundials_dense.h"        // Prototypes for small dense fcts.
@@ -106,9 +108,9 @@ class ReactionNetwork
         int             num_mkr;                // number of mineral kinetic reactions
         int             num_akr;                // number of aqueous kinetic reactions
         double          tmp;                    // temperature of the moment
-        double          dep_mtx[MAXSPS][MAXSPS];// dependency of secondary species on primary species
-        double          dep_kin[MAXSPS][MAXSPS];// dependency of kinetic species on primary species
-        double          conc_contrib[MAXSPS][MAXSPS];   // contribution of each species to total concentration
+        array<array<f64, MAXSPS>, MAXSPS> dep_mtx; // dependency of secondary species on primary species
+        array<array<f64, MAXSPS>, MAXSPS> dep_kin;// dependency of kinetic species on primary species
+        array<array<f64, MAXSPS>, MAXSPS> conc_contrib;   // contribution of each species to total concentration
         array<f64, MAXSPS> keq;
         array<f64, MAXSPS> keq_kin;
         double          adh;                    // Debye Huckel parameter
@@ -188,10 +190,10 @@ class SoilConstants {
 class Subcatchment
 {
     public:
-        double         (*ws)[NWS];
-        double         (*q)[NQ];
-        double        **prcp_conc_time;         // time-series precipitation concentration (mol L-1)  2021-05-20
-        double         *tmp;                    // air temperature (degree C)
+        vector<array<f64, NWS>> ws;
+        vector<array<f64, NQ>> q;
+        vector<vector<f64>> prcp_conc_time;     // time-series precipitation concentration (mol L-1)  2021-05-20
+        vector<f64> tmp;                        // air temperature (degree C)
         array<f64, MAXSPS> prcp_conc;           // concentration in precipitation (mol kgH2O-1)
         SoilConstants   soil_surface;           // Surface soil parameters
         SoilConstants   soil_sz;                // Shallow zone soil parameters
@@ -202,9 +204,8 @@ class Subcatchment
         double          perc;                   // percolation rate (mm day-1)
         double          sfcf;                   // snow fall correction factor
         double          tt;                     // threshold temperature (degree C)
-        // double          react_rate[NWS][MAXSPS];
         array<array<f64, MAXSPS>, NWS> react_rate;  // reaction rate (mol m-2 day-1)
-        ChemicalState chms[NWS];
+        array<ChemicalState, NWS> chms;
         ChemicalState river_chms;
 };
 
@@ -221,7 +222,7 @@ void            CopyConstSubcatchProp(const Subcatchment* subcatch, Subcatchment
 void            CopyInitChemSubcatch(ReactionNetwork *, const Subcatchment* subcatch, Subcatchment* subcatch_numexp );
 int             CountLeapYears(int, int);
 int             FindChem(const char [MAXSTRING], int, const ChemTableEntry[]);
-void            FreeStruct(int *steps[], Subcatchment subcatch[]);
+void            FreeStruct(int *steps[]);
 int             GetDifference(int, int);
 void            InitChem(const char [], const CalibrationStruct *, const ControlData ctrl, ChemTableEntry [],
     KineticTableEntry [], ReactionNetwork *, Subcatchment* subcatch);
@@ -275,10 +276,10 @@ bool            CheckArrayForNan(const array<f64, MAXSPS>& arr);
 void            CheckChmsForNonFinite(const ChemicalState* chms, const char* filename, const int line_number);
 bool            CheckNonzeroRanged(const array<f64, MAXSPS>& arr, const int num);
 void            ErrOnZeroRanged(const char* filename, const char* arr_name, const int line_number, const array<f64, MAXSPS>& arr, const int num);
-void            ComputeDependence(array<f64, MAXSPS>& tmpconc, const double dep_mtx[MAXSPS][MAXSPS], const array<f64, MAXSPS>& keq, int num_rows, int num_cols, int offset);
+void            ComputeDependence(array<f64, MAXSPS>& tmpconc, const array<array<f64, MAXSPS>, MAXSPS>& dep_mtx, const array<f64, MAXSPS>& keq, int num_rows, int num_cols, int offset);
 void            ErrorOnArrayNan(const array<f64, MAXSPS>& arr, const char* array_name, const char* filename, const int line_number);
 void            ErrorOnArrayNanIter(const array<f64, MAXSPS>& arr, const char* array_name, const char* filename, const int line_number, const int iter);
-void            GetLogActivity(array<f64, MAXSPS>& tmpconc, double gamma[MAXSPS], const double dep_mtx[MAXSPS][MAXSPS], const array<f64, MAXSPS>& keq, int num_rows, int num_cols, int offset);
+void            GetLogActivity(array<f64, MAXSPS>& tmpconc, double gamma[MAXSPS], const array<array<f64, MAXSPS>, MAXSPS>& dep_mtx, const array<f64, MAXSPS>& keq, int num_rows, int num_cols, int offset);
 void            GetSecondarySpecies(double conc[MAXSPS], const double gamma[MAXSPS], const ReactionNetwork* rttbl);
 void            GetSurfaceAreaRange(double area[MAXSPS], const array<f64, MAXSPS>& prim_conc, const array<f64, MAXSPS>& ssa, const ChemTableEntry chemtbl[], int start, int end, int offset);
 void            GetTempFactorRange(double ftemp[MAXSPS], const array<f64, MAXSPS>& q10, double temperature, int start, int end, int offset);

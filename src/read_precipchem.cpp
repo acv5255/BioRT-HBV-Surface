@@ -9,9 +9,7 @@ void ReadPrecipChem(const char dir[], int *nsteps, int *steps[], Subcatchment su
     int             pH_index = 0;
     int             pH_convert = 0;
     int             ind;
-    int             ntime;
-
-    ntime = *nsteps;
+    const int ntime = *nsteps;
 
     if (mode == 0)
     {
@@ -36,16 +34,9 @@ void ReadPrecipChem(const char dir[], int *nsteps, int *steps[], Subcatchment su
         biort_printf(VL_ERROR,"\nNumber of time steps in \"Numexp_precipchem.txt\" should be same as in \"Numexp_Results.txt\" file.\n");
         exit(EXIT_FAILURE);
     }
-    *steps = (int *)malloc(*nsteps * sizeof(int));
+    *steps = (int *)malloc(ntime * sizeof(int));
 
-
-    subcatch->prcp_conc_time = (double **)malloc(*nsteps * sizeof(double *));
-
-    for (int kstep = 0; kstep < *nsteps; kstep++)
-    {
-        subcatch->prcp_conc_time[kstep] = (double *)malloc(num_stc * sizeof(double));
-    }
-
+    subcatch->prcp_conc_time = vector(ntime, vector(num_stc, BADVAL));
 
     // read header to locate pH position
     for (int kspc = 0; kspc < num_stc + 1; kspc++)  // add one more column of date

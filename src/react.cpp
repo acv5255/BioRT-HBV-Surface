@@ -1,6 +1,6 @@
 #include "biort.hpp"
 
-void GetIAP(double iap[MAXSPS], const array<f64, MAXSPS>& activity, const double dep_kin[MAXSPS][MAXSPS], int num_reactions, int num_stc) {
+void GetIAP(double iap[MAXSPS], const array<f64, MAXSPS>& activity, const array<array<f64, MAXSPS>, MAXSPS>& dep_kin, int num_reactions, int num_stc) {
     for (int i = 0; i < num_reactions; i++) {
         iap[i] = 0.0;
         for (int j = 0; j < num_stc; j++) {

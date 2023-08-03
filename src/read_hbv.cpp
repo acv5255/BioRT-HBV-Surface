@@ -52,10 +52,9 @@ void ReadHbvResults(const char dir[], int *nsteps, int *steps[], Subcatchment* s
         len_numexp /= *nsteps;
     }
 
-
-    subcatch->ws = (double (*)[NWS])malloc(len_numexp * *nsteps * sizeof(double[NWS]));
-    subcatch->q = (double (*)[NQ])malloc(len_numexp * *nsteps * sizeof(double[NQ]));
-    subcatch->tmp = (double *)malloc(len_numexp * *nsteps * sizeof(double));
+    subcatch->ws = vector<array<f64, NWS>>(len_numexp * *nsteps, { BADVAL });
+    subcatch->q = vector<array<f64, NQ>>(len_numexp* *nsteps, { BADVAL });
+    subcatch->tmp = vector<f64>(len_numexp* *nsteps, {BADVAL});
 
     NextLine(file_pointer, cmdstr, &line_number);     // Skip header line
 

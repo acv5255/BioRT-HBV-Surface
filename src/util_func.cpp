@@ -65,14 +65,9 @@ void UnwrapParentheses(const char wrapped_str[], char str[])
     str[j] = '\0';
 }
 
-void FreeStruct(int *steps[], Subcatchment subcatch[])
+void FreeStruct(int *steps[])
 {
-    const int ksub = 0;
     free(*steps);
-
-    free(subcatch[ksub].ws);
-    free(subcatch[ksub].q);
-    free(subcatch[ksub].tmp);
 }
 
 void ParseCmdLineParam(int argc, char *argv[], char dir[])
@@ -138,7 +133,7 @@ void ParseCmdLineParam(int argc, char *argv[], char dir[])
     }
 }
 
-void ComputeDependence(array<f64, MAXSPS>& tmpconc, const double dep_mtx[MAXSPS][MAXSPS], const array<f64, MAXSPS>& keq, int num_rows, int num_cols, int offset) {
+void ComputeDependence(array<f64, MAXSPS>& tmpconc, const array<array<f64, MAXSPS>, MAXSPS>& dep_mtx, const array<f64, MAXSPS>& keq, int num_rows, int num_cols, int offset) {
     for (int i = 0; i < num_rows; i++)
     {
         tmpconc[i + offset] = 0.0;
@@ -150,7 +145,7 @@ void ComputeDependence(array<f64, MAXSPS>& tmpconc, const double dep_mtx[MAXSPS]
     }
 }
 
-void GetLogActivity(array<f64, MAXSPS>& tmpconc, double gamma[MAXSPS], const double dep_mtx[MAXSPS][MAXSPS], const array<f64, MAXSPS>& keq, int num_rows, int num_cols, int offset) {
+void GetLogActivity(array<f64, MAXSPS>& tmpconc, double gamma[MAXSPS], const array<array<f64, MAXSPS>, MAXSPS>& dep_mtx, const array<f64, MAXSPS>& keq, int num_rows, int num_cols, int offset) {
     for (int i = 0; i < num_rows; i++)
     {
         tmpconc[i + offset] = 0.0;

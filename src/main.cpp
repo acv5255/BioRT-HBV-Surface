@@ -178,6 +178,6 @@ int main(int argc, char *argv[])
         }
     }
 
-    FreeStruct(&steps, &subcatch);
-    FreeStruct(&steps_numexp, &subcatch_numexp);
+    FreeStruct(&steps);
+    FreeStruct(&steps_numexp);
 }

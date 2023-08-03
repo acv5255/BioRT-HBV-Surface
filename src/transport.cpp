@@ -72,7 +72,7 @@ void TransportSurfaceZone(const ReactionNetwork* rttbl, const ControlData ctrl, 
     const double q_q1 = subcatch->q[step][Q1];
     const double q_perc = subcatch->q[step][PERC];
 
-    const double ws_surf = MAX(subcatch->ws[step][SURFACE], 0.001);
+    const double ws_surf = std::max(subcatch->ws[step][SURFACE], 0.001);
     const double v_0 = ws_surf;
     const double ws_snow = subcatch->ws[step][SNOW];
     const double ws_sz = subcatch->ws[step][UZ];       // Water storage in the shallow zone

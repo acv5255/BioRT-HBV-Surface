@@ -80,7 +80,7 @@ void ReactZone(const int kzone, const double temp, const SoilConstants soil, con
     }
 
     double satn = tot_water / (soil.depth * soil.porosity);  // add porosity for saturation calculation
-    satn = MIN(satn, 1.0);
+    satn = std::min(satn, 1.0);
 
     CheckChmsForNonFinite(&subcatch->chms[kzone], "react.c", 80);
     if (!CheckArrayForNan(subcatch->react_rate[kzone])) {
@@ -166,13 +166,7 @@ void Reaction(int kstep, double stepsize, const ChemTableEntry chemtbl[],
     const double temp = subcatch->tmp[kstep];
     if (subcatch->q[kstep][Q0] >= 0.1) {
         const double tot_water_surf = subcatch->ws[kstep][SURFACE] + subcatch->q[kstep][Q0];
-        // printf("Starting surface reactions on step %d with total water = %g mm\n", kstep, tot_water_surf);
-        // printf("Surface concentrations before reaction: \n");
-        // PrintChemicalState(&subcatch->chms[SURFACE]);
         ReactSurfaceZone(temp, subcatch->soil_surface, tot_water_surf, chemtbl, kintbl, rttbl, stepsize, subcatch);
-        // printf("Surface concentrations after reaction: \n");
-        // PrintChemicalState(&subcatch->chms[SURFACE]);
-        printf("\n");
     }
     CheckChmsForNonFinite(&subcatch->chms[SURFACE], "react.c", 153);
 
@@ -406,20 +400,14 @@ int SolveReact(double stepsize, const ChemTableEntry chemtbl[], const KineticTab
                 tmpconc[i] += (x[i] < 0) ? -0.3 : 0.3;
             }
 
-            max_error = MAX(fabs(residue[i] / tot_conc[i]), max_error);
+            max_error = std::max(fabs(residue[i] / tot_conc[i]), max_error);
         }
 
         control++;
         if (control > MAX_ITERATIONS)   // Limit the model steps
         {
-            // biort_printf(VL_NORMAL, "React failed to converge...\n");
-            // printf("Failed to converge with stepsize of %g\n", stepsize);
-            // printf("Jacobian matrix: \n");
-            // PrintMatrix((const realtype**)jcb, matrix_dimension, matrix_dimension);
             destroyMat(jcb);
-            // printf("\n\n");
             return 1;
-            // exit(-1);
         }
         destroyMat(jcb);
     } while (max_error > TOLERANCE);
@@ -714,7 +702,7 @@ int SolveSurfaceReact(double stepsize, const ChemTableEntry chemtbl[], const Kin
                 tmpconc[i] += (x[i] < 0) ? -0.3 : 0.3;
             }
 
-            max_error = MAX(fabs(residue[i] / tot_conc[i]), max_error);
+            max_error = std::max(fabs(residue[i] / tot_conc[i]), max_error);
         }
 
         control++;

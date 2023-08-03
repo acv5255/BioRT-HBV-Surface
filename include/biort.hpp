@@ -12,6 +12,9 @@
 #include <sys/stat.h>
 #include <stdbool.h>
 
+// C++ includes
+#include <cmath>
+
 // SUNDIAL Header Files
 #include "sundials/sundials_dense.h"        // Prototypes for small dense fcts.
 
@@ -19,63 +22,57 @@
 
 #define VERSION    "0.1.0-alpha"
 
-#define BADVAL                  -999
-#define NWS                     6           // number of water storages
-#define NQ                      9           // number of water fluxes
+const double BADVAL = -999;
+const int NWS = 6;
+const int NQ = 9; 
 
-#define STORAGE_MIN             1.0         // minimum water storage (mm)
-#define ZERO_CONC               1.0E-20     // minimum concentration
+const double STORAGE_MIN = 1.0;
+const double ZERO_CONC = 1.0E-20;
 
-static const double TOLERANCE = 1E-8;       // Tolerance for iterative methods
+const double TOLERANCE = 1E-8;       // Tolerance for iterative methods
 
-static const int PRECIP = 0;
-static const int RECHG = 1;
-static const int PERC = 2;
-static const int Q0 = 3;
-static const int Q1 = 4;
-static const int Q2 = 5;
-static const int Prain = 6;
-static const int Psnow = 7;
-static const int snowmelt = 8;
+const int PRECIP = 0;
+const int RECHG = 1;
+const int PERC = 2;
+const int Q0 = 3;
+const int Q1 = 4;
+const int Q2 = 5;
+const int Prain = 6;
+const int Psnow = 7;
+const int snowmelt = 8;
 
-#define SNOW                    0
-#define SURFACE                 1          // add surface Q0 reaction, 2021-05-14
-#define UZ                      2
-#define LZ                      3
-#define STREAM                  4
-#define SM                      5
-// static const int SNOW = 0;
-// static const int SURFACE = 1;
-// static const int UZ = 2;
-// static const int LZ = 3;
-// static const int STREAM = 4;
-// static const int SM = 5;
+const int SNOW = 0;
+const int SURFACE = 1;
+const int UZ = 2;
+const int LZ = 3;
+const int STREAM = 4;
+const int SM = 5;
 
-#define MAXSPS 20
-#define MAXDEP 4
-#define SKIP_JACOB 1
+const int MAXSPS = 20;
+const int MAXDEP = 4;
+const int SKIP_JACOB = 1;
 
 // RT simulation mode
-static const int KIN_REACTION = 0;
-static const int TRANSPORT_ONLY = 1;
+const int KIN_REACTION = 0;
+const int TRANSPORT_ONLY = 1;
 
 // RT primary species types
-#define AQUEOUS                 1
-#define ADSORPTION              2
-#define CATION_ECHG             3
-#define MINERAL                 4
-#define SECONDARY               5
+const int AQUEOUS = 1;
+const int ADSORPTION = 2;
+const int CATION_ECHG = 3;
+const int MINERAL = 4;
+const int SECONDARY = 5;
 
 // RT mass action types
-#define IMMOBILE_MA             0
-#define MOBILE_MA               1
-#define MIXED_MA                2
+const int IMMOBILE_MA = 0;
+const int MOBILE_MA = 1;
+const int MIXED_MA = 2;
 
 // RT kinetic reaction types
-#define TST                     1
-#define PRCP_ONLY               2
-#define DISS_ONLY               3
-#define MONOD                   4
+const int TST = 1;
+const int PRCP_ONLY = 2;
+const int DISS_ONLY = 3;
+const int MONOD = 4;
 
 extern int     verbose_mode;
 
@@ -206,8 +203,6 @@ class Subcatchment
         ChemicalState river_chms;
 };
 
-#define MIN(x, y)               (((x) < (y)) ? (x) : (y))
-#define MAX(x, y)               (((x) > (y)) ? (x) : (y))
 
 #define fopen                   _custom_fopen
 #define biort_printf(...)       _custom_printf(verbose_mode, __VA_ARGS__)

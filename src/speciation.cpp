@@ -176,8 +176,8 @@ int SolveSpeciation(const ChemTableEntry chemtbl[], const ControlData ctrl, cons
                 continue;
             }
 
-            tmpconc[i] += x[row] > 0 ? MIN(x[row], MAX_STEP) : MAX(x[row], -MAX_STEP);
-            maxerror = MAX(fabs(residue[i] / tot_conc[i]), maxerror);
+            tmpconc[i] += x[row] > 0 ? std::min(x[row], MAX_STEP) : std::max(x[row], -MAX_STEP);
+            maxerror = std::max(fabs(residue[i] / tot_conc[i]), maxerror);
             row += 1;
         }
 

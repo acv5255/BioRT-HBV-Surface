@@ -92,7 +92,7 @@ void ReadHbvResults(const char dir[], int *nsteps, int *steps[], Subcatchment* s
             subcatch->q[kstep][PRECIP] * subcatch->sfcf : 0.0;
         
         subcatch->q[kstep][snowmelt] = (kstep == 0) ?
-            0.0 : MAX(0, subcatch->q[kstep][Psnow] + subcatch->ws[kstep - 1][SNOW] - subcatch->ws[kstep][SNOW]);
+            0.0 : std::max(0.0, subcatch->q[kstep][Psnow] + subcatch->ws[kstep - 1][SNOW] - subcatch->ws[kstep][SNOW]);
         //biort_printf(VL_NORMAL, "  snowmelt %.2f m3 m-3.\n", subcatch->q[kstep][snowmelt]);
         // In the upper zone, HBV first calculates percolation to the lower zone.
         //   percolation = MIN(perc0, SUZ0 + recharge).                         (1)
@@ -116,18 +116,18 @@ void ReadHbvResults(const char dir[], int *nsteps, int *steps[], Subcatchment* s
         subcatch->ws[kstep][LZ] = subcatch->q[kstep][Q2] / subcatch->k2 -
             subcatch->q[kstep][Q2];
         subcatch->q[kstep][PERC] = (kstep == 0) ?
-            0.0 : MIN(subcatch->perc, subcatch->ws[kstep - 1][UZ] + subcatch->q[kstep][RECHG]);
+            0.0 : std::min(subcatch->perc, subcatch->ws[kstep - 1][UZ] + subcatch->q[kstep][RECHG]);
 
     }
     
     //Change PERC value for 1st time step using water storage for last timestep
     
-    subcatch->q[0][PERC] = MIN(subcatch->perc, subcatch->ws[*nsteps - 1][UZ] + subcatch->q[0][RECHG]);
+    subcatch->q[0][PERC] = std::min(subcatch->perc, subcatch->ws[*nsteps - 1][UZ] + subcatch->q[0][RECHG]);
 
     // Add 1. residual moisture to LZ & UZ and 2. SM to UZ
     for (int kstep = 0; kstep < *nsteps; kstep++)
     {
-        subcatch->ws[kstep][SURFACE]+= MIN(subcatch->soil_surface.ws_passive, STORAGE_MIN);
+        subcatch->ws[kstep][SURFACE]+= std::min(subcatch->soil_surface.ws_passive, STORAGE_MIN);
         // if (subcatch->q[kstep][Q0] > 0.0) subcatch->ws[kstep][SURFACE] = subcatch->q[kstep][Q0];
         subcatch->ws[kstep][UZ] += subcatch->soil_sz.ws_passive;
         subcatch->ws[kstep][LZ] += subcatch->soil_dz.ws_passive;

@@ -29,17 +29,17 @@ void ReadSoil(const char dir[], Subcatchment* sub)
     //===== Passive water storage =====//
     NextLine(file_pointer, cmdstr, &line_number);
     sub->soil_surface.ws_passive = ReadParamToDouble(cmdstr, "WS_PASSIVE_SURFACE", file_name, line_number);
-    sub->soil_surface.ws_passive = MAX(sub->soil_surface.ws_passive, STORAGE_MIN);
+    sub->soil_surface.ws_passive = std::max(sub->soil_surface.ws_passive, STORAGE_MIN);
     biort_printf(VL_NORMAL, "  Surface zone passive water storage is %.2f mm.\n", sub->soil_surface.ws_passive);
 
     NextLine(file_pointer, cmdstr, &line_number);
     sub->soil_sz.ws_passive = ReadParamToDouble(cmdstr, "WS_PASSIVE_UZ", file_name, line_number);
-    sub->soil_sz.ws_passive = MAX(sub->soil_sz.ws_passive, STORAGE_MIN);
+    sub->soil_sz.ws_passive = std::max(sub->soil_sz.ws_passive, STORAGE_MIN);
     biort_printf(VL_NORMAL, "  Upper zone passive water storage is %.2f mm.\n", sub->soil_sz.ws_passive);
 
     NextLine(file_pointer, cmdstr, &line_number);
     sub->soil_dz.ws_passive = ReadParamToDouble(cmdstr, "WS_PASSIVE_LZ", file_name, line_number);
-    sub->soil_dz.ws_passive = MAX(sub->soil_dz.ws_passive, STORAGE_MIN);
+    sub->soil_dz.ws_passive = std::max(sub->soil_dz.ws_passive, STORAGE_MIN);
     biort_printf(VL_NORMAL, "  Lower zone passive water storage is %.2f mm.\n", sub->soil_dz.ws_passive);
 
     //===== Depth =====//

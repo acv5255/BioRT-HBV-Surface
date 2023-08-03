@@ -1,6 +1,6 @@
 #include "biort.hpp"
 
-void GetIAP(double iap[MAXSPS], const double activity[MAXSPS], const double dep_kin[MAXSPS][MAXSPS], int num_reactions, int num_stc) {
+void GetIAP(double iap[MAXSPS], const array<f64, MAXSPS>& activity, const double dep_kin[MAXSPS][MAXSPS], int num_reactions, int num_stc) {
     for (int i = 0; i < num_reactions; i++) {
         iap[i] = 0.0;
         for (int j = 0; j < num_stc; j++) {
@@ -774,7 +774,7 @@ int SolveSurfaceReact(double stepsize, const ChemTableEntry chemtbl[], const Kin
 }
 
 double ReactControl(const ChemTableEntry chemtbl[], const KineticTableEntry kintbl[], const ReactionNetwork *rttbl,
-    double stepsize, double porosity, double depth, double satn, double temp, double Zw, double react_rate[],
+    double stepsize, double porosity, double depth, double satn, double temp, double Zw, array<f64, MAXSPS>& react_rate,
     ChemicalState *chms)
 {
     double          substep;
@@ -839,7 +839,7 @@ double ReactControl(const ChemTableEntry chemtbl[], const KineticTableEntry kint
 }
 
 double ReactSurfaceControl(const ChemTableEntry chemtbl[], const KineticTableEntry kintbl[], const ReactionNetwork *rttbl,
-    double stepsize, double porosity, double depth, double tot_water, double temp, double react_rate[],
+    double stepsize, double porosity, double depth, double tot_water, double temp, array<f64, MAXSPS>& react_rate,
     ChemicalState *chms)
 {
     double          substep;
@@ -922,7 +922,7 @@ double WTDepthFactor(double Zw, double n_alpha){
     return    fzw;
 }
 
-void SoilMoistFactorRange(double dst[MAXSPS], double satn, const double sw_threshold[MAXSPS], const double sw_exponent[MAXSPS], int start, int end, int offset) {
+void SoilMoistFactorRange(double dst[MAXSPS], double satn, const array<f64, MAXSPS>& sw_threshold, const array<f64, MAXSPS>& sw_exponent, int start, int end, int offset) {
     /* Calculate the soil moisture factor over an array */
     if (satn < 1.0) {
         for (int i = start; i < end; i++) {
@@ -932,19 +932,19 @@ void SoilMoistFactorRange(double dst[MAXSPS], double satn, const double sw_thres
     return;
 }
 
-void GetSurfaceAreaRange(double area[MAXSPS], const double prim_conc[MAXSPS], const double ssa[MAXSPS], const ChemTableEntry chemtbl[], int start, int end, int offset) {
+void GetSurfaceAreaRange(double area[MAXSPS], const array<f64, MAXSPS>& prim_conc, const array<f64, MAXSPS>& ssa, const ChemTableEntry chemtbl[], int start, int end, int offset) {
     for (int i = start; i < end; i++) {
         area[i - offset] = prim_conc[i] * ssa[i] * chemtbl[i].molar_mass;
     }
 }
 
-void GetTempFactorRange(double ftemp[MAXSPS], const double q10[MAXSPS], double temperature, int start, int end, int offset) {
+void GetTempFactorRange(double ftemp[MAXSPS], const array<f64, MAXSPS>& q10, double temperature, int start, int end, int offset) {
     for (int i = start; i < end; i++) {
         ftemp[i - offset] = SoilTempFactor(q10[i], temperature);
     }
 }
 
-void GetWTDepthFactorRange(double fzw[MAXSPS], double Zw, const double n_alpha[MAXSPS], int start, int end, int offset) {
+void GetWTDepthFactorRange(double fzw[MAXSPS], double Zw, const array<f64, MAXSPS>& n_alpha, int start, int end, int offset) {
     for (int i = start; i < end; i++) {
         fzw[i - offset] = WTDepthFactor(Zw, n_alpha[i]);
     }

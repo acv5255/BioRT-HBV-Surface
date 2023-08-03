@@ -10,10 +10,14 @@
 #include <stdarg.h>
 #include <float.h>
 #include <sys/stat.h>
-#include <stdbool.h>
 
 // C++ includes
 #include <cmath>
+#include <array>
+
+// Usings
+using f64 = double;
+using std::array;
 
 // SUNDIAL Header Files
 #include "sundials/sundials_dense.h"        // Prototypes for small dense fcts.
@@ -105,8 +109,8 @@ class ReactionNetwork
         double          dep_mtx[MAXSPS][MAXSPS];// dependency of secondary species on primary species
         double          dep_kin[MAXSPS][MAXSPS];// dependency of kinetic species on primary species
         double          conc_contrib[MAXSPS][MAXSPS];   // contribution of each species to total concentration
-        double          keq[MAXSPS];            // Keq's of secondary species
-        double          keq_kin[MAXSPS];        // Keq's of kinetic species
+        array<f64, MAXSPS> keq;
+        array<f64, MAXSPS> keq_kin;
         double          adh;                    // Debye Huckel parameter
         double          bdh;                    // Debye Huckel parameter
         double          bdt;                    // Debye Huckel parameter
@@ -140,30 +144,30 @@ class KineticTableEntry
                                                 // different temperatures
         double          keq;                    // equilibrium constant
         int             ndep;                   // number of dependency
-        int             dep_index[MAXDEP];      // position of species that kinetic reaction depends on
-        double          dep_power[MAXDEP];      // power of dependency
+        array<int, MAXDEP> dep_index;           // position of species that kinetic reaction depends on
+        array<f64, MAXDEP> dep_power;           // power of dependency
         int             biomass_index;          // position of biomass species
         int             nmonod;                 // number of monod species
-        int             monod_index[MAXDEP];    // position of monod species
-        double          monod_para[MAXDEP];     // parameter for monod dependency
+        array<int, MAXDEP> monod_index;         // position of monod species
+        array<f64, MAXDEP> monod_para;          // parameter for monod dependency
         int             ninhib;                 // number of inhibition species
-        int             inhib_index[MAXDEP];    // position of inhibition species
-        double          inhib_para[MAXDEP];     // parameters that controls this inhibition
+        array<int, MAXDEP> inhib_index;         // position of inhibition species
+        array<f64, MAXDEP> inhib_para;          // parameters that controls this inhibition
 };
 
 class ChemicalState
 {
     public:
-        double          tot_conc[MAXSPS];       // concentration (mol kgH2O-1)
-        double          prim_conc[MAXSPS];      // primary concentration (mol kgH2O-1)
-        double          sec_conc[MAXSPS];       // secondary concentration (mol kgH2O-1)
-        double          prim_actv[MAXSPS];      // activity of primary species
-        double          ssa[MAXSPS];            // specific surface area (m2 g-1)
-        double          sw_thld[MAXSPS];        // threshold in soil moisture function (-)
-        double          sw_exp[MAXSPS];         // exponent in soil moisture function (-)
-        double          q10[MAXSPS];            // Q10 factor (-)
-        double          n_alpha[MAXSPS];        // n*alpha in depth function (-)
-        double          tot_mol[MAXSPS];        // total moles (mol m-2)
+        array<f64, MAXSPS> tot_conc;       // concentration (mol kgH2O-1)
+        array<f64, MAXSPS> prim_conc;      // primary concentration (mol kgH2O-1)
+        array<f64, MAXSPS> sec_conc;       // secondary concentration (mol kgH2O-1)
+        array<f64, MAXSPS> prim_actv;      // activity of primary species
+        array<f64, MAXSPS> ssa;            // specific surface area (m2 g-1)
+        array<f64, MAXSPS> sw_thld;        // threshold in soil moisture function (-)
+        array<f64, MAXSPS> sw_exp;         // exponent in soil moisture function (-)
+        array<f64, MAXSPS> q10;            // Q10 factor (-)
+        array<f64, MAXSPS> n_alpha;        // n*alpha in depth function (-)
+        array<f64, MAXSPS> tot_mol;        // total moles (mol m-2)
 };
 
 class CalibrationStruct
@@ -188,7 +192,7 @@ class Subcatchment
         double         (*q)[NQ];
         double        **prcp_conc_time;         // time-series precipitation concentration (mol L-1)  2021-05-20
         double         *tmp;                    // air temperature (degree C)
-        double          prcp_conc[MAXSPS];      // concentration in precipitation (mol kgH2O-1)
+        array<f64, MAXSPS> prcp_conc;           // concentration in precipitation (mol kgH2O-1)
         SoilConstants   soil_surface;           // Surface soil parameters
         SoilConstants   soil_sz;                // Shallow zone soil parameters
         SoilConstants   soil_dz;                // Deep zone soil parameters
@@ -198,7 +202,8 @@ class Subcatchment
         double          perc;                   // percolation rate (mm day-1)
         double          sfcf;                   // snow fall correction factor
         double          tt;                     // threshold temperature (degree C)
-        double          react_rate[NWS][MAXSPS];// reaction rate (mol m-2 day-1)
+        // double          react_rate[NWS][MAXSPS];
+        array<array<f64, MAXSPS>, NWS> react_rate;  // reaction rate (mol m-2 day-1)
         ChemicalState chms[NWS];
         ChemicalState river_chms;
 };
@@ -229,14 +234,14 @@ void            ParseLine(const char [], char [], double *);
 void            PrintDailyResults(FILE *, int, int, const ReactionNetwork *, const Subcatchment* subcatch);
 void            PrintHeader(FILE *, int, const ReactionNetwork *, const ChemTableEntry chemtbl[]);
 double          ReactControl(const ChemTableEntry [], const KineticTableEntry [], const ReactionNetwork *, double, double, double,
-    double, double, double, double [], ChemicalState *);
+    double, double, double, array<f64, MAXSPS>&, ChemicalState *);
 void            Reaction(int, double, const ChemTableEntry [], const KineticTableEntry [],
     const ReactionNetwork *, Subcatchment* subcatch);
 void            ReadAdsorption(const char [], int, int, ChemTableEntry [], ReactionNetwork *);
 void            ReadCationEchg(const char [], double, ChemTableEntry [], ReactionNetwork *);
 void            ReadChem(const char [], ControlData *, ReactionNetwork *, ChemTableEntry [], KineticTableEntry []);
 void            ReadCini(const char [], const ChemTableEntry *, ReactionNetwork *, Subcatchment* subcatch);
-void            ReadConc(FILE *, int, const ChemTableEntry [], int *, double [], double [], double [], double [], double[], double[]);
+void            ReadConc(FILE *, int, const ChemTableEntry [], int *, array<f64, MAXSPS>&, array<f64, MAXSPS>&, array<f64, MAXSPS>&, array<f64, MAXSPS>&, array<f64, MAXSPS>&, array<f64, MAXSPS>&);
 void            ReadDHParam(const char [], int, double *);
 void            ReadHbvParam(const char [], Subcatchment* subcatch);
 void            ReadHbvResults(const char [], int *, int **, Subcatchment* subcatch, int);
@@ -266,25 +271,25 @@ void            UnwrapParentheses(const char wrapped_str[], char str[]);
 void            UpdatePrimConc(const ReactionNetwork *rttbl, const ControlData ctrl, Subcatchment* subcatch);
 
 // Andrew's functions
-bool            CheckArrayForNan(const double arr[MAXSPS]);
+bool            CheckArrayForNan(const array<f64, MAXSPS>& arr);
 void            CheckChmsForNonFinite(const ChemicalState* chms, const char* filename, const int line_number);
-bool            CheckNonzeroRanged(const double arr[MAXSPS], const int num);
-void            ErrOnZeroRanged(const char* filename, const char* arr_name, const int line_number, const double arr[MAXSPS], const int num);
-void            ComputeDependence(double tmpconc[MAXSPS], const double dep_mtx[MAXSPS][MAXSPS], const double keq[MAXSPS], int num_rows, int num_cols, int offset);
-void            ErrorOnArrayNan(const double arr[MAXSPS], const char* array_name, const char* filename, const int line_number);
-void            ErrorOnArrayNanIter(const double arr[MAXSPS], const char* array_name, const char* filename, const int line_number, const int iter);
-void            GetLogActivity(double tmpconc[MAXSPS], double gamma[MAXSPS], const double dep_mtx[MAXSPS][MAXSPS], const double keq[MAXSPS], int num_rows, int num_cols, int offset);
+bool            CheckNonzeroRanged(const array<f64, MAXSPS>& arr, const int num);
+void            ErrOnZeroRanged(const char* filename, const char* arr_name, const int line_number, const array<f64, MAXSPS>& arr, const int num);
+void            ComputeDependence(array<f64, MAXSPS>& tmpconc, const double dep_mtx[MAXSPS][MAXSPS], const array<f64, MAXSPS>& keq, int num_rows, int num_cols, int offset);
+void            ErrorOnArrayNan(const array<f64, MAXSPS>& arr, const char* array_name, const char* filename, const int line_number);
+void            ErrorOnArrayNanIter(const array<f64, MAXSPS>& arr, const char* array_name, const char* filename, const int line_number, const int iter);
+void            GetLogActivity(array<f64, MAXSPS>& tmpconc, double gamma[MAXSPS], const double dep_mtx[MAXSPS][MAXSPS], const array<f64, MAXSPS>& keq, int num_rows, int num_cols, int offset);
 void            GetSecondarySpecies(double conc[MAXSPS], const double gamma[MAXSPS], const ReactionNetwork* rttbl);
-void            GetSurfaceAreaRange(double area[MAXSPS], const double prim_conc[MAXSPS], const double ssa[MAXSPS], const ChemTableEntry chemtbl[], int start, int end, int offset);
-void            GetTempFactorRange(double ftemp[MAXSPS], const double q10[MAXSPS], double temperature, int start, int end, int offset);
-void            GetWTDepthFactorRange(double fzw[MAXSPS], double Zw, const double n_alpha[MAXSPS], int start, int end, int offset);
-void            Log10Arr(const double src[MAXSPS], double dst[MAXSPS], int num_species);
+void            GetSurfaceAreaRange(double area[MAXSPS], const array<f64, MAXSPS>& prim_conc, const array<f64, MAXSPS>& ssa, const ChemTableEntry chemtbl[], int start, int end, int offset);
+void            GetTempFactorRange(double ftemp[MAXSPS], const array<f64, MAXSPS>& q10, double temperature, int start, int end, int offset);
+void            GetWTDepthFactorRange(double fzw[MAXSPS], double Zw, const array<f64, MAXSPS>& n_alpha, int start, int end, int offset);
+void            Log10Arr(const array<f64, MAXSPS>& src, array<f64, MAXSPS>& dst, int num_species);
 void            Pow10Arr(const double src[MAXSPS], double dst[MAXSPS], int num_species);
-void            PrintArray(const double arr[MAXSPS]);
+void            PrintArray(const array<f64, MAXSPS>& arr);
 void            PrintMatrix(const realtype** mat, const int nrows, const int ncols);
 void            SetZero(double arr[MAXSPS]);
 void            SetZeroRange(double arr[MAXSPS], int start, int end);
-void            SoilMoistFactorRange(double dst[MAXSPS], double satn, const double sw_threshold[MAXSPS], const double sw_exponent[MAXSPS], 
+void            SoilMoistFactorRange(double dst[MAXSPS], double satn, const array<f64, MAXSPS>& sw_threshold, const array<f64, MAXSPS>& sw_exponent, 
                     int start, int end, int offset);
 double          SumArr(const double arr[MAXSPS], int num_species);
 
@@ -294,7 +299,6 @@ void            TransportSurfaceZone(const ReactionNetwork* rttbl, const Control
 
 void            PrintChemicalState(const ChemicalState* chms);
 
-bool            CompareSubcatch(const Subcatchment* lhs, const Subcatchment* rhs, const int num);
 double          ReadParamToDouble(const char buffer[], const char keyword[], const char fn[], int line_number);
 void            ResetReactionRates(Subcatchment * subcatch);
 int             ReadParamToInt(const char buffer[], const char keyword[], const char fn[], int line_number);
@@ -303,7 +307,7 @@ void            ReactSurfaceZone(const double temp, const SoilConstants soil, co
 int             SolveSurfaceReact(double stepsize, const ChemTableEntry chemtbl[], const KineticTableEntry kintbl[], const ReactionNetwork *rttbl,
                     double tot_water, double temp, double porosity, ChemicalState *chms);
 double          ReactSurfaceControl(const ChemTableEntry chemtbl[], const KineticTableEntry kintbl[], const ReactionNetwork *rttbl,
-                    double stepsize, double porosity, double depth, double satn, double temp, double react_rate[],
+                    double stepsize, double porosity, double depth, double satn, double temp, array<f64, MAXSPS>& react_rate,
                     ChemicalState *chms);
 
 //===== Constant definitions =====//

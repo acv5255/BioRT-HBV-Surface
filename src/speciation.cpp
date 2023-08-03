@@ -3,7 +3,7 @@
 const int MAX_SPECIATION_ITERS = 100;
 const double MAX_STEP = 1.0;
 
-void GetSecondarySpeciesRange(const ReactionNetwork* rttbl, double tmpconc[MAXSPS], double gamma[MAXSPS]) {
+void GetSecondarySpeciesRange(const ReactionNetwork* rttbl, array<f64, MAXSPS>& tmpconc, double gamma[MAXSPS]) {
     for (int i = 0; i < rttbl->num_ssc; i++)
     {
         tmpconc[i + rttbl->num_stc] = 0.0;
@@ -16,7 +16,7 @@ void GetSecondarySpeciesRange(const ReactionNetwork* rttbl, double tmpconc[MAXSP
     return;
 }
 
-double GetIonicStrength(const ReactionNetwork* rttbl, const ChemTableEntry chemtbl[], const double conc[MAXSPS]) {
+double GetIonicStrength(const ReactionNetwork* rttbl, const ChemTableEntry chemtbl[], const array<f64, MAXSPS>& conc) {
     double imat = 0.0;
     for (int i = 0; i < rttbl->num_stc + rttbl->num_ssc; i++)
     {
@@ -30,7 +30,7 @@ int SolveSpeciation(const ChemTableEntry chemtbl[], const ControlData ctrl, cons
     ChemicalState *chms)
 {
     double          residue[MAXSPS];
-    double          tmpconc[MAXSPS];
+    array<f64, MAXSPS> tmpconc;
     double          tot_conc[MAXSPS];
     double          log10gamma[MAXSPS];
     double          maxerror;
@@ -40,15 +40,11 @@ int SolveSpeciation(const ChemTableEntry chemtbl[], const ControlData ctrl, cons
     // the same but the total concentration for H+ does not need to be solved.
     // If speciation flg = 0, all defined value is total concentration
     SetZero(residue);
-    SetZero(tmpconc);
+    tmpconc.fill(0.0);
     SetZero(tot_conc);
     SetZero(log10gamma);
 
     Log10Arr(chms->prim_conc, tmpconc, rttbl->num_stc);
-    if (!CheckArrayForNan(chms->prim_conc)) {
-        printf("chms->prim_conc contains nan value in speciation.c near line 45\n");
-        exit(-1);
-    }
 
     ComputeDependence(tmpconc, rttbl->dep_mtx, rttbl->keq, rttbl->num_ssc, rttbl->num_sdc, rttbl->num_stc);
 

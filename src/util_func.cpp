@@ -19,7 +19,7 @@ void SetZeroRange(double arr[MAXSPS], int start, int end) {
     }
 }
 
-void Log10Arr(const double src[MAXSPS], double dst[MAXSPS], int num_species) {
+void Log10Arr(const array<f64, MAXSPS>& src, array<f64, MAXSPS>& dst, int num_species) {
     for (int i = 0; i < num_species; i++) {
         dst[i] = log10(src[i]);
     }
@@ -138,7 +138,7 @@ void ParseCmdLineParam(int argc, char *argv[], char dir[])
     }
 }
 
-void ComputeDependence(double tmpconc[MAXSPS], const double dep_mtx[MAXSPS][MAXSPS], const double keq[MAXSPS], int num_rows, int num_cols, int offset) {
+void ComputeDependence(array<f64, MAXSPS>& tmpconc, const double dep_mtx[MAXSPS][MAXSPS], const array<f64, MAXSPS>& keq, int num_rows, int num_cols, int offset) {
     for (int i = 0; i < num_rows; i++)
     {
         tmpconc[i + offset] = 0.0;
@@ -150,7 +150,7 @@ void ComputeDependence(double tmpconc[MAXSPS], const double dep_mtx[MAXSPS][MAXS
     }
 }
 
-void GetLogActivity(double tmpconc[MAXSPS], double gamma[MAXSPS], const double dep_mtx[MAXSPS][MAXSPS], const double keq[MAXSPS], int num_rows, int num_cols, int offset) {
+void GetLogActivity(array<f64, MAXSPS>& tmpconc, double gamma[MAXSPS], const double dep_mtx[MAXSPS][MAXSPS], const array<f64, MAXSPS>& keq, int num_rows, int num_cols, int offset) {
     for (int i = 0; i < num_rows; i++)
     {
         tmpconc[i + offset] = 0.0;
@@ -162,7 +162,7 @@ void GetLogActivity(double tmpconc[MAXSPS], double gamma[MAXSPS], const double d
     }
 }
 
-bool CheckArrayForNan(const double arr[MAXSPS]) {
+bool CheckArrayForNan(const array<f64, MAXSPS>& arr) {
     for (int i = 0; i < MAXSPS; i++) {
         if (!isfinite(arr[i])) {
             return false;
@@ -172,7 +172,7 @@ bool CheckArrayForNan(const double arr[MAXSPS]) {
     return true;
 }
 
-void ErrorOnArrayNan(const double arr[MAXSPS], const char* array_name, const char* filename, const int line_number) {
+void ErrorOnArrayNan(const array<f64, MAXSPS>& arr, const char* array_name, const char* filename, const int line_number) {
     /* If an array contains a nan value, exit, or else do nothing */
     if (!CheckArrayForNan(arr)) {
         printf("Array '%s' in file '%s' near line %d contains nonfinite value, exiting...\n", array_name, filename, line_number);
@@ -183,7 +183,7 @@ void ErrorOnArrayNan(const double arr[MAXSPS], const char* array_name, const cha
     return;
 }
 
-void PrintArray(const double arr[MAXSPS]) {
+void PrintArray(const array<f64, MAXSPS>& arr) {
     // Print a constant sized array
     for (int i = 0; i < MAXSPS; i++) {
         printf("%.4g  ", arr[i]);
@@ -247,7 +247,7 @@ void CheckChmsForNonFinite(const ChemicalState* chms, const char* filename, cons
     }
 }
 
-void ErrorOnArrayNanIter(const double arr[MAXSPS], const char* array_name, const char* filename, const int line_number, const int iter) {
+void ErrorOnArrayNanIter(const array<f64, MAXSPS>& arr, const char* array_name, const char* filename, const int line_number, const int iter) {
     /* If an array contains a nan value, exit, or else do nothing */
     if (!CheckArrayForNan(arr)) {
         printf("Array '%s' in file '%s' near line %d on iter %d contains NaN value, exiting...\n", array_name, filename, line_number, iter);
@@ -258,7 +258,7 @@ void ErrorOnArrayNanIter(const double arr[MAXSPS], const char* array_name, const
     return;   
 }
 
-bool CheckNonzeroRanged(const double arr[MAXSPS], const int num) {
+bool CheckNonzeroRanged(const array<f64, MAXSPS>& arr, const int num) {
     const double TOL = 1e-15;
     for (int i = 0; i < num; i++) {
         if (fabs(arr[i]) < TOL) return false;
@@ -266,7 +266,7 @@ bool CheckNonzeroRanged(const double arr[MAXSPS], const int num) {
     return true;
 }
 
-void ErrOnZeroRanged(const char* filename, const char* arr_name, const int line_number, const double arr[MAXSPS], const int num) {
+void ErrOnZeroRanged(const char* filename, const char* arr_name, const int line_number, const array<f64, MAXSPS>& arr, const int num) {
     if (!CheckNonzeroRanged(arr, num)) {
         printf("Array '%s' in file '%s' near line '%d' contains zero value (ranged) when it shouldn't, exiting...\n", arr_name, filename, line_number);
         PrintArray(arr);
@@ -281,8 +281,8 @@ bool CompareFloats(const double lhs, const double rhs) {
     return fabs(lhs - rhs) < TOL;
 }
 
-bool CompareArray(const double* lhs, const double* rhs, const int num) {
-    for (int i = 0; i < num; i++) {
+bool CompareArray(const array<f64, MAXSPS>& lhs, const array<f64, MAXSPS>& rhs) {
+    for (unsigned int i = 0; i < lhs.size(); i++) {
         if (CompareFloats(lhs[i], rhs[i])) return false;
     }
 
@@ -290,42 +290,19 @@ bool CompareArray(const double* lhs, const double* rhs, const int num) {
 }
 
 bool CompareChemicalState(const ChemicalState* lhs, const ChemicalState* rhs) {
-    return CompareArray(lhs->tot_conc, rhs->tot_conc, MAXSPS)
-        && CompareArray(lhs->prim_conc, rhs->prim_conc, MAXSPS)
-        && CompareArray(lhs->prim_actv, rhs->prim_actv, MAXSPS)
-        && CompareArray(lhs->sec_conc, rhs->sec_conc, MAXSPS)
-        && CompareArray(lhs->ssa, rhs->ssa, MAXSPS)
-        && CompareArray(lhs->sw_thld, rhs->sw_thld, MAXSPS)
-        && CompareArray(lhs->sw_exp, rhs->sw_exp, MAXSPS)
-        && CompareArray(lhs->q10, rhs->q10, MAXSPS)
-        && CompareArray(lhs->n_alpha, rhs->n_alpha, MAXSPS)
-        && CompareArray(lhs->tot_mol, rhs->tot_mol, MAXSPS);
+    return CompareArray(lhs->tot_conc, rhs->tot_conc)
+        && CompareArray(lhs->prim_conc, rhs->prim_conc)
+        && CompareArray(lhs->prim_actv, rhs->prim_actv)
+        && CompareArray(lhs->sec_conc, rhs->sec_conc)
+        && CompareArray(lhs->ssa, rhs->ssa)
+        && CompareArray(lhs->sw_thld, rhs->sw_thld)
+        && CompareArray(lhs->sw_exp, rhs->sw_exp)
+        && CompareArray(lhs->q10, rhs->q10)
+        && CompareArray(lhs->n_alpha, rhs->n_alpha)
+        && CompareArray(lhs->tot_mol, rhs->tot_mol);
 }
 
 // Compare two subcatchments and determine whether the data in each is the same
-bool CompareSubcatch(const Subcatchment* lhs, const Subcatchment* rhs, const int num_steps) {
-    for (int i = 0; i < num_steps; i++) {
-        if (!CompareArray(lhs->ws[i], rhs->ws[i], NWS)) return false;
-        if (!CompareArray(lhs->q[i], rhs->q[i], NQ)) return false;
-    }
-
-    if (!(
-        CompareFloats(lhs->k1, rhs->k1) &&
-        CompareFloats(lhs->k2, rhs->k2) &&
-        CompareFloats(lhs->maxbas, rhs->maxbas) &&
-        CompareFloats(lhs->perc, rhs->perc) &&
-        CompareFloats(lhs->sfcf, rhs->sfcf) &&
-        CompareFloats(lhs->tt, rhs->tt)
-    )) return false;
-
-    for (int i = 0; i < NWS; i++) {
-        if (!CompareChemicalState(&lhs->chms[i], &rhs->chms[i])) return false;
-    }
-
-    if (!CompareChemicalState(&lhs->river_chms, &rhs->river_chms)) return false;
-
-    return true;
-}
 
 void PrintMatrix(const realtype** mat, const int nrows, const int ncols) {
     // Print a matrix

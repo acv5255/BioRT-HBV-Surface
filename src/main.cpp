@@ -62,7 +62,6 @@ int main(int argc, char *argv[])
     InitChem(dir, &calib, ctrl, chemtbl, kintbl, &rttbl, &subcatch);
 
     // Check on secondary concentrations in the surface zone
-    ErrOnZeroRanged("main.c", "subcatch.chms[SURFACE].sec_conc", 63, subcatch.chms[SURFACE].sec_conc, 2);
 
     // Create output directory when necessary
     mkdir("output");

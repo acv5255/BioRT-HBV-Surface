@@ -7,7 +7,8 @@ void ReadCini(const char dir[], const ChemTableEntry *chemtbl, ReactionNetwork *
     char            cmdstr[MAXSTRING];
     FILE           *file_pointer;
     int             line_number = 0;
-    double          dummy[MAXSPS];
+    // double          dummy[MAXSPS];
+    array<f64, MAXSPS> dummy_arr;
 
     sprintf(file_name, "input/%s/cini.txt", dir);
     file_pointer = fopen(file_name, "r");
@@ -17,7 +18,7 @@ void ReadCini(const char dir[], const ChemTableEntry *chemtbl, ReactionNetwork *
     // Read precipitation concentration
     // printf("\tPRECIPITATION:\n");
     FindLine(file_pointer, "PRECIPITATION", &line_number, cmdstr);
-    ReadConc(file_pointer, rttbl->num_stc, chemtbl, &line_number, subcatch->prcp_conc, dummy, dummy, dummy, dummy, dummy);
+    ReadConc(file_pointer, rttbl->num_stc, chemtbl, &line_number, subcatch->prcp_conc, dummy_arr, dummy_arr, dummy_arr, dummy_arr, dummy_arr);
 
 
     // Read surface concentration  2021-05-07
@@ -41,7 +42,7 @@ void ReadCini(const char dir[], const ChemTableEntry *chemtbl, ReactionNetwork *
     fclose(file_pointer);
 }
 
-void ReadConc(FILE *fp, int num_stc, const ChemTableEntry chemtbl[], int *lno, double tot_conc[], double ssa[], double q10[], double sw_thld[], double sw_exp[], double n_alpha[])
+void ReadConc(FILE *fp, int num_stc, const ChemTableEntry chemtbl[], int *lno, array<f64, MAXSPS>& tot_conc, array<f64, MAXSPS>& ssa, array<f64, MAXSPS>& q10, array<f64, MAXSPS>& sw_thld, array<f64, MAXSPS>& sw_exp, array<f64, MAXSPS>& n_alpha)
 {
     char            cmdstr[MAXSTRING];
     char            temp_str[MAXSTRING];

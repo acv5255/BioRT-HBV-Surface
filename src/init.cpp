@@ -2,7 +2,7 @@
 
 // Initialize RT structures
 void InitChem(const char dir[], const CalibrationStruct *calib, const ControlData ctrl, array<ChemTableEntry, MAXSPS>& chemtbl,
-    KineticTableEntry kintbl[], ReactionNetwork *rttbl, Subcatchment* subcatch)
+    array<KineticTableEntry, MAXSPS>& kintbl, ReactionNetwork *rttbl, Subcatchment* subcatch)
 {
     char            file_name[MAXSTRING];
     FILE           *file_pointer;

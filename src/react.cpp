@@ -69,7 +69,7 @@ void GetSecondarySpecies(array<f64, MAXSPS>& conc, const array<f64, MAXSPS>& gam
 }
 
 void ReactZone(const int kzone, const double temp, const SoilConstants soil, const double tot_water, const array<ChemTableEntry, MAXSPS>& chemtbl,
-        const KineticTableEntry kintbl[], const ReactionNetwork* rttbl, double stepsize, Subcatchment* subcatch) {
+        const array<KineticTableEntry, MAXSPS>& kintbl, const ReactionNetwork* rttbl, double stepsize, Subcatchment* subcatch) {
     
     const double Zw = soil.depth - tot_water / soil.porosity;     // UZ or LZ or SURFACE
     double substep;
@@ -100,7 +100,7 @@ void ReactZone(const int kzone, const double temp, const SoilConstants soil, con
 }
 
 void ReactSurfaceZone(const double temp, const SoilConstants soil, const double tot_water, const array<ChemTableEntry, MAXSPS>& chemtbl,
-        const KineticTableEntry kintbl[], const ReactionNetwork* rttbl, double stepsize, Subcatchment* subcatch) {
+        const array<KineticTableEntry, MAXSPS>& kintbl, const ReactionNetwork* rttbl, double stepsize, Subcatchment* subcatch) {
     
     double substep;
 
@@ -124,7 +124,7 @@ void ReactSurfaceZone(const double temp, const SoilConstants soil, const double 
 }
 
 void GetRates(array<f64, MAXSPS>& rate, array<f64, MAXSPS>& rate_spe, const array<f64, MAXSPS>& area, const array<f64, MAXSPS>& ftemp, const array<f64, MAXSPS>& fsw, const array<f64, MAXSPS>& fzw,
-    const ReactionNetwork* rttbl, const KineticTableEntry kintbl[MAXSPS], const ChemicalState* chms) {
+    const ReactionNetwork* rttbl, const array<KineticTableEntry, MAXSPS>& kintbl, const ChemicalState* chms) {
         
     for (int i = 0; i < rttbl->num_mkr; i++) {
         int min_pos = kintbl[i].position - rttbl->num_stc + rttbl->num_min;
@@ -161,7 +161,7 @@ void GetRates(array<f64, MAXSPS>& rate, array<f64, MAXSPS>& rate_spe, const arra
 }
 
 void Reaction(int kstep, double stepsize, const array<ChemTableEntry, MAXSPS>& chemtbl,
-    const KineticTableEntry kintbl[], const ReactionNetwork *rttbl, Subcatchment* subcatch)
+    const array<KineticTableEntry, MAXSPS>& kintbl, const ReactionNetwork *rttbl, Subcatchment* subcatch)
 {
     const double temp = subcatch->tmp[kstep];
     if (subcatch->q[kstep][Q0] >= 0.1) {
@@ -174,7 +174,7 @@ void Reaction(int kstep, double stepsize, const array<ChemTableEntry, MAXSPS>& c
     ReactZone(LZ, temp, subcatch->soil_dz, subcatch->ws[kstep][LZ], chemtbl, kintbl, rttbl, stepsize, subcatch);
 }
 
-int SolveReact(double stepsize, const array<ChemTableEntry, MAXSPS>& chemtbl, const KineticTableEntry kintbl[], const ReactionNetwork *rttbl,
+int SolveReact(double stepsize, const array<ChemTableEntry, MAXSPS>& chemtbl, const array<KineticTableEntry, MAXSPS>& kintbl, const ReactionNetwork *rttbl,
     double satn, double temp, double porosity, double Zw, ChemicalState *chms)
 {
     array<f64, MAXSPS> tmpconc = { 0.0 };
@@ -463,7 +463,7 @@ int SolveReact(double stepsize, const array<ChemTableEntry, MAXSPS>& chemtbl, co
     return 0;
 }
 
-int SolveSurfaceReact(double stepsize, const array<ChemTableEntry, MAXSPS>& chemtbl, const KineticTableEntry kintbl[], const ReactionNetwork *rttbl,
+int SolveSurfaceReact(double stepsize, const array<ChemTableEntry, MAXSPS>& chemtbl, const array<KineticTableEntry, MAXSPS>& kintbl, const ReactionNetwork *rttbl,
     double tot_water, double temp, double porosity, ChemicalState *chms)
 {
     array<double, MAXSPS> tmpconc = { 0.0 };
@@ -770,7 +770,7 @@ int SolveSurfaceReact(double stepsize, const array<ChemTableEntry, MAXSPS>& chem
     return 0;
 }
 
-double ReactControl(const array<ChemTableEntry, MAXSPS>& chemtbl, const KineticTableEntry kintbl[], const ReactionNetwork *rttbl,
+double ReactControl(const array<ChemTableEntry, MAXSPS>& chemtbl, const array<KineticTableEntry, MAXSPS>& kintbl, const ReactionNetwork *rttbl,
     double stepsize, double porosity, double depth, double satn, double temp, double Zw, array<f64, MAXSPS>& react_rate,
     ChemicalState *chms)
 {
@@ -835,7 +835,7 @@ double ReactControl(const array<ChemTableEntry, MAXSPS>& chemtbl, const KineticT
     }
 }
 
-double ReactSurfaceControl(const array<ChemTableEntry, MAXSPS>& chemtbl, const KineticTableEntry kintbl[], const ReactionNetwork *rttbl,
+double ReactSurfaceControl(const array<ChemTableEntry, MAXSPS>& chemtbl, const array<KineticTableEntry, MAXSPS>& kintbl, const ReactionNetwork *rttbl,
     double stepsize, double porosity, double depth, double tot_water, double temp, array<f64, MAXSPS>& react_rate,
     ChemicalState *chms)
 {

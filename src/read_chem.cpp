@@ -1,7 +1,7 @@
 #include "biort.hpp"
 
 void ReadChem(const char dir[], ControlData *ctrl, ReactionNetwork *rttbl, array<ChemTableEntry, MAXSPS>& chemtbl,
-    KineticTableEntry kintbl[])
+    array<KineticTableEntry, MAXSPS>& kintbl)
 {
     int             i;
     char            cmdstr[MAXSTRING];

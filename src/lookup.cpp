@@ -1,6 +1,6 @@
 #include "biort.hpp"
 
-void Lookup(FILE *fp, const CalibrationStruct *calib, array<ChemTableEntry, MAXSPS>& chemtbl, KineticTableEntry kintbl[], ReactionNetwork *rttbl)
+void Lookup(FILE *fp, const CalibrationStruct *calib, array<ChemTableEntry, MAXSPS>& chemtbl, array<KineticTableEntry, MAXSPS>& kintbl, ReactionNetwork *rttbl)
 {
     char            cmdstr[MAXSTRING];
     int             i, j, k;

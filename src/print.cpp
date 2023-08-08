@@ -1,6 +1,6 @@
 #include "biort.hpp"
 
-void PrintHeader(FILE *file_pointer, int transpt, const ReactionNetwork *rttbl, const ChemTableEntry chemtbl[])
+void PrintHeader(FILE *file_pointer, int transpt, const ReactionNetwork *rttbl, const array<ChemTableEntry, MAXSPS>& chemtbl)
 {
     char            chemn[MAXSTRING];
     char            tempstr[MAXSTRING];

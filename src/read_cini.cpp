@@ -1,6 +1,6 @@
 #include "biort.hpp"
 
-void ReadCini(const char dir[], const ChemTableEntry *chemtbl, ReactionNetwork *rttbl,
+void ReadCini(const char dir[], const array<ChemTableEntry, MAXSPS>& chemtbl, ReactionNetwork *rttbl,
     Subcatchment subcatch[])
 {
     char            file_name[MAXSTRING];
@@ -72,7 +72,7 @@ void ReadCini(const char dir[], const ChemTableEntry *chemtbl, ReactionNetwork *
     fclose(file_pointer);
 }
 
-void ReadConc(FILE *fp, int num_stc, const ChemTableEntry chemtbl[], int *lno, array<f64, MAXSPS>& tot_conc, array<f64, MAXSPS>& ssa, array<f64, MAXSPS>& q10, array<f64, MAXSPS>& sw_thld, array<f64, MAXSPS>& sw_exp, array<f64, MAXSPS>& n_alpha)
+void ReadConc(FILE *fp, int num_stc, const array<ChemTableEntry, MAXSPS>& chemtbl, int *lno, array<f64, MAXSPS>& tot_conc, array<f64, MAXSPS>& ssa, array<f64, MAXSPS>& q10, array<f64, MAXSPS>& sw_thld, array<f64, MAXSPS>& sw_exp, array<f64, MAXSPS>& n_alpha)
 {
     char            cmdstr[MAXSTRING];
     char            temp_str[MAXSTRING];

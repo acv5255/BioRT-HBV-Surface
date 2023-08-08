@@ -28,7 +28,7 @@ double TransportMassChange(const double c_in, const double c_0, const double q, 
 //   C * V - C_0 * V_0 = C_in * Q_in - C * Q_out + F.
 // Thus,
 //   C = (C_in * Qin + F + C0 * V0) / (V + Q_out).
-void Transport(int step, const ChemTableEntry *chemtbl, ReactionNetwork *rttbl, const ControlData ctrl, Subcatchment* subcatch)
+void Transport(int step, const array<ChemTableEntry, MAXSPS>& chemtbl, ReactionNetwork *rttbl, const ControlData ctrl, Subcatchment* subcatch)
 {
     /* Transport for all species in each of the zones */
     
@@ -168,7 +168,7 @@ void TransportSurfaceZone(const ReactionNetwork* rttbl, const ControlData ctrl, 
     return;
 }
 
-void TransportShallowZone(const ReactionNetwork* rttbl, const ChemTableEntry chemtbl[], Subcatchment* subcatch, const int step) {
+void TransportShallowZone(const ReactionNetwork* rttbl, const array<ChemTableEntry, MAXSPS>& chemtbl, Subcatchment* subcatch, const int step) {
     const double q_q1 = subcatch->q[step][Q1];
     const double q_q2 = subcatch->q[step][Q2];
     const double q_perc = subcatch->q[step][PERC];
@@ -214,7 +214,7 @@ void TransportShallowZone(const ReactionNetwork* rttbl, const ChemTableEntry che
     return;
 }
 
-void TransportDeepZone(const ReactionNetwork* rttbl, const ChemTableEntry chemtbl[], Subcatchment* subcatch, const int step) {
+void TransportDeepZone(const ReactionNetwork* rttbl, const array<ChemTableEntry, MAXSPS>& chemtbl, Subcatchment* subcatch, const int step) {
     const double q_q0 = subcatch->q[step][Q0];
     const double q_q1 = subcatch->q[step][Q1];
     const double q_q2 = subcatch->q[step][Q2];

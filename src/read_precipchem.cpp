@@ -1,6 +1,6 @@
 #include "biort.hpp"
 
-void ReadPrecipChem(const char dir[], int *nsteps, int *steps[], Subcatchment subcatch[], int num_stc, const ChemTableEntry chemtbl[],int mode)
+void ReadPrecipChem(const char dir[], int *nsteps, int *steps[], Subcatchment subcatch[], int num_stc, const array<ChemTableEntry, MAXSPS>& chemtbl,int mode)
 {
     FILE           *file_pointer;
     char            file_name[MAXSTRING];

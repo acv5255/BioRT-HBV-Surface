@@ -1,7 +1,7 @@
 #include "biort.hpp"
 
 // Initialize RT structures
-void InitChem(const char dir[], const CalibrationStruct *calib, const ControlData ctrl, ChemTableEntry chemtbl[],
+void InitChem(const char dir[], const CalibrationStruct *calib, const ControlData ctrl, array<ChemTableEntry, MAXSPS>& chemtbl,
     KineticTableEntry kintbl[], ReactionNetwork *rttbl, Subcatchment* subcatch)
 {
     char            file_name[MAXSTRING];
@@ -41,7 +41,7 @@ void InitChem(const char dir[], const CalibrationStruct *calib, const ControlDat
     CheckChmsForNonFinite(&subcatch->chms[LZ], "init.c", 41);
 }
 
-void InitChemState(double smcmax, double vol, const ChemTableEntry chemtbl[], const ReactionNetwork *rttbl,
+void InitChemState(double smcmax, double vol, const array<ChemTableEntry, MAXSPS>& chemtbl, const ReactionNetwork *rttbl,
     const ControlData ctrl, ChemicalState *chms)
 {
     for (int kspc = 0; kspc < rttbl->num_stc; kspc++)

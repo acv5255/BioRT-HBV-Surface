@@ -16,7 +16,7 @@ void GetSecondarySpeciesRange(const ReactionNetwork* rttbl, array<f64, MAXSPS>& 
     return;
 }
 
-double GetIonicStrength(const ReactionNetwork* rttbl, const ChemTableEntry chemtbl[], const array<f64, MAXSPS>& conc) {
+double GetIonicStrength(const ReactionNetwork* rttbl, const array<ChemTableEntry, MAXSPS>& chemtbl, const array<f64, MAXSPS>& conc) {
     double imat = 0.0;
     for (int i = 0; i < rttbl->num_stc + rttbl->num_ssc; i++)
     {
@@ -26,7 +26,7 @@ double GetIonicStrength(const ReactionNetwork* rttbl, const ChemTableEntry chemt
     return 0.5 * imat;
 }
 
-int SolveSpeciation(const ChemTableEntry chemtbl[], const ControlData ctrl, const ReactionNetwork *rttbl, int speciation_flg,
+int SolveSpeciation(const array<ChemTableEntry, MAXSPS>& chemtbl, const ControlData ctrl, const ReactionNetwork *rttbl, int speciation_flg,
     ChemicalState *chms)
 {
     double          residue[MAXSPS];
@@ -232,14 +232,14 @@ int SolveSpeciation(const ChemTableEntry chemtbl[], const ControlData ctrl, cons
     return 0;
 }
 
-void Speciation(const ChemTableEntry chemtbl[], const ControlData ctrl, const ReactionNetwork *rttbl,
+void Speciation(const array<ChemTableEntry, MAXSPS>& chemtbl, const ControlData ctrl, const ReactionNetwork *rttbl,
     Subcatchment* subcatch)
 {
     SolveSpeciation(chemtbl, ctrl, rttbl, 0, &subcatch->chms[UZ]);
     SolveSpeciation(chemtbl, ctrl, rttbl, 0, &subcatch->chms[LZ]);
 }
 
-void StreamSpeciation(int step, const ChemTableEntry chemtbl[], const ControlData ctrl,
+void StreamSpeciation(int step, const array<ChemTableEntry, MAXSPS>& chemtbl, const ControlData ctrl,
     const ReactionNetwork *rttbl, Subcatchment* subcatch)
 {
     static int      init_flag = 1;

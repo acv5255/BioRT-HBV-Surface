@@ -14,7 +14,8 @@ int main(int argc, char *argv[])
     time_t              rawtime;
     struct tm           *timestamp;
     ReactionNetwork     rttbl;
-    ChemTableEntry      chemtbl[MAXSPS];
+    // ChemTableEntry      chemtbl[MAXSPS];
+    array<ChemTableEntry, MAXSPS> chemtbl;
     KineticTableEntry   kintbl[MAXSPS];
     CalibrationStruct   calib;
     ControlData         ctrl;

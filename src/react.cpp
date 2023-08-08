@@ -46,7 +46,7 @@ double GetDependenceTerm(const KineticTableEntry* entry, const ChemicalState* ch
     return dep_term;
 }
 
-void GetSecondarySpecies(double conc[MAXSPS], const double gamma[MAXSPS], const ReactionNetwork* rttbl) {
+void GetSecondarySpecies(array<f64, MAXSPS>& conc, const array<f64, MAXSPS>& gamma, const ReactionNetwork* rttbl) {
     for (int i = 0; i < rttbl->num_ssc; i++) {
         double tmpval = 0.0;
         for (int j = 0; j < rttbl->num_sdc; j++) {
@@ -68,7 +68,7 @@ void GetSecondarySpecies(double conc[MAXSPS], const double gamma[MAXSPS], const 
     return;
 }
 
-void ReactZone(const int kzone, const double temp, const SoilConstants soil, const double tot_water, const ChemTableEntry chemtbl[],
+void ReactZone(const int kzone, const double temp, const SoilConstants soil, const double tot_water, const array<ChemTableEntry, MAXSPS>& chemtbl,
         const KineticTableEntry kintbl[], const ReactionNetwork* rttbl, double stepsize, Subcatchment* subcatch) {
     
     const double Zw = soil.depth - tot_water / soil.porosity;     // UZ or LZ or SURFACE
@@ -99,7 +99,7 @@ void ReactZone(const int kzone, const double temp, const SoilConstants soil, con
     }
 }
 
-void ReactSurfaceZone(const double temp, const SoilConstants soil, const double tot_water, const ChemTableEntry chemtbl[],
+void ReactSurfaceZone(const double temp, const SoilConstants soil, const double tot_water, const array<ChemTableEntry, MAXSPS>& chemtbl,
         const KineticTableEntry kintbl[], const ReactionNetwork* rttbl, double stepsize, Subcatchment* subcatch) {
     
     double substep;
@@ -123,7 +123,7 @@ void ReactSurfaceZone(const double temp, const SoilConstants soil, const double 
     }
 }
 
-void GetRates(double rate[MAXSPS], double rate_spe[MAXSPS], const double area[MAXSPS], const double ftemp[MAXSPS], const double fsw[MAXSPS], const double fzw[MAXSPS],
+void GetRates(array<f64, MAXSPS>& rate, array<f64, MAXSPS>& rate_spe, const array<f64, MAXSPS>& area, const array<f64, MAXSPS>& ftemp, const array<f64, MAXSPS>& fsw, const array<f64, MAXSPS>& fzw,
     const ReactionNetwork* rttbl, const KineticTableEntry kintbl[MAXSPS], const ChemicalState* chms) {
         
     for (int i = 0; i < rttbl->num_mkr; i++) {
@@ -160,7 +160,7 @@ void GetRates(double rate[MAXSPS], double rate_spe[MAXSPS], const double area[MA
 
 }
 
-void Reaction(int kstep, double stepsize, const ChemTableEntry chemtbl[],
+void Reaction(int kstep, double stepsize, const array<ChemTableEntry, MAXSPS>& chemtbl,
     const KineticTableEntry kintbl[], const ReactionNetwork *rttbl, Subcatchment* subcatch)
 {
     const double temp = subcatch->tmp[kstep];
@@ -174,23 +174,22 @@ void Reaction(int kstep, double stepsize, const ChemTableEntry chemtbl[],
     ReactZone(LZ, temp, subcatch->soil_dz, subcatch->ws[kstep][LZ], chemtbl, kintbl, rttbl, stepsize, subcatch);
 }
 
-int SolveReact(double stepsize, const ChemTableEntry chemtbl[], const KineticTableEntry kintbl[], const ReactionNetwork *rttbl,
+int SolveReact(double stepsize, const array<ChemTableEntry, MAXSPS>& chemtbl, const KineticTableEntry kintbl[], const ReactionNetwork *rttbl,
     double satn, double temp, double porosity, double Zw, ChemicalState *chms)
 {
-    double          tmpconc[MAXSPS];
-    double          tot_conc[MAXSPS];
-    double          area[MAXSPS];
-    double          ftemp[MAXSPS];
-    double          fsw[MAXSPS];
-    double          fzw[MAXSPS];
-    double          gamma[MAXSPS];
-    double          rate_pre[MAXSPS];
-    double          rate_spe[MAXSPS];
-    double          rate_spet[MAXSPS];
+    array<f64, MAXSPS> tmpconc = { 0.0 };
+    array<f64, MAXSPS> tot_conc = { 0.0 };
+    array<f64, MAXSPS> area;
+    array<f64, MAXSPS> ftemp;
+    array<f64, MAXSPS> fsw;
+    array<f64, MAXSPS> fzw;
+    array<f64, MAXSPS> gamma;
+    array<f64, MAXSPS>rate_pre;
+    array<f64, MAXSPS> rate_spe;
+    array<f64, MAXSPS> rate_spet;
     const double    TMPPRB = 1.0E-4;
     const double    TMPPRB_INV = 1.0 / TMPPRB;
     const double    inv_sat = 1.0 / satn;//inv_sat(L of porous space/L of water)= 1/sat(L of water/L of porous space)
-    SetZero(tmpconc); SetZero(tot_conc);
     CheckChmsForNonFinite(chms, "react.c", 174);
     // ErrOnZeroRanged("react.c", "chms->sec_conc", 175, chms->sec_conc, rttbl->num_ssc);
     {
@@ -203,7 +202,7 @@ int SolveReact(double stepsize, const ChemTableEntry chemtbl[], const KineticTab
     }
 
     SoilMoistFactorRange(fsw, satn, chms->soil_parameters.sw_thld, chms->soil_parameters.sw_exp, rttbl->num_stc - rttbl->num_min, rttbl->num_stc, rttbl->num_stc - rttbl->num_min);
-    SetZeroRange(rate_spe, 0, rttbl->num_stc);
+    rate_spe.fill(0.0);
     GetRates(rate_pre, rate_spe, area, ftemp, fsw, fzw, rttbl, kintbl, chms);
 
     for (int i = 0; i < rttbl->num_mkr; i++)
@@ -271,14 +270,14 @@ int SolveReact(double stepsize, const ChemTableEntry chemtbl[], const KineticTab
     {
         const int matrix_dimension = rttbl->num_stc - rttbl->num_min;
         realtype** jcb = newDenseMat(matrix_dimension, matrix_dimension);
-        double          residue[MAXSPS];
-        double          residue_t[MAXSPS];
-        sunindextype    p[MAXSPS];
-        realtype        x[MAXSPS];
+        array<f64, MAXSPS> residue;
+        array<f64, MAXSPS> residue_t;
+        array<sunindextype, MAXSPS> p;
+        array<realtype, MAXSPS> x;
 
         GetSecondarySpecies(tmpconc, gamma, rttbl);
 
-        SetZeroRange(rate_spet, 0, rttbl->num_stc);
+        rate_spet.fill(0.0);
         for (int i = 0; i < rttbl->num_mkr; i++)
         {
             double iap[MAXSPS];
@@ -378,14 +377,14 @@ int SolveReact(double stepsize, const ChemTableEntry chemtbl[], const KineticTab
             x[i] = -residue[i];
         }
 
-        int pivot_flg = denseGETRF(jcb, rttbl->num_stc - rttbl->num_min, rttbl->num_stc - rttbl->num_min, p);
+        int pivot_flg = denseGETRF(jcb, rttbl->num_stc - rttbl->num_min, rttbl->num_stc - rttbl->num_min, p.data());
         if (pivot_flg != 0)
         {
             destroyMat(jcb);
             return 1;
         }
 
-        denseGETRS(jcb, rttbl->num_stc - rttbl->num_min, p, x);
+        denseGETRS(jcb, rttbl->num_stc - rttbl->num_min, p.data(), x.data());
 
         max_error = 0.0;
         for (int i = 0; i < rttbl->num_stc - rttbl->num_min; i++)
@@ -461,27 +460,25 @@ int SolveReact(double stepsize, const ChemTableEntry chemtbl[], const KineticTab
         }
     }
 
-    CheckChmsForNonFinite(chms, "react.c", 438);
     return 0;
 }
 
-int SolveSurfaceReact(double stepsize, const ChemTableEntry chemtbl[], const KineticTableEntry kintbl[], const ReactionNetwork *rttbl,
+int SolveSurfaceReact(double stepsize, const array<ChemTableEntry, MAXSPS>& chemtbl, const KineticTableEntry kintbl[], const ReactionNetwork *rttbl,
     double tot_water, double temp, double porosity, ChemicalState *chms)
 {
-    double          tmpconc[MAXSPS];
-    double          tot_conc[MAXSPS];
-    double          area[MAXSPS];
-    double          ftemp[MAXSPS];
-    double          fsw[MAXSPS];
-    double          fzw[MAXSPS];
-    double          gamma[MAXSPS];
-    double          rate_pre[MAXSPS];
-    double          rate_spe[MAXSPS];
-    double          rate_spet[MAXSPS];
+    array<double, MAXSPS> tmpconc = { 0.0 };
+    array<double, MAXSPS> tot_conc = { 0.0 };
+    array<double, MAXSPS> area;
+    array<double, MAXSPS> ftemp;
+    array<double, MAXSPS> fsw;
+    array<double, MAXSPS> fzw;
+    array<f64, MAXSPS> gamma;
+    array<double, MAXSPS> rate_pre;
+    array<double, MAXSPS> rate_spe;
+    array<double, MAXSPS> rate_spet;
     const double    TMPPRB = 1.0E-4;
     const double    TMPPRB_INV = 1.0 / TMPPRB;
     const double    inv_sat = 1.0 / tot_water;//inv_sat(L of porous space/L of water)= 1/sat(L of water/L of porous space)
-    SetZero(tmpconc); SetZero(tot_conc);
     CheckChmsForNonFinite(chms, "react.c", 174);
     {
         int start = rttbl->num_stc - rttbl->num_min;
@@ -505,7 +502,7 @@ int SolveSurfaceReact(double stepsize, const ChemTableEntry chemtbl[], const Kin
     }
 
     // SoilMoistFactorRange(fsw, tot_water, chms->sw_thld, chms->sw_exp, rttbl->num_stc - rttbl->num_min, rttbl->num_stc, rttbl->num_stc - rttbl->num_min);
-    SetZeroRange(rate_spe, 0, rttbl->num_stc);
+    rate_spe.fill(0.0);
     GetRates(rate_pre, rate_spe, area, ftemp, fsw, fzw, rttbl, kintbl, chms);
 
     for (int i = 0; i < rttbl->num_mkr; i++)
@@ -573,14 +570,14 @@ int SolveSurfaceReact(double stepsize, const ChemTableEntry chemtbl[], const Kin
     {
         const int matrix_dimension = rttbl->num_stc - rttbl->num_min;
         realtype** jcb = newDenseMat(matrix_dimension, matrix_dimension);
-        double          residue[MAXSPS];
-        double          residue_t[MAXSPS];
-        sunindextype    p[MAXSPS];
-        realtype        x[MAXSPS];
+        array<f64, MAXSPS> residue;
+        array<f64, MAXSPS> residue_t;
+        array<sunindextype, MAXSPS> p;
+        array<realtype, MAXSPS> x;
 
         GetSecondarySpecies(tmpconc, gamma, rttbl);
 
-        SetZeroRange(rate_spet, 0, rttbl->num_stc);
+        rate_spet.fill(0.0);
         for (int i = 0; i < rttbl->num_mkr; i++)
         {
             double iap[MAXSPS];
@@ -680,14 +677,14 @@ int SolveSurfaceReact(double stepsize, const ChemTableEntry chemtbl[], const Kin
             x[i] = -residue[i];
         }
 
-        int pivot_flg = denseGETRF(jcb, rttbl->num_stc - rttbl->num_min, rttbl->num_stc - rttbl->num_min, p);
+        int pivot_flg = denseGETRF(jcb, rttbl->num_stc - rttbl->num_min, rttbl->num_stc - rttbl->num_min, p.data());
         if (pivot_flg != 0)
         {
             destroyMat(jcb);
             return 1;
         }
 
-        denseGETRS(jcb, rttbl->num_stc - rttbl->num_min, p, x);
+        denseGETRS(jcb, rttbl->num_stc - rttbl->num_min, p.data(), x.data());
 
         max_error = 0.0;
         for (int i = 0; i < rttbl->num_stc - rttbl->num_min; i++)
@@ -773,7 +770,7 @@ int SolveSurfaceReact(double stepsize, const ChemTableEntry chemtbl[], const Kin
     return 0;
 }
 
-double ReactControl(const ChemTableEntry chemtbl[], const KineticTableEntry kintbl[], const ReactionNetwork *rttbl,
+double ReactControl(const array<ChemTableEntry, MAXSPS>& chemtbl, const KineticTableEntry kintbl[], const ReactionNetwork *rttbl,
     double stepsize, double porosity, double depth, double satn, double temp, double Zw, array<f64, MAXSPS>& react_rate,
     ChemicalState *chms)
 {
@@ -838,7 +835,7 @@ double ReactControl(const ChemTableEntry chemtbl[], const KineticTableEntry kint
     }
 }
 
-double ReactSurfaceControl(const ChemTableEntry chemtbl[], const KineticTableEntry kintbl[], const ReactionNetwork *rttbl,
+double ReactSurfaceControl(const array<ChemTableEntry, MAXSPS>& chemtbl, const KineticTableEntry kintbl[], const ReactionNetwork *rttbl,
     double stepsize, double porosity, double depth, double tot_water, double temp, array<f64, MAXSPS>& react_rate,
     ChemicalState *chms)
 {
@@ -922,7 +919,7 @@ double WTDepthFactor(double Zw, double n_alpha){
     return    fzw;
 }
 
-void SoilMoistFactorRange(double dst[MAXSPS], double satn, const array<f64, MAXSPS>& sw_threshold, const array<f64, MAXSPS>& sw_exponent, int start, int end, int offset) {
+void SoilMoistFactorRange(array<f64, MAXSPS>& dst, double satn, const array<f64, MAXSPS>& sw_threshold, const array<f64, MAXSPS>& sw_exponent, int start, int end, int offset) {
     /* Calculate the soil moisture factor over an array */
     if (satn < 1.0) {
         for (int i = start; i < end; i++) {
@@ -932,19 +929,19 @@ void SoilMoistFactorRange(double dst[MAXSPS], double satn, const array<f64, MAXS
     return;
 }
 
-void GetSurfaceAreaRange(double area[MAXSPS], const array<f64, MAXSPS>& prim_conc, const array<f64, MAXSPS>& ssa, const ChemTableEntry chemtbl[], int start, int end, int offset) {
+void GetSurfaceAreaRange(array<f64, MAXSPS>& area, const array<f64, MAXSPS>& prim_conc, const array<f64, MAXSPS>& ssa, const array<ChemTableEntry, MAXSPS>& chemtbl, int start, int end, int offset) {
     for (int i = start; i < end; i++) {
         area[i - offset] = prim_conc[i] * ssa[i] * chemtbl[i].molar_mass;
     }
 }
 
-void GetTempFactorRange(double ftemp[MAXSPS], const array<f64, MAXSPS>& q10, double temperature, int start, int end, int offset) {
+void GetTempFactorRange(array<f64, MAXSPS>& ftemp, const array<f64, MAXSPS>& q10, double temperature, int start, int end, int offset) {
     for (int i = start; i < end; i++) {
         ftemp[i - offset] = SoilTempFactor(q10[i], temperature);
     }
 }
 
-void GetWTDepthFactorRange(double fzw[MAXSPS], double Zw, const array<f64, MAXSPS>& n_alpha, int start, int end, int offset) {
+void GetWTDepthFactorRange(array<f64, MAXSPS>& fzw, double Zw, const array<f64, MAXSPS>& n_alpha, int start, int end, int offset) {
     for (int i = start; i < end; i++) {
         fzw[i - offset] = WTDepthFactor(Zw, n_alpha[i]);
     }

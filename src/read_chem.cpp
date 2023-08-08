@@ -1,6 +1,6 @@
 #include "biort.hpp"
 
-void ReadChem(const char dir[], ControlData *ctrl, ReactionNetwork *rttbl, ChemTableEntry chemtbl[],
+void ReadChem(const char dir[], ControlData *ctrl, ReactionNetwork *rttbl, array<ChemTableEntry, MAXSPS>& chemtbl,
     KineticTableEntry kintbl[])
 {
     int             i;
@@ -289,7 +289,7 @@ int MatchWrappedKey(const char cmdstr[], const char key[])
     }
 }
 
-void SortChem(char chemn[MAXSPS][MAXSTRING], const int p_type[MAXSPS], int nsps, ChemTableEntry chemtbl[])
+void SortChem(char chemn[MAXSPS][MAXSTRING], const int p_type[MAXSPS], int nsps, array<ChemTableEntry, MAXSPS>& chemtbl)
 {
     int             i, j;
     int             temp;
@@ -326,7 +326,7 @@ void SortChem(char chemn[MAXSPS][MAXSTRING], const int p_type[MAXSPS], int nsps,
     }
 }
 
-int FindChem(const char chemn[MAXSTRING], int nsps, const ChemTableEntry  chemtbl[])
+int FindChem(const char chemn[MAXSTRING], int nsps, const array<ChemTableEntry, MAXSPS>& chemtbl)
 {
     int             i;
     int             ind = BADVAL;

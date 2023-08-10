@@ -1,6 +1,6 @@
 #include "biort.hpp"
 
-void Lookup(FILE *fp, const CalibrationStruct *calib, array<ChemTableEntry, MAXSPS>& chemtbl, array<KineticTableEntry, MAXSPS>& kintbl, ReactionNetwork *rttbl)
+void Lookup(FILE *fp, const CalibrationStruct *calib, array<ChemTableEntry, MAXSPS>& chemtbl, array<KineticTableEntry, MAXSPS>& kintbl, ReactionNetwork& rttbl)
 {
     char            cmdstr[MAXSTRING];
     int             i, j, k;
@@ -19,7 +19,7 @@ void Lookup(FILE *fp, const CalibrationStruct *calib, array<ChemTableEntry, MAXS
     {
         NextLine(fp, cmdstr, &lno);
     }
-    ReadTempPoints(cmdstr, rttbl->tmp, &total_temp_points, &keq_position);
+    ReadTempPoints(cmdstr, rttbl.tmp, &total_temp_points, &keq_position);
     if (keq_position == BADVAL)
     {
         biort_printf(VL_ERROR, "Error reading temperature points in %s near Line %d", ".cdbs", lno);
@@ -27,16 +27,16 @@ void Lookup(FILE *fp, const CalibrationStruct *calib, array<ChemTableEntry, MAXS
     }
 
     // Read Debye Huckel parameters from database
-    rttbl->adh = BADVAL;
-    rttbl->bdh = BADVAL;
-    rttbl->bdt = BADVAL;
+    rttbl.adh = BADVAL;
+    rttbl.bdh = BADVAL;
+    rttbl.bdt = BADVAL;
 
     while (MatchWrappedKey(cmdstr, "'Debye-Huckel adh'") != 0)
     {
         NextLine(fp, cmdstr, &lno);
     }
-    ReadDHParam(cmdstr, keq_position, &rttbl->adh);
-    if (roundi(rttbl->adh) == BADVAL)
+    ReadDHParam(cmdstr, keq_position, &rttbl.adh);
+    if (roundi(rttbl.adh) == BADVAL)
     {
         biort_printf(VL_ERROR, "Error reading Debye Huckel parameters in %s near Line %d", ".cdbs", lno);
         exit(EXIT_FAILURE);
@@ -46,8 +46,8 @@ void Lookup(FILE *fp, const CalibrationStruct *calib, array<ChemTableEntry, MAXS
     {
         NextLine(fp, cmdstr, &lno);
     }
-    ReadDHParam(cmdstr, keq_position, &rttbl->bdh);
-    if (roundi(rttbl->bdh) == BADVAL)
+    ReadDHParam(cmdstr, keq_position, &rttbl.bdh);
+    if (roundi(rttbl.bdh) == BADVAL)
     {
         biort_printf(VL_ERROR, "Error reading Debye Huckel parameters in %s near Line %d", ".cdbs", lno);
         exit(EXIT_FAILURE);
@@ -57,15 +57,15 @@ void Lookup(FILE *fp, const CalibrationStruct *calib, array<ChemTableEntry, MAXS
     {
         NextLine(fp, cmdstr, &lno);
     }
-    ReadDHParam(cmdstr, keq_position, &rttbl->bdt);
-    if (roundi(rttbl->bdt) == BADVAL)
+    ReadDHParam(cmdstr, keq_position, &rttbl.bdt);
+    if (roundi(rttbl.bdt) == BADVAL)
     {
         biort_printf(VL_ERROR, "Error reading Debye Huckel parameters in %s near Line %d", ".cdbs", lno);
         exit(EXIT_FAILURE);
     }
 
     biort_printf(VL_NORMAL, " Debye-Huckel Parameters set to A=%6.4f; B=%6.4f; b=%6.4f\n\n",
-        rttbl->adh, rttbl->bdh, rttbl->bdt);
+        rttbl.adh, rttbl.bdh, rttbl.bdt);
 
 
     for (i = 0; i < MAXSPS; i++)
@@ -73,21 +73,21 @@ void Lookup(FILE *fp, const CalibrationStruct *calib, array<ChemTableEntry, MAXS
         for (j = 0; j < MAXSPS; j++)
         {
             pot_dep[i][j] = 0.0;    // num_min x num_stc
-            rttbl->dep_mtx[i][j] = 0.0;     // num_ssc x num_sdc
-            rttbl->dep_kin[i][j] = 0.0;     // (um_mkr + num_akr) x num_stc
-            rttbl->conc_contrib[i][j] = 0.0;    // num_stc x (num_stc + num_ssc)
+            rttbl.dep_mtx[i][j] = 0.0;     // num_ssc x num_sdc
+            rttbl.dep_kin[i][j] = 0.0;     // (um_mkr + num_akr) x num_stc
+            rttbl.conc_contrib[i][j] = 0.0;    // num_stc x (num_stc + num_ssc)
 #if NOT_YET_IMPLEMENTED
-            rttbl->Totalconck[i][j] = 0.0;  // num_stc x (num_stc + num_ssc)
+            rttbl.Totalconck[i][j] = 0.0;  // num_stc x (num_stc + num_ssc)
 #endif
         }
         // Keqs of equilibrium: kinetic and kinetic all
         keq_kin_all[i] = 0.0;   // num_min
-        rttbl->keq[i] = 0.0;    // num_ssc
-        rttbl->keq_kin[i] = 0.0;    // num_mkr + num_akr
+        rttbl.keq[i] = 0.0;    // num_ssc
+        rttbl.keq_kin[i] = 0.0;    // num_mkr + num_akr
     }
 
     // Update species parameters
-    for (i = 0; i < rttbl->num_stc + rttbl->num_ssc; i++)
+    for (i = 0; i < rttbl.num_stc + rttbl.num_ssc; i++)
     {
         if (strcmp(chemtbl[i].name, "pH") == 0)
         {
@@ -104,7 +104,7 @@ void Lookup(FILE *fp, const CalibrationStruct *calib, array<ChemTableEntry, MAXS
     while (MatchWrappedKey(cmdstr, "'End of primary'") != 0)
     {
         NextLine(fp, cmdstr, &lno);
-        ReadPrimary(cmdstr, rttbl->num_stc, chemtbl);
+        ReadPrimary(cmdstr, rttbl.num_stc, chemtbl);
     }
 
     // Read parameters for secondary species
@@ -122,15 +122,15 @@ void Lookup(FILE *fp, const CalibrationStruct *calib, array<ChemTableEntry, MAXS
     }
 
     // Build dependencies
-    for (i = 0; i < rttbl->num_mkr + rttbl->num_akr; i++)
+    for (i = 0; i < rttbl.num_mkr + rttbl.num_akr; i++)
     {
-        ind = kintbl[i].position - rttbl->num_stc + rttbl->num_min;
+        ind = kintbl[i].position - rttbl.num_stc + rttbl.num_min;
         biort_printf(VL_NORMAL, " Selecting the kinetic species %s from all possible species.\n\n",
             chemtbl[kintbl[i].position].name);
-        rttbl->keq_kin[i] = keq_kin_all[ind];
-        for (k = 0; k < rttbl->num_stc; k++)
+        rttbl.keq_kin[i] = keq_kin_all[ind];
+        for (k = 0; k < rttbl.num_stc; k++)
         {
-            rttbl->dep_kin[i][k] = pot_dep[ind][k];
+            rttbl.dep_kin[i][k] = pot_dep[ind][k];
         }
     }
 
@@ -157,7 +157,7 @@ void Lookup(FILE *fp, const CalibrationStruct *calib, array<ChemTableEntry, MAXS
         }
     }
 
-    for (i = 0; i < rttbl->num_mkr; i++)
+    for (i = 0; i < rttbl.num_mkr; i++)
     {
         // Initialize kinetic reaction type
         kintbl[i].type = BADVAL;
@@ -171,7 +171,7 @@ void Lookup(FILE *fp, const CalibrationStruct *calib, array<ChemTableEntry, MAXS
 
         while (strcmp(cmdstr, "End of mineral kinetics\r\n") != 0 && strcmp(cmdstr, "End of mineral kinetics\n") != 0)
         {
-            ReadMinKin(fp, rttbl->num_stc, calib->rate, &lno, cmdstr, chemtbl, &kintbl[i]);
+            ReadMinKin(fp, rttbl.num_stc, calib->rate, &lno, cmdstr, chemtbl, &kintbl[i]);
             NextLine(fp, cmdstr, &lno);
         }
 
@@ -183,111 +183,82 @@ void Lookup(FILE *fp, const CalibrationStruct *calib, array<ChemTableEntry, MAXS
         }
     }
 
-    for (i = 0; i < rttbl->num_stc; i++)
+    for (i = 0; i < rttbl.num_stc; i++)
     {
-        rttbl->conc_contrib[i][i] = 1.0;
+        rttbl.conc_contrib[i][i] = 1.0;
     }
 
-    for (i = rttbl->num_stc; i < rttbl->num_stc + rttbl->num_ssc; i++)
+    for (i = rttbl.num_stc; i < rttbl.num_stc + rttbl.num_ssc; i++)
     {
-        for (j = 0; j < rttbl->num_sdc; j++)
+        for (j = 0; j < rttbl.num_sdc; j++)
         {
-            rttbl->conc_contrib[j][i] += rttbl->dep_mtx[i - rttbl->num_stc][j];
+            rttbl.conc_contrib[j][i] += rttbl.dep_mtx[i - rttbl.num_stc][j];
         }
     }
-    if (rttbl->num_ssc > 0)
+    if (rttbl.num_ssc > 0)
     {
         biort_printf(VL_NORMAL, " \n Dependency Matrix!\n");
 
         biort_printf(VL_NORMAL, "%-15s", " ");
-        for (i = 0; i < rttbl->num_sdc; i++)
+        for (i = 0; i < rttbl.num_sdc; i++)
         {
             biort_printf(VL_NORMAL, "%-14s", chemtbl[i].name);
         }
         biort_printf(VL_NORMAL, "\n");
 
-        for (i = 0; i < rttbl->num_ssc; i++)
+        for (i = 0; i < rttbl.num_ssc; i++)
         {
-            biort_printf(VL_NORMAL, " %-14s", chemtbl[i + rttbl->num_stc].name);
-            for (j = 0; j < rttbl->num_sdc; j++)
+            biort_printf(VL_NORMAL, " %-14s", chemtbl[i + rttbl.num_stc].name);
+            for (j = 0; j < rttbl.num_sdc; j++)
             {
-                biort_printf(VL_NORMAL, "%-14.2f", rttbl->dep_mtx[i][j]);
+                biort_printf(VL_NORMAL, "%-14.2f", rttbl.dep_mtx[i][j]);
             }
-            biort_printf(VL_NORMAL, " %6.2f\n", rttbl->keq[i]);
+            biort_printf(VL_NORMAL, " %6.2f\n", rttbl.keq[i]);
         }
     }
 
     biort_printf(VL_NORMAL, " \n Total Concentration Matrix!\n");
     biort_printf(VL_NORMAL, "%-18s", " ");
-    for (i = 0; i < rttbl->num_stc + rttbl->num_ssc; i++)
+    for (i = 0; i < rttbl.num_stc + rttbl.num_ssc; i++)
     {
         biort_printf(VL_NORMAL, "%-14s", chemtbl[i].name);
     }
     biort_printf(VL_NORMAL, "\n");
-    for (i = 0; i < rttbl->num_stc; i++)
+    for (i = 0; i < rttbl.num_stc; i++)
     {
         biort_printf(VL_NORMAL, " Sum%-14s", chemtbl[i].name);
-        for (j = 0; j < rttbl->num_stc + rttbl->num_ssc; j++)
+        for (j = 0; j < rttbl.num_stc + rttbl.num_ssc; j++)
         {
-            biort_printf(VL_NORMAL, "%-14.2f", rttbl->conc_contrib[i][j]);
+            biort_printf(VL_NORMAL, "%-14.2f", rttbl.conc_contrib[i][j]);
         }
         biort_printf(VL_NORMAL, "\n");
     }
 
     biort_printf(VL_NORMAL, " \n Kinetic Mass Matrix!\n");
     biort_printf(VL_NORMAL, "%-15s", " ");
-    for (i = 0; i < rttbl->num_stc; i++)
+    for (i = 0; i < rttbl.num_stc; i++)
     {
         biort_printf(VL_NORMAL, "%-14s", chemtbl[i].name);
     }
     biort_printf(VL_NORMAL, "\n");
-    for (j = 0; j < rttbl->num_mkr + rttbl->num_akr; j++)
+    for (j = 0; j < rttbl.num_mkr + rttbl.num_akr; j++)
     {
         biort_printf(VL_NORMAL, " %-14s", chemtbl[kintbl[j].position].name);
-        for (i = 0; i < rttbl->num_stc; i++)
+        for (i = 0; i < rttbl.num_stc; i++)
         {
-            biort_printf(VL_NORMAL, "%-14f", rttbl->dep_kin[j][i]);
+            biort_printf(VL_NORMAL, "%-14f", rttbl.dep_kin[j][i]);
         }
-        biort_printf(VL_NORMAL, " Keq = %-6.2f\n", rttbl->keq_kin[j]);
+        biort_printf(VL_NORMAL, " Keq = %-6.2f\n", rttbl.keq_kin[j]);
     }
-
-#if NOT_YET_IMPLEMENTED
-    // Use calibration coefficient to produce new Keq values for 1) CO2, 2) other kinetic reaction
-    double          Cal_PCO2 = 1.0;
-    double          Cal_Keq = 1.0;
-    for (i = 0; i < rttbl->num_akr + rttbl->num_mkr; i++)
-    {
-        rttbl->KeqKinect[i] += (!strcmp(chemtbl[i + rttbl->num_spc + rttbl->num_ads + rttbl->num_cex].name,
-            "'CO2(*g)'")) ? log10(Cal_PCO2) : log10(Cal_Keq);
-    }
-
-    printf("\n Kinetic Mass Matrix (calibrated Keq)! \n");
-    printf("%-15s", " ");
-    for (i = 0; i < rttbl->num_stc; i++)
-    {
-        printf("%-14s", chemtbl[i].name);
-    }
-    printf("\n");
-    for (j = 0; j < rttbl->num_mkr + rttbl->num_akr; j++)
-    {
-        printf(" %-14s", chemtbl[j + rttbl->num_spc + rttbl->num_ads + rttbl->num_cex].name);
-        for (i = 0; i < rttbl->num_stc; i++)
-        {
-            printf("%-14.2f", rttbl->Dep_kinetic[j][i]);
-        }
-        printf(" Keq = %-6.2f\n", rttbl->KeqKinect[j]);
-    }
-    printf("\n");
-#endif
 
     biort_printf(VL_NORMAL, " \n Mass action species type determination (0: immobile, 1: mobile, 2: Mixed) \n");
-    for (i = 0; i < rttbl->num_spc; i++)
+    for (i = 0; i < rttbl.num_spc; i++)
     {
         chemtbl[i].mtype = (chemtbl[i].itype == AQUEOUS) ? MOBILE_MA : IMMOBILE_MA;
 
-        for (j = 0; j < rttbl->num_stc + rttbl->num_ssc; j++)
+        for (j = 0; j < rttbl.num_stc + rttbl.num_ssc; j++)
         {
-            chemtbl[i].mtype = (rttbl->conc_contrib[i][j] != 0 && chemtbl[j].itype != chemtbl[i].mtype) ?
+            chemtbl[i].mtype = (rttbl.conc_contrib[i][j] != 0 && chemtbl[j].itype != chemtbl[i].mtype) ?
                 MIXED_MA : chemtbl[i].mtype;
         }
         biort_printf(VL_NORMAL, " %12s    %10d\n", chemtbl[i].name, chemtbl[i].mtype);
@@ -295,7 +266,7 @@ void Lookup(FILE *fp, const CalibrationStruct *calib, array<ChemTableEntry, MAXS
 
     biort_printf(VL_NORMAL,
         " \n Individual species type determination (1: aqueous, 2: adsorption, 3: ion exchange, 4: solid)\n");
-    for (i = 0; i < rttbl->num_stc + rttbl->num_ssc; i++)
+    for (i = 0; i < rttbl.num_stc + rttbl.num_ssc; i++)
     {
         biort_printf(VL_NORMAL, " %12s    %10d\n", chemtbl[i].name, chemtbl[i].itype);
     }
@@ -380,7 +351,7 @@ void ReadPrimary(const char cmdstr[], int num_stc, array<ChemTableEntry, MAXSPS>
     }
 }
 
-void ReadSecondary(const char cmdstr[], int npoints, int keq_position, array<ChemTableEntry, MAXSPS>& chemtbl, ReactionNetwork *rttbl)
+void ReadSecondary(const char cmdstr[], int npoints, int keq_position, array<ChemTableEntry, MAXSPS>& chemtbl, ReactionNetwork& rttbl)
 {
     int             bytes_now;
     int             bytes_consumed = 0;
@@ -394,9 +365,9 @@ void ReadSecondary(const char cmdstr[], int npoints, int keq_position, array<Che
     bytes_consumed += bytes_now;
     WrapInParentheses(chemn);
 
-    for (i = 0; i < rttbl->num_ssc; i++)
+    for (i = 0; i < rttbl.num_ssc; i++)
     {
-        ind = i + rttbl->num_stc;
+        ind = i + rttbl.num_stc;
 
         if (MatchWrappedKey(chemn, chemtbl[ind].name) == 0)
         {
@@ -410,11 +381,11 @@ void ReadSecondary(const char cmdstr[], int npoints, int keq_position, array<Che
                 bytes_consumed += bytes_now;
                 WrapInParentheses(chemn);
 
-                for (k = 0; k < rttbl->num_sdc; k++)
+                for (k = 0; k < rttbl.num_sdc; k++)
                 {
                     if (MatchWrappedKey(chemtbl[k].name, chemn) == 0)
                     {
-                        rttbl->dep_mtx[i][k] = dep;
+                        rttbl.dep_mtx[i][k] = dep;
                     }
                 }
             }
@@ -423,9 +394,9 @@ void ReadSecondary(const char cmdstr[], int npoints, int keq_position, array<Che
             {
                 if (j + 1 == keq_position)
                 {
-                    sscanf(cmdstr + bytes_consumed, "%lf%n", &rttbl->keq[i], &bytes_now);
+                    sscanf(cmdstr + bytes_consumed, "%lf%n", &rttbl.keq[i], &bytes_now);
                     bytes_consumed += bytes_now;
-                    biort_printf(VL_NORMAL, " Keq = %6.4f\n", rttbl->keq[i]);
+                    biort_printf(VL_NORMAL, " Keq = %6.4f\n", rttbl.keq[i]);
                 }
                 else
                 {
@@ -445,7 +416,7 @@ void ReadSecondary(const char cmdstr[], int npoints, int keq_position, array<Che
 }
 
 void ReadMinerals(const char cmdstr[], int npoints, int keq_position, double pot_dep[MAXSPS][MAXSPS],
-    double keq_kin_all[], array<ChemTableEntry, MAXSPS>& chemtbl, ReactionNetwork *rttbl)
+    double keq_kin_all[], array<ChemTableEntry, MAXSPS>& chemtbl, ReactionNetwork& rttbl)
 {
     int             bytes_now;
     int             bytes_consumed = 0;
@@ -461,9 +432,9 @@ void ReadMinerals(const char cmdstr[], int npoints, int keq_position, double pot
     bytes_consumed += bytes_now;
     WrapInParentheses(chemn);
 
-    for (i = 0; i < rttbl->num_min; i++)
+    for (i = 0; i < rttbl.num_min; i++)
     {
-        ind = i + rttbl->num_spc + rttbl->num_ads + rttbl->num_cex;
+        ind = i + rttbl.num_spc + rttbl.num_ads + rttbl.num_cex;
 
         if (MatchWrappedKey(chemn, chemtbl[ind].name) == 0)
         {
@@ -479,22 +450,22 @@ void ReadMinerals(const char cmdstr[], int npoints, int keq_position, double pot
                 bytes_consumed += bytes_now;
                 WrapInParentheses(chemn);
 
-                for (k = 0; k < rttbl->num_stc + rttbl->num_ssc; k++)
+                for (k = 0; k < rttbl.num_stc + rttbl.num_ssc; k++)
                 {
                     if (MatchWrappedKey(chemtbl[k].name, chemn) == 0)
                     {
-                        if (k < rttbl->num_stc)
+                        if (k < rttbl.num_stc)
                         {
                             pot_dep[i][k] = dep;
                         }
                         else
                         {
-                            for (l = 0; l < rttbl->num_spc; l++)
+                            for (l = 0; l < rttbl.num_spc; l++)
                             {
-                                pot_dep[i][l] += dep * rttbl->dep_mtx[k - rttbl->num_stc][l];
+                                pot_dep[i][l] += dep * rttbl.dep_mtx[k - rttbl.num_stc][l];
                             }
-                            //keq_kin_all[i] += dep * rttbl->keq[k - rttbl->num_stc];
-                            keq_sec += dep * rttbl->keq[k - rttbl->num_stc];  // fix by for adjusting Keq when reaction is written in terms of secondary species in database, 2021-05-26
+                            //keq_kin_all[i] += dep * rttbl.keq[k - rttbl.num_stc];
+                            keq_sec += dep * rttbl.keq[k - rttbl.num_stc];  // fix by for adjusting Keq when reaction is written in terms of secondary species in database, 2021-05-26
                         }
 
                         break;
@@ -535,7 +506,7 @@ void ReadMinerals(const char cmdstr[], int npoints, int keq_position, double pot
     }
 }
 
-void ReadAdsorption(const char cmdstr[], int npoints, int keq_position, array<ChemTableEntry, MAXSPS>& chemtbl, ReactionNetwork *rttbl)
+void ReadAdsorption(const char cmdstr[], int npoints, int keq_position, array<ChemTableEntry, MAXSPS>& chemtbl, ReactionNetwork& rttbl)
 {
     int             bytes_now;
     int             bytes_consumed = 0;
@@ -553,9 +524,9 @@ void ReadAdsorption(const char cmdstr[], int npoints, int keq_position, array<Ch
     bytes_consumed += bytes_now;
     WrapInParentheses(chemn);
 
-    for (i = 0; i < rttbl->num_ssc; i++)
+    for (i = 0; i < rttbl.num_ssc; i++)
     {
-        ind = i + rttbl->num_stc;
+        ind = i + rttbl.num_stc;
 
         if (strcmp(chemtbl[ind].name, chemn) == 0)
         {
@@ -568,11 +539,11 @@ void ReadAdsorption(const char cmdstr[], int npoints, int keq_position, array<Ch
                 bytes_consumed += bytes_now;
                 WrapInParentheses(chemn);
 
-                for (k = 0; k < rttbl->num_sdc; k++)
+                for (k = 0; k < rttbl.num_sdc; k++)
                 {
                     if (strcmp(chemtbl[k].name, chemn) == 0)
                     {
-                        rttbl->dep_mtx[i][k] = dep;
+                        rttbl.dep_mtx[i][k] = dep;
                         break;
                     }
                 }
@@ -582,9 +553,9 @@ void ReadAdsorption(const char cmdstr[], int npoints, int keq_position, array<Ch
             {
                 if (j + 1 == keq_position)
                 {
-                    sscanf(cmdstr + bytes_consumed, "%lf%n", &rttbl->keq[i], &bytes_now);
+                    sscanf(cmdstr + bytes_consumed, "%lf%n", &rttbl.keq[i], &bytes_now);
                     bytes_consumed += bytes_now;
-                    biort_printf(VL_NORMAL, " Keq = %6.4f\n", rttbl->keq[i]);
+                    biort_printf(VL_NORMAL, " Keq = %6.4f\n", rttbl.keq[i]);
                 }
                 else
                 {
@@ -596,7 +567,7 @@ void ReadAdsorption(const char cmdstr[], int npoints, int keq_position, array<Ch
     }
 }
 
-void ReadCationEchg(const char cmdstr[], double calval, array<ChemTableEntry, MAXSPS>& chemtbl, ReactionNetwork *rttbl)
+void ReadCationEchg(const char cmdstr[], double calval, array<ChemTableEntry, MAXSPS>& chemtbl, ReactionNetwork& rttbl)
 {
     int             bytes_now;
     int             bytes_consumed = 0;
@@ -613,9 +584,9 @@ void ReadCationEchg(const char cmdstr[], double calval, array<ChemTableEntry, MA
     bytes_consumed += bytes_now;
     WrapInParentheses(chemn);
 
-    for (i = 0; i < rttbl->num_ssc; i++)
+    for (i = 0; i < rttbl.num_ssc; i++)
     {
-        ind = i + rttbl->num_stc;
+        ind = i + rttbl.num_stc;
 
         if (strcmp(chemtbl[ind].name, chemn) == 0)
         {
@@ -628,20 +599,20 @@ void ReadCationEchg(const char cmdstr[], double calval, array<ChemTableEntry, MA
                 bytes_consumed += bytes_now;
                 WrapInParentheses(chemn);
 
-                for (k = 0; k < rttbl->num_sdc; k++)
+                for (k = 0; k < rttbl.num_sdc; k++)
                 {
                     if (strcmp(chemtbl[k].name, chemn) == 0)
                     {
-                        rttbl->dep_mtx[i][k] = dep;
+                        rttbl.dep_mtx[i][k] = dep;
                         break;
                     }
                 }
             }
-            sscanf(cmdstr + bytes_consumed, "%lf", &rttbl->keq[i]);
-            biort_printf(VL_NORMAL, " Keq = %6.4f \n", rttbl->keq[i]);
+            sscanf(cmdstr + bytes_consumed, "%lf", &rttbl.keq[i]);
+            biort_printf(VL_NORMAL, " Keq = %6.4f \n", rttbl.keq[i]);
 
-            rttbl->keq[i] += calval;
-            biort_printf(VL_NORMAL, " After calibration: Keq = %6.4f \n", rttbl->keq[i]);
+            rttbl.keq[i] += calval;
+            biort_printf(VL_NORMAL, " After calibration: Keq = %6.4f \n", rttbl.keq[i]);
         }
     }
 }

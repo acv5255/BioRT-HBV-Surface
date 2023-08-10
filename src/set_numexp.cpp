@@ -14,9 +14,9 @@ void CopyConstSubcatchProp(const Subcatchment& subcatch, Subcatchment& subcatch_
     subcatch_numexp.soil_dz = subcatch.soil_dz;
 }
 
-void CopyInitChemSubcatch(ReactionNetwork *rttbl, const Subcatchment& subcatch, Subcatchment& subcatch_numexp)
+void CopyInitChemSubcatch(ReactionNetwork& rttbl, const Subcatchment& subcatch, Subcatchment& subcatch_numexp)
 {
-    for (int kspc = 0; kspc < rttbl->num_stc; kspc++)
+    for (int kspc = 0; kspc < rttbl.num_stc; kspc++)
     {
         subcatch_numexp.chms[SNOW].soil_parameters.ssa[kspc] = subcatch.chms[SNOW].soil_parameters.ssa[kspc];
         subcatch_numexp.chms[SURFACE].soil_parameters.ssa[kspc] = subcatch.chms[SURFACE].soil_parameters.ssa[kspc];
@@ -64,7 +64,7 @@ void CopyInitChemSubcatch(ReactionNetwork *rttbl, const Subcatchment& subcatch, 
         subcatch_numexp.chms[STREAM].tot_mol[kspc] = subcatch.chms[STREAM].tot_mol[kspc];
     }
 
-    for (int kspc = 0; kspc < rttbl->num_ssc; kspc++)
+    for (int kspc = 0; kspc < rttbl.num_ssc; kspc++)
     {
         subcatch_numexp.chms[SNOW].sec_conc[kspc] = subcatch.chms[SNOW].sec_conc[kspc];
         subcatch_numexp.chms[SURFACE].sec_conc[kspc] = subcatch.chms[SURFACE].sec_conc[kspc];

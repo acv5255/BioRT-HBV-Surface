@@ -46,30 +46,30 @@ double GetDependenceTerm(const KineticTableEntry* entry, const ChemicalState* ch
     return dep_term;
 }
 
-void GetSecondarySpecies(array<f64, MAXSPS>& conc, const array<f64, MAXSPS>& gamma, const ReactionNetwork* rttbl) {
-    for (int i = 0; i < rttbl->num_ssc; i++) {
+void GetSecondarySpecies(array<f64, MAXSPS>& conc, const array<f64, MAXSPS>& gamma, const ReactionNetwork& rttbl) {
+    for (int i = 0; i < rttbl.num_ssc; i++) {
         double tmpval = 0.0;
-        for (int j = 0; j < rttbl->num_sdc; j++) {
-            tmpval += (conc[j] + gamma[j]) * rttbl->dep_mtx[i][j];
+        for (int j = 0; j < rttbl.num_sdc; j++) {
+            tmpval += (conc[j] + gamma[j]) * rttbl.dep_mtx[i][j];
         }
-        tmpval -= rttbl->keq[i] + gamma[i + rttbl->num_stc];
+        tmpval -= rttbl.keq[i] + gamma[i + rttbl.num_stc];
         if (std::isinf(tmpval)) {
             printf("Value in 'GetSecondarySpecies is infinite, exiting...\n"); 
-            printf("Gamma for secondary species: %g\n", gamma[i + rttbl->num_stc]);
+            printf("Gamma for secondary species: %g\n", gamma[i + rttbl.num_stc]);
             printf("Values leading up to this:\n");
-            for (int j = 0; j < rttbl->num_sdc; j++) {
+            for (int j = 0; j < rttbl.num_sdc; j++) {
                 printf("(conc, gamma) = (%g, %g)\n", conc[j], gamma[j]);
             }
             exit(-1);
         }
-        conc[i + rttbl->num_stc] = tmpval;
+        conc[i + rttbl.num_stc] = tmpval;
     }
 
     return;
 }
 
 void ReactZone(const int kzone, const double temp, const SoilConstants soil, const double tot_water, const array<ChemTableEntry, MAXSPS>& chemtbl,
-        const array<KineticTableEntry, MAXSPS>& kintbl, const ReactionNetwork* rttbl, double stepsize, Subcatchment& subcatch) {
+        const array<KineticTableEntry, MAXSPS>& kintbl, const ReactionNetwork& rttbl, double stepsize, Subcatchment& subcatch) {
     
     const double Zw = soil.depth - tot_water / soil.porosity;     // UZ or LZ or SURFACE
     double substep;
@@ -100,7 +100,7 @@ void ReactZone(const int kzone, const double temp, const SoilConstants soil, con
 }
 
 void ReactSurfaceZone(const double temp, const SoilConstants soil, const double tot_water, const array<ChemTableEntry, MAXSPS>& chemtbl,
-        const array<KineticTableEntry, MAXSPS>& kintbl, const ReactionNetwork* rttbl, double stepsize, Subcatchment& subcatch) {
+        const array<KineticTableEntry, MAXSPS>& kintbl, const ReactionNetwork& rttbl, double stepsize, Subcatchment& subcatch) {
     
     double substep;
 
@@ -124,17 +124,17 @@ void ReactSurfaceZone(const double temp, const SoilConstants soil, const double 
 }
 
 void GetRates(array<f64, MAXSPS>& rate, array<f64, MAXSPS>& rate_spe, const array<f64, MAXSPS>& area, const array<f64, MAXSPS>& ftemp, const array<f64, MAXSPS>& fsw, const array<f64, MAXSPS>& fzw,
-    const ReactionNetwork* rttbl, const array<KineticTableEntry, MAXSPS>& kintbl, const ChemicalState* chms) {
+    const ReactionNetwork& rttbl, const array<KineticTableEntry, MAXSPS>& kintbl, const ChemicalState* chms) {
         
-    for (int i = 0; i < rttbl->num_mkr; i++) {
-        int min_pos = kintbl[i].position - rttbl->num_stc + rttbl->num_min;
+    for (int i = 0; i < rttbl.num_mkr; i++) {
+        int min_pos = kintbl[i].position - rttbl.num_stc + rttbl.num_min;
 
         if (kintbl[i].type == TST)
         {
             double iap[MAXSPS];
             double dependency[MAXSPS];
-            GetIAP(iap, chms->prim_actv, rttbl->dep_kin, rttbl->num_mkr, rttbl->num_stc);
-            double temp_keq = pow(10, rttbl->keq_kin[i]);
+            GetIAP(iap, chms->prim_actv, rttbl.dep_kin, rttbl.num_mkr, rttbl.num_stc);
+            double temp_keq = pow(10, rttbl.keq_kin[i]);
             dependency[i] = GetDependenceTerm(&kintbl[i], chms);
 
             // Calculate the predicted rate depending on the type of rate law
@@ -152,16 +152,16 @@ void GetRates(array<f64, MAXSPS>& rate, array<f64, MAXSPS>& rate_spe, const arra
             // Based on CrunchTope
             rate[i] = area[min_pos] * pow(10, kintbl[i].rate) * monodterm * inhibterm * ftemp[min_pos] * fsw[min_pos] * fzw[min_pos];
         }
-        for (int j = 0; j < rttbl->num_stc; j++)
+        for (int j = 0; j < rttbl.num_stc; j++)
         {
-            rate_spe[j] += rate[i] * rttbl->dep_kin[i][j];
+            rate_spe[j] += rate[i] * rttbl.dep_kin[i][j];
         }
     }
 
 }
 
 void Reaction(int kstep, double stepsize, const array<ChemTableEntry, MAXSPS>& chemtbl,
-    const array<KineticTableEntry, MAXSPS>& kintbl, const ReactionNetwork *rttbl, Subcatchment& subcatch)
+    const array<KineticTableEntry, MAXSPS>& kintbl, const ReactionNetwork& rttbl, Subcatchment& subcatch)
 {
     const double temp = subcatch.tmp[kstep];
     if (subcatch.q[kstep][Q0] >= 0.1) {
@@ -174,7 +174,7 @@ void Reaction(int kstep, double stepsize, const array<ChemTableEntry, MAXSPS>& c
     ReactZone(LZ, temp, subcatch.soil_dz, subcatch.ws[kstep][LZ], chemtbl, kintbl, rttbl, stepsize, subcatch);
 }
 
-int SolveReact(double stepsize, const array<ChemTableEntry, MAXSPS>& chemtbl, const array<KineticTableEntry, MAXSPS>& kintbl, const ReactionNetwork *rttbl,
+int SolveReact(double stepsize, const array<ChemTableEntry, MAXSPS>& chemtbl, const array<KineticTableEntry, MAXSPS>& kintbl, const ReactionNetwork& rttbl,
     double satn, double temp, double porosity, double Zw, ChemicalState *chms)
 {
     array<f64, MAXSPS> tmpconc = { 0.0 };
@@ -191,23 +191,23 @@ int SolveReact(double stepsize, const array<ChemTableEntry, MAXSPS>& chemtbl, co
     const double    TMPPRB_INV = 1.0 / TMPPRB;
     const double    inv_sat = 1.0 / satn;//inv_sat(L of porous space/L of water)= 1/sat(L of water/L of porous space)
     CheckChmsForNonFinite(chms, "react.c", 174);
-    // ErrOnZeroRanged("react.c", "chms->sec_conc", 175, chms->sec_conc, rttbl->num_ssc);
+    // ErrOnZeroRanged("react.c", "chms->sec_conc", 175, chms->sec_conc, rttbl.num_ssc);
     {
-        int start = rttbl->num_stc - rttbl->num_min;
-        int end = rttbl->num_stc;
+        int start = rttbl.num_stc - rttbl.num_min;
+        int end = rttbl.num_stc;
         int offset = start;
-        GetSurfaceAreaRange(area, chms->prim_conc, chms->soil_parameters.ssa, chemtbl, rttbl->num_stc - rttbl->num_min, rttbl->num_stc, rttbl->num_stc - rttbl->num_min);
+        GetSurfaceAreaRange(area, chms->prim_conc, chms->soil_parameters.ssa, chemtbl, rttbl.num_stc - rttbl.num_min, rttbl.num_stc, rttbl.num_stc - rttbl.num_min);
         GetTempFactorRange(ftemp, chms->soil_parameters.q10, temp, start, end, offset);
         GetWTDepthFactorRange(fzw, Zw, chms->soil_parameters.n_alpha, start, end, offset);
     }
 
-    SoilMoistFactorRange(fsw, satn, chms->soil_parameters.sw_thld, chms->soil_parameters.sw_exp, rttbl->num_stc - rttbl->num_min, rttbl->num_stc, rttbl->num_stc - rttbl->num_min);
+    SoilMoistFactorRange(fsw, satn, chms->soil_parameters.sw_thld, chms->soil_parameters.sw_exp, rttbl.num_stc - rttbl.num_min, rttbl.num_stc, rttbl.num_stc - rttbl.num_min);
     rate_spe.fill(0.0);
     GetRates(rate_pre, rate_spe, area, ftemp, fsw, fzw, rttbl, kintbl, chms);
 
-    for (int i = 0; i < rttbl->num_mkr; i++)
+    for (int i = 0; i < rttbl.num_mkr; i++)
     {
-        int min_pos = kintbl[i].position - rttbl->num_stc + rttbl->num_min;
+        int min_pos = kintbl[i].position - rttbl.num_stc + rttbl.num_min;
 
         if (rate_pre[i] < 0.0)
         {
@@ -216,22 +216,22 @@ int SolveReact(double stepsize, const array<ChemTableEntry, MAXSPS>& chemtbl, co
         }
     }
 
-    for (int i = 0; i < rttbl->num_spc; i++)
+    for (int i = 0; i < rttbl.num_spc; i++)
     {
         // Aqueous species, saturation term for aqueous volume
         // rate(mol/m2 water/s)= rate(mol/m2 pm/s)*inv_sat(L of porous space/L of water)/porosity(L of porous space/L of pm)
         rate_spe[i] *= (chemtbl[i].itype == AQUEOUS) ? (inv_sat/porosity) : 1.0;
     }
 
-    const double adh = rttbl->adh;
-    const double bdh = rttbl->bdh;
-    const double bdt = rttbl->bdt;
+    const double adh = rttbl.adh;
+    const double bdh = rttbl.bdh;
+    const double bdt = rttbl.bdt;
 
     double tot_cec = 0.0;
     double ionic_strength = 0.0;
-    for (int i = 0; i < rttbl->num_stc + rttbl->num_ssc; i++)
+    for (int i = 0; i < rttbl.num_stc + rttbl.num_ssc; i++)
     {
-        double conc_val = (i < rttbl->num_stc) ? log10(chms->prim_conc[i]) : log10(chms->sec_conc[i - rttbl->num_stc]);
+        double conc_val = (i < rttbl.num_stc) ? log10(chms->prim_conc[i]) : log10(chms->sec_conc[i - rttbl.num_stc]);
         if (std::isinf(conc_val)) {
             printf("Got non-finite value for log10(conc) for species '%s' with index %d\n", chemtbl[i].name, i);
         }
@@ -243,7 +243,7 @@ int SolveReact(double stepsize, const array<ChemTableEntry, MAXSPS>& chemtbl, co
     }
     double root_ionic_strength = sqrt(ionic_strength);
     
-    for (int i = 0; i < rttbl->num_stc + rttbl->num_ssc; i++)
+    for (int i = 0; i < rttbl.num_stc + rttbl.num_ssc; i++)
     {
         switch (chemtbl[i].itype)
         {
@@ -268,7 +268,7 @@ int SolveReact(double stepsize, const array<ChemTableEntry, MAXSPS>& chemtbl, co
     double max_error = 0.0;
     do
     {
-        const int matrix_dimension = rttbl->num_stc - rttbl->num_min;
+        const int matrix_dimension = rttbl.num_stc - rttbl.num_min;
         realtype** jcb = newDenseMat(matrix_dimension, matrix_dimension);
         array<f64, MAXSPS> residue;
         array<f64, MAXSPS> residue_t;
@@ -278,22 +278,22 @@ int SolveReact(double stepsize, const array<ChemTableEntry, MAXSPS>& chemtbl, co
         GetSecondarySpecies(tmpconc, gamma, rttbl);
 
         rate_spet.fill(0.0);
-        for (int i = 0; i < rttbl->num_mkr; i++)
+        for (int i = 0; i < rttbl.num_mkr; i++)
         {
             double iap[MAXSPS];
             double dependency[MAXSPS];
-            int min_pos = kintbl[i].position - rttbl->num_stc + rttbl->num_min;
+            int min_pos = kintbl[i].position - rttbl.num_stc + rttbl.num_min;
 
             if (kintbl[i].type == TST)
             {
                 iap[i] = 0.0;
-                for (int j = 0; j < rttbl->num_stc; j++)
+                for (int j = 0; j < rttbl.num_stc; j++)
                 {
-                    iap[i] += (chemtbl[j].itype != MINERAL) ? (tmpconc[j] + gamma[j]) * rttbl->dep_kin[i][j] : 0.0;
+                    iap[i] += (chemtbl[j].itype != MINERAL) ? (tmpconc[j] + gamma[j]) * rttbl.dep_kin[i][j] : 0.0;
                 }
                 iap[i] = pow(10, iap[i]);
 
-                double temp_keq = pow(10, rttbl->keq_kin[i]);
+                double temp_keq = pow(10, rttbl.keq_kin[i]);
 
                 dependency[i] = 0.0;
                 for (int k = 0; k < kintbl[i].ndep; k++)
@@ -319,52 +319,52 @@ int SolveReact(double stepsize, const array<ChemTableEntry, MAXSPS>& chemtbl, co
                 rate_pre[i] = area[min_pos] * pow(10, kintbl[i].rate) * monodterm * inhibterm * ftemp[min_pos] * fsw[min_pos] * fzw[min_pos];
             }
 
-            for (int j = 0; j < rttbl->num_stc; j++)
+            for (int j = 0; j < rttbl.num_stc; j++)
             {
-                rate_spet[j] += rate_pre[i] * rttbl->dep_kin[i][j];
+                rate_spet[j] += rate_pre[i] * rttbl.dep_kin[i][j];
             }
             // Adjust the unit of the calculated rate. Note that for mineral, the unit of rate and the unit of
             // concentration are mol/L porous media. For the aqueous species, the unit of the rate and the unit of the
             // concentration are mol/L pm and mol/L water respectively.
         }
-        for (int i = 0; i < rttbl->num_spc; i++)
+        for (int i = 0; i < rttbl.num_spc; i++)
         {
             // rate(mol/m2 water/s)= rate(mol/m2 pm/s)*inv_sat(L of porous space/L of water)/porosity(L of porous space/L of pm)
             rate_spet[i] *= (chemtbl[i].itype == AQUEOUS) ? (inv_sat/porosity) : 1.0;
         }
 
         // Calculate the residual for each aqueous primary species
-        for (int i = 0; i < rttbl->num_stc - rttbl->num_min; i++)
+        for (int i = 0; i < rttbl.num_stc - rttbl.num_min; i++)
         {
             double tmpval = 0.0;
-            for (int j = 0; j < rttbl->num_stc + rttbl->num_ssc; j++)
+            for (int j = 0; j < rttbl.num_stc + rttbl.num_ssc; j++)
             {
-                tmpval += rttbl->conc_contrib[i][j] * pow(10, tmpconc[j]);
+                tmpval += rttbl.conc_contrib[i][j] * pow(10, tmpconc[j]);
             }
             tot_conc[i] = tmpval;
             residue[i] = tmpval - (chms->tot_conc[i] + (rate_spe[i] + rate_spet[i]) * stepsize * 0.5);
         }
 
         // Calculate the concentrations with a perturbation TMPPRB to calculate the numerical Jacobian
-        for (int k = 0; k < rttbl->num_stc - rttbl->num_min; k++)
+        for (int k = 0; k < rttbl.num_stc - rttbl.num_min; k++)
         {
             tmpconc[k] += TMPPRB;
-            for (int i = 0; i < rttbl->num_ssc; i++)
+            for (int i = 0; i < rttbl.num_ssc; i++)
             {
                 double tmpval = 0.0;
-                for (int j = 0; j < rttbl->num_sdc; j++)
+                for (int j = 0; j < rttbl.num_sdc; j++)
                 {
-                    tmpval += (tmpconc[j] + gamma[j]) * rttbl->dep_mtx[i][j];
+                    tmpval += (tmpconc[j] + gamma[j]) * rttbl.dep_mtx[i][j];
                 }
-                tmpval -= rttbl->keq[i] + gamma[i + rttbl->num_stc];
-                tmpconc[i + rttbl->num_stc] = tmpval;
+                tmpval -= rttbl.keq[i] + gamma[i + rttbl.num_stc];
+                tmpconc[i + rttbl.num_stc] = tmpval;
             }
-            for (int i = 0; i < rttbl->num_stc - rttbl->num_min; i++)
+            for (int i = 0; i < rttbl.num_stc - rttbl.num_min; i++)
             {
                 double tmpval = 0.0;
-                for (int j = 0; j < rttbl->num_stc + rttbl->num_ssc; j++)
+                for (int j = 0; j < rttbl.num_stc + rttbl.num_ssc; j++)
                 {
-                    tmpval += rttbl->conc_contrib[i][j] * pow(10, tmpconc[j]);
+                    tmpval += rttbl.conc_contrib[i][j] * pow(10, tmpconc[j]);
                 }
                 residue_t[i] = tmpval - (chms->tot_conc[i] + (rate_spe[i] + rate_spet[i]) * stepsize * 0.5);
                 jcb[k][i] = (residue_t[i] - residue[i]) * TMPPRB_INV;
@@ -372,22 +372,22 @@ int SolveReact(double stepsize, const array<ChemTableEntry, MAXSPS>& chemtbl, co
             tmpconc[k] -= TMPPRB;
         }
         
-        for (int i = 0; i < rttbl->num_stc - rttbl->num_min; i++)
+        for (int i = 0; i < rttbl.num_stc - rttbl.num_min; i++)
         {
             x[i] = -residue[i];
         }
 
-        int pivot_flg = denseGETRF(jcb, rttbl->num_stc - rttbl->num_min, rttbl->num_stc - rttbl->num_min, p.data());
+        int pivot_flg = denseGETRF(jcb, rttbl.num_stc - rttbl.num_min, rttbl.num_stc - rttbl.num_min, p.data());
         if (pivot_flg != 0)
         {
             destroyMat(jcb);
             return 1;
         }
 
-        denseGETRS(jcb, rttbl->num_stc - rttbl->num_min, p.data(), x.data());
+        denseGETRS(jcb, rttbl.num_stc - rttbl.num_min, p.data(), x.data());
 
         max_error = 0.0;
-        for (int i = 0; i < rttbl->num_stc - rttbl->num_min; i++)
+        for (int i = 0; i < rttbl.num_stc - rttbl.num_min; i++)
         {
             // Take the step, limited to 0.3
             if (fabs(x[i]) < 0.3)
@@ -414,32 +414,32 @@ int SolveReact(double stepsize, const array<ChemTableEntry, MAXSPS>& chemtbl, co
     CheckChmsForNonFinite(chms, "react.c", 389);
 
     // Update secondary species here
-    for (int i = 0; i < rttbl->num_ssc; i++)
+    for (int i = 0; i < rttbl.num_ssc; i++)
     {
         double tmpval = 0.0;
-        for (int j = 0; j < rttbl->num_sdc; j++)
+        for (int j = 0; j < rttbl.num_sdc; j++)
         {
-            tmpval += (tmpconc[j] + gamma[j]) * rttbl->dep_mtx[i][j];
+            tmpval += (tmpconc[j] + gamma[j]) * rttbl.dep_mtx[i][j];
         }
-        tmpval -= rttbl->keq[i] + gamma[i + rttbl->num_stc];
-        tmpconc[i + rttbl->num_stc] = tmpval;
+        tmpval -= rttbl.keq[i] + gamma[i + rttbl.num_stc];
+        tmpconc[i + rttbl.num_stc] = tmpval;
     }
     CheckChmsForNonFinite(chms, "react.c", 402);
     
-    for (int i = 0; i < rttbl->num_stc - rttbl->num_min; i++)
+    for (int i = 0; i < rttbl.num_stc - rttbl.num_min; i++)
     {
         double tmpval = 0.0;
-        for (int j = 0; j < rttbl->num_stc + rttbl->num_ssc; j++)
+        for (int j = 0; j < rttbl.num_stc + rttbl.num_ssc; j++)
         {
-            tmpval += rttbl->conc_contrib[i][j] * pow(10, tmpconc[j]);
+            tmpval += rttbl.conc_contrib[i][j] * pow(10, tmpconc[j]);
         }
         tot_conc[i] = tmpval;
     }
     CheckChmsForNonFinite(chms, "react.c", 413);
 
-    for (int i = 0; i < rttbl->num_stc + rttbl->num_ssc; i++)
+    for (int i = 0; i < rttbl.num_stc + rttbl.num_ssc; i++)
     {
-        if (i < rttbl->num_stc)
+        if (i < rttbl.num_stc)
         {
             if (chemtbl[i].itype == MINERAL)
             {
@@ -456,14 +456,14 @@ int SolveReact(double stepsize, const array<ChemTableEntry, MAXSPS>& chemtbl, co
         }
         else
         {
-            chms->sec_conc[i - rttbl->num_stc] = pow(10, tmpconc[i]);
+            chms->sec_conc[i - rttbl.num_stc] = pow(10, tmpconc[i]);
         }
     }
 
     return 0;
 }
 
-int SolveSurfaceReact(double stepsize, const array<ChemTableEntry, MAXSPS>& chemtbl, const array<KineticTableEntry, MAXSPS>& kintbl, const ReactionNetwork *rttbl,
+int SolveSurfaceReact(double stepsize, const array<ChemTableEntry, MAXSPS>& chemtbl, const array<KineticTableEntry, MAXSPS>& kintbl, const ReactionNetwork& rttbl,
     double tot_water, double temp, double porosity, ChemicalState *chms)
 {
     array<double, MAXSPS> tmpconc = { 0.0 };
@@ -481,33 +481,33 @@ int SolveSurfaceReact(double stepsize, const array<ChemTableEntry, MAXSPS>& chem
     const double    inv_sat = 1.0 / tot_water;//inv_sat(L of porous space/L of water)= 1/sat(L of water/L of porous space)
     CheckChmsForNonFinite(chms, "react.c", 174);
     {
-        int start = rttbl->num_stc - rttbl->num_min;
-        int end = rttbl->num_stc;
+        int start = rttbl.num_stc - rttbl.num_min;
+        int end = rttbl.num_stc;
         int offset = start;
-        GetSurfaceAreaRange(area, chms->prim_conc, chms->soil_parameters.ssa, chemtbl, rttbl->num_stc - rttbl->num_min, rttbl->num_stc, rttbl->num_stc - rttbl->num_min);
+        GetSurfaceAreaRange(area, chms->prim_conc, chms->soil_parameters.ssa, chemtbl, rttbl.num_stc - rttbl.num_min, rttbl.num_stc, rttbl.num_stc - rttbl.num_min);
         GetTempFactorRange(ftemp, chms->soil_parameters.q10, temp, start, end, offset);
         // GetWTDepthFactorRange(fzw, Zw, chms->n_alpha, start, end, offset);
     }
 
     // Set the factors for the surface zone
-    for (int i = 0; i < rttbl->num_min; i++) {
+    for (int i = 0; i < rttbl.num_min; i++) {
         fzw[i] = 1.0;
     }
 
-    for (int i = rttbl->num_stc - rttbl->num_min; i < rttbl->num_stc; i++) {
-        int offset = rttbl->num_stc - rttbl->num_min;
+    for (int i = rttbl.num_stc - rttbl.num_min; i < rttbl.num_stc; i++) {
+        int offset = rttbl.num_stc - rttbl.num_min;
         fsw[i - offset] = pow(tot_water, chms->soil_parameters.sw_exp[i]);
         // fsw[i - offset] = 1.0;
         // printf("fsw for species %d: %g\n", i - offset, fsw[i - offset]);
     }
 
-    // SoilMoistFactorRange(fsw, tot_water, chms->sw_thld, chms->sw_exp, rttbl->num_stc - rttbl->num_min, rttbl->num_stc, rttbl->num_stc - rttbl->num_min);
+    // SoilMoistFactorRange(fsw, tot_water, chms->sw_thld, chms->sw_exp, rttbl.num_stc - rttbl.num_min, rttbl.num_stc, rttbl.num_stc - rttbl.num_min);
     rate_spe.fill(0.0);
     GetRates(rate_pre, rate_spe, area, ftemp, fsw, fzw, rttbl, kintbl, chms);
 
-    for (int i = 0; i < rttbl->num_mkr; i++)
+    for (int i = 0; i < rttbl.num_mkr; i++)
     {
-        int min_pos = kintbl[i].position - rttbl->num_stc + rttbl->num_min;
+        int min_pos = kintbl[i].position - rttbl.num_stc + rttbl.num_min;
 
         if (rate_pre[i] < 0.0)
         {
@@ -516,22 +516,22 @@ int SolveSurfaceReact(double stepsize, const array<ChemTableEntry, MAXSPS>& chem
         }
     }
 
-    for (int i = 0; i < rttbl->num_spc; i++)
+    for (int i = 0; i < rttbl.num_spc; i++)
     {
         // Aqueous species, saturation term for aqueous volume
         // rate(mol/m2 water/s)= rate(mol/m2 pm/s)*inv_sat(L of porous space/L of water)/porosity(L of porous space/L of pm)
         rate_spe[i] *= (chemtbl[i].itype == AQUEOUS) ? (inv_sat/porosity) : 1.0;
     }
 
-    const double adh = rttbl->adh;
-    const double bdh = rttbl->bdh;
-    const double bdt = rttbl->bdt;
+    const double adh = rttbl.adh;
+    const double bdh = rttbl.bdh;
+    const double bdt = rttbl.bdt;
 
     double tot_cec = 0.0;
     double ionic_strength = 0.0;
-    for (int i = 0; i < rttbl->num_stc + rttbl->num_ssc; i++)
+    for (int i = 0; i < rttbl.num_stc + rttbl.num_ssc; i++)
     {
-        double conc_val = (i < rttbl->num_stc) ? log10(chms->prim_conc[i]) : log10(chms->sec_conc[i - rttbl->num_stc]);
+        double conc_val = (i < rttbl.num_stc) ? log10(chms->prim_conc[i]) : log10(chms->sec_conc[i - rttbl.num_stc]);
         if (std::isinf(conc_val)) {
             printf("Got non-finite value for log10(conc) for species '%s' with index %d\n", chemtbl[i].name, i);
         }
@@ -543,7 +543,7 @@ int SolveSurfaceReact(double stepsize, const array<ChemTableEntry, MAXSPS>& chem
     }
     double root_ionic_strength = sqrt(ionic_strength);
     
-    for (int i = 0; i < rttbl->num_stc + rttbl->num_ssc; i++)
+    for (int i = 0; i < rttbl.num_stc + rttbl.num_ssc; i++)
     {
         switch (chemtbl[i].itype)
         {
@@ -568,7 +568,7 @@ int SolveSurfaceReact(double stepsize, const array<ChemTableEntry, MAXSPS>& chem
     double max_error = 0.0;
     do
     {
-        const int matrix_dimension = rttbl->num_stc - rttbl->num_min;
+        const int matrix_dimension = rttbl.num_stc - rttbl.num_min;
         realtype** jcb = newDenseMat(matrix_dimension, matrix_dimension);
         array<f64, MAXSPS> residue;
         array<f64, MAXSPS> residue_t;
@@ -578,22 +578,22 @@ int SolveSurfaceReact(double stepsize, const array<ChemTableEntry, MAXSPS>& chem
         GetSecondarySpecies(tmpconc, gamma, rttbl);
 
         rate_spet.fill(0.0);
-        for (int i = 0; i < rttbl->num_mkr; i++)
+        for (int i = 0; i < rttbl.num_mkr; i++)
         {
             double iap[MAXSPS];
             double dependency[MAXSPS];
-            int min_pos = kintbl[i].position - rttbl->num_stc + rttbl->num_min;
+            int min_pos = kintbl[i].position - rttbl.num_stc + rttbl.num_min;
 
             if (kintbl[i].type == TST)
             {
                 iap[i] = 0.0;
-                for (int j = 0; j < rttbl->num_stc; j++)
+                for (int j = 0; j < rttbl.num_stc; j++)
                 {
-                    iap[i] += (chemtbl[j].itype != MINERAL) ? (tmpconc[j] + gamma[j]) * rttbl->dep_kin[i][j] : 0.0;
+                    iap[i] += (chemtbl[j].itype != MINERAL) ? (tmpconc[j] + gamma[j]) * rttbl.dep_kin[i][j] : 0.0;
                 }
                 iap[i] = pow(10, iap[i]);
 
-                double temp_keq = pow(10, rttbl->keq_kin[i]);
+                double temp_keq = pow(10, rttbl.keq_kin[i]);
 
                 dependency[i] = 0.0;
                 for (int k = 0; k < kintbl[i].ndep; k++)
@@ -619,52 +619,52 @@ int SolveSurfaceReact(double stepsize, const array<ChemTableEntry, MAXSPS>& chem
                 rate_pre[i] = area[min_pos] * pow(10, kintbl[i].rate) * monodterm * inhibterm * ftemp[min_pos] * fsw[min_pos] * fzw[min_pos];
             }
 
-            for (int j = 0; j < rttbl->num_stc; j++)
+            for (int j = 0; j < rttbl.num_stc; j++)
             {
-                rate_spet[j] += rate_pre[i] * rttbl->dep_kin[i][j];
+                rate_spet[j] += rate_pre[i] * rttbl.dep_kin[i][j];
             }
             // Adjust the unit of the calculated rate. Note that for mineral, the unit of rate and the unit of
             // concentration are mol/L porous media. For the aqueous species, the unit of the rate and the unit of the
             // concentration are mol/L pm and mol/L water respectively.
         }
-        for (int i = 0; i < rttbl->num_spc; i++)
+        for (int i = 0; i < rttbl.num_spc; i++)
         {
             // rate(mol/m2 water/s)= rate(mol/m2 pm/s)*inv_sat(L of porous space/L of water)/porosity(L of porous space/L of pm)
             rate_spet[i] *= (chemtbl[i].itype == AQUEOUS) ? (inv_sat/porosity) : 1.0;
         }
 
         // Calculate the residual for each aqueous primary species
-        for (int i = 0; i < rttbl->num_stc - rttbl->num_min; i++)
+        for (int i = 0; i < rttbl.num_stc - rttbl.num_min; i++)
         {
             double tmpval = 0.0;
-            for (int j = 0; j < rttbl->num_stc + rttbl->num_ssc; j++)
+            for (int j = 0; j < rttbl.num_stc + rttbl.num_ssc; j++)
             {
-                tmpval += rttbl->conc_contrib[i][j] * pow(10, tmpconc[j]);
+                tmpval += rttbl.conc_contrib[i][j] * pow(10, tmpconc[j]);
             }
             tot_conc[i] = tmpval;
             residue[i] = tmpval - (chms->tot_conc[i] + (rate_spe[i] + rate_spet[i]) * stepsize * 0.5);
         }
 
         // Calculate the concentrations with a perturbation TMPPRB to calculate the numerical Jacobian
-        for (int k = 0; k < rttbl->num_stc - rttbl->num_min; k++)
+        for (int k = 0; k < rttbl.num_stc - rttbl.num_min; k++)
         {
             tmpconc[k] += TMPPRB;
-            for (int i = 0; i < rttbl->num_ssc; i++)
+            for (int i = 0; i < rttbl.num_ssc; i++)
             {
                 double tmpval = 0.0;
-                for (int j = 0; j < rttbl->num_sdc; j++)
+                for (int j = 0; j < rttbl.num_sdc; j++)
                 {
-                    tmpval += (tmpconc[j] + gamma[j]) * rttbl->dep_mtx[i][j];
+                    tmpval += (tmpconc[j] + gamma[j]) * rttbl.dep_mtx[i][j];
                 }
-                tmpval -= rttbl->keq[i] + gamma[i + rttbl->num_stc];
-                tmpconc[i + rttbl->num_stc] = tmpval;
+                tmpval -= rttbl.keq[i] + gamma[i + rttbl.num_stc];
+                tmpconc[i + rttbl.num_stc] = tmpval;
             }
-            for (int i = 0; i < rttbl->num_stc - rttbl->num_min; i++)
+            for (int i = 0; i < rttbl.num_stc - rttbl.num_min; i++)
             {
                 double tmpval = 0.0;
-                for (int j = 0; j < rttbl->num_stc + rttbl->num_ssc; j++)
+                for (int j = 0; j < rttbl.num_stc + rttbl.num_ssc; j++)
                 {
-                    tmpval += rttbl->conc_contrib[i][j] * pow(10, tmpconc[j]);
+                    tmpval += rttbl.conc_contrib[i][j] * pow(10, tmpconc[j]);
                 }
                 residue_t[i] = tmpval - (chms->tot_conc[i] + (rate_spe[i] + rate_spet[i]) * stepsize * 0.5);
                 jcb[k][i] = (residue_t[i] - residue[i]) * TMPPRB_INV;
@@ -672,22 +672,22 @@ int SolveSurfaceReact(double stepsize, const array<ChemTableEntry, MAXSPS>& chem
             tmpconc[k] -= TMPPRB;
         }
         
-        for (int i = 0; i < rttbl->num_stc - rttbl->num_min; i++)
+        for (int i = 0; i < rttbl.num_stc - rttbl.num_min; i++)
         {
             x[i] = -residue[i];
         }
 
-        int pivot_flg = denseGETRF(jcb, rttbl->num_stc - rttbl->num_min, rttbl->num_stc - rttbl->num_min, p.data());
+        int pivot_flg = denseGETRF(jcb, rttbl.num_stc - rttbl.num_min, rttbl.num_stc - rttbl.num_min, p.data());
         if (pivot_flg != 0)
         {
             destroyMat(jcb);
             return 1;
         }
 
-        denseGETRS(jcb, rttbl->num_stc - rttbl->num_min, p.data(), x.data());
+        denseGETRS(jcb, rttbl.num_stc - rttbl.num_min, p.data(), x.data());
 
         max_error = 0.0;
-        for (int i = 0; i < rttbl->num_stc - rttbl->num_min; i++)
+        for (int i = 0; i < rttbl.num_stc - rttbl.num_min; i++)
         {
             // Take the step, limited to 0.3
             if (fabs(x[i]) < 0.3)
@@ -720,32 +720,32 @@ int SolveSurfaceReact(double stepsize, const array<ChemTableEntry, MAXSPS>& chem
     CheckChmsForNonFinite(chms, "react.c", 389);
 
     // Update secondary species here
-    for (int i = 0; i < rttbl->num_ssc; i++)
+    for (int i = 0; i < rttbl.num_ssc; i++)
     {
         double tmpval = 0.0;
-        for (int j = 0; j < rttbl->num_sdc; j++)
+        for (int j = 0; j < rttbl.num_sdc; j++)
         {
-            tmpval += (tmpconc[j] + gamma[j]) * rttbl->dep_mtx[i][j];
+            tmpval += (tmpconc[j] + gamma[j]) * rttbl.dep_mtx[i][j];
         }
-        tmpval -= rttbl->keq[i] + gamma[i + rttbl->num_stc];
-        tmpconc[i + rttbl->num_stc] = tmpval;
+        tmpval -= rttbl.keq[i] + gamma[i + rttbl.num_stc];
+        tmpconc[i + rttbl.num_stc] = tmpval;
     }
     CheckChmsForNonFinite(chms, "react.c", 402);
     
-    for (int i = 0; i < rttbl->num_stc - rttbl->num_min; i++)
+    for (int i = 0; i < rttbl.num_stc - rttbl.num_min; i++)
     {
         double tmpval = 0.0;
-        for (int j = 0; j < rttbl->num_stc + rttbl->num_ssc; j++)
+        for (int j = 0; j < rttbl.num_stc + rttbl.num_ssc; j++)
         {
-            tmpval += rttbl->conc_contrib[i][j] * pow(10, tmpconc[j]);
+            tmpval += rttbl.conc_contrib[i][j] * pow(10, tmpconc[j]);
         }
         tot_conc[i] = tmpval;
     }
     CheckChmsForNonFinite(chms, "react.c", 413);
 
-    for (int i = 0; i < rttbl->num_stc + rttbl->num_ssc; i++)
+    for (int i = 0; i < rttbl.num_stc + rttbl.num_ssc; i++)
     {
-        if (i < rttbl->num_stc)
+        if (i < rttbl.num_stc)
         {
             if (chemtbl[i].itype == MINERAL)
             {
@@ -762,7 +762,7 @@ int SolveSurfaceReact(double stepsize, const array<ChemTableEntry, MAXSPS>& chem
         }
         else
         {
-            chms->sec_conc[i - rttbl->num_stc] = pow(10, tmpconc[i]);
+            chms->sec_conc[i - rttbl.num_stc] = pow(10, tmpconc[i]);
         }
     }
 
@@ -770,7 +770,7 @@ int SolveSurfaceReact(double stepsize, const array<ChemTableEntry, MAXSPS>& chem
     return 0;
 }
 
-double ReactControl(const array<ChemTableEntry, MAXSPS>& chemtbl, const array<KineticTableEntry, MAXSPS>& kintbl, const ReactionNetwork *rttbl,
+double ReactControl(const array<ChemTableEntry, MAXSPS>& chemtbl, const array<KineticTableEntry, MAXSPS>& kintbl, const ReactionNetwork& rttbl,
     double stepsize, double porosity, double depth, double satn, double temp, double Zw, array<f64, MAXSPS>& react_rate,
     ChemicalState *chms)
 {
@@ -779,9 +779,9 @@ double ReactControl(const array<ChemTableEntry, MAXSPS>& chemtbl, const array<Ki
     double          conc0[MAXSPS];
 
     // Copy initial mineral concentration to array
-    for (int kspc = 0; kspc < rttbl->num_min; kspc++)
+    for (int kspc = 0; kspc < rttbl.num_min; kspc++)
     {
-        conc0[kspc] = chms->tot_conc[kspc + rttbl->num_stc - rttbl->num_min];
+        conc0[kspc] = chms->tot_conc[kspc + rttbl.num_stc - rttbl.num_min];
     }
 
     substep = stepsize;
@@ -811,15 +811,15 @@ double ReactControl(const array<ChemTableEntry, MAXSPS>& chemtbl, const array<Ki
     }
     else    // Reactions succeed
     {
-        for (int kspc = 0; kspc < rttbl->num_min; kspc++)
+        for (int kspc = 0; kspc < rttbl.num_min; kspc++)
         {
             // Calculate reaction rate (mole/m2-pm/day) = mol/L-pm/day * mm of depth   * (1m/1000mm) * (1000L/1m3)
             react_rate[kspc] =
-                (chms->tot_conc[kspc + rttbl->num_stc - rttbl->num_min] - conc0[kspc]) * depth;
+                (chms->tot_conc[kspc + rttbl.num_stc - rttbl.num_min] - conc0[kspc]) * depth;
             CheckChmsForNonFinite(chms, "react.c", 477);
         }
 
-        for (int kspc = 0; kspc <rttbl->num_spc; kspc++)
+        for (int kspc = 0; kspc <rttbl.num_spc; kspc++)
         {
             chms->tot_mol[kspc] = chms->tot_conc[kspc] * porosity * satn * depth; // tot_mol (moles-mm of water/L water ) =tot_conc (mol/L water) * satn * porosity * depth
             CheckChmsForNonFinite(chms, "react.c", 483);
@@ -835,7 +835,7 @@ double ReactControl(const array<ChemTableEntry, MAXSPS>& chemtbl, const array<Ki
     }
 }
 
-double ReactSurfaceControl(const array<ChemTableEntry, MAXSPS>& chemtbl, const array<KineticTableEntry, MAXSPS>& kintbl, const ReactionNetwork *rttbl,
+double ReactSurfaceControl(const array<ChemTableEntry, MAXSPS>& chemtbl, const array<KineticTableEntry, MAXSPS>& kintbl, const ReactionNetwork& rttbl,
     double stepsize, double porosity, double depth, double tot_water, double temp, array<f64, MAXSPS>& react_rate,
     ChemicalState *chms)
 {
@@ -844,9 +844,9 @@ double ReactSurfaceControl(const array<ChemTableEntry, MAXSPS>& chemtbl, const a
     double          conc0[MAXSPS];
 
     // Copy initial mineral concentration to array
-    for (int kspc = 0; kspc < rttbl->num_min; kspc++)
+    for (int kspc = 0; kspc < rttbl.num_min; kspc++)
     {
-        conc0[kspc] = chms->tot_conc[kspc + rttbl->num_stc - rttbl->num_min];
+        conc0[kspc] = chms->tot_conc[kspc + rttbl.num_stc - rttbl.num_min];
     }
 
     substep = stepsize;
@@ -876,15 +876,15 @@ double ReactSurfaceControl(const array<ChemTableEntry, MAXSPS>& chemtbl, const a
     }
     else    // Reactions succeed
     {
-        for (int kspc = 0; kspc < rttbl->num_min; kspc++)
+        for (int kspc = 0; kspc < rttbl.num_min; kspc++)
         {
             // Calculate reaction rate (mole/m2-pm/day) = mol/L-pm/day * mm of depth   * (1m/1000mm) * (1000L/1m3)
             react_rate[kspc] =
-                (chms->tot_conc[kspc + rttbl->num_stc - rttbl->num_min] - conc0[kspc]) * depth;
+                (chms->tot_conc[kspc + rttbl.num_stc - rttbl.num_min] - conc0[kspc]) * depth;
             CheckChmsForNonFinite(chms, "react.c", 477);
         }
 
-        for (int kspc = 0; kspc <rttbl->num_spc; kspc++)
+        for (int kspc = 0; kspc <rttbl.num_spc; kspc++)
         {
             chms->tot_mol[kspc] = chms->tot_conc[kspc] * tot_water; // tot_mol (moles-mm of water/L water ) =tot_conc (mol/L water) * satn * porosity * depth
             CheckChmsForNonFinite(chms, "react.c", 483);

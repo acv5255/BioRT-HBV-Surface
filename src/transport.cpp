@@ -28,7 +28,7 @@ double TransportMassChange(const double c_in, const double c_0, const double q, 
 //   C * V - C_0 * V_0 = C_in * Q_in - C * Q_out + F.
 // Thus,
 //   C = (C_in * Qin + F + C0 * V0) / (V + Q_out).
-void Transport(int step, const array<ChemTableEntry, MAXSPS>& chemtbl, ReactionNetwork *rttbl, const ControlData ctrl, Subcatchment& subcatch)
+void Transport(int step, const array<ChemTableEntry, MAXSPS>& chemtbl, ReactionNetwork& rttbl, const ControlData ctrl, Subcatchment& subcatch)
 {
     /* Transport for all species in each of the zones */
     
@@ -44,11 +44,11 @@ void Transport(int step, const array<ChemTableEntry, MAXSPS>& chemtbl, ReactionN
     TransportDeepZone(rttbl, chemtbl, subcatch, step);
 }
 
-void UpdatePrimConc(const ReactionNetwork *rttbl, const ControlData ctrl, Subcatchment& subcatch)
+void UpdatePrimConc(const ReactionNetwork& rttbl, const ControlData ctrl, Subcatchment& subcatch)
 {
     /* Set concentrations */
 
-    for (int kspc = 0; kspc < rttbl->num_spc; kspc++)
+    for (int kspc = 0; kspc < rttbl.num_spc; kspc++)
     {
         subcatch.chms[SNOW].prim_conc[kspc] = subcatch.chms[SNOW].tot_conc[kspc];
         subcatch.chms[SURFACE].prim_conc[kspc] = subcatch.chms[SURFACE].tot_conc[kspc];
@@ -61,7 +61,7 @@ void UpdatePrimConc(const ReactionNetwork *rttbl, const ControlData ctrl, Subcat
     }
 }
 
-void TransportSurfaceZone(const ReactionNetwork* rttbl, const ControlData ctrl, Subcatchment& subcatch, const int step) {
+void TransportSurfaceZone(const ReactionNetwork& rttbl, const ControlData ctrl, Subcatchment& subcatch, const int step) {
     const double t = 1.0;     // Time step for transportation
     const double q_snow = subcatch.q[step][Psnow];
     const double q_snowmelt = subcatch.q[step][snowmelt];
@@ -85,7 +85,7 @@ void TransportSurfaceZone(const ReactionNetwork* rttbl, const ControlData ctrl, 
     const double x_0 = do_surface_transport ? q_q0 / q : 0.0;    // Fraction of water input going to the stream
     const double x_inf = do_surface_transport ? q_inf / q : 1.0; // Fraction of water input entering as infiltration
         
-    for (int kspc = 0; kspc < rttbl->num_spc; kspc++)
+    for (int kspc = 0; kspc < rttbl.num_spc; kspc++)
     {
 
         double c_prcp_i;        // Concentration in precipitation of species (i)
@@ -166,14 +166,14 @@ void TransportSurfaceZone(const ReactionNetwork* rttbl, const ControlData ctrl, 
     return;
 }
 
-void TransportShallowZone(const ReactionNetwork* rttbl, const array<ChemTableEntry, MAXSPS>& chemtbl, Subcatchment& subcatch, const int step) {
+void TransportShallowZone(const ReactionNetwork& rttbl, const array<ChemTableEntry, MAXSPS>& chemtbl, Subcatchment& subcatch, const int step) {
     const double q_q1 = subcatch.q[step][Q1];
     const double q_q2 = subcatch.q[step][Q2];
     const double q_perc = subcatch.q[step][PERC];
     const double ws_dz = subcatch.ws[step][LZ];
     const double ws_dz_tot = ws_dz + q_q2;
 
-    for (int kspc = 0; kspc < rttbl->num_spc; kspc++)
+    for (int kspc = 0; kspc < rttbl.num_spc; kspc++)
     {
         // Temporary concentration in UZ
         
@@ -187,12 +187,12 @@ void TransportShallowZone(const ReactionNetwork* rttbl, const array<ChemTableEnt
         
         if (chemtbl[kspc].mtype == MIXED_MA)
         {
-            for (int kssc = 0; kssc < rttbl->num_ssc; kssc++)
+            for (int kssc = 0; kssc < rttbl.num_ssc; kssc++)
             {
-                const double nu_i = rttbl->conc_contrib[kspc][rttbl->num_stc+kssc];     // Stoichiometric coefficient in each species
+                const double nu_i = rttbl.conc_contrib[kspc][rttbl.num_stc+kssc];     // Stoichiometric coefficient in each species
                 const double c_i = subcatch.chms[UZ].sec_conc[kssc];
                 if ((nu_i != 0) && 
-                    (chemtbl[rttbl->num_stc+kssc].itype != AQUEOUS))
+                    (chemtbl[rttbl.num_stc+kssc].itype != AQUEOUS))
                     {
                         subcatch.chms[UZ].tot_mol[kspc] += c_i * q_q1 * nu_i;
                         subcatch.chms[STREAM].tot_mol[kspc] -= c_i * q_q1 * nu_i;
@@ -212,7 +212,7 @@ void TransportShallowZone(const ReactionNetwork* rttbl, const array<ChemTableEnt
     return;
 }
 
-void TransportDeepZone(const ReactionNetwork* rttbl, const array<ChemTableEntry, MAXSPS>& chemtbl, Subcatchment& subcatch, const int step) {
+void TransportDeepZone(const ReactionNetwork& rttbl, const array<ChemTableEntry, MAXSPS>& chemtbl, Subcatchment& subcatch, const int step) {
     const double q_q0 = subcatch.q[step][Q0];
     const double q_q1 = subcatch.q[step][Q1];
     const double q_q2 = subcatch.q[step][Q2];
@@ -221,7 +221,7 @@ void TransportDeepZone(const ReactionNetwork* rttbl, const array<ChemTableEntry,
     const double ws_sz = subcatch.ws[step][UZ];       // Water storage in the shallow zone
     const double ws_dz = subcatch.ws[step][LZ];       // Water storage in the deep zone
 
-    for (int kspc = 0; kspc < rttbl->num_spc; kspc++)
+    for (int kspc = 0; kspc < rttbl.num_spc; kspc++)
     {
         {
             // Q2
@@ -230,13 +230,13 @@ void TransportDeepZone(const ReactionNetwork* rttbl, const array<ChemTableEntry,
             
             if (chemtbl[kspc].mtype == MIXED_MA)
             {
-                for (int kssc = 0; kssc < rttbl->num_ssc; kssc++)
+                for (int kssc = 0; kssc < rttbl.num_ssc; kssc++)
                 {
-                    double nu_i = rttbl->conc_contrib[kspc][rttbl->num_stc+kssc];   // Contribution of each species to this value
+                    double nu_i = rttbl.conc_contrib[kspc][rttbl.num_stc+kssc];   // Contribution of each species to this value
                     double c_i = subcatch.chms[LZ].sec_conc[kssc];     // Concentration of species 'kspc'
                     double dm_i = nu_i * c_i * q_q2;                    // Mass transfer between zones
                     if ((nu_i != 0) && 
-                        (chemtbl[rttbl->num_stc+kssc].itype != AQUEOUS))
+                        (chemtbl[rttbl.num_stc+kssc].itype != AQUEOUS))
                         {
                             subcatch.chms[LZ].tot_mol[kspc] += dm_i;
                             subcatch.chms[STREAM].tot_mol[kspc] -= dm_i;

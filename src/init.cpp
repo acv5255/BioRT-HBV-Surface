@@ -2,7 +2,7 @@
 
 // Initialize RT structures
 void InitChem(const char dir[], const CalibrationStruct *calib, const ControlData ctrl, array<ChemTableEntry, MAXSPS>& chemtbl,
-    array<KineticTableEntry, MAXSPS>& kintbl, ReactionNetwork *rttbl, Subcatchment& subcatch)
+    array<KineticTableEntry, MAXSPS>& kintbl, ReactionNetwork& rttbl, Subcatchment& subcatch)
 {
     char            file_name[MAXSTRING];
     FILE           *file_pointer;
@@ -14,7 +14,7 @@ void InitChem(const char dir[], const CalibrationStruct *calib, const ControlDat
     Lookup(file_pointer, calib, chemtbl, kintbl, rttbl);
     fclose(file_pointer);
 
-    for (int kspc = 0; kspc < rttbl->num_stc; kspc++)
+    for (int kspc = 0; kspc < rttbl.num_stc; kspc++)
     {
         // Apply calibration
         // subcatch.chms[SNOW].ssa[kspc] *= (chemtbl[kspc].itype == MINERAL) ? calib->ssa : 1.0;   // 2021-05-07
@@ -41,10 +41,10 @@ void InitChem(const char dir[], const CalibrationStruct *calib, const ControlDat
     CheckChmsForNonFinite(&subcatch.chms[LZ], "init.c", 41);
 }
 
-void InitChemState(double smcmax, double vol, const array<ChemTableEntry, MAXSPS>& chemtbl, const ReactionNetwork *rttbl,
+void InitChemState(double smcmax, double vol, const array<ChemTableEntry, MAXSPS>& chemtbl, const ReactionNetwork& rttbl,
     const ControlData ctrl, ChemicalState *chms)
 {
-    for (int kspc = 0; kspc < rttbl->num_stc; kspc++)
+    for (int kspc = 0; kspc < rttbl.num_stc; kspc++)
     {
         if (strcmp(chemtbl[kspc].name, "'H+'") == 0)
         {
@@ -76,7 +76,7 @@ void InitChemState(double smcmax, double vol, const array<ChemTableEntry, MAXSPS
         }
     }
 
-    for (int kspc = 0; kspc < rttbl->num_ssc; kspc++)
+    for (int kspc = 0; kspc < rttbl.num_ssc; kspc++)
     {
         chms->sec_conc[kspc] = ZERO_CONC;
     }
@@ -85,7 +85,7 @@ void InitChemState(double smcmax, double vol, const array<ChemTableEntry, MAXSPS
     SolveSpeciation(chemtbl, ctrl, rttbl, 1, chms);
 
     // Total moles should be calculated after speciation
-    for (int kspc = 0; kspc < rttbl->num_stc; kspc++)
+    for (int kspc = 0; kspc < rttbl.num_stc; kspc++)
     {
         chms->tot_mol[kspc] = chms->tot_conc[kspc] * vol;
     }

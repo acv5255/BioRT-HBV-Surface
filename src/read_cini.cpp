@@ -1,6 +1,6 @@
 #include "biort.hpp"
 
-void ReadCini(const char dir[], const array<ChemTableEntry, MAXSPS>& chemtbl, ReactionNetwork *rttbl,
+void ReadCini(const char dir[], const array<ChemTableEntry, MAXSPS>& chemtbl, ReactionNetwork& rttbl,
     Subcatchment& subcatch)
 {
     char            file_name[MAXSTRING];
@@ -17,7 +17,7 @@ void ReadCini(const char dir[], const array<ChemTableEntry, MAXSPS>& chemtbl, Re
     // Read precipitation concentration
     // printf("\tPRECIPITATION:\n");
     FindLine(file_pointer, "PRECIPITATION", &line_number, cmdstr);
-    ReadConc(file_pointer, rttbl->num_stc, chemtbl, &line_number, subcatch.prcp_conc, dummy_arr, dummy_arr, dummy_arr, dummy_arr, dummy_arr);
+    ReadConc(file_pointer, rttbl.num_stc, chemtbl, &line_number, subcatch.prcp_conc, dummy_arr, dummy_arr, dummy_arr, dummy_arr, dummy_arr);
 
 
     // Read surface concentration  2021-05-07
@@ -25,7 +25,7 @@ void ReadCini(const char dir[], const array<ChemTableEntry, MAXSPS>& chemtbl, Re
     FindLine(file_pointer, "SURFACE", &line_number, cmdstr);
     ReadConc(
         file_pointer, 
-        rttbl->num_stc, 
+        rttbl.num_stc, 
         chemtbl, 
         &line_number, 
         subcatch.chms[SURFACE].tot_conc, 
@@ -41,7 +41,7 @@ void ReadCini(const char dir[], const array<ChemTableEntry, MAXSPS>& chemtbl, Re
     FindLine(file_pointer, "UZ", &line_number, cmdstr);
     ReadConc(
         file_pointer, 
-        rttbl->num_stc, 
+        rttbl.num_stc, 
         chemtbl, 
         &line_number, 
         subcatch.chms[UZ].tot_conc, 
@@ -56,7 +56,7 @@ void ReadCini(const char dir[], const array<ChemTableEntry, MAXSPS>& chemtbl, Re
     FindLine(file_pointer, "LZ", &line_number, cmdstr);
     ReadConc(
         file_pointer, 
-        rttbl->num_stc, 
+        rttbl.num_stc, 
         chemtbl, 
         &line_number, 
         subcatch.chms[LZ].tot_conc, 

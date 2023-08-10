@@ -1,6 +1,6 @@
 #include "biort.hpp"
 
-void ReadChem(const char dir[], ControlData *ctrl, ReactionNetwork *rttbl, array<ChemTableEntry, MAXSPS>& chemtbl,
+void ReadChem(const char dir[], ControlData *ctrl, ReactionNetwork& rttbl, array<ChemTableEntry, MAXSPS>& chemtbl,
     array<KineticTableEntry, MAXSPS>& kintbl)
 {
     int             i;
@@ -69,28 +69,28 @@ void ReadChem(const char dir[], ControlData *ctrl, ReactionNetwork *rttbl, array
     }
 
     NextLine(file_pointer, cmdstr, &lno);
-    rttbl->tmp = ReadParamToDouble(cmdstr, CHEM_TEMPERATURE_ID, file_name, lno);
-    biort_printf(VL_NORMAL, "  Temperature = %3.1f \n", rttbl->tmp);
+    rttbl.tmp = ReadParamToDouble(cmdstr, CHEM_TEMPERATURE_ID, file_name, lno);
+    biort_printf(VL_NORMAL, "  Temperature = %3.1f \n", rttbl.tmp);
 
     // Count numbers of species and reactions
     FindLine(file_pointer, CHEM_PRIMARY_SPECIES_ID, &lno, file_name);
-    rttbl->num_stc = CountLines(file_pointer, cmdstr, 1, "SECONDARY_SPECIES");
-    rttbl->num_ssc = CountLines(file_pointer, cmdstr, 1, "MINERAL_KINETICS");
-    rttbl->num_mkr = CountLines(file_pointer, cmdstr, 1, "PRECIPITATION_CONC");
-    rttbl->num_akr = 0;     // Not implemented yet
+    rttbl.num_stc = CountLines(file_pointer, cmdstr, 1, "SECONDARY_SPECIES");
+    rttbl.num_ssc = CountLines(file_pointer, cmdstr, 1, "MINERAL_KINETICS");
+    rttbl.num_mkr = CountLines(file_pointer, cmdstr, 1, "PRECIPITATION_CONC");
+    rttbl.num_akr = 0;     // Not implemented yet
 
     // Primary species block
     biort_printf(VL_NORMAL, "\nPRIMARY SPECIES\n");
-    biort_printf(VL_NORMAL, "  %d chemical species specified. \n", rttbl->num_stc);
+    biort_printf(VL_NORMAL, "  %d chemical species specified. \n", rttbl.num_stc);
     FindLine(file_pointer, "BOF", &lno, file_name);
     FindLine(file_pointer, CHEM_PRIMARY_SPECIES_ID, &lno, file_name);
 
-    rttbl->num_spc = 0;
-    rttbl->num_ads = 0;
-    rttbl->num_cex = 0;
-    rttbl->num_min = 0;
+    rttbl.num_spc = 0;
+    rttbl.num_ads = 0;
+    rttbl.num_cex = 0;
+    rttbl.num_min = 0;
 
-    for (i = 0; i < rttbl->num_stc; i++)
+    for (i = 0; i < rttbl.num_stc; i++)
     {
         NextLine(file_pointer, cmdstr, &lno);
         if (sscanf(cmdstr, "%s", chemn[i]) != 1)
@@ -105,16 +105,16 @@ void ReadChem(const char dir[], ControlData *ctrl, ReactionNetwork *rttbl, array
                 biort_printf(VL_ERROR, "Error finding primary species %s in the database.\n", chemn[i]);
                 exit(EXIT_FAILURE);
             case AQUEOUS:
-                rttbl->num_spc++;
+                rttbl.num_spc++;
                 break;
             case ADSORPTION:
-                rttbl->num_ads++;
+                rttbl.num_ads++;
                 break;
             case CATION_ECHG:
-                rttbl->num_cex++;
+                rttbl.num_cex++;
                 break;
             case MINERAL:
-                rttbl->num_min++;
+                rttbl.num_min++;
                 break;
             case SECONDARY:
                 biort_printf(VL_ERROR, "%s is a secondary species, but is listed as a primary species.\n"
@@ -126,42 +126,42 @@ void ReadChem(const char dir[], ControlData *ctrl, ReactionNetwork *rttbl, array
         }
     }
 
-    biort_printf(VL_NORMAL, "  %d aqueous species specified. \n", rttbl->num_spc);
-    biort_printf(VL_NORMAL, "  %d surface complexation specified. \n", rttbl->num_ads);
-    biort_printf(VL_NORMAL, "  %d cation exchange specified. \n", rttbl->num_cex);
-    biort_printf(VL_NORMAL, "  %d minerals specified. \n", rttbl->num_min);
+    biort_printf(VL_NORMAL, "  %d aqueous species specified. \n", rttbl.num_spc);
+    biort_printf(VL_NORMAL, "  %d surface complexation specified. \n", rttbl.num_ads);
+    biort_printf(VL_NORMAL, "  %d cation exchange specified. \n", rttbl.num_cex);
+    biort_printf(VL_NORMAL, "  %d minerals specified. \n", rttbl.num_min);
 
-    SortChem(chemn, p_type, rttbl->num_stc, chemtbl);
+    SortChem(chemn, p_type, rttbl.num_stc, chemtbl);
 
     // Number of species that others depend on
-    rttbl->num_sdc = rttbl->num_stc - rttbl->num_min;
+    rttbl.num_sdc = rttbl.num_stc - rttbl.num_min;
 
     // Secondary_species block
     biort_printf(VL_NORMAL, "\nSECONDARY SPECIES\n");
-    biort_printf(VL_NORMAL, "  %d secondary species specified. \n", rttbl->num_ssc);
+    biort_printf(VL_NORMAL, "  %d secondary species specified. \n", rttbl.num_ssc);
     FindLine(file_pointer, CHEM_SECONDARY_SPECIES_ID, &lno, file_name);
-    for (i = 0; i < rttbl->num_ssc; i++)
+    for (i = 0; i < rttbl.num_ssc; i++)
     {
         NextLine(file_pointer, cmdstr, &lno);
-        if (sscanf(cmdstr, "%s", chemtbl[rttbl->num_stc + i].name) != 1)
+        if (sscanf(cmdstr, "%s", chemtbl[rttbl.num_stc + i].name) != 1)
         {
             biort_printf(VL_ERROR, "Error reading secondary_species in %s near Line %d.\n", file_name, lno);
         }
 
-        if (SpeciesType(dir, chemtbl[rttbl->num_stc + i].name) == 0)
+        if (SpeciesType(dir, chemtbl[rttbl.num_stc + i].name) == 0)
         {
             biort_printf(VL_ERROR, "Error finding secondary species %s in the database.\n",
-                chemtbl[rttbl->num_stc + i].name);
+                chemtbl[rttbl.num_stc + i].name);
             exit(EXIT_FAILURE);
         }
     }
 
     // Minerals block
     biort_printf(VL_NORMAL, "\nMINERAL KINETIC REACTIONS\n");
-    biort_printf(VL_NORMAL, "  %d mineral kinetic reaction(s) specified. \n", rttbl->num_mkr);
+    biort_printf(VL_NORMAL, "  %d mineral kinetic reaction(s) specified. \n", rttbl.num_mkr);
     FindLine(file_pointer, CHEM_MINERAL_KINETICS_ID, &lno, file_name);
 
-    for (i = 0; i < rttbl->num_mkr; i++)
+    for (i = 0; i < rttbl.num_mkr; i++)
     {
         NextLine(file_pointer, cmdstr, &lno);
         if (sscanf(cmdstr, "%s %*s %s", temp_str, kintbl[i].label) != 2)
@@ -172,7 +172,7 @@ void ReadChem(const char dir[], ControlData *ctrl, ReactionNetwork *rttbl, array
 
         biort_printf(VL_NORMAL, "  Kinetic reaction on '%s' is specified, label '%s'.\n", temp_str, kintbl[i].label);
 
-        kintbl[i].position = FindChem(temp_str, rttbl->num_stc, chemtbl);
+        kintbl[i].position = FindChem(temp_str, rttbl.num_stc, chemtbl);
 
         if (kintbl[i].position < 0)
         {

@@ -285,20 +285,19 @@ void            CopyConstSubcatchProp(const Subcatchment& subcatch, Subcatchment
 void            CopyInitChemSubcatch(ReactionNetwork& rttbl, const Subcatchment& subcatch, Subcatchment& subcatch_numexp);
 int             CountLeapYears(int, int);
 int             FindChem(const char [MAXSTRING], int, const array<ChemTableEntry, MAXSPS>& chemtbl);
-void            FreeStruct(int *steps[]);
 int             GetDifference(int, int);
-void            InitChem(const char [], const CalibrationStruct *, const ControlData ctrl, array<ChemTableEntry, MAXSPS>& chemtbl,
+void            InitChem(const char [], const CalibrationStruct& calib, const ControlData ctrl, array<ChemTableEntry, MAXSPS>& chemtbl,
     array<KineticTableEntry, MAXSPS>& kintbl, ReactionNetwork& rttbl, Subcatchment& subcatch);
 void            InitChemState(double, double, const array<ChemTableEntry, MAXSPS>& chemtbl, const ReactionNetwork& rttbl, const ControlData ctrl,
-    ChemicalState *);
-void            Lookup(FILE *, const CalibrationStruct *, array<ChemTableEntry, MAXSPS>& chemtbl, array<KineticTableEntry, MAXSPS>& kintbl, ReactionNetwork& rttbl);
+    ChemicalState& chms);
+void            Lookup(FILE *, const CalibrationStruct& calib, array<ChemTableEntry, MAXSPS>& chemtbl, array<KineticTableEntry, MAXSPS>& kintbl, ReactionNetwork& rttbl);
 int             MatchWrappedKey(const char [], const char []);
 void            ParseCmdLineParam(int argc, char *argv[], char dir[]);
 void            ParseLine(const char [], char [], double *);
 void            PrintDailyResults(FILE *, int, int, const ReactionNetwork& rttbl, const Subcatchment& subcatch);
 void            PrintHeader(FILE *, int, const ReactionNetwork& rttbl, const array<ChemTableEntry, MAXSPS>& chemtbl);
 double          ReactControl(const array<ChemTableEntry, MAXSPS>& chemtbl, const array<KineticTableEntry, MAXSPS>& kintbl, const ReactionNetwork& rttbl, double, double, double,
-    double, double, double, array<f64, MAXSPS>&, ChemicalState *);
+    double, double, double, array<f64, MAXSPS>&, ChemicalState&);
 void            Reaction(int, double, const array<ChemTableEntry, MAXSPS>& chemtbl, const array<KineticTableEntry, MAXSPS>& kintbl,
     const ReactionNetwork& rttbl, Subcatchment& subcatch);
 void            ReadAdsorption(const char [], int, int, array<ChemTableEntry, MAXSPS>& chemtbl, ReactionNetwork& rttbl);
@@ -321,8 +320,8 @@ int             roundi(double);
 double          SoilTempFactor(double, double);
 double          SoilMoistFactor(double, double, double);
 int             SolveReact(double, const array<ChemTableEntry, MAXSPS>& chemtbl, const KineticTableEntry [], const ReactionNetwork& rttbl, double, double,
-    double, double, ChemicalState *);
-int             SolveSpeciation(const array<ChemTableEntry, MAXSPS>& chemtbl, const ControlData ctrl, const ReactionNetwork& rttbl, int, ChemicalState *);
+    double, double, ChemicalState&);
+int             SolveSpeciation(const array<ChemTableEntry, MAXSPS>& chemtbl, const ControlData ctrl, const ReactionNetwork& rttbl, int, ChemicalState& chms);
 void            SortChem(char [MAXSPS][MAXSTRING], const int [MAXSPS], int, array<ChemTableEntry, MAXSPS>& chemtbl);
 void            Speciation(const array<ChemTableEntry, MAXSPS>& chemtbl, const ControlData ctrl, const ReactionNetwork& rttbl, Subcatchment& subcatch);
 int             SpeciesType(const char [], const char []);
@@ -336,7 +335,7 @@ void            UpdatePrimConc(const ReactionNetwork& rttbl, const ControlData c
 
 // Andrew's functions
 bool            CheckArrayForNan(const array<f64, MAXSPS>& arr);
-void            CheckChmsForNonFinite(const ChemicalState* chms, const char* filename, const int line_number);
+void            CheckChmsForNonFinite(const ChemicalState& chms, const char* filename, const int line_number);
 bool            CheckNonzeroRanged(const array<f64, MAXSPS>& arr, const int num);
 void            ErrOnZeroRanged(const char* filename, const char* arr_name, const int line_number, const array<f64, MAXSPS>& arr, const int num);
 void            ComputeDependence(array<f64, MAXSPS>& tmpconc, const array<array<f64, MAXSPS>, MAXSPS>& dep_mtx, const array<f64, MAXSPS>& keq, int num_rows, int num_cols, int offset);
@@ -360,17 +359,17 @@ void            TransportDeepZone(const ReactionNetwork& rttbl, const array<Chem
 void            TransportShallowZone(const ReactionNetwork& rttbl, const array<ChemTableEntry, MAXSPS>& chemtbl, Subcatchment& subcatch, const int step);
 void            TransportSurfaceZone(const ReactionNetwork& rttbl, const ControlData ctrl, Subcatchment& subcatch, const int step);
 
-void            PrintChemicalState(const ChemicalState* chms);
+void            PrintChemicalState(const ChemicalState& chms);
 
 double          ReadParamToDouble(const char buffer[], const char keyword[], const char fn[], int line_number);
 int             ReadParamToInt(const char buffer[], const char keyword[], const char fn[], int line_number);
 void            ReactSurfaceZone(const double temp, const SoilConstants soil, const double tot_water, const array<ChemTableEntry, MAXSPS>& chemtbl,
                     const array<KineticTableEntry, MAXSPS>& kintbl, const ReactionNetwork& rttbl, double stepsize, Subcatchment& subcatch);
 int             SolveSurfaceReact(double stepsize, const array<ChemTableEntry, MAXSPS>& chemtbl, const array<KineticTableEntry, MAXSPS>& kintbl, const ReactionNetwork& rttbl,
-                    double tot_water, double temp, double porosity, ChemicalState *chms);
+                    double tot_water, double temp, double porosity, ChemicalState&chms);
 double          ReactSurfaceControl(const array<ChemTableEntry, MAXSPS>& chemtbl, const array<KineticTableEntry, MAXSPS>& kintbl, const ReactionNetwork& rttbl,
                     double stepsize, double porosity, double depth, double satn, double temp, array<f64, MAXSPS>& react_rate,
-                    ChemicalState *chms);
+                    ChemicalState&chms);
 
 //===== Constant definitions =====//
 static const char CHEM_FILE_DIR[] = "input/%s/chem.txt";

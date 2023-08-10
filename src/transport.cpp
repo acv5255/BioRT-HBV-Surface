@@ -34,12 +34,12 @@ void Transport(int step, const array<ChemTableEntry, MAXSPS>& chemtbl, ReactionN
     
     TransportSurfaceZone(rttbl, ctrl, subcatch, step);
     
-    SolveSpeciation(chemtbl, ctrl, rttbl, 0, &subcatch.chms[SURFACE]);
-    SolveSpeciation(chemtbl, ctrl, rttbl, 0, &subcatch.chms[UZ]);
+    SolveSpeciation(chemtbl, ctrl, rttbl, 0, subcatch.chms[SURFACE]);
+    SolveSpeciation(chemtbl, ctrl, rttbl, 0, subcatch.chms[UZ]);
     
     TransportShallowZone(rttbl, chemtbl, subcatch, step);
 
-    SolveSpeciation(chemtbl, ctrl, rttbl, 0, &subcatch.chms[LZ]);
+    SolveSpeciation(chemtbl, ctrl, rttbl, 0, subcatch.chms[LZ]);
     
     TransportDeepZone(rttbl, chemtbl, subcatch, step);
 }
@@ -207,7 +207,7 @@ void TransportShallowZone(const ReactionNetwork& rttbl, const array<ChemTableEnt
         subcatch.chms[LZ].tot_conc[kspc] = subcatch.chms[LZ].tot_mol[kspc] / ws_dz_tot;   
     }
 
-    CheckChmsForNonFinite(&subcatch.chms[UZ], "transpt.c", 210);
+    CheckChmsForNonFinite(subcatch.chms[UZ], "transpt.c", 210);
 
     return;
 }
@@ -246,7 +246,7 @@ void TransportDeepZone(const ReactionNetwork& rttbl, const array<ChemTableEntry,
             }
         }
         
-        CheckChmsForNonFinite(&subcatch.chms[LZ], "transpt.c", 259);
+        CheckChmsForNonFinite(subcatch.chms[LZ], "transpt.c", 259);
 
         // UPDATE CONCENTRATIONS
         const double q_stream = q_q0 + q_q1 + q_q2;
@@ -261,6 +261,6 @@ void TransportDeepZone(const ReactionNetwork& rttbl, const array<ChemTableEntry,
 
     }
 
-    CheckChmsForNonFinite(&subcatch.chms[LZ], "transpt.c", 274);
+    CheckChmsForNonFinite(subcatch.chms[LZ], "transpt.c", 274);
 
 }

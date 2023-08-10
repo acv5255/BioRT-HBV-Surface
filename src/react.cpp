@@ -11,37 +11,37 @@ void GetIAP(double iap[MAXSPS], const array<f64, MAXSPS>& activity, const array<
     return;
 }
 
-double GetMonodTerm(const KineticTableEntry* entry, const ChemicalState* chms) {
+double GetMonodTerm(const KineticTableEntry* entry, const ChemicalState& chms) {
     double monodterm = 1.0;
 
     for (int kmonod = 0; kmonod < entry->nmonod; kmonod++) {
         const int id = entry->monod_index[kmonod];
         const double k_i = entry->monod_para[kmonod];
-        const double c_i = chms->prim_conc[id];
+        const double c_i = chms.prim_conc[id];
         monodterm *= c_i / (c_i + k_i);
     }
 
     return monodterm;
 }
 
-double GetInhibTerm(const KineticTableEntry* entry, const ChemicalState* chms) {
+double GetInhibTerm(const KineticTableEntry* entry, const ChemicalState& chms) {
     double inhibterm = 1.0;
 
     for (int kinhib = 0; kinhib < entry->ninhib; kinhib++) {
         const int id = entry->inhib_index[kinhib];
         const double k_i = entry->inhib_para[kinhib];
-        const double c_i = chms->prim_conc[id];
+        const double c_i = chms.prim_conc[id];
         inhibterm *= k_i / (c_i + k_i);
     }
 
     return inhibterm;
 }
 
-double GetDependenceTerm(const KineticTableEntry* entry, const ChemicalState* chms) {
+double GetDependenceTerm(const KineticTableEntry* entry, const ChemicalState& chms) {
     double dep_term = 1.0;
     for (int k = 0; k < entry->ndep; k++) {
         const int dep_ind = entry->dep_index[k];
-        dep_term *= pow(chms->prim_actv[dep_ind], entry->dep_power[k]);
+        dep_term *= pow(chms.prim_actv[dep_ind], entry->dep_power[k]);
     }
     return dep_term;
 }
@@ -82,7 +82,7 @@ void ReactZone(const int kzone, const double temp, const SoilConstants soil, con
     double satn = tot_water / (soil.depth * soil.porosity);  // add porosity for saturation calculation
     satn = std::min(satn, 1.0);
 
-    CheckChmsForNonFinite(&subcatch.chms[kzone], "react.c", 80);
+    CheckChmsForNonFinite(subcatch.chms[kzone], "react.c", 80);
     if (!CheckArrayForNan(subcatch.react_rate[kzone])) {
         printf("ChemicalState->react_rate contains nan in 'react.c' near line 82 with kzone = %d", kzone);
     }
@@ -90,8 +90,8 @@ void ReactZone(const int kzone, const double temp, const SoilConstants soil, con
     if (satn > SATN_MINIMUM)
     {
         substep = ReactControl(chemtbl, kintbl, rttbl, stepsize, soil.porosity, soil.depth, satn, temp, Zw,
-            subcatch.react_rate[kzone], &subcatch.chms[kzone]);
-        CheckChmsForNonFinite(&subcatch.chms[kzone], "react.c", 89);
+            subcatch.react_rate[kzone], subcatch.chms[kzone]);
+        CheckChmsForNonFinite(subcatch.chms[kzone], "react.c", 89);
         
         if (substep < 0.0) {
             printf("React failed to converge...\n");
@@ -109,14 +109,14 @@ void ReactSurfaceZone(const double temp, const SoilConstants soil, const double 
         subcatch.react_rate[SURFACE][kspc] = BADVAL;   // Set reaction rate to -999
     }
 
-    CheckChmsForNonFinite(&subcatch.chms[SURFACE], "react.c", 80);
+    CheckChmsForNonFinite(subcatch.chms[SURFACE], "react.c", 80);
     if (!CheckArrayForNan(subcatch.react_rate[SURFACE])) {
         printf("ChemicalState->react_rate contains nan in 'react.c' near line 82 with SURFACE = %d", SURFACE);
     }
 
     substep = ReactSurfaceControl(chemtbl, kintbl, rttbl, stepsize, soil.porosity, soil.depth, tot_water, temp,
-        subcatch.react_rate[SURFACE], &subcatch.chms[SURFACE]);
-    CheckChmsForNonFinite(&subcatch.chms[SURFACE], "react.c", 89);
+        subcatch.react_rate[SURFACE], subcatch.chms[SURFACE]);
+    CheckChmsForNonFinite(subcatch.chms[SURFACE], "react.c", 89);
     
     if (substep < 0.0) {
         printf("React failed to converge...\n");
@@ -124,7 +124,7 @@ void ReactSurfaceZone(const double temp, const SoilConstants soil, const double 
 }
 
 void GetRates(array<f64, MAXSPS>& rate, array<f64, MAXSPS>& rate_spe, const array<f64, MAXSPS>& area, const array<f64, MAXSPS>& ftemp, const array<f64, MAXSPS>& fsw, const array<f64, MAXSPS>& fzw,
-    const ReactionNetwork& rttbl, const array<KineticTableEntry, MAXSPS>& kintbl, const ChemicalState* chms) {
+    const ReactionNetwork& rttbl, const array<KineticTableEntry, MAXSPS>& kintbl, const ChemicalState& chms) {
         
     for (int i = 0; i < rttbl.num_mkr; i++) {
         int min_pos = kintbl[i].position - rttbl.num_stc + rttbl.num_min;
@@ -133,7 +133,7 @@ void GetRates(array<f64, MAXSPS>& rate, array<f64, MAXSPS>& rate_spe, const arra
         {
             double iap[MAXSPS];
             double dependency[MAXSPS];
-            GetIAP(iap, chms->prim_actv, rttbl.dep_kin, rttbl.num_mkr, rttbl.num_stc);
+            GetIAP(iap, chms.prim_actv, rttbl.dep_kin, rttbl.num_mkr, rttbl.num_stc);
             double temp_keq = pow(10, rttbl.keq_kin[i]);
             dependency[i] = GetDependenceTerm(&kintbl[i], chms);
 
@@ -168,14 +168,14 @@ void Reaction(int kstep, double stepsize, const array<ChemTableEntry, MAXSPS>& c
         const double tot_water_surf = subcatch.ws[kstep][SURFACE] + subcatch.q[kstep][Q0];
         ReactSurfaceZone(temp, subcatch.soil_surface, tot_water_surf, chemtbl, kintbl, rttbl, stepsize, subcatch);
     }
-    CheckChmsForNonFinite(&subcatch.chms[SURFACE], "react.c", 153);
+    CheckChmsForNonFinite(subcatch.chms[SURFACE], "react.c", 153);
 
     ReactZone(UZ, temp, subcatch.soil_sz, subcatch.ws[kstep][UZ], chemtbl, kintbl, rttbl, stepsize, subcatch);
     ReactZone(LZ, temp, subcatch.soil_dz, subcatch.ws[kstep][LZ], chemtbl, kintbl, rttbl, stepsize, subcatch);
 }
 
 int SolveReact(double stepsize, const array<ChemTableEntry, MAXSPS>& chemtbl, const array<KineticTableEntry, MAXSPS>& kintbl, const ReactionNetwork& rttbl,
-    double satn, double temp, double porosity, double Zw, ChemicalState *chms)
+    double satn, double temp, double porosity, double Zw, ChemicalState&chms)
 {
     array<f64, MAXSPS> tmpconc = { 0.0 };
     array<f64, MAXSPS> tot_conc = { 0.0 };
@@ -191,17 +191,17 @@ int SolveReact(double stepsize, const array<ChemTableEntry, MAXSPS>& chemtbl, co
     const double    TMPPRB_INV = 1.0 / TMPPRB;
     const double    inv_sat = 1.0 / satn;//inv_sat(L of porous space/L of water)= 1/sat(L of water/L of porous space)
     CheckChmsForNonFinite(chms, "react.c", 174);
-    // ErrOnZeroRanged("react.c", "chms->sec_conc", 175, chms->sec_conc, rttbl.num_ssc);
+    // ErrOnZeroRanged("react.c", "chms.sec_conc", 175, chms.sec_conc, rttbl.num_ssc);
     {
         int start = rttbl.num_stc - rttbl.num_min;
         int end = rttbl.num_stc;
         int offset = start;
-        GetSurfaceAreaRange(area, chms->prim_conc, chms->soil_parameters.ssa, chemtbl, rttbl.num_stc - rttbl.num_min, rttbl.num_stc, rttbl.num_stc - rttbl.num_min);
-        GetTempFactorRange(ftemp, chms->soil_parameters.q10, temp, start, end, offset);
-        GetWTDepthFactorRange(fzw, Zw, chms->soil_parameters.n_alpha, start, end, offset);
+        GetSurfaceAreaRange(area, chms.prim_conc, chms.soil_parameters.ssa, chemtbl, rttbl.num_stc - rttbl.num_min, rttbl.num_stc, rttbl.num_stc - rttbl.num_min);
+        GetTempFactorRange(ftemp, chms.soil_parameters.q10, temp, start, end, offset);
+        GetWTDepthFactorRange(fzw, Zw, chms.soil_parameters.n_alpha, start, end, offset);
     }
 
-    SoilMoistFactorRange(fsw, satn, chms->soil_parameters.sw_thld, chms->soil_parameters.sw_exp, rttbl.num_stc - rttbl.num_min, rttbl.num_stc, rttbl.num_stc - rttbl.num_min);
+    SoilMoistFactorRange(fsw, satn, chms.soil_parameters.sw_thld, chms.soil_parameters.sw_exp, rttbl.num_stc - rttbl.num_min, rttbl.num_stc, rttbl.num_stc - rttbl.num_min);
     rate_spe.fill(0.0);
     GetRates(rate_pre, rate_spe, area, ftemp, fsw, fzw, rttbl, kintbl, chms);
 
@@ -212,7 +212,7 @@ int SolveReact(double stepsize, const array<ChemTableEntry, MAXSPS>& chemtbl, co
         if (rate_pre[i] < 0.0)
         {
             // Mineral cutoff when mineral is disappearing
-            area[min_pos] = (chms->prim_conc[kintbl[i].position] < 1.0E-8) ? 0.0 : area[min_pos];
+            area[min_pos] = (chms.prim_conc[kintbl[i].position] < 1.0E-8) ? 0.0 : area[min_pos];
         }
     }
 
@@ -231,7 +231,7 @@ int SolveReact(double stepsize, const array<ChemTableEntry, MAXSPS>& chemtbl, co
     double ionic_strength = 0.0;
     for (int i = 0; i < rttbl.num_stc + rttbl.num_ssc; i++)
     {
-        double conc_val = (i < rttbl.num_stc) ? log10(chms->prim_conc[i]) : log10(chms->sec_conc[i - rttbl.num_stc]);
+        double conc_val = (i < rttbl.num_stc) ? log10(chms.prim_conc[i]) : log10(chms.sec_conc[i - rttbl.num_stc]);
         if (std::isinf(conc_val)) {
             printf("Got non-finite value for log10(conc) for species '%s' with index %d\n", chemtbl[i].name, i);
         }
@@ -342,7 +342,7 @@ int SolveReact(double stepsize, const array<ChemTableEntry, MAXSPS>& chemtbl, co
                 tmpval += rttbl.conc_contrib[i][j] * pow(10, tmpconc[j]);
             }
             tot_conc[i] = tmpval;
-            residue[i] = tmpval - (chms->tot_conc[i] + (rate_spe[i] + rate_spet[i]) * stepsize * 0.5);
+            residue[i] = tmpval - (chms.tot_conc[i] + (rate_spe[i] + rate_spet[i]) * stepsize * 0.5);
         }
 
         // Calculate the concentrations with a perturbation TMPPRB to calculate the numerical Jacobian
@@ -366,7 +366,7 @@ int SolveReact(double stepsize, const array<ChemTableEntry, MAXSPS>& chemtbl, co
                 {
                     tmpval += rttbl.conc_contrib[i][j] * pow(10, tmpconc[j]);
                 }
-                residue_t[i] = tmpval - (chms->tot_conc[i] + (rate_spe[i] + rate_spet[i]) * stepsize * 0.5);
+                residue_t[i] = tmpval - (chms.tot_conc[i] + (rate_spe[i] + rate_spet[i]) * stepsize * 0.5);
                 jcb[k][i] = (residue_t[i] - residue[i]) * TMPPRB_INV;
             }
             tmpconc[k] -= TMPPRB;
@@ -443,20 +443,20 @@ int SolveReact(double stepsize, const array<ChemTableEntry, MAXSPS>& chemtbl, co
         {
             if (chemtbl[i].itype == MINERAL)
             {
-                chms->tot_conc[i] += (rate_spe[i] + rate_spet[i]) * stepsize * 0.5;
-                chms->prim_actv[i] = 1.0;
-                chms->prim_conc[i] = chms->tot_conc[i];
+                chms.tot_conc[i] += (rate_spe[i] + rate_spet[i]) * stepsize * 0.5;
+                chms.prim_actv[i] = 1.0;
+                chms.prim_conc[i] = chms.tot_conc[i];
             }
             else
             {
-                chms->prim_conc[i] = pow(10, tmpconc[i]);
-                chms->prim_actv[i] = pow(10, tmpconc[i] + gamma[i]);
-                chms->tot_conc[i] = tot_conc[i];
+                chms.prim_conc[i] = pow(10, tmpconc[i]);
+                chms.prim_actv[i] = pow(10, tmpconc[i] + gamma[i]);
+                chms.tot_conc[i] = tot_conc[i];
             }
         }
         else
         {
-            chms->sec_conc[i - rttbl.num_stc] = pow(10, tmpconc[i]);
+            chms.sec_conc[i - rttbl.num_stc] = pow(10, tmpconc[i]);
         }
     }
 
@@ -464,7 +464,7 @@ int SolveReact(double stepsize, const array<ChemTableEntry, MAXSPS>& chemtbl, co
 }
 
 int SolveSurfaceReact(double stepsize, const array<ChemTableEntry, MAXSPS>& chemtbl, const array<KineticTableEntry, MAXSPS>& kintbl, const ReactionNetwork& rttbl,
-    double tot_water, double temp, double porosity, ChemicalState *chms)
+    double tot_water, double temp, double porosity, ChemicalState&chms)
 {
     array<double, MAXSPS> tmpconc = { 0.0 };
     array<double, MAXSPS> tot_conc = { 0.0 };
@@ -484,9 +484,9 @@ int SolveSurfaceReact(double stepsize, const array<ChemTableEntry, MAXSPS>& chem
         int start = rttbl.num_stc - rttbl.num_min;
         int end = rttbl.num_stc;
         int offset = start;
-        GetSurfaceAreaRange(area, chms->prim_conc, chms->soil_parameters.ssa, chemtbl, rttbl.num_stc - rttbl.num_min, rttbl.num_stc, rttbl.num_stc - rttbl.num_min);
-        GetTempFactorRange(ftemp, chms->soil_parameters.q10, temp, start, end, offset);
-        // GetWTDepthFactorRange(fzw, Zw, chms->n_alpha, start, end, offset);
+        GetSurfaceAreaRange(area, chms.prim_conc, chms.soil_parameters.ssa, chemtbl, rttbl.num_stc - rttbl.num_min, rttbl.num_stc, rttbl.num_stc - rttbl.num_min);
+        GetTempFactorRange(ftemp, chms.soil_parameters.q10, temp, start, end, offset);
+        // GetWTDepthFactorRange(fzw, Zw, chms.n_alpha, start, end, offset);
     }
 
     // Set the factors for the surface zone
@@ -496,12 +496,12 @@ int SolveSurfaceReact(double stepsize, const array<ChemTableEntry, MAXSPS>& chem
 
     for (int i = rttbl.num_stc - rttbl.num_min; i < rttbl.num_stc; i++) {
         int offset = rttbl.num_stc - rttbl.num_min;
-        fsw[i - offset] = pow(tot_water, chms->soil_parameters.sw_exp[i]);
+        fsw[i - offset] = pow(tot_water, chms.soil_parameters.sw_exp[i]);
         // fsw[i - offset] = 1.0;
         // printf("fsw for species %d: %g\n", i - offset, fsw[i - offset]);
     }
 
-    // SoilMoistFactorRange(fsw, tot_water, chms->sw_thld, chms->sw_exp, rttbl.num_stc - rttbl.num_min, rttbl.num_stc, rttbl.num_stc - rttbl.num_min);
+    // SoilMoistFactorRange(fsw, tot_water, chms.sw_thld, chms.sw_exp, rttbl.num_stc - rttbl.num_min, rttbl.num_stc, rttbl.num_stc - rttbl.num_min);
     rate_spe.fill(0.0);
     GetRates(rate_pre, rate_spe, area, ftemp, fsw, fzw, rttbl, kintbl, chms);
 
@@ -512,7 +512,7 @@ int SolveSurfaceReact(double stepsize, const array<ChemTableEntry, MAXSPS>& chem
         if (rate_pre[i] < 0.0)
         {
             // Mineral cutoff when mineral is disappearing
-            area[min_pos] = (chms->prim_conc[kintbl[i].position] < 1.0E-8) ? 0.0 : area[min_pos];
+            area[min_pos] = (chms.prim_conc[kintbl[i].position] < 1.0E-8) ? 0.0 : area[min_pos];
         }
     }
 
@@ -531,7 +531,7 @@ int SolveSurfaceReact(double stepsize, const array<ChemTableEntry, MAXSPS>& chem
     double ionic_strength = 0.0;
     for (int i = 0; i < rttbl.num_stc + rttbl.num_ssc; i++)
     {
-        double conc_val = (i < rttbl.num_stc) ? log10(chms->prim_conc[i]) : log10(chms->sec_conc[i - rttbl.num_stc]);
+        double conc_val = (i < rttbl.num_stc) ? log10(chms.prim_conc[i]) : log10(chms.sec_conc[i - rttbl.num_stc]);
         if (std::isinf(conc_val)) {
             printf("Got non-finite value for log10(conc) for species '%s' with index %d\n", chemtbl[i].name, i);
         }
@@ -642,7 +642,7 @@ int SolveSurfaceReact(double stepsize, const array<ChemTableEntry, MAXSPS>& chem
                 tmpval += rttbl.conc_contrib[i][j] * pow(10, tmpconc[j]);
             }
             tot_conc[i] = tmpval;
-            residue[i] = tmpval - (chms->tot_conc[i] + (rate_spe[i] + rate_spet[i]) * stepsize * 0.5);
+            residue[i] = tmpval - (chms.tot_conc[i] + (rate_spe[i] + rate_spet[i]) * stepsize * 0.5);
         }
 
         // Calculate the concentrations with a perturbation TMPPRB to calculate the numerical Jacobian
@@ -666,7 +666,7 @@ int SolveSurfaceReact(double stepsize, const array<ChemTableEntry, MAXSPS>& chem
                 {
                     tmpval += rttbl.conc_contrib[i][j] * pow(10, tmpconc[j]);
                 }
-                residue_t[i] = tmpval - (chms->tot_conc[i] + (rate_spe[i] + rate_spet[i]) * stepsize * 0.5);
+                residue_t[i] = tmpval - (chms.tot_conc[i] + (rate_spe[i] + rate_spet[i]) * stepsize * 0.5);
                 jcb[k][i] = (residue_t[i] - residue[i]) * TMPPRB_INV;
             }
             tmpconc[k] -= TMPPRB;
@@ -749,20 +749,20 @@ int SolveSurfaceReact(double stepsize, const array<ChemTableEntry, MAXSPS>& chem
         {
             if (chemtbl[i].itype == MINERAL)
             {
-                chms->tot_conc[i] += (rate_spe[i] + rate_spet[i]) * stepsize * 0.5;
-                chms->prim_actv[i] = 1.0;
-                chms->prim_conc[i] = chms->tot_conc[i];
+                chms.tot_conc[i] += (rate_spe[i] + rate_spet[i]) * stepsize * 0.5;
+                chms.prim_actv[i] = 1.0;
+                chms.prim_conc[i] = chms.tot_conc[i];
             }
             else
             {
-                chms->prim_conc[i] = pow(10, tmpconc[i]);
-                chms->prim_actv[i] = pow(10, tmpconc[i] + gamma[i]);
-                chms->tot_conc[i] = tot_conc[i];
+                chms.prim_conc[i] = pow(10, tmpconc[i]);
+                chms.prim_actv[i] = pow(10, tmpconc[i] + gamma[i]);
+                chms.tot_conc[i] = tot_conc[i];
             }
         }
         else
         {
-            chms->sec_conc[i - rttbl.num_stc] = pow(10, tmpconc[i]);
+            chms.sec_conc[i - rttbl.num_stc] = pow(10, tmpconc[i]);
         }
     }
 
@@ -772,7 +772,7 @@ int SolveSurfaceReact(double stepsize, const array<ChemTableEntry, MAXSPS>& chem
 
 double ReactControl(const array<ChemTableEntry, MAXSPS>& chemtbl, const array<KineticTableEntry, MAXSPS>& kintbl, const ReactionNetwork& rttbl,
     double stepsize, double porosity, double depth, double satn, double temp, double Zw, array<f64, MAXSPS>& react_rate,
-    ChemicalState *chms)
+    ChemicalState&chms)
 {
     double          substep;
     double          step_counter = 0.0;
@@ -781,7 +781,7 @@ double ReactControl(const array<ChemTableEntry, MAXSPS>& chemtbl, const array<Ki
     // Copy initial mineral concentration to array
     for (int kspc = 0; kspc < rttbl.num_min; kspc++)
     {
-        conc0[kspc] = chms->tot_conc[kspc + rttbl.num_stc - rttbl.num_min];
+        conc0[kspc] = chms.tot_conc[kspc + rttbl.num_stc - rttbl.num_min];
     }
 
     substep = stepsize;
@@ -815,13 +815,13 @@ double ReactControl(const array<ChemTableEntry, MAXSPS>& chemtbl, const array<Ki
         {
             // Calculate reaction rate (mole/m2-pm/day) = mol/L-pm/day * mm of depth   * (1m/1000mm) * (1000L/1m3)
             react_rate[kspc] =
-                (chms->tot_conc[kspc + rttbl.num_stc - rttbl.num_min] - conc0[kspc]) * depth;
+                (chms.tot_conc[kspc + rttbl.num_stc - rttbl.num_min] - conc0[kspc]) * depth;
             CheckChmsForNonFinite(chms, "react.c", 477);
         }
 
         for (int kspc = 0; kspc <rttbl.num_spc; kspc++)
         {
-            chms->tot_mol[kspc] = chms->tot_conc[kspc] * porosity * satn * depth; // tot_mol (moles-mm of water/L water ) =tot_conc (mol/L water) * satn * porosity * depth
+            chms.tot_mol[kspc] = chms.tot_conc[kspc] * porosity * satn * depth; // tot_mol (moles-mm of water/L water ) =tot_conc (mol/L water) * satn * porosity * depth
             CheckChmsForNonFinite(chms, "react.c", 483);
         }
         if (roundi(substep) != roundi(stepsize))
@@ -837,7 +837,7 @@ double ReactControl(const array<ChemTableEntry, MAXSPS>& chemtbl, const array<Ki
 
 double ReactSurfaceControl(const array<ChemTableEntry, MAXSPS>& chemtbl, const array<KineticTableEntry, MAXSPS>& kintbl, const ReactionNetwork& rttbl,
     double stepsize, double porosity, double depth, double tot_water, double temp, array<f64, MAXSPS>& react_rate,
-    ChemicalState *chms)
+    ChemicalState&chms)
 {
     double          substep;
     double          step_counter = 0.0;
@@ -846,7 +846,7 @@ double ReactSurfaceControl(const array<ChemTableEntry, MAXSPS>& chemtbl, const a
     // Copy initial mineral concentration to array
     for (int kspc = 0; kspc < rttbl.num_min; kspc++)
     {
-        conc0[kspc] = chms->tot_conc[kspc + rttbl.num_stc - rttbl.num_min];
+        conc0[kspc] = chms.tot_conc[kspc + rttbl.num_stc - rttbl.num_min];
     }
 
     substep = stepsize;
@@ -880,13 +880,13 @@ double ReactSurfaceControl(const array<ChemTableEntry, MAXSPS>& chemtbl, const a
         {
             // Calculate reaction rate (mole/m2-pm/day) = mol/L-pm/day * mm of depth   * (1m/1000mm) * (1000L/1m3)
             react_rate[kspc] =
-                (chms->tot_conc[kspc + rttbl.num_stc - rttbl.num_min] - conc0[kspc]) * depth;
+                (chms.tot_conc[kspc + rttbl.num_stc - rttbl.num_min] - conc0[kspc]) * depth;
             CheckChmsForNonFinite(chms, "react.c", 477);
         }
 
         for (int kspc = 0; kspc <rttbl.num_spc; kspc++)
         {
-            chms->tot_mol[kspc] = chms->tot_conc[kspc] * tot_water; // tot_mol (moles-mm of water/L water ) =tot_conc (mol/L water) * satn * porosity * depth
+            chms.tot_mol[kspc] = chms.tot_conc[kspc] * tot_water; // tot_mol (moles-mm of water/L water ) =tot_conc (mol/L water) * satn * porosity * depth
             CheckChmsForNonFinite(chms, "react.c", 483);
         }
         if (roundi(substep) != roundi(stepsize))

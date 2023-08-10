@@ -1,6 +1,6 @@
 #include "biort.hpp"
 
-void Lookup(FILE *fp, const CalibrationStruct *calib, array<ChemTableEntry, MAXSPS>& chemtbl, array<KineticTableEntry, MAXSPS>& kintbl, ReactionNetwork& rttbl)
+void Lookup(FILE *fp, const CalibrationStruct& calib, array<ChemTableEntry, MAXSPS>& chemtbl, array<KineticTableEntry, MAXSPS>& kintbl, ReactionNetwork& rttbl)
 {
     char            cmdstr[MAXSTRING];
     int             i, j, k;
@@ -144,7 +144,7 @@ void Lookup(FILE *fp, const CalibrationStruct *calib, array<ChemTableEntry, MAXS
     while (strcmp(cmdstr, "End of exchange\r\n") != 0 && strcmp(cmdstr, "End of exchange\n") != 0)
     {
         NextLine(fp, cmdstr, &lno);
-        ReadCationEchg(cmdstr, calib->xsorption, chemtbl, rttbl);
+        ReadCationEchg(cmdstr, calib.xsorption, chemtbl, rttbl);
     }
 
     for (i = 0; i < MAXSPS; i++)
@@ -171,7 +171,7 @@ void Lookup(FILE *fp, const CalibrationStruct *calib, array<ChemTableEntry, MAXS
 
         while (strcmp(cmdstr, "End of mineral kinetics\r\n") != 0 && strcmp(cmdstr, "End of mineral kinetics\n") != 0)
         {
-            ReadMinKin(fp, rttbl.num_stc, calib->rate, &lno, cmdstr, chemtbl, &kintbl[i]);
+            ReadMinKin(fp, rttbl.num_stc, calib.rate, &lno, cmdstr, chemtbl, &kintbl[i]);
             NextLine(fp, cmdstr, &lno);
         }
 
@@ -680,7 +680,7 @@ void ReadMinKin(FILE *fp, int num_stc, double calval, int *lno, char cmdstr[], a
                 biort_printf(VL_NORMAL, " Rate is %f\n", kintbl->rate);
 
                 kintbl->rate += calval;
-                biort_printf(VL_NORMAL, " After calibration: Rate is %f, calib->Rate = %f \n", kintbl->rate, calval);
+                biort_printf(VL_NORMAL, " After calibration: Rate is %f, calib.Rate = %f \n", kintbl->rate, calval);
             }
             else
             {

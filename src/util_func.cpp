@@ -65,11 +65,6 @@ void UnwrapParentheses(const char wrapped_str[], char str[])
     str[j] = '\0';
 }
 
-void FreeStruct(int *steps[])
-{
-    free(*steps);
-}
-
 void ParseCmdLineParam(int argc, char *argv[], char dir[])
 {
     int             option;
@@ -186,58 +181,58 @@ void PrintArray(const array<f64, MAXSPS>& arr) {
     printf("\n");
 }
 
-void CheckChmsForNonFinite(const ChemicalState* chms, const char* filename, const int line_number) {
+void CheckChmsForNonFinite(const ChemicalState& chms, const char* filename, const int line_number) {
     /* Check a chemical state for any nan values */
     const char* msg = "Chemical state entry ChemicalState->%s contained nonfinite value in file '%s' near line %d: \n";
 
-    if (!CheckArrayForNan(chms->tot_conc)) {
+    if (!CheckArrayForNan(chms.tot_conc)) {
         printf(msg, "tot_conc", filename, line_number);
-        PrintArray(chms->tot_conc);
+        PrintArray(chms.tot_conc);
         exit(-1);
     }
-    if (!CheckArrayForNan(chms->prim_conc)) {
+    if (!CheckArrayForNan(chms.prim_conc)) {
         printf(msg, "prim_conc", filename, line_number);
-        PrintArray(chms->prim_conc);
+        PrintArray(chms.prim_conc);
         exit(-1);
     }
-    if (!CheckArrayForNan(chms->sec_conc)) {
+    if (!CheckArrayForNan(chms.sec_conc)) {
         printf(msg, "sec_conc", filename, line_number);
-        PrintArray(chms->sec_conc);
+        PrintArray(chms.sec_conc);
         exit(-1);
     }
-    if (!CheckArrayForNan(chms->prim_actv)) {
+    if (!CheckArrayForNan(chms.prim_actv)) {
         printf(msg, "prim_actv", filename, line_number);
-        PrintArray(chms->prim_actv);
+        PrintArray(chms.prim_actv);
         exit(-1);
     }
-    if (!CheckArrayForNan(chms->soil_parameters.ssa)) {
+    if (!CheckArrayForNan(chms.soil_parameters.ssa)) {
         printf(msg, "ssa", filename, line_number);
-        PrintArray(chms->soil_parameters.ssa);
+        PrintArray(chms.soil_parameters.ssa);
         exit(-1);
     }
-    if (!CheckArrayForNan(chms->soil_parameters.sw_thld)) {
+    if (!CheckArrayForNan(chms.soil_parameters.sw_thld)) {
         printf(msg, "sw_thld", filename, line_number);
-        PrintArray(chms->soil_parameters.sw_thld);
+        PrintArray(chms.soil_parameters.sw_thld);
         exit(-1);
     }
-    if (!CheckArrayForNan(chms->soil_parameters.sw_exp)) {
+    if (!CheckArrayForNan(chms.soil_parameters.sw_exp)) {
         printf(msg, "sw_exp", filename, line_number);
-        PrintArray(chms->soil_parameters.sw_exp);
+        PrintArray(chms.soil_parameters.sw_exp);
         exit(-1);
     }
-    if (!CheckArrayForNan(chms->soil_parameters.q10)) {
+    if (!CheckArrayForNan(chms.soil_parameters.q10)) {
         printf(msg, "q10", filename, line_number);
-        PrintArray(chms->soil_parameters.q10);
+        PrintArray(chms.soil_parameters.q10);
         exit(-1);
     }
-    if (!CheckArrayForNan(chms->soil_parameters.n_alpha)) {
+    if (!CheckArrayForNan(chms.soil_parameters.n_alpha)) {
         printf(msg, "n_alpha", filename, line_number);
-        PrintArray(chms->soil_parameters.n_alpha);
+        PrintArray(chms.soil_parameters.n_alpha);
         exit(-1);
     }
-    if (!CheckArrayForNan(chms->tot_mol)) {
+    if (!CheckArrayForNan(chms.tot_mol)) {
         printf(msg, "tot_mol", filename, line_number);
-        PrintArray(chms->tot_mol);
+        PrintArray(chms.tot_mol);
         exit(-1);
     }
 }
@@ -284,17 +279,17 @@ bool CompareArray(const array<f64, MAXSPS>& lhs, const array<f64, MAXSPS>& rhs) 
     return true;
 }
 
-bool CompareChemicalState(const ChemicalState* lhs, const ChemicalState* rhs) {
-    return CompareArray(lhs->tot_conc, rhs->tot_conc)
-        && CompareArray(lhs->prim_conc, rhs->prim_conc)
-        && CompareArray(lhs->prim_actv, rhs->prim_actv)
-        && CompareArray(lhs->sec_conc, rhs->sec_conc)
-        && CompareArray(lhs->soil_parameters.ssa, rhs->soil_parameters.ssa)
-        && CompareArray(lhs->soil_parameters.sw_thld, rhs->soil_parameters.sw_thld)
-        && CompareArray(lhs->soil_parameters.sw_exp, rhs->soil_parameters.sw_exp)
-        && CompareArray(lhs->soil_parameters.q10, rhs->soil_parameters.q10)
-        && CompareArray(lhs->soil_parameters.n_alpha, rhs->soil_parameters.n_alpha)
-        && CompareArray(lhs->tot_mol, rhs->tot_mol);
+bool CompareChemicalState(const ChemicalState& lhs, const ChemicalState& rhs) {
+    return CompareArray(lhs.tot_conc, rhs.tot_conc)
+        && CompareArray(lhs.prim_conc, rhs.prim_conc)
+        && CompareArray(lhs.prim_actv, rhs.prim_actv)
+        && CompareArray(lhs.sec_conc, rhs.sec_conc)
+        && CompareArray(lhs.soil_parameters.ssa, rhs.soil_parameters.ssa)
+        && CompareArray(lhs.soil_parameters.sw_thld, rhs.soil_parameters.sw_thld)
+        && CompareArray(lhs.soil_parameters.sw_exp, rhs.soil_parameters.sw_exp)
+        && CompareArray(lhs.soil_parameters.q10, rhs.soil_parameters.q10)
+        && CompareArray(lhs.soil_parameters.n_alpha, rhs.soil_parameters.n_alpha)
+        && CompareArray(lhs.tot_mol, rhs.tot_mol);
 }
 
 // Compare two subcatchments and determine whether the data in each is the same
@@ -310,33 +305,33 @@ void PrintMatrix(const realtype** mat, const int nrows, const int ncols) {
 }
 
 // Print all the values in a chemical state
-void PrintChemicalState(const ChemicalState* chms) {
+void PrintChemicalState(const ChemicalState& chms) {
     printf("Total concentration: ");
-    PrintArray(chms->tot_conc);
+    PrintArray(chms.tot_conc);
 
     printf("Total moles: ");
-    PrintArray(chms->tot_mol);
+    PrintArray(chms.tot_mol);
     
     printf("Primary concentration: ");
-    PrintArray(chms->prim_conc);
+    PrintArray(chms.prim_conc);
 
     printf("Secondary concentration: ");
-    PrintArray(chms->sec_conc);
+    PrintArray(chms.sec_conc);
 
     // printf("SSA: ");
-    // PrintArray(chms->ssa);
+    // PrintArray(chms.ssa);
 
     // printf("SW Threshold: ");
-    // PrintArray(chms->sw_thld);
+    // PrintArray(chms.sw_thld);
 
     // printf("SW Exponent: ");
-    // PrintArray(chms->sw_exp);
+    // PrintArray(chms.sw_exp);
 
     // printf("Q10: ");
-    // PrintArray(chms->q10);
+    // PrintArray(chms.q10);
 
     // printf("N_alpha: ");
-    // PrintArray(chms->n_alpha);
+    // PrintArray(chms.n_alpha);
 
     return;
 }

@@ -64,7 +64,7 @@ int main(int argc, char *argv[])
     }
 
     // Initialize RT structures
-    InitChem(dir, &calib, ctrl, chemtbl, kintbl, rttbl, subcatch);
+    InitChem(dir, calib, ctrl, chemtbl, kintbl, rttbl, subcatch);
 
     // Create output directory when necessary
     mkdir("output");

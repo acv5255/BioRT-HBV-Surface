@@ -1,7 +1,7 @@
 #include "biort.hpp"
 
 // Returns vector of date ints
-vector<int> ReadPrecipChem(const char dir[], Subcatchment subcatch[], int num_stc, const array<ChemTableEntry, MAXSPS>& chemtbl,int mode)
+vector<int> ReadPrecipChem(const char dir[], Subcatchment& subcatch, int num_stc, const array<ChemTableEntry, MAXSPS>& chemtbl,int mode)
 {
     FILE           *file_pointer;
     char            file_name[MAXSTRING];
@@ -33,7 +33,7 @@ vector<int> ReadPrecipChem(const char dir[], Subcatchment subcatch[], int num_st
     // *steps = (int *)malloc(ntime * sizeof(int));
     vector<int> steps = vector<int>(ntime, BADVAL);
 
-    subcatch->prcp_conc_time = vector(ntime, vector(num_stc, BADVAL));
+    subcatch.prcp_conc_time = vector(ntime, vector(num_stc, BADVAL));
 
     // read header to locate pH position
     for (int kspc = 0; kspc < num_stc + 1; kspc++)  // add one more column of date
@@ -69,14 +69,14 @@ vector<int> ReadPrecipChem(const char dir[], Subcatchment subcatch[], int num_st
         {
             if (kspc == pH_index && pH_convert == 1)
             {
-                fscanf(file_pointer, "%lf", &subcatch->prcp_conc_time[kstep][kspc]);
-                //printf("  step = %d, converting time-series precipitation pH (%lf) to ", kstep, subcatch->prcp_conc_time[kstep][kspc]);
-                subcatch->prcp_conc_time[kstep][kspc] = pow(10, -subcatch->prcp_conc_time[kstep][kspc]);
-                //printf("H+ concentration (%lf) \n", subcatch->prcp_conc_time[kstep][kspc]);
+                fscanf(file_pointer, "%lf", &subcatch.prcp_conc_time[kstep][kspc]);
+                //printf("  step = %d, converting time-series precipitation pH (%lf) to ", kstep, subcatch.prcp_conc_time[kstep][kspc]);
+                subcatch.prcp_conc_time[kstep][kspc] = pow(10, -subcatch.prcp_conc_time[kstep][kspc]);
+                //printf("H+ concentration (%lf) \n", subcatch.prcp_conc_time[kstep][kspc]);
             }
             else
             {
-                fscanf(file_pointer, "%lf", &subcatch->prcp_conc_time[kstep][kspc]);
+                fscanf(file_pointer, "%lf", &subcatch.prcp_conc_time[kstep][kspc]);
             }
         }
 

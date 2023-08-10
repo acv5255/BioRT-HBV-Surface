@@ -281,42 +281,41 @@ class Subcatchment
 # define mkdir(path)            mkdir(path, 0755)
 #endif
 
-void            CopyConstSubcatchProp(const Subcatchment* subcatch, Subcatchment* subcatch_numexp);
-void            CopyInitChemSubcatch(ReactionNetwork *, const Subcatchment* subcatch, Subcatchment* subcatch_numexp );
+void            CopyConstSubcatchProp(const Subcatchment& subcatch, Subcatchment& subcatch_numexp);
+void            CopyInitChemSubcatch(ReactionNetwork *, const Subcatchment& subcatch, Subcatchment& subcatch_numexp);
 int             CountLeapYears(int, int);
 int             FindChem(const char [MAXSTRING], int, const array<ChemTableEntry, MAXSPS>& chemtbl);
 void            FreeStruct(int *steps[]);
 int             GetDifference(int, int);
 void            InitChem(const char [], const CalibrationStruct *, const ControlData ctrl, array<ChemTableEntry, MAXSPS>& chemtbl,
-    array<KineticTableEntry, MAXSPS>& kintbl, ReactionNetwork *, Subcatchment* subcatch);
+    array<KineticTableEntry, MAXSPS>& kintbl, ReactionNetwork *, Subcatchment& subcatch);
 void            InitChemState(double, double, const array<ChemTableEntry, MAXSPS>& chemtbl, const ReactionNetwork *, const ControlData ctrl,
     ChemicalState *);
 void            Lookup(FILE *, const CalibrationStruct *, array<ChemTableEntry, MAXSPS>& chemtbl, array<KineticTableEntry, MAXSPS>& kintbl, ReactionNetwork *);
 int             MatchWrappedKey(const char [], const char []);
 void            ParseCmdLineParam(int argc, char *argv[], char dir[]);
 void            ParseLine(const char [], char [], double *);
-void            PrintDailyResults(FILE *, int, int, const ReactionNetwork *, const Subcatchment* subcatch);
+void            PrintDailyResults(FILE *, int, int, const ReactionNetwork *, const Subcatchment& subcatch);
 void            PrintHeader(FILE *, int, const ReactionNetwork *, const array<ChemTableEntry, MAXSPS>& chemtbl);
 double          ReactControl(const array<ChemTableEntry, MAXSPS>& chemtbl, const array<KineticTableEntry, MAXSPS>& kintbl, const ReactionNetwork *, double, double, double,
     double, double, double, array<f64, MAXSPS>&, ChemicalState *);
 void            Reaction(int, double, const array<ChemTableEntry, MAXSPS>& chemtbl, const array<KineticTableEntry, MAXSPS>& kintbl,
-    const ReactionNetwork *, Subcatchment* subcatch);
+    const ReactionNetwork *, Subcatchment& subcatch);
 void            ReadAdsorption(const char [], int, int, array<ChemTableEntry, MAXSPS>& chemtbl, ReactionNetwork *);
 void            ReadCationEchg(const char [], double, array<ChemTableEntry, MAXSPS>& chemtbl, ReactionNetwork *);
 void            ReadChem(const char [], ControlData *, ReactionNetwork *, array<ChemTableEntry, MAXSPS>& chemtbl, array<KineticTableEntry, MAXSPS>& kintbl);
-void            ReadCini(const char [], const array<ChemTableEntry, MAXSPS>& chemtbl, ReactionNetwork *, Subcatchment* subcatch);
+void            ReadCini(const char [], const array<ChemTableEntry, MAXSPS>& chemtbl, ReactionNetwork *, Subcatchment& subcatch);
 void            ReadConc(FILE *, int, const array<ChemTableEntry, MAXSPS>& chemtbl, int *, array<f64, MAXSPS>&, array<f64, MAXSPS>&, array<f64, MAXSPS>&, array<f64, MAXSPS>&, array<f64, MAXSPS>&, array<f64, MAXSPS>&);
 void            ReadDHParam(const char [], int, double *);
-void            ReadHbvParam(const char [], Subcatchment* subcatch);
-int             ReadHbvResults(const char [], vector<int>& steps, Subcatchment* subcatch, int);
-// int             ReadPrecipChem(const char [], vector<int>& nsteps, Subcatchment* subcatch, int, const array<ChemTableEntry, MAXSPS>& chemtbl, int);
-vector<int>     ReadPrecipChem(const char [], Subcatchment* subcatch, int, const array<ChemTableEntry, MAXSPS>& chemtbl, int);
+void            ReadHbvParam(const char [], Subcatchment& subcatch);
+int             ReadHbvResults(const char [], vector<int>& steps, Subcatchment& subcatch, int);
+vector<int>     ReadPrecipChem(const char [], Subcatchment& subcatch, int, const array<ChemTableEntry, MAXSPS>& chemtbl, int);
 void            ReadMinerals(const char [], int, int, double [MAXSPS][MAXSPS], double [], array<ChemTableEntry, MAXSPS>& chemtbl,
     ReactionNetwork *);
 void            ReadMinKin(FILE *, int, double, int *, char [], array<ChemTableEntry, MAXSPS>& chemtbl, KineticTableEntry *);
 void            ReadPrimary(const char [], int, array<ChemTableEntry, MAXSPS>& chemtbl);
 void            ReadSecondary(const char [], int, int, array<ChemTableEntry, MAXSPS>& chemtbl, ReactionNetwork *);
-void            ReadSoil(const char [], Subcatchment* sub);
+void            ReadSoil(const char [], Subcatchment& sub);
 void            ReadTempPoints(const char [], double, int *, int *);
 int             roundi(double);
 double          SoilTempFactor(double, double);
@@ -325,15 +324,15 @@ int             SolveReact(double, const array<ChemTableEntry, MAXSPS>& chemtbl,
     double, double, ChemicalState *);
 int             SolveSpeciation(const array<ChemTableEntry, MAXSPS>& chemtbl, const ControlData ctrl, const ReactionNetwork *, int, ChemicalState *);
 void            SortChem(char [MAXSPS][MAXSTRING], const int [MAXSPS], int, array<ChemTableEntry, MAXSPS>& chemtbl);
-void            Speciation(const array<ChemTableEntry, MAXSPS>& chemtbl, const ControlData ctrl, const ReactionNetwork *, Subcatchment* subcatch);
+void            Speciation(const array<ChemTableEntry, MAXSPS>& chemtbl, const ControlData ctrl, const ReactionNetwork *, Subcatchment& subcatch);
 int             SpeciesType(const char [], const char []);
 void            StreamSpeciation(int, const array<ChemTableEntry, MAXSPS>& chemtbl, const ControlData ctrl, const ReactionNetwork *,
-    Subcatchment* subcatch);
-void            Transport(int step, const array<ChemTableEntry, MAXSPS>& chemtbl, ReactionNetwork *rttbl, const ControlData ctrl, Subcatchment* subcatch);   // 2021-05-21
+    Subcatchment& subcatch);
+void            Transport(int step, const array<ChemTableEntry, MAXSPS>& chemtbl, ReactionNetwork *rttbl, const ControlData ctrl, Subcatchment& subcatch);   // 2021-05-21
 void            WrapInParentheses(char *str);
 double          WTDepthFactor(double ,double );
 void            UnwrapParentheses(const char wrapped_str[], char str[]);
-void            UpdatePrimConc(const ReactionNetwork *rttbl, const ControlData ctrl, Subcatchment* subcatch);
+void            UpdatePrimConc(const ReactionNetwork *rttbl, const ControlData ctrl, Subcatchment& subcatch);
 
 // Andrew's functions
 bool            CheckArrayForNan(const array<f64, MAXSPS>& arr);
@@ -358,17 +357,16 @@ void            SoilMoistFactorRange(array<f64, MAXSPS>& dst, double satn, const
                     int start, int end, int offset);
 double          SumArr(const double arr[MAXSPS], int num_species);
 
-void            TransportDeepZone(const ReactionNetwork* rttbl, const array<ChemTableEntry, MAXSPS>& chemtbl, Subcatchment* subcatch, const int step);
-void            TransportShallowZone(const ReactionNetwork* rttbl, const array<ChemTableEntry, MAXSPS>& chemtbl, Subcatchment* subcatch, const int step);
-void            TransportSurfaceZone(const ReactionNetwork* rttbl, const ControlData ctrl, Subcatchment* subcatch, const int step);
+void            TransportDeepZone(const ReactionNetwork* rttbl, const array<ChemTableEntry, MAXSPS>& chemtbl, Subcatchment& subcatch, const int step);
+void            TransportShallowZone(const ReactionNetwork* rttbl, const array<ChemTableEntry, MAXSPS>& chemtbl, Subcatchment& subcatch, const int step);
+void            TransportSurfaceZone(const ReactionNetwork* rttbl, const ControlData ctrl, Subcatchment& subcatch, const int step);
 
 void            PrintChemicalState(const ChemicalState* chms);
 
 double          ReadParamToDouble(const char buffer[], const char keyword[], const char fn[], int line_number);
-void            ResetReactionRates(Subcatchment * subcatch);
 int             ReadParamToInt(const char buffer[], const char keyword[], const char fn[], int line_number);
 void            ReactSurfaceZone(const double temp, const SoilConstants soil, const double tot_water, const array<ChemTableEntry, MAXSPS>& chemtbl,
-                    const array<KineticTableEntry, MAXSPS>& kintbl, const ReactionNetwork* rttbl, double stepsize, Subcatchment* subcatch);
+                    const array<KineticTableEntry, MAXSPS>& kintbl, const ReactionNetwork* rttbl, double stepsize, Subcatchment& subcatch);
 int             SolveSurfaceReact(double stepsize, const array<ChemTableEntry, MAXSPS>& chemtbl, const array<KineticTableEntry, MAXSPS>& kintbl, const ReactionNetwork *rttbl,
                     double tot_water, double temp, double porosity, ChemicalState *chms);
 double          ReactSurfaceControl(const array<ChemTableEntry, MAXSPS>& chemtbl, const array<KineticTableEntry, MAXSPS>& kintbl, const ReactionNetwork *rttbl,

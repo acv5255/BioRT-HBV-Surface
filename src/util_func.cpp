@@ -340,12 +340,3 @@ void PrintChemicalState(const ChemicalState* chms) {
 
     return;
 }
-
-void ResetReactionRates(Subcatchment * subcatch) {
-    /* Reset the reaction rates to zero at the end of the timestep*/
-    for (int i = 0; i < NWS; i++) {
-        for (int j = 0; j < MAXSPS; j++) {
-            subcatch->react_rate[i][j] = 0.0;
-        }
-    }
-}

@@ -1,13 +1,12 @@
 #include "biort.hpp"
 
 void ReadCini(const char dir[], const array<ChemTableEntry, MAXSPS>& chemtbl, ReactionNetwork *rttbl,
-    Subcatchment subcatch[])
+    Subcatchment& subcatch)
 {
     char            file_name[MAXSTRING];
     char            cmdstr[MAXSTRING];
     FILE           *file_pointer;
     int             line_number = 0;
-    // double          dummy[MAXSPS];
     array<f64, MAXSPS> dummy_arr;
 
     sprintf(file_name, "input/%s/cini.txt", dir);
@@ -18,7 +17,7 @@ void ReadCini(const char dir[], const array<ChemTableEntry, MAXSPS>& chemtbl, Re
     // Read precipitation concentration
     // printf("\tPRECIPITATION:\n");
     FindLine(file_pointer, "PRECIPITATION", &line_number, cmdstr);
-    ReadConc(file_pointer, rttbl->num_stc, chemtbl, &line_number, subcatch->prcp_conc, dummy_arr, dummy_arr, dummy_arr, dummy_arr, dummy_arr);
+    ReadConc(file_pointer, rttbl->num_stc, chemtbl, &line_number, subcatch.prcp_conc, dummy_arr, dummy_arr, dummy_arr, dummy_arr, dummy_arr);
 
 
     // Read surface concentration  2021-05-07
@@ -29,12 +28,12 @@ void ReadCini(const char dir[], const array<ChemTableEntry, MAXSPS>& chemtbl, Re
         rttbl->num_stc, 
         chemtbl, 
         &line_number, 
-        subcatch->chms[SURFACE].tot_conc, 
-        subcatch->chms[SURFACE].soil_parameters.ssa, 
-        subcatch->chms[SURFACE].soil_parameters.q10, 
-        subcatch->chms[SURFACE].soil_parameters.sw_thld, 
-        subcatch->chms[SURFACE].soil_parameters.sw_exp, 
-        subcatch->chms[SURFACE].soil_parameters.n_alpha);
+        subcatch.chms[SURFACE].tot_conc, 
+        subcatch.chms[SURFACE].soil_parameters.ssa, 
+        subcatch.chms[SURFACE].soil_parameters.q10, 
+        subcatch.chms[SURFACE].soil_parameters.sw_thld, 
+        subcatch.chms[SURFACE].soil_parameters.sw_exp, 
+        subcatch.chms[SURFACE].soil_parameters.n_alpha);
 
 
     // Read upper zone concentration
@@ -45,12 +44,12 @@ void ReadCini(const char dir[], const array<ChemTableEntry, MAXSPS>& chemtbl, Re
         rttbl->num_stc, 
         chemtbl, 
         &line_number, 
-        subcatch->chms[UZ].tot_conc, 
-        subcatch->chms[UZ].soil_parameters.ssa, 
-        subcatch->chms[UZ].soil_parameters.q10, 
-        subcatch->chms[UZ].soil_parameters.sw_thld, 
-        subcatch->chms[UZ].soil_parameters.sw_exp, 
-        subcatch->chms[UZ].soil_parameters.n_alpha);
+        subcatch.chms[UZ].tot_conc, 
+        subcatch.chms[UZ].soil_parameters.ssa, 
+        subcatch.chms[UZ].soil_parameters.q10, 
+        subcatch.chms[UZ].soil_parameters.sw_thld, 
+        subcatch.chms[UZ].soil_parameters.sw_exp, 
+        subcatch.chms[UZ].soil_parameters.n_alpha);
 
     // Read lower zone concentration
     // printf("\tDEEP ZONE:\n");
@@ -60,12 +59,12 @@ void ReadCini(const char dir[], const array<ChemTableEntry, MAXSPS>& chemtbl, Re
         rttbl->num_stc, 
         chemtbl, 
         &line_number, 
-        subcatch->chms[LZ].tot_conc, 
-        subcatch->chms[LZ].soil_parameters.ssa, 
-        subcatch->chms[LZ].soil_parameters.q10, 
-        subcatch->chms[LZ].soil_parameters.sw_thld, 
-        subcatch->chms[LZ].soil_parameters.sw_exp, 
-        subcatch->chms[LZ].soil_parameters.n_alpha);
+        subcatch.chms[LZ].tot_conc, 
+        subcatch.chms[LZ].soil_parameters.ssa, 
+        subcatch.chms[LZ].soil_parameters.q10, 
+        subcatch.chms[LZ].soil_parameters.sw_thld, 
+        subcatch.chms[LZ].soil_parameters.sw_exp, 
+        subcatch.chms[LZ].soil_parameters.n_alpha);
 
     printf("\n\n");
 

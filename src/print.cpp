@@ -213,7 +213,7 @@ void PrintHeader(FILE *file_pointer, int transpt, const ReactionNetwork *rttbl, 
 }
 
 void PrintDailyResults(FILE *fp, int transpt, int step, const ReactionNetwork *rttbl,
-    const Subcatchment* subcatch)
+    const Subcatchment& subcatch)
 {
     // Soil concentration file header
     fprintf(fp, "%-15d",  step);
@@ -224,89 +224,89 @@ void PrintDailyResults(FILE *fp, int transpt, int step, const ReactionNetwork *r
         // Snow concentration
         for (int kspc = 0; kspc < rttbl->num_spc; kspc++)   // 2021-06-29
         {
-            fprintf(fp, "\t%-15lg", subcatch->chms[SNOW].prim_conc[kspc]);
+            fprintf(fp, "\t%-15lg", subcatch.chms[SNOW].prim_conc[kspc]);
         }
         // Surface concentration
         for (int kspc = 0; kspc < rttbl->num_stc; kspc++)   // 2021-06-29
         {
-            fprintf(fp, "\t%-15lg", subcatch->chms[SURFACE].prim_conc[kspc]);
+            fprintf(fp, "\t%-15lg", subcatch.chms[SURFACE].prim_conc[kspc]);
         }
         // Surface secondary concentration
         for (int kspc = 0; kspc < rttbl->num_ssc; kspc++)   // 2021-06-29
         {
-            fprintf(fp, "\t%-15lg", subcatch->chms[SURFACE].sec_conc[kspc]);
+            fprintf(fp, "\t%-15lg", subcatch.chms[SURFACE].sec_conc[kspc]);
         }
 
         // Upper zone primary concentration
         for (int kspc = 0; kspc < rttbl->num_stc; kspc++)
         {
-            fprintf(fp, "\t%-15lg", subcatch->chms[UZ].prim_conc[kspc]);
+            fprintf(fp, "\t%-15lg", subcatch.chms[UZ].prim_conc[kspc]);
         }
         // Upper zone secondary concentration
         for (int kspc = 0; kspc < rttbl->num_ssc; kspc++)
         {
-            fprintf(fp, "\t%-15lg", subcatch->chms[UZ].sec_conc[kspc]);
+            fprintf(fp, "\t%-15lg", subcatch.chms[UZ].sec_conc[kspc]);
         }
 
         // Lower zone primary concentration
         for (int kspc = 0; kspc < rttbl->num_stc; kspc++)
         {
-            fprintf(fp, "\t%-15lg", subcatch->chms[LZ].prim_conc[kspc]);
+            fprintf(fp, "\t%-15lg", subcatch.chms[LZ].prim_conc[kspc]);
         }
 
         // Lower zone secondary concentration
         for (int kspc = 0; kspc < rttbl->num_ssc; kspc++)
         {
-            fprintf(fp, "\t%-15lg", subcatch->chms[LZ].sec_conc[kspc]);
+            fprintf(fp, "\t%-15lg", subcatch.chms[LZ].sec_conc[kspc]);
         }
 
         // Stream primary concentration
         for (int kspc = 0; kspc < rttbl->num_stc; kspc++)
         {
-            fprintf(fp, "\t%-15lg", subcatch->chms[STREAM].prim_conc[kspc]);
+            fprintf(fp, "\t%-15lg", subcatch.chms[STREAM].prim_conc[kspc]);
         }
 
         // Stream secondary concentration
         for (int kspc = 0; kspc < rttbl->num_ssc; kspc++)
         {
-            fprintf(fp, "\t%-15lg", subcatch->chms[STREAM].sec_conc[kspc]);
+            fprintf(fp, "\t%-15lg", subcatch.chms[STREAM].sec_conc[kspc]);
         }
 
         //===== Reaction rates =====//
         for (int kspc = 0; kspc < rttbl->num_min; kspc++)  // 2021-05-14
         {
-           fprintf(fp, "\t%-23lg", subcatch->react_rate[SURFACE][kspc]);
+           fprintf(fp, "\t%-23lg", subcatch.react_rate[SURFACE][kspc]);
         }
         for (int kspc = 0; kspc < rttbl->num_min; kspc++)
         {
-            fprintf(fp, "\t%-23lg", subcatch->react_rate[UZ][kspc]);
+            fprintf(fp, "\t%-23lg", subcatch.react_rate[UZ][kspc]);
         }
         for (int kspc = 0; kspc < rttbl->num_min; kspc++)
         {
-            fprintf(fp, "\t%-23lg", subcatch->react_rate[LZ][kspc]);
+            fprintf(fp, "\t%-23lg", subcatch.react_rate[LZ][kspc]);
         }
     }
     else    // In transport mode, only print primary species
     {
         for (int kspc = 0; kspc < rttbl->num_spc; kspc++)  // 2021-06-29
         {
-            fprintf(fp, "\t%-15lg", subcatch->chms[SNOW].prim_conc[kspc]);
+            fprintf(fp, "\t%-15lg", subcatch.chms[SNOW].prim_conc[kspc]);
         }
         for (int kspc = 0; kspc < rttbl->num_spc; kspc++)  // 2021-06-29
         {
-            fprintf(fp, "\t%-15lg", subcatch->chms[SURFACE].prim_conc[kspc]);
+            fprintf(fp, "\t%-15lg", subcatch.chms[SURFACE].prim_conc[kspc]);
         }
         for (int kspc = 0; kspc < rttbl->num_spc; kspc++)
         {
-            fprintf(fp, "\t%-15lg", subcatch->chms[UZ].prim_conc[kspc]);
+            fprintf(fp, "\t%-15lg", subcatch.chms[UZ].prim_conc[kspc]);
         }
         for (int kspc = 0; kspc < rttbl->num_spc; kspc++)
         {
-            fprintf(fp, "\t%-15lg", subcatch->chms[LZ].prim_conc[kspc]);
+            fprintf(fp, "\t%-15lg", subcatch.chms[LZ].prim_conc[kspc]);
         }
         for (int kspc = 0; kspc < rttbl->num_spc; kspc++)
         {
-        fprintf(fp, "\t%-15lg", subcatch->chms[STREAM].prim_conc[kspc]);
+        fprintf(fp, "\t%-15lg", subcatch.chms[STREAM].prim_conc[kspc]);
         }
     }
     fprintf(fp, "\n");

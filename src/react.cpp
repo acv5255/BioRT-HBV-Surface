@@ -69,29 +69,29 @@ void GetSecondarySpecies(array<f64, MAXSPS>& conc, const array<f64, MAXSPS>& gam
 }
 
 void ReactZone(const int kzone, const double temp, const SoilConstants soil, const double tot_water, const array<ChemTableEntry, MAXSPS>& chemtbl,
-        const array<KineticTableEntry, MAXSPS>& kintbl, const ReactionNetwork* rttbl, double stepsize, Subcatchment* subcatch) {
+        const array<KineticTableEntry, MAXSPS>& kintbl, const ReactionNetwork* rttbl, double stepsize, Subcatchment& subcatch) {
     
     const double Zw = soil.depth - tot_water / soil.porosity;     // UZ or LZ or SURFACE
     double substep;
 
     for (int kspc = 0; kspc < MAXSPS; kspc++)
     {
-        subcatch->react_rate[kzone][kspc] = BADVAL;   // Set reaction rate to -999
+        subcatch.react_rate[kzone][kspc] = BADVAL;   // Set reaction rate to -999
     }
 
     double satn = tot_water / (soil.depth * soil.porosity);  // add porosity for saturation calculation
     satn = std::min(satn, 1.0);
 
-    CheckChmsForNonFinite(&subcatch->chms[kzone], "react.c", 80);
-    if (!CheckArrayForNan(subcatch->react_rate[kzone])) {
+    CheckChmsForNonFinite(&subcatch.chms[kzone], "react.c", 80);
+    if (!CheckArrayForNan(subcatch.react_rate[kzone])) {
         printf("ChemicalState->react_rate contains nan in 'react.c' near line 82 with kzone = %d", kzone);
     }
 
     if (satn > SATN_MINIMUM)
     {
         substep = ReactControl(chemtbl, kintbl, rttbl, stepsize, soil.porosity, soil.depth, satn, temp, Zw,
-            subcatch->react_rate[kzone], &subcatch->chms[kzone]);
-        CheckChmsForNonFinite(&subcatch->chms[kzone], "react.c", 89);
+            subcatch.react_rate[kzone], &subcatch.chms[kzone]);
+        CheckChmsForNonFinite(&subcatch.chms[kzone], "react.c", 89);
         
         if (substep < 0.0) {
             printf("React failed to converge...\n");
@@ -100,23 +100,23 @@ void ReactZone(const int kzone, const double temp, const SoilConstants soil, con
 }
 
 void ReactSurfaceZone(const double temp, const SoilConstants soil, const double tot_water, const array<ChemTableEntry, MAXSPS>& chemtbl,
-        const array<KineticTableEntry, MAXSPS>& kintbl, const ReactionNetwork* rttbl, double stepsize, Subcatchment* subcatch) {
+        const array<KineticTableEntry, MAXSPS>& kintbl, const ReactionNetwork* rttbl, double stepsize, Subcatchment& subcatch) {
     
     double substep;
 
     for (int kspc = 0; kspc < MAXSPS; kspc++)
     {
-        subcatch->react_rate[SURFACE][kspc] = BADVAL;   // Set reaction rate to -999
+        subcatch.react_rate[SURFACE][kspc] = BADVAL;   // Set reaction rate to -999
     }
 
-    CheckChmsForNonFinite(&subcatch->chms[SURFACE], "react.c", 80);
-    if (!CheckArrayForNan(subcatch->react_rate[SURFACE])) {
+    CheckChmsForNonFinite(&subcatch.chms[SURFACE], "react.c", 80);
+    if (!CheckArrayForNan(subcatch.react_rate[SURFACE])) {
         printf("ChemicalState->react_rate contains nan in 'react.c' near line 82 with SURFACE = %d", SURFACE);
     }
 
     substep = ReactSurfaceControl(chemtbl, kintbl, rttbl, stepsize, soil.porosity, soil.depth, tot_water, temp,
-        subcatch->react_rate[SURFACE], &subcatch->chms[SURFACE]);
-    CheckChmsForNonFinite(&subcatch->chms[SURFACE], "react.c", 89);
+        subcatch.react_rate[SURFACE], &subcatch.chms[SURFACE]);
+    CheckChmsForNonFinite(&subcatch.chms[SURFACE], "react.c", 89);
     
     if (substep < 0.0) {
         printf("React failed to converge...\n");
@@ -161,17 +161,17 @@ void GetRates(array<f64, MAXSPS>& rate, array<f64, MAXSPS>& rate_spe, const arra
 }
 
 void Reaction(int kstep, double stepsize, const array<ChemTableEntry, MAXSPS>& chemtbl,
-    const array<KineticTableEntry, MAXSPS>& kintbl, const ReactionNetwork *rttbl, Subcatchment* subcatch)
+    const array<KineticTableEntry, MAXSPS>& kintbl, const ReactionNetwork *rttbl, Subcatchment& subcatch)
 {
-    const double temp = subcatch->tmp[kstep];
-    if (subcatch->q[kstep][Q0] >= 0.1) {
-        const double tot_water_surf = subcatch->ws[kstep][SURFACE] + subcatch->q[kstep][Q0];
-        ReactSurfaceZone(temp, subcatch->soil_surface, tot_water_surf, chemtbl, kintbl, rttbl, stepsize, subcatch);
+    const double temp = subcatch.tmp[kstep];
+    if (subcatch.q[kstep][Q0] >= 0.1) {
+        const double tot_water_surf = subcatch.ws[kstep][SURFACE] + subcatch.q[kstep][Q0];
+        ReactSurfaceZone(temp, subcatch.soil_surface, tot_water_surf, chemtbl, kintbl, rttbl, stepsize, subcatch);
     }
-    CheckChmsForNonFinite(&subcatch->chms[SURFACE], "react.c", 153);
+    CheckChmsForNonFinite(&subcatch.chms[SURFACE], "react.c", 153);
 
-    ReactZone(UZ, temp, subcatch->soil_sz, subcatch->ws[kstep][UZ], chemtbl, kintbl, rttbl, stepsize, subcatch);
-    ReactZone(LZ, temp, subcatch->soil_dz, subcatch->ws[kstep][LZ], chemtbl, kintbl, rttbl, stepsize, subcatch);
+    ReactZone(UZ, temp, subcatch.soil_sz, subcatch.ws[kstep][UZ], chemtbl, kintbl, rttbl, stepsize, subcatch);
+    ReactZone(LZ, temp, subcatch.soil_dz, subcatch.ws[kstep][LZ], chemtbl, kintbl, rttbl, stepsize, subcatch);
 }
 
 int SolveReact(double stepsize, const array<ChemTableEntry, MAXSPS>& chemtbl, const array<KineticTableEntry, MAXSPS>& kintbl, const ReactionNetwork *rttbl,

@@ -1,7 +1,7 @@
 #include "biort.hpp"
 
-// int ReadPrecipChem(const char dir[], int *steps[], Subcatchment subcatch[], int num_stc, const array<ChemTableEntry, MAXSPS>& chemtbl,int mode)
-int ReadPrecipChem(const char dir[], vector<int>& steps, Subcatchment subcatch[], int num_stc, const array<ChemTableEntry, MAXSPS>& chemtbl,int mode)
+// Returns vector of date ints
+vector<int> ReadPrecipChem(const char dir[], Subcatchment subcatch[], int num_stc, const array<ChemTableEntry, MAXSPS>& chemtbl,int mode)
 {
     FILE           *file_pointer;
     char            file_name[MAXSTRING];
@@ -31,7 +31,7 @@ int ReadPrecipChem(const char dir[], vector<int>& steps, Subcatchment subcatch[]
     rewind(file_pointer);
 
     // *steps = (int *)malloc(ntime * sizeof(int));
-    steps = vector<int>(ntime, BADVAL);
+    vector<int> steps = vector<int>(ntime, BADVAL);
 
     subcatch->prcp_conc_time = vector(ntime, vector(num_stc, BADVAL));
 
@@ -84,5 +84,6 @@ int ReadPrecipChem(const char dir[], vector<int>& steps, Subcatchment subcatch[]
 
     fclose(file_pointer);
 
-    return ntime;
+    // return ntime;
+    return steps;
 }

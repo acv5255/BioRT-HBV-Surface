@@ -8,7 +8,7 @@ int main(int argc, char *argv[])
     char                file_name[MAXSTRING];   // name of output file
     char                timestr[MAXSTRING];     // time stamp
     vector<int>         steps;                  // Model time steps
-    int                 nsteps_numexp;          // number of simulation steps
+    size_t                 nsteps_numexp;          // number of simulation steps
     vector<int>         steps_numexp;           // Numexp model time steps
     time_t              rawtime;
     tm                  *timestamp;
@@ -34,7 +34,7 @@ int main(int argc, char *argv[])
 
     // Read HBV simulation steps, water states and fluxes
     ReadHbvParam(dir, &subcatch);
-    int nsteps = ReadHbvResults(dir, steps, &subcatch, 0);
+    size_t nsteps = (size_t)ReadHbvResults(dir, steps, &subcatch, 0);
 
     // Read chemistry control file
     ReadChem(dir, &ctrl, &rttbl, chemtbl, kintbl);
@@ -43,10 +43,10 @@ int main(int argc, char *argv[])
     ReadCini(dir, chemtbl, &rttbl, &subcatch);
 
     // Read time-series precipitation chemistry if defined in chem.txt  2021-05-20
-    int n_precipchem;
     if (ctrl.variable_precipchem == 1) {
-        n_precipchem = ReadPrecipChem(dir, steps, &subcatch, rttbl.num_stc, chemtbl, 0);
-        if ((n_precipchem != nsteps)) {
+        // n_precipchem = ReadPrecipChem(dir, steps, &subcatch, rttbl.num_stc, chemtbl, 0);
+        steps = ReadPrecipChem(dir, &subcatch, rttbl.num_stc, chemtbl, 0);
+        if ((steps.size() != nsteps)) {
             biort_printf(VL_ERROR,"\nNumber of time steps in \"Numexp_precipchem.txt\" should be same as in \"Numexp_Results.txt\" file.\n");
             exit(EXIT_FAILURE);
         }
@@ -55,9 +55,10 @@ int main(int argc, char *argv[])
     if (ctrl.precipchem_numexp == 1){
         ctrl.recycle = ctrl.recycle - 1;
         CopyConstSubcatchProp(&subcatch, &subcatch_numexp);
-        nsteps_numexp = ReadHbvResults(dir, steps_numexp, &subcatch_numexp, 1);
-        int n_prcpchem_numexp = ReadPrecipChem(dir, steps_numexp, &subcatch_numexp, rttbl.num_stc, chemtbl, 1);
-        if ((n_prcpchem_numexp != nsteps)) {
+        nsteps_numexp = (size_t)ReadHbvResults(dir, steps_numexp, &subcatch_numexp, 1);
+        // int n_prcpchem_numexp = ReadPrecipChem(dir, steps_numexp, &subcatch_numexp, rttbl.num_stc, chemtbl, 1);
+        steps_numexp = ReadPrecipChem(dir, &subcatch_numexp, rttbl.num_stc, chemtbl, 1);
+        if ((steps_numexp.size() != nsteps_numexp)) {
             biort_printf(VL_ERROR,"\nNumber of time steps in \"Numexp_precipchem.txt\" should be same as in \"Numexp_Results.txt\" file.\n");
             exit(EXIT_FAILURE);
         }
@@ -92,7 +93,7 @@ int main(int argc, char *argv[])
         for (int kcycle = 0; kcycle <= ctrl.recycle; kcycle++)
         {
             // Loop through model steps to calculate reactive transport
-            for (int kstep = 0; kstep < nsteps; kstep++)
+            for (int kstep = 0; kstep < (int)steps.size(); kstep++)
             {
                 // Transport and routing
                 Transport(kstep, chemtbl, &rttbl, ctrl, &subcatch); // 2021-05-20
@@ -123,7 +124,7 @@ int main(int argc, char *argv[])
 
     biort_printf(VL_NORMAL, "\nHBV-BioRT %s simulation succeeded.\n", dir);
 
-
+    // Do numerical experiment
     if (ctrl.precipchem_numexp == 1){
         CopyInitChemSubcatch(&rttbl, &subcatch, &subcatch_numexp);
         {
@@ -140,7 +141,7 @@ int main(int argc, char *argv[])
 
             biort_printf(VL_NORMAL, "\nHBV-BioRT %s numerical experiment started.\n", dir);
 
-            for (int kstep = 0; kstep < nsteps_numexp; kstep++){
+            for (int kstep = 0; kstep < (int)steps_numexp.size(); kstep++){
 
 
                 Transport(kstep, chemtbl, &rttbl, ctrl, &subcatch_numexp); // 2021-05-20

@@ -308,8 +308,10 @@ void            ReadCini(const char [], const array<ChemTableEntry, MAXSPS>& che
 void            ReadConc(FILE *, int, const array<ChemTableEntry, MAXSPS>& chemtbl, int *, array<f64, MAXSPS>&, array<f64, MAXSPS>&, array<f64, MAXSPS>&, array<f64, MAXSPS>&, array<f64, MAXSPS>&, array<f64, MAXSPS>&);
 void            ReadDHParam(const char [], int, double *);
 void            ReadHbvParam(const char [], Subcatchment* subcatch);
-void            ReadHbvResults(const char [], int *, int **, Subcatchment* subcatch, int);
-void            ReadPrecipChem(const char [], int *, int **, Subcatchment* subcatch, int, const array<ChemTableEntry, MAXSPS>& chemtbl, int);
+// int             ReadHbvResults(const char [], int **, Subcatchment* subcatch, int);
+int             ReadHbvResults(const char [], vector<int>& steps, Subcatchment* subcatch, int);
+// int             ReadPrecipChem(const char [], int **, Subcatchment* subcatch, int, const array<ChemTableEntry, MAXSPS>& chemtbl, int);
+int             ReadPrecipChem(const char [], vector<int>& nsteps, Subcatchment* subcatch, int, const array<ChemTableEntry, MAXSPS>& chemtbl, int);
 void            ReadMinerals(const char [], int, int, double [MAXSPS][MAXSPS], double [], array<ChemTableEntry, MAXSPS>& chemtbl,
     ReactionNetwork *);
 void            ReadMinKin(FILE *, int, double, int *, char [], array<ChemTableEntry, MAXSPS>& chemtbl, KineticTableEntry *);

@@ -5,17 +5,15 @@ int             verbose_mode;
 int main(int argc, char *argv[])
 {
     char                dir[MAXSTRING];         // name of input directory
-    char                file_name[MAXSTRING];          // name of output file
+    char                file_name[MAXSTRING];   // name of output file
     char                timestr[MAXSTRING];     // time stamp
-    int                 nsteps;                 // number of simulation steps
-    int                 *steps;                  // simulation steps
-    int                 nsteps_numexp;                 // number of simulation steps
-    int                 *steps_numexp;                  // simulation steps
+    vector<int>         steps;                  // Model time steps
+    int                 nsteps_numexp;          // number of simulation steps
+    vector<int>         steps_numexp;           // Numexp model time steps
     time_t              rawtime;
-    struct tm           *timestamp;
+    tm                  *timestamp;
     ReactionNetwork     rttbl;
     array<ChemTableEntry, MAXSPS> chemtbl;
-    // KineticTableEntry   kintbl[MAXSPS];
     array<KineticTableEntry, MAXSPS> kintbl;
     CalibrationStruct   calib;
     ControlData         ctrl;
@@ -36,7 +34,7 @@ int main(int argc, char *argv[])
 
     // Read HBV simulation steps, water states and fluxes
     ReadHbvParam(dir, &subcatch);
-    ReadHbvResults(dir, &nsteps, &steps, &subcatch, 0);
+    int nsteps = ReadHbvResults(dir, steps, &subcatch, 0);
 
     // Read chemistry control file
     ReadChem(dir, &ctrl, &rttbl, chemtbl, kintbl);
@@ -44,41 +42,36 @@ int main(int argc, char *argv[])
     // Read chemistry initial conditions
     ReadCini(dir, chemtbl, &rttbl, &subcatch);
 
-    // printf("Surface zone chemistry after 'ReadCini': \n");
-    // PrintChemicalState(&subcatch.chms[SURFACE]);
-
     // Read time-series precipitation chemistry if defined in chem.txt  2021-05-20
+    int n_precipchem;
     if (ctrl.variable_precipchem == 1) {
-        ReadPrecipChem(dir, &nsteps, &steps, &subcatch, rttbl.num_stc, chemtbl, 0);
+        n_precipchem = ReadPrecipChem(dir, steps, &subcatch, rttbl.num_stc, chemtbl, 0);
+        if ((n_precipchem != nsteps)) {
+            biort_printf(VL_ERROR,"\nNumber of time steps in \"Numexp_precipchem.txt\" should be same as in \"Numexp_Results.txt\" file.\n");
+            exit(EXIT_FAILURE);
+        }
     }
 
     if (ctrl.precipchem_numexp == 1){
         ctrl.recycle = ctrl.recycle - 1;
         CopyConstSubcatchProp(&subcatch, &subcatch_numexp);
-        ReadHbvResults(dir, &nsteps_numexp,  &steps_numexp, &subcatch_numexp, 1);
-        ReadPrecipChem(dir, &nsteps_numexp, &steps_numexp, &subcatch_numexp, rttbl.num_stc, chemtbl, 1);
+        nsteps_numexp = ReadHbvResults(dir, steps_numexp, &subcatch_numexp, 1);
+        int n_prcpchem_numexp = ReadPrecipChem(dir, steps_numexp, &subcatch_numexp, rttbl.num_stc, chemtbl, 1);
+        if ((n_prcpchem_numexp != nsteps)) {
+            biort_printf(VL_ERROR,"\nNumber of time steps in \"Numexp_precipchem.txt\" should be same as in \"Numexp_Results.txt\" file.\n");
+            exit(EXIT_FAILURE);
+        }
     }
 
     // Initialize RT structures
     InitChem(dir, &calib, ctrl, chemtbl, kintbl, &rttbl, &subcatch);
 
-    // Check on secondary concentrations in the surface zone
-
     // Create output directory when necessary
     mkdir("output");
 
-    // {
-    //     printf("Surface total concentration at before starting: \n");
-    //     PrintArray(subcatch.chms[SURFACE].tot_conc);
-    // }
-
-    //
     time(&rawtime);
     timestamp = localtime(&rawtime);
     strftime(timestr, 11, "%y%m%d%H%M", timestamp);
-
-    // printf("Surface zone chemistry before starting loops: \n");
-    // PrintChemicalState(&subcatch.chms[SURFACE]);
 
     // Open output file
     {
@@ -178,7 +171,4 @@ int main(int argc, char *argv[])
             fclose(file_pointer);
         }
     }
-
-    FreeStruct(&steps);
-    FreeStruct(&steps_numexp);
 }

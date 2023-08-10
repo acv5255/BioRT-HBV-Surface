@@ -2,7 +2,8 @@
 
 const double SURFACE_STORAGE_MIN = 1e-5; // 1 mm water, minimum water allowed in the surface zone
 
-void ReadHbvResults(const char dir[], int *nsteps, int *steps[], Subcatchment* subcatch, int mode)
+// int ReadHbvResults(const char dir[], int *steps[], Subcatchment* subcatch, int mode)
+int ReadHbvResults(const char dir[], vector<int>& steps, Subcatchment* subcatch, int mode)
 {
     FILE           *file_pointer;
     char            file_name[MAXSTRING];
@@ -37,32 +38,33 @@ void ReadHbvResults(const char dir[], int *nsteps, int *steps[], Subcatchment* s
     }
 
 
-    *nsteps = CountLines(file_pointer, cmdstr, 0) - 1;
+    int nsteps = CountLines(file_pointer, cmdstr, 0) - 1;
 
     rewind(file_pointer);
 
-    *steps = (int *)malloc(*nsteps * sizeof(int));
+    // *steps = (int *)malloc(nsteps * sizeof(int));
+    steps = vector<int>(nsteps, BADVAL);
 
     if ((mode == 1) & (numexp_file_flag == 0))
     {
-      if (len_numexp % *nsteps != 0){
+      if (len_numexp % nsteps != 0){
           biort_printf(VL_ERROR,"\nNumber of time steps in \"Numexp_precipchem.txt\" should be a multiple of time steps in \"Results.txt\" file, if \"Numexp_precipchem.txt\" file is not provided.\n");
           exit(EXIT_FAILURE);
     }
-        len_numexp /= *nsteps;
+        len_numexp /= nsteps;
     }
 
-    subcatch->ws = vector<array<f64, NWS>>(len_numexp * *nsteps, { BADVAL });
-    subcatch->q = vector<array<f64, NQ>>(len_numexp* *nsteps, { BADVAL });
-    subcatch->tmp = vector<f64>(len_numexp* *nsteps, {BADVAL});
+    subcatch->ws = vector<array<f64, NWS>>(len_numexp * nsteps, { BADVAL });
+    subcatch->q = vector<array<f64, NQ>>(len_numexp* nsteps, { BADVAL });
+    subcatch->tmp = vector<f64>(len_numexp* nsteps, {BADVAL});
 
     NextLine(file_pointer, cmdstr, &line_number);     // Skip header line
 
-    for (int kstep = 0; kstep < *nsteps; kstep++)
+    for (int kstep = 0; kstep < nsteps; kstep++)
     {
         double          snow, sm;
 
-        fscanf(file_pointer, "%d", &((*steps)[kstep]));    // Read model steps
+        fscanf(file_pointer, "%d", &steps[kstep]);    // Read model steps
 
         fscanf(file_pointer, "%*f %*f");  // Skip "Qsim" and "Qobs"
         fscanf(file_pointer, "%lf %lf", &subcatch->q[kstep][PRECIP], &subcatch->tmp[kstep]);    // Read precip. and
@@ -121,20 +123,19 @@ void ReadHbvResults(const char dir[], int *nsteps, int *steps[], Subcatchment* s
     
     //Change PERC value for 1st time step using water storage for last timestep
     
-    subcatch->q[0][PERC] = std::min(subcatch->hbv_parameters.perc, subcatch->ws[*nsteps - 1][UZ] + subcatch->q[0][RECHG]);
+    subcatch->q[0][PERC] = std::min(subcatch->hbv_parameters.perc, subcatch->ws[nsteps - 1][UZ] + subcatch->q[0][RECHG]);
 
     // Add 1. residual moisture to LZ & UZ and 2. SM to UZ
-    for (int kstep = 0; kstep < *nsteps; kstep++)
+    for (int kstep = 0; kstep < nsteps; kstep++)
     {
         subcatch->ws[kstep][SURFACE]+= std::min(subcatch->soil_surface.ws_passive, STORAGE_MIN);
-        // if (subcatch->q[kstep][Q0] > 0.0) subcatch->ws[kstep][SURFACE] = subcatch->q[kstep][Q0];
         subcatch->ws[kstep][UZ] += subcatch->soil_sz.ws_passive;
         subcatch->ws[kstep][LZ] += subcatch->soil_dz.ws_passive;
         subcatch->ws[kstep][UZ] += subcatch->ws[kstep][SM];
         
     }
 
-    for (int kstep = 0; kstep < *nsteps; kstep++)
+    for (int kstep = 0; kstep < nsteps; kstep++)
     {
         if (subcatch->ws[kstep][UZ] > (subcatch->soil_sz.depth * subcatch->soil_sz.porosity))
         {
@@ -156,24 +157,25 @@ void ReadHbvResults(const char dir[], int *nsteps, int *steps[], Subcatchment* s
         {
             for (int i = 1; i < len_numexp; i++)
             {
-                for (int kstep = 0; kstep < *nsteps; kstep++)
+                for (int kstep = 0; kstep < nsteps; kstep++)
                 {
-                    subcatch->ws[(i * *nsteps)+kstep][SNOW] = subcatch->ws[kstep][SNOW];
-                    subcatch->ws[(i * *nsteps)+kstep][SURFACE] = subcatch->ws[kstep][SURFACE];
-                    subcatch->ws[(i * *nsteps)+kstep][UZ] = subcatch->ws[kstep][UZ];
-                    subcatch->ws[(i * *nsteps)+kstep][LZ] = subcatch->ws[kstep][LZ];
-                    subcatch->q[(i * *nsteps)+kstep][PRECIP] = subcatch->q[kstep][PRECIP];
-                    subcatch->q[(i * *nsteps)+kstep][RECHG] = subcatch->q[kstep][RECHG];
-                    subcatch->q[(i * *nsteps)+kstep][PERC] = subcatch->q[kstep][PERC];
-                    subcatch->q[(i * *nsteps)+kstep][Q0] = subcatch->q[kstep][Q0];
-                    subcatch->q[(i * *nsteps)+kstep][Q1] = subcatch->q[kstep][Q1];
-                    subcatch->q[(i * *nsteps)+kstep][Q2] = subcatch->q[kstep][Q2];
-                    subcatch->tmp[(i * *nsteps)+kstep] = subcatch->tmp[kstep];
+                    subcatch->ws[(i * nsteps)+kstep][SNOW] = subcatch->ws[kstep][SNOW];
+                    subcatch->ws[(i * nsteps)+kstep][SURFACE] = subcatch->ws[kstep][SURFACE];
+                    subcatch->ws[(i * nsteps)+kstep][UZ] = subcatch->ws[kstep][UZ];
+                    subcatch->ws[(i * nsteps)+kstep][LZ] = subcatch->ws[kstep][LZ];
+                    subcatch->q[(i * nsteps)+kstep][PRECIP] = subcatch->q[kstep][PRECIP];
+                    subcatch->q[(i * nsteps)+kstep][RECHG] = subcatch->q[kstep][RECHG];
+                    subcatch->q[(i * nsteps)+kstep][PERC] = subcatch->q[kstep][PERC];
+                    subcatch->q[(i * nsteps)+kstep][Q0] = subcatch->q[kstep][Q0];
+                    subcatch->q[(i * nsteps)+kstep][Q1] = subcatch->q[kstep][Q1];
+                    subcatch->q[(i * nsteps)+kstep][Q2] = subcatch->q[kstep][Q2];
+                    subcatch->tmp[(i * nsteps)+kstep] = subcatch->tmp[kstep];
                 }
             }
         }
     }
-    *nsteps *= len_numexp;
+    nsteps *= len_numexp;
+    return nsteps;
 }
 
 void ReadHbvParam(const char dir[], Subcatchment* subcatch)

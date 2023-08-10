@@ -1,6 +1,7 @@
 #include "biort.hpp"
 
-void ReadPrecipChem(const char dir[], int *nsteps, int *steps[], Subcatchment subcatch[], int num_stc, const array<ChemTableEntry, MAXSPS>& chemtbl,int mode)
+// int ReadPrecipChem(const char dir[], int *steps[], Subcatchment subcatch[], int num_stc, const array<ChemTableEntry, MAXSPS>& chemtbl,int mode)
+int ReadPrecipChem(const char dir[], vector<int>& steps, Subcatchment subcatch[], int num_stc, const array<ChemTableEntry, MAXSPS>& chemtbl,int mode)
 {
     FILE           *file_pointer;
     char            file_name[MAXSTRING];
@@ -9,7 +10,7 @@ void ReadPrecipChem(const char dir[], int *nsteps, int *steps[], Subcatchment su
     int             pH_index = 0;
     int             pH_convert = 0;
     int             ind;
-    const int ntime = *nsteps;
+    
 
     if (mode == 0)
     {
@@ -26,15 +27,11 @@ void ReadPrecipChem(const char dir[], int *nsteps, int *steps[], Subcatchment su
 
     file_pointer = fopen(file_name, "r");
 
-    *nsteps = CountLines(file_pointer, cmdstr, 0) - 1;
-
+    const int ntime = CountLines(file_pointer, cmdstr, 0) - 1;
     rewind(file_pointer);
 
-    if ((ntime != *nsteps) & (mode == 1)){
-        biort_printf(VL_ERROR,"\nNumber of time steps in \"Numexp_precipchem.txt\" should be same as in \"Numexp_Results.txt\" file.\n");
-        exit(EXIT_FAILURE);
-    }
-    *steps = (int *)malloc(ntime * sizeof(int));
+    // *steps = (int *)malloc(ntime * sizeof(int));
+    steps = vector<int>(ntime, BADVAL);
 
     subcatch->prcp_conc_time = vector(ntime, vector(num_stc, BADVAL));
 
@@ -42,6 +39,7 @@ void ReadPrecipChem(const char dir[], int *nsteps, int *steps[], Subcatchment su
     for (int kspc = 0; kspc < num_stc + 1; kspc++)  // add one more column of date
     {
         fscanf(file_pointer, "%s", temp_str);
+        printf("Looking for species: %s\n", temp_str);
 
         if (strcmp("pH", temp_str) == 0)
         {
@@ -62,10 +60,10 @@ void ReadPrecipChem(const char dir[], int *nsteps, int *steps[], Subcatchment su
 
     }
 
-    for (int kstep = 0; kstep < *nsteps; kstep++)
+    for (int kstep = 0; kstep < ntime; kstep++)
     {
 
-        fscanf(file_pointer, "%d", &((*steps)[kstep]));    // Read model steps
+        fscanf(file_pointer, "%d", &steps[kstep]);    // Read model steps
 
         for (int kspc = 0; kspc < num_stc; kspc++)  // Read precipitation chemistry
         {
@@ -85,4 +83,6 @@ void ReadPrecipChem(const char dir[], int *nsteps, int *steps[], Subcatchment su
     }
 
     fclose(file_pointer);
+
+    return ntime;
 }

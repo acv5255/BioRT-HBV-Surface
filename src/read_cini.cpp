@@ -119,7 +119,7 @@ void ReadConc(FILE *fp, int num_stc, const array<ChemTableEntry, MAXSPS>& chemtb
             // printf("\t\t\t%-20s: %g\n", "Concentration", tot_conc[ind]);
         }
 
-        tot_conc[ind] = (strcmp(chemtbl[ind].name, "pH") == 0 && convert == 1) ?
+        tot_conc[ind] = (strcmp(chemtbl[ind].name.c_str(), "pH") == 0 && convert == 1) ?
             pow(10, -tot_conc[ind]) : tot_conc[ind];
     }
 }

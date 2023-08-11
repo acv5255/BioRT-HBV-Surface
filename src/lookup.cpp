@@ -89,11 +89,11 @@ void Lookup(FILE *fp, const CalibrationStruct& calib, array<ChemTableEntry, MAXS
     // Update species parameters
     for (i = 0; i < rttbl.num_stc + rttbl.num_ssc; i++)
     {
-        if (strcmp(chemtbl[i].name, "pH") == 0)
+        if (strcmp(chemtbl[i].name.c_str(), "pH") == 0)
         {
-            strcpy(chemtbl[i].name, "H+");
+            strcpy(chemtbl[i].name.data(), "H+");
         }
-        WrapInParentheses(chemtbl[i].name);
+        WrapInParentheses(chemtbl[i].name.data());
 
         chemtbl[i].charge = 0.0;
         chemtbl[i].size_fac = 1.0;
@@ -336,7 +336,7 @@ void ReadPrimary(const char cmdstr[], int num_stc, array<ChemTableEntry, MAXSPS>
 
     for (i = 0; i < num_stc; i++)
     {
-        if (MatchWrappedKey(cmdstr, chemtbl[i].name) == 0)
+        if (MatchWrappedKey(cmdstr, chemtbl[i].name.c_str()) == 0)
         {
             if (sscanf(cmdstr, "'%*[^']' %lf %lf %lf",
                 &chemtbl[i].size_fac, &chemtbl[i].charge, &chemtbl[i].molar_mass) != 3)
@@ -369,7 +369,7 @@ void ReadSecondary(const char cmdstr[], int npoints, int keq_position, array<Che
     {
         ind = i + rttbl.num_stc;
 
-        if (MatchWrappedKey(chemn, chemtbl[ind].name) == 0)
+        if (MatchWrappedKey(chemn, chemtbl[ind].name.c_str()) == 0)
         {
             biort_printf(VL_NORMAL, " Secondary species %s found in database!\n", chemtbl[ind].name);
             biort_printf(VL_NORMAL, " %s", cmdstr);
@@ -383,7 +383,7 @@ void ReadSecondary(const char cmdstr[], int npoints, int keq_position, array<Che
 
                 for (k = 0; k < rttbl.num_sdc; k++)
                 {
-                    if (MatchWrappedKey(chemtbl[k].name, chemn) == 0)
+                    if (MatchWrappedKey(chemtbl[k].name.c_str(), chemn) == 0)
                     {
                         rttbl.dep_mtx[i][k] = dep;
                     }
@@ -436,7 +436,7 @@ void ReadMinerals(const char cmdstr[], int npoints, int keq_position, double pot
     {
         ind = i + rttbl.num_spc + rttbl.num_ads + rttbl.num_cex;
 
-        if (MatchWrappedKey(chemn, chemtbl[ind].name) == 0)
+        if (MatchWrappedKey(chemn, chemtbl[ind].name.c_str()) == 0)
         {
             biort_printf(VL_NORMAL, " Mineral %s found in database!\n", chemtbl[ind].name);
             biort_printf(VL_NORMAL, " %s", cmdstr);
@@ -452,7 +452,7 @@ void ReadMinerals(const char cmdstr[], int npoints, int keq_position, double pot
 
                 for (k = 0; k < rttbl.num_stc + rttbl.num_ssc; k++)
                 {
-                    if (MatchWrappedKey(chemtbl[k].name, chemn) == 0)
+                    if (MatchWrappedKey(chemtbl[k].name.c_str(), chemn) == 0)
                     {
                         if (k < rttbl.num_stc)
                         {
@@ -528,7 +528,7 @@ void ReadAdsorption(const char cmdstr[], int npoints, int keq_position, array<Ch
     {
         ind = i + rttbl.num_stc;
 
-        if (strcmp(chemtbl[ind].name, chemn) == 0)
+        if (strcmp(chemtbl[ind].name.c_str(), chemn) == 0)
         {
             biort_printf(VL_NORMAL, " Secondary surface complexation %s found in database!\n", chemtbl[ind].name);
             biort_printf(VL_NORMAL, " %s", cmdstr);
@@ -541,7 +541,7 @@ void ReadAdsorption(const char cmdstr[], int npoints, int keq_position, array<Ch
 
                 for (k = 0; k < rttbl.num_sdc; k++)
                 {
-                    if (strcmp(chemtbl[k].name, chemn) == 0)
+                    if (strcmp(chemtbl[k].name.c_str(), chemn) == 0)
                     {
                         rttbl.dep_mtx[i][k] = dep;
                         break;
@@ -588,7 +588,7 @@ void ReadCationEchg(const char cmdstr[], double calval, array<ChemTableEntry, MA
     {
         ind = i + rttbl.num_stc;
 
-        if (strcmp(chemtbl[ind].name, chemn) == 0)
+        if (strcmp(chemtbl[ind].name.c_str(), chemn) == 0)
         {
             biort_printf(VL_NORMAL, " Secondary ion exchange %s found in database!\n", chemtbl[ind].name);
             biort_printf(VL_NORMAL, " %s", cmdstr);
@@ -601,7 +601,7 @@ void ReadCationEchg(const char cmdstr[], double calval, array<ChemTableEntry, MA
 
                 for (k = 0; k < rttbl.num_sdc; k++)
                 {
-                    if (strcmp(chemtbl[k].name, chemn) == 0)
+                    if (strcmp(chemtbl[k].name.c_str(), chemn) == 0)
                     {
                         rttbl.dep_mtx[i][k] = dep;
                         break;
@@ -630,7 +630,7 @@ void ReadMinKin(FILE *fp, int num_stc, double calval, int *lno, char cmdstr[], a
     sscanf(cmdstr, "%s", chemn);
     WrapInParentheses(chemn);
 
-    if (strcmp(chemtbl[kintbl->position].name, chemn) == 0)
+    if (strcmp(chemtbl[kintbl->position].name.c_str(), chemn) == 0)
     {
         NextLine(fp, cmdstr, lno);
         sscanf(cmdstr, "%*s = %s", label);

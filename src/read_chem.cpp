@@ -143,12 +143,13 @@ void ReadChem(const string& input_dir, ControlData& ctrl, ReactionNetwork& rttbl
     for (i = 0; i < rttbl.num_ssc; i++)
     {
         NextLine(file_pointer, cmdstr, &lno);
-        if (sscanf(cmdstr, "%s", chemtbl[rttbl.num_stc + i].name) != 1)
+        chemtbl[rttbl.num_stc + i].name.resize(MAXSTRING);
+        if (sscanf(cmdstr, "%s", chemtbl[rttbl.num_stc + i].name.data()) != 1)
         {
             biort_printf(VL_ERROR, "Error reading secondary_species in %s near Line %d.\n", file_name, lno);
         }
 
-        if (SpeciesType(input_dir.c_str(), chemtbl[rttbl.num_stc + i].name) == 0)
+        if (SpeciesType(input_dir.c_str(), chemtbl[rttbl.num_stc + i].name.c_str()) == 0)
         {
             biort_printf(VL_ERROR, "Error finding secondary species %s in the database.\n",
                 chemtbl[rttbl.num_stc + i].name);
@@ -321,7 +322,7 @@ void SortChem(char chemn[MAXSPS][MAXSTRING], const int p_type[MAXSPS], int nsps,
 
     for (i = 0; i < nsps; i++)
     {
-        strcpy(chemtbl[i].name, chemn[rank[i]]);
+        strcpy(chemtbl[i].name.data(), chemn[rank[i]]);
         chemtbl[i].itype = p_type[rank[i]];
     }
 }
@@ -333,7 +334,7 @@ int FindChem(const char chemn[MAXSTRING], int nsps, const array<ChemTableEntry, 
 
     for (i = 0; i < nsps; i++)
     {
-        if (strcmp(chemn, chemtbl[i].name) == 0)
+        if (strcmp(chemn, chemtbl[i].name.c_str()) == 0)
         {
             ind = i;
             break;

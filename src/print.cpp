@@ -13,7 +13,7 @@ void PrintHeader(FILE *file_pointer, int transpt, const ReactionNetwork& rttbl, 
         // Snow chemistry
         for (int kspc = 0; kspc < rttbl.num_spc; kspc++)  // 2021-06-29
         {
-            UnwrapParentheses(chemtbl[kspc].name, chemn);
+            UnwrapParentheses(chemtbl[kspc].name.data(), chemn);
 
             char substr[SUBSTRING_SIZE];
             strncpy(substr, chemn, SUBSTRING_SIZE);
@@ -27,7 +27,7 @@ void PrintHeader(FILE *file_pointer, int transpt, const ReactionNetwork& rttbl, 
         // Surface zone
         for (int kspc = 0; kspc < rttbl.num_stc + rttbl.num_ssc; kspc++)  // 2021-06-29
         {
-            UnwrapParentheses(chemtbl[kspc].name, chemn);
+            UnwrapParentheses(chemtbl[kspc].name.data(), chemn);
 
             char substr[SUBSTRING_SIZE];
             strncpy(substr, chemn, SUBSTRING_SIZE);
@@ -40,7 +40,7 @@ void PrintHeader(FILE *file_pointer, int transpt, const ReactionNetwork& rttbl, 
         // Shallow zone
         for (int kspc = 0; kspc < rttbl.num_stc + rttbl.num_ssc; kspc++)
         {
-            UnwrapParentheses(chemtbl[kspc].name, chemn);
+            UnwrapParentheses(chemtbl[kspc].name.data(), chemn);
 
             char substr[SUBSTRING_SIZE];
             strncpy(substr, chemn, SUBSTRING_SIZE);
@@ -53,7 +53,7 @@ void PrintHeader(FILE *file_pointer, int transpt, const ReactionNetwork& rttbl, 
         // Deep zone
         for (int kspc = 0; kspc < rttbl.num_stc + rttbl.num_ssc; kspc++)
         {
-            UnwrapParentheses(chemtbl[kspc].name, chemn);
+            UnwrapParentheses(chemtbl[kspc].name.data(), chemn);
 
             char substr[SUBSTRING_SIZE];
             strncpy(substr, chemn, SUBSTRING_SIZE);
@@ -67,7 +67,7 @@ void PrintHeader(FILE *file_pointer, int transpt, const ReactionNetwork& rttbl, 
         // Stream chemistry
         for (int kspc = 0; kspc < rttbl.num_stc + rttbl.num_ssc; kspc++)
         {
-            UnwrapParentheses(chemtbl[kspc].name, chemn);
+            UnwrapParentheses(chemtbl[kspc].name.data(), chemn);
 
             char substr[SUBSTRING_SIZE];
             strncpy(substr, chemn, SUBSTRING_SIZE);
@@ -81,7 +81,7 @@ void PrintHeader(FILE *file_pointer, int transpt, const ReactionNetwork& rttbl, 
         //===== Reaction rates =====//
         for (int kspc = 0; kspc < rttbl.num_min; kspc++)  // 2021-05-14
         {
-            UnwrapParentheses(chemtbl[kspc + rttbl.num_stc - rttbl.num_min].name, chemn);
+            UnwrapParentheses(chemtbl[kspc + rttbl.num_stc - rttbl.num_min].name.data(), chemn);
 
             char substr[SUBSTRING_SIZE];
             strncpy(substr, chemn, SUBSTRING_SIZE);
@@ -92,7 +92,7 @@ void PrintHeader(FILE *file_pointer, int transpt, const ReactionNetwork& rttbl, 
 
         for (int kspc = 0; kspc < rttbl.num_min; kspc++)  // 2021-05-14
         {
-            UnwrapParentheses(chemtbl[kspc + rttbl.num_stc - rttbl.num_min].name, chemn);
+            UnwrapParentheses(chemtbl[kspc + rttbl.num_stc - rttbl.num_min].name.data(), chemn);
 
             char substr[SUBSTRING_SIZE];
             strncpy(substr, chemn, SUBSTRING_SIZE);
@@ -103,7 +103,7 @@ void PrintHeader(FILE *file_pointer, int transpt, const ReactionNetwork& rttbl, 
 
         for (int kspc = 0; kspc < rttbl.num_min; kspc++)
         {
-            UnwrapParentheses(chemtbl[kspc + rttbl.num_stc - rttbl.num_min].name, chemn);
+            UnwrapParentheses(chemtbl[kspc + rttbl.num_stc - rttbl.num_min].name.data(), chemn);
 
             char substr[SUBSTRING_SIZE];
             strncpy(substr, chemn, SUBSTRING_SIZE);
@@ -118,7 +118,7 @@ void PrintHeader(FILE *file_pointer, int transpt, const ReactionNetwork& rttbl, 
 
         for (int kspc = 0; kspc < rttbl.num_spc; kspc++)
         {
-            UnwrapParentheses(chemtbl[kspc].name, chemn);
+            UnwrapParentheses(chemtbl[kspc].name.data(), chemn);
 
             char substr[SUBSTRING_SIZE];
             strncpy(substr, chemn, SUBSTRING_SIZE);
@@ -130,7 +130,7 @@ void PrintHeader(FILE *file_pointer, int transpt, const ReactionNetwork& rttbl, 
         }
         for (int kspc = 0; kspc < rttbl.num_spc; kspc++)
         {
-            UnwrapParentheses(chemtbl[kspc].name, chemn);
+            UnwrapParentheses(chemtbl[kspc].name.data(), chemn);
 
             char substr[SUBSTRING_SIZE];
             strncpy(substr, chemn, SUBSTRING_SIZE);
@@ -142,7 +142,7 @@ void PrintHeader(FILE *file_pointer, int transpt, const ReactionNetwork& rttbl, 
         }
         for (int kspc = 0; kspc < rttbl.num_spc; kspc++)
         {
-            UnwrapParentheses(chemtbl[kspc].name, chemn);
+            UnwrapParentheses(chemtbl[kspc].name.data(), chemn);
 
             char substr[SUBSTRING_SIZE];
             strncpy(substr, chemn, SUBSTRING_SIZE);
@@ -154,7 +154,7 @@ void PrintHeader(FILE *file_pointer, int transpt, const ReactionNetwork& rttbl, 
         }
         for (int kspc = 0; kspc < rttbl.num_spc; kspc++)
         {
-            UnwrapParentheses(chemtbl[kspc].name, chemn);
+            UnwrapParentheses(chemtbl[kspc].name.data(), chemn);
 
             char substr[SUBSTRING_SIZE];
             strncpy(substr, chemn, SUBSTRING_SIZE);
@@ -166,7 +166,7 @@ void PrintHeader(FILE *file_pointer, int transpt, const ReactionNetwork& rttbl, 
         }
         for (int kspc = 0; kspc < rttbl.num_spc; kspc++)
         {
-            UnwrapParentheses(chemtbl[kspc].name, chemn);
+            UnwrapParentheses(chemtbl[kspc].name.data(), chemn);
 
             char substr[SUBSTRING_SIZE];
             strncpy(substr, chemn, SUBSTRING_SIZE);

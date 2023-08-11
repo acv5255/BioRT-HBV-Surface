@@ -72,7 +72,7 @@ int SolveSpeciation(const array<ChemTableEntry, MAXSPS>& chemtbl, const ControlD
                     (-rttbl.adh * root_ion_str * chemtbl[i].charge * chemtbl[i].charge) /
                     (1.0 + rttbl.bdh * chemtbl[i].size_fac * root_ion_str) + rttbl.bdt * ionic_strength;
 
-                if (speciation_flg == 1 && strcmp(chemtbl[i].name, "'H+'") == 0)
+                if (speciation_flg == 1 && strcmp(chemtbl[i].name.c_str(), "'H+'") == 0)
                 {
                     tmpconc[i] = log10(chms.prim_actv[i]) - log10gamma[i];
                 }
@@ -90,7 +90,7 @@ int SolveSpeciation(const array<ChemTableEntry, MAXSPS>& chemtbl, const ControlD
                 tot_conc[i] += rttbl.conc_contrib[i][j] * pow(10, tmpconc[j]);
             }
 
-            if (speciation_flg == 1 && strcmp(chemtbl[i].name, "'H+'") == 0)
+            if (speciation_flg == 1 && strcmp(chemtbl[i].name.c_str(), "'H+'") == 0)
             {
                 chms.tot_conc[i] = tot_conc[i];
             }
@@ -102,7 +102,7 @@ int SolveSpeciation(const array<ChemTableEntry, MAXSPS>& chemtbl, const ControlD
         col = 0;
         for (int k = 0; k < rttbl.num_stc; k++)
         {
-            if (speciation_flg == 1 && strcmp(chemtbl[k].name, "'H+'") == 0)
+            if (speciation_flg == 1 && strcmp(chemtbl[k].name.c_str(), "'H+'") == 0)
             {
                 continue;
             }
@@ -123,7 +123,7 @@ int SolveSpeciation(const array<ChemTableEntry, MAXSPS>& chemtbl, const ControlD
             {
                 double          tmpval;
 
-                if (speciation_flg == 1 && strcmp(chemtbl[i].name, "'H+'") == 0)
+                if (speciation_flg == 1 && strcmp(chemtbl[i].name.c_str(), "'H+'") == 0)
                 {
                     continue;
                 }
@@ -147,7 +147,7 @@ int SolveSpeciation(const array<ChemTableEntry, MAXSPS>& chemtbl, const ControlD
         row = 0;
         for (int i = 0; i < rttbl.num_stc; i++)
         {
-            if (speciation_flg == 1 && strcmp(chemtbl[i].name, "'H+'") == 0)
+            if (speciation_flg == 1 && strcmp(chemtbl[i].name.c_str(), "'H+'") == 0)
             {
                 continue;
             }
@@ -167,7 +167,7 @@ int SolveSpeciation(const array<ChemTableEntry, MAXSPS>& chemtbl, const ControlD
         row = 0;
         for (int i = 0; i < rttbl.num_stc; i++)
         {
-            if (speciation_flg == 1 && strcmp(chemtbl[i].name, "'H+'") == 0)
+            if (speciation_flg == 1 && strcmp(chemtbl[i].name.c_str(), "'H+'") == 0)
             {
                 continue;
             }

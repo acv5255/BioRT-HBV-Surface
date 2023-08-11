@@ -233,7 +233,7 @@ int SolveReact(double stepsize, const array<ChemTableEntry, MAXSPS>& chemtbl, co
     {
         double conc_val = (i < rttbl.num_stc) ? log10(chms.prim_conc[i]) : log10(chms.sec_conc[i - rttbl.num_stc]);
         if (std::isinf(conc_val)) {
-            printf("Got non-finite value for log10(conc) for species '%s' with index %d\n", chemtbl[i].name, i);
+            printf("Got non-finite value for log10(conc) for species '%s' with index %d\n", chemtbl[i].name.c_str(), i);
         }
         tmpconc[i] = conc_val;
 
@@ -533,7 +533,7 @@ int SolveSurfaceReact(double stepsize, const array<ChemTableEntry, MAXSPS>& chem
     {
         double conc_val = (i < rttbl.num_stc) ? log10(chms.prim_conc[i]) : log10(chms.sec_conc[i - rttbl.num_stc]);
         if (std::isinf(conc_val)) {
-            printf("Got non-finite value for log10(conc) for species '%s' with index %d\n", chemtbl[i].name, i);
+            printf("Got non-finite value for log10(conc) for species '%s' with index %d\n", chemtbl[i].name.c_str(), i);
         }
         tmpconc[i] = conc_val;
 

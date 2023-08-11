@@ -136,7 +136,8 @@ class ReactionNetwork
 class ChemTableEntry
 {
     public:
-        char            name[MAXSTRING];        // molecular formula or name
+        // char            name[MAXSTRING];        // molecular formula or name
+        string          name;
         double          molar_mass;             // (g mol-1)
         double          molar_vol;              // (cm3 mol-1)
         double          charge;                 // charge
@@ -150,7 +151,7 @@ class ChemTableEntry
 
         // Methods
         ChemTableEntry();
-        ChemTableEntry(const char name[MAXSTRING], const f64 molar_mass, const f64 molar_vol, const f64 charge, const f64 size_fac, const int itype, const int mtype);
+        ChemTableEntry(const string& name, const f64 molar_mass, const f64 molar_vol, const f64 charge, const f64 size_fac, const int itype, const int mtype);
         ChemTableEntry copy();
 };
 

@@ -46,7 +46,7 @@ void InitChemState(double smcmax, double vol, const array<ChemTableEntry, MAXSPS
 {
     for (int kspc = 0; kspc < rttbl.num_stc; kspc++)
     {
-        if (strcmp(chemtbl[kspc].name, "'H+'") == 0)
+        if (strcmp(chemtbl[kspc].name.c_str(), "'H+'") == 0)
         {
             chms.prim_actv[kspc] = chms.tot_conc[kspc];
             chms.prim_conc[kspc] = chms.tot_conc[kspc];

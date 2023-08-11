@@ -1,7 +1,7 @@
 #include "biort.hpp"
 
 // Returns vector of date ints
-vector<int> ReadPrecipChem(const char dir[], Subcatchment& subcatch, int num_stc, const array<ChemTableEntry, MAXSPS>& chemtbl,int mode)
+vector<int> ReadPrecipChem(const string& input_dir, Subcatchment& subcatch, int num_stc, const array<ChemTableEntry, MAXSPS>& chemtbl,int mode)
 {
     FILE           *file_pointer;
     char            file_name[MAXSTRING];
@@ -14,14 +14,14 @@ vector<int> ReadPrecipChem(const char dir[], Subcatchment& subcatch, int num_stc
 
     if (mode == 0)
     {
-        sprintf(file_name, "input/%s/precipchem.txt", dir);
+        sprintf(file_name, "input/%s/precipchem.txt", input_dir.c_str());
         biort_printf(VL_NORMAL, "\nREADING TIME-SERIES PRECIPITATION CHEMISTRY from \"precipchem.txt\"\n");
     }
 
     else if (mode == 1)
 
     {
-        sprintf(file_name, "input/%s/Numexp_precipchem.txt", dir);
+        sprintf(file_name, "input/%s/Numexp_precipchem.txt", input_dir.c_str());
         biort_printf(VL_NORMAL, "\nREADING TIME-SERIES PRECIPITATION CHEMISTRY from \"Numexp_precipchem.txt\"\n");
     }
 

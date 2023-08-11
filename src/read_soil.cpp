@@ -1,6 +1,6 @@
 #include "biort.hpp"
 
-void ReadSoil(const char dir[], Subcatchment& subcatch)
+void ReadSoil(const string& dir, Subcatchment& subcatch)
 {
     char            cmdstr[MAXSTRING];
     char            file_name[MAXSTRING];
@@ -8,7 +8,7 @@ void ReadSoil(const char dir[], Subcatchment& subcatch)
     FILE           *file_pointer;
 
     // READ SOIL.TXT FILE
-    sprintf(file_name, "input/%s/soil.txt", dir);
+    sprintf(file_name, "input/%s/soil.txt", dir.c_str());
     file_pointer = fopen(file_name, "r");
 
     biort_printf(VL_NORMAL, "SOIL PARAMTERS\n");

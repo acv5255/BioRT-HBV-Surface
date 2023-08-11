@@ -1,14 +1,14 @@
 #include "biort.hpp"
 
 // Initialize RT structures
-void InitChem(const char dir[], const CalibrationStruct& calib, const ControlData ctrl, array<ChemTableEntry, MAXSPS>& chemtbl,
+void InitChem(const string& input_dir, const CalibrationStruct& calib, const ControlData ctrl, array<ChemTableEntry, MAXSPS>& chemtbl,
     array<KineticTableEntry, MAXSPS>& kintbl, ReactionNetwork& rttbl, Subcatchment& subcatch)
 {
     char            file_name[MAXSTRING];
     FILE           *file_pointer;
 
     // LOOK UP DATABASE TO FIND REQUIRED PARAMETERS AND DEPENDENCIES FOR CHEMICAL SPECIES IN CDBS.TXT
-    sprintf(file_name, "input/%s/cdbs.txt", dir);
+    sprintf(file_name, "input/%s/cdbs.txt", input_dir.c_str());
     file_pointer = fopen(file_name, "r");
 
     Lookup(file_pointer, calib, chemtbl, kintbl, rttbl);

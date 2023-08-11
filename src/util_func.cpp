@@ -65,8 +65,9 @@ void UnwrapParentheses(const char wrapped_str[], char str[])
     str[j] = '\0';
 }
 
-void ParseCmdLineParam(int argc, char *argv[], char dir[])
+string ParseCmdLineParam(int argc, char *argv[])
 {
+    char dir[MAXSTRING];
     int             option;
     struct optparse options;
     struct optparse_long longopts[] = {
@@ -125,6 +126,7 @@ void ParseCmdLineParam(int argc, char *argv[], char dir[])
     {
         // Parse remaining arguments
         strcpy(dir, optparse_arg(&options));
+        return string(dir);
     }
 }
 

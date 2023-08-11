@@ -2,7 +2,7 @@
 
 const double SURFACE_STORAGE_MIN = 1e-5; // 1 mm water, minimum water allowed in the surface zone
 
-int ReadHbvResults(const char dir[], vector<int>& steps, Subcatchment& subcatch, int mode)
+int ReadHbvResults(const string& input_dir, vector<int>& steps, Subcatchment& subcatch, int mode)
 {
     FILE           *file_pointer;
     char            file_name[MAXSTRING];
@@ -13,11 +13,11 @@ int ReadHbvResults(const char dir[], vector<int>& steps, Subcatchment& subcatch,
 
     if (mode==0)
     {
-        sprintf(file_name, "input/%s/Results.txt", dir);
+        sprintf(file_name, "input/%s/Results.txt", input_dir.c_str());
         file_pointer = fopen(file_name, "r");
     } else if (mode == 1)
     {
-        sprintf(file_name, "input/%s/Numexp_Results.txt", dir);
+        sprintf(file_name, "input/%s/Numexp_Results.txt", input_dir.c_str());
         if (access(file_name , F_OK ) != -1)
         {
             file_pointer = fopen(file_name, "r");
@@ -25,11 +25,11 @@ int ReadHbvResults(const char dir[], vector<int>& steps, Subcatchment& subcatch,
             biort_printf(VL_NORMAL, "\nHydrology in %s will be used for numerical experiment.\n", file_name);
         } else
         {
-            sprintf(file_name, "input/%s/Numexp_precipchem.txt", dir);
+            sprintf(file_name, "input/%s/Numexp_precipchem.txt", input_dir.c_str());
             file_pointer = fopen(file_name, "r");
             len_numexp = CountLines(file_pointer, cmdstr, 0) - 1;
             fclose(file_pointer);
-            sprintf(file_name, "input/%s/Results.txt", dir);
+            sprintf(file_name, "input/%s/Results.txt", input_dir.c_str());
             file_pointer = fopen(file_name, "r");
             numexp_file_flag = 0;
             biort_printf(VL_NORMAL, "\nHydrology in %s will be used for numerical experiment.\n", file_name);
@@ -177,7 +177,7 @@ int ReadHbvResults(const char dir[], vector<int>& steps, Subcatchment& subcatch,
     return nsteps;
 }
 
-void ReadHbvParam(const char dir[], Subcatchment& subcatch)
+void ReadHbvParam(const string& input_dir, Subcatchment& subcatch)
 {
     FILE           *file_pointer;
     char            file_name[MAXSTRING];
@@ -186,7 +186,7 @@ void ReadHbvParam(const char dir[], Subcatchment& subcatch)
     int             line_number = 0;
     double          value;
 
-    sprintf(file_name, "input/%s/Parameter.xml", dir);
+    sprintf(file_name, "input/%s/Parameter.xml", input_dir.c_str());
     file_pointer = fopen(file_name, "r");
 
     biort_printf(VL_NORMAL, "\nHBV MODEL PARAMETERS\n");

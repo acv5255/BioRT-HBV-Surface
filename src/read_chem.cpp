@@ -1,6 +1,6 @@
 #include "biort.hpp"
 
-void ReadChem(const char dir[], ControlData *ctrl, ReactionNetwork& rttbl, array<ChemTableEntry, MAXSPS>& chemtbl,
+void ReadChem(const string& input_dir, ControlData& ctrl, ReactionNetwork& rttbl, array<ChemTableEntry, MAXSPS>& chemtbl,
     array<KineticTableEntry, MAXSPS>& kintbl)
 {
     int             i;
@@ -13,26 +13,26 @@ void ReadChem(const char dir[], ControlData *ctrl, ReactionNetwork& rttbl, array
     FILE           *file_pointer;
 
     // READ CHEM.TXT FILE
-    sprintf(file_name, CHEM_FILE_DIR, dir);
+    sprintf(file_name, CHEM_FILE_DIR, input_dir.c_str());
     file_pointer = fopen(file_name, "r");
 
     biort_printf(VL_NORMAL, "\nBIORT CONTROL PARAMETERS\n");
 
     NextLine(file_pointer, cmdstr, &lno);
-    ctrl->recycle = ReadParamToInt(cmdstr, CHEM_RECYCLE_ID, file_name, lno);
-    biort_printf(VL_NORMAL, "  Forcing recycle %d time(s). \n", ctrl->recycle);
+    ctrl.recycle = ReadParamToInt(cmdstr, CHEM_RECYCLE_ID, file_name, lno);
+    biort_printf(VL_NORMAL, "  Forcing recycle %d time(s). \n", ctrl.recycle);
 
     NextLine(file_pointer, cmdstr, &lno);
-    ctrl->use_activity = ReadParamToInt(cmdstr, CHEM_ACTIVITY_ID, file_name, lno);
-    biort_printf(VL_NORMAL, "  Activity correction is set to %d. \n", ctrl->use_activity);
+    ctrl.use_activity = ReadParamToInt(cmdstr, CHEM_ACTIVITY_ID, file_name, lno);
+    biort_printf(VL_NORMAL, "  Activity correction is set to %d. \n", ctrl.use_activity);
 
     NextLine(file_pointer, cmdstr, &lno);
-    ctrl->transport_only = ReadParamToInt(cmdstr, CHEM_TRANSPORT_ONLY_ID, file_name, lno);
+    ctrl.transport_only = ReadParamToInt(cmdstr, CHEM_TRANSPORT_ONLY_ID, file_name, lno);
 
-    if (ctrl->transport_only == KIN_REACTION) {
+    if (ctrl.transport_only == KIN_REACTION) {
         biort_printf(VL_NORMAL, "  Transport only mode disabled.\n");
     }
-    else if (ctrl->transport_only == TRANSPORT_ONLY) {
+    else if (ctrl.transport_only == TRANSPORT_ONLY) {
         biort_printf(VL_NORMAL, "  Transport only mode enabled. \n");
     }
     else {
@@ -41,8 +41,8 @@ void ReadChem(const char dir[], ControlData *ctrl, ReactionNetwork& rttbl, array
     }
 
     NextLine(file_pointer, cmdstr, &lno);  // 2021-05-20
-    ctrl->variable_precipchem = ReadParamToInt(cmdstr, CHEM_PRECIPCHEM_ID, file_name, lno);
-    switch (ctrl->variable_precipchem)
+    ctrl.variable_precipchem = ReadParamToInt(cmdstr, CHEM_PRECIPCHEM_ID, file_name, lno);
+    switch (ctrl.variable_precipchem)
     {
         case 0:
             biort_printf(VL_NORMAL, "  Using constant precipitation chemistry in cini.txt. \n");
@@ -55,8 +55,8 @@ void ReadChem(const char dir[], ControlData *ctrl, ReactionNetwork& rttbl, array
     }
 
     NextLine(file_pointer, cmdstr, &lno);  // 2021-09-09
-    ctrl->precipchem_numexp = ReadParamToInt(cmdstr, CHEM_NUMEXP_ID, file_name, lno);
-    switch (ctrl->precipchem_numexp)
+    ctrl.precipchem_numexp = ReadParamToInt(cmdstr, CHEM_NUMEXP_ID, file_name, lno);
+    switch (ctrl.precipchem_numexp)
     {
         case 0:
             biort_printf(VL_NORMAL, "  Using same precipitation chemistry during warmup and simulation run. \n");
@@ -97,7 +97,7 @@ void ReadChem(const char dir[], ControlData *ctrl, ReactionNetwork& rttbl, array
         {
             biort_printf(VL_ERROR, "Error reading primary_species in %s near Line %d.\n", file_name, lno);
         }
-        p_type[i] = SpeciesType(dir, chemn[i]);
+        p_type[i] = SpeciesType(input_dir.c_str(), chemn[i]);
 
         switch (p_type[i])
         {
@@ -148,7 +148,7 @@ void ReadChem(const char dir[], ControlData *ctrl, ReactionNetwork& rttbl, array
             biort_printf(VL_ERROR, "Error reading secondary_species in %s near Line %d.\n", file_name, lno);
         }
 
-        if (SpeciesType(dir, chemtbl[rttbl.num_stc + i].name) == 0)
+        if (SpeciesType(input_dir.c_str(), chemtbl[rttbl.num_stc + i].name) == 0)
         {
             biort_printf(VL_ERROR, "Error finding secondary species %s in the database.\n",
                 chemtbl[rttbl.num_stc + i].name);

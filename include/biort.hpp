@@ -13,6 +13,7 @@
 #include <array>
 #include <vector>
 #include <stdexcept>
+#include <sstream>
 
 // Not implemented error
 class NotImplemented : public std::logic_error {
@@ -24,6 +25,7 @@ class NotImplemented : public std::logic_error {
 using f64 = double;
 using std::array;
 using std::vector;
+using std::string;
 
 // SUNDIAL Header Files
 #include "sundials/sundials_dense.h"        // Prototypes for small dense fcts.
@@ -286,13 +288,13 @@ void            CopyInitChemSubcatch(ReactionNetwork& rttbl, const Subcatchment&
 int             CountLeapYears(int, int);
 int             FindChem(const char [MAXSTRING], int, const array<ChemTableEntry, MAXSPS>& chemtbl);
 int             GetDifference(int, int);
-void            InitChem(const char [], const CalibrationStruct& calib, const ControlData ctrl, array<ChemTableEntry, MAXSPS>& chemtbl,
+void            InitChem(const string& input_dir, const CalibrationStruct& calib, const ControlData ctrl, array<ChemTableEntry, MAXSPS>& chemtbl,
     array<KineticTableEntry, MAXSPS>& kintbl, ReactionNetwork& rttbl, Subcatchment& subcatch);
 void            InitChemState(double, double, const array<ChemTableEntry, MAXSPS>& chemtbl, const ReactionNetwork& rttbl, const ControlData ctrl,
     ChemicalState& chms);
 void            Lookup(FILE *, const CalibrationStruct& calib, array<ChemTableEntry, MAXSPS>& chemtbl, array<KineticTableEntry, MAXSPS>& kintbl, ReactionNetwork& rttbl);
 int             MatchWrappedKey(const char [], const char []);
-void            ParseCmdLineParam(int argc, char *argv[], char dir[]);
+string          ParseCmdLineParam(int argc, char *argv[]);
 void            ParseLine(const char [], char [], double *);
 void            PrintDailyResults(FILE *, int, int, const ReactionNetwork& rttbl, const Subcatchment& subcatch);
 void            PrintHeader(FILE *, int, const ReactionNetwork& rttbl, const array<ChemTableEntry, MAXSPS>& chemtbl);
@@ -302,19 +304,19 @@ void            Reaction(int, double, const array<ChemTableEntry, MAXSPS>& chemt
     const ReactionNetwork& rttbl, Subcatchment& subcatch);
 void            ReadAdsorption(const char [], int, int, array<ChemTableEntry, MAXSPS>& chemtbl, ReactionNetwork& rttbl);
 void            ReadCationEchg(const char [], double, array<ChemTableEntry, MAXSPS>& chemtbl, ReactionNetwork& rttbl);
-void            ReadChem(const char [], ControlData *, ReactionNetwork& rttbl, array<ChemTableEntry, MAXSPS>& chemtbl, array<KineticTableEntry, MAXSPS>& kintbl);
-void            ReadCini(const char [], const array<ChemTableEntry, MAXSPS>& chemtbl, ReactionNetwork& rttbl, Subcatchment& subcatch);
+void            ReadChem(const string& input_dir, ControlData& ctrl, ReactionNetwork& rttbl, array<ChemTableEntry, MAXSPS>& chemtbl, array<KineticTableEntry, MAXSPS>& kintbl);
+void            ReadCini(const string& input_dir, const array<ChemTableEntry, MAXSPS>& chemtbl, ReactionNetwork& rttbl, Subcatchment& subcatch);
 void            ReadConc(FILE *, int, const array<ChemTableEntry, MAXSPS>& chemtbl, int *, array<f64, MAXSPS>&, array<f64, MAXSPS>&, array<f64, MAXSPS>&, array<f64, MAXSPS>&, array<f64, MAXSPS>&, array<f64, MAXSPS>&);
 void            ReadDHParam(const char [], int, double *);
-void            ReadHbvParam(const char [], Subcatchment& subcatch);
-int             ReadHbvResults(const char [], vector<int>& steps, Subcatchment& subcatch, int);
-vector<int>     ReadPrecipChem(const char [], Subcatchment& subcatch, int, const array<ChemTableEntry, MAXSPS>& chemtbl, int);
+void            ReadHbvParam(const string& input_dir, Subcatchment& subcatch);
+int             ReadHbvResults(const string& input_dir, vector<int>& steps, Subcatchment& subcatch, int);
+vector<int>     ReadPrecipChem(const string& input_dir, Subcatchment& subcatch, int, const array<ChemTableEntry, MAXSPS>& chemtbl, int);
 void            ReadMinerals(const char [], int, int, double [MAXSPS][MAXSPS], double [], array<ChemTableEntry, MAXSPS>& chemtbl,
     ReactionNetwork& rttbl);
 void            ReadMinKin(FILE *, int, double, int *, char [], array<ChemTableEntry, MAXSPS>& chemtbl, KineticTableEntry *);
 void            ReadPrimary(const char [], int, array<ChemTableEntry, MAXSPS>& chemtbl);
 void            ReadSecondary(const char [], int, int, array<ChemTableEntry, MAXSPS>& chemtbl, ReactionNetwork& rttbl);
-void            ReadSoil(const char [], Subcatchment& sub);
+void            ReadSoil(const string& input_dir, Subcatchment& sub);
 void            ReadTempPoints(const char [], double, int *, int *);
 int             roundi(double);
 double          SoilTempFactor(double, double);

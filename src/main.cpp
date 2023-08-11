@@ -4,11 +4,9 @@ int             verbose_mode;
 
 int main(int argc, char *argv[])
 {
-    char                dir[MAXSTRING];         // name of input directory
-    char                file_name[MAXSTRING];   // name of output file
     char                timestr[MAXSTRING];     // time stamp
     vector<int>         steps;                  // Model time steps
-    size_t                 nsteps_numexp;          // number of simulation steps
+    size_t              nsteps_numexp;          // number of simulation steps
     vector<int>         steps_numexp;           // Numexp model time steps
     time_t              rawtime;
     tm                  *timestamp;
@@ -19,7 +17,7 @@ int main(int argc, char *argv[])
     ControlData         ctrl;
 
     // Read command line arguments
-    ParseCmdLineParam(argc, argv, dir);
+    const string input_dir = ParseCmdLineParam(argc, argv);
 
     // Allocate
     Subcatchment subcatch;
@@ -30,22 +28,22 @@ int main(int argc, char *argv[])
     calib.ssa = 1.0;
 
     // Read subcatchment soil parameters
-    ReadSoil(dir, subcatch);
+    ReadSoil(input_dir, subcatch);
 
     // Read HBV simulation steps, water states and fluxes
-    ReadHbvParam(dir, subcatch);
-    size_t nsteps = (size_t)ReadHbvResults(dir, steps, subcatch, 0);
+    ReadHbvParam(input_dir, subcatch);
+    size_t nsteps = (size_t)ReadHbvResults(input_dir, steps, subcatch, 0);
 
     // Read chemistry control file
-    ReadChem(dir, &ctrl, rttbl, chemtbl, kintbl);
+    ReadChem(input_dir, ctrl, rttbl, chemtbl, kintbl);
 
     // Read chemistry initial conditions
-    ReadCini(dir, chemtbl, rttbl, subcatch);
+    ReadCini(input_dir, chemtbl, rttbl, subcatch);
 
     // Read time-series precipitation chemistry if defined in chem.txt  2021-05-20
     if (ctrl.variable_precipchem == 1) {
         // n_precipchem = ReadPrecipChem(dir, steps, &subcatch, rttbl.num_stc, chemtbl, 0);
-        steps = ReadPrecipChem(dir, subcatch, rttbl.num_stc, chemtbl, 0);
+        steps = ReadPrecipChem(input_dir, subcatch, rttbl.num_stc, chemtbl, 0);
         if ((steps.size() != nsteps)) {
             biort_printf(VL_ERROR,"\nNumber of time steps in \"Numexp_precipchem.txt\" should be same as in \"Numexp_Results.txt\" file.\n");
             exit(EXIT_FAILURE);
@@ -55,8 +53,8 @@ int main(int argc, char *argv[])
     if (ctrl.precipchem_numexp == 1){
         ctrl.recycle = ctrl.recycle - 1;
         CopyConstSubcatchProp(subcatch, subcatch_numexp);
-        nsteps_numexp = (size_t)ReadHbvResults(dir, steps_numexp, subcatch_numexp, 1);
-        steps_numexp = ReadPrecipChem(dir, subcatch_numexp, rttbl.num_stc, chemtbl, 1);
+        nsteps_numexp = (size_t)ReadHbvResults(input_dir, steps_numexp, subcatch_numexp, 1);
+        steps_numexp = ReadPrecipChem(input_dir, subcatch_numexp, rttbl.num_stc, chemtbl, 1);
         if ((steps_numexp.size() != nsteps_numexp)) {
             biort_printf(VL_ERROR,"\nNumber of time steps in \"Numexp_precipchem.txt\" should be same as in \"Numexp_Results.txt\" file.\n");
             exit(EXIT_FAILURE);
@@ -64,7 +62,7 @@ int main(int argc, char *argv[])
     }
 
     // Initialize RT structures
-    InitChem(dir, calib, ctrl, chemtbl, kintbl, rttbl, subcatch);
+    InitChem(input_dir, calib, ctrl, chemtbl, kintbl, rttbl, subcatch);
 
     // Create output directory when necessary
     mkdir("output");
@@ -76,17 +74,15 @@ int main(int argc, char *argv[])
     // Open output file
     {
         FILE* file_pointer;
-        char dir_substr[SUBSTRING_SIZE];
-        char time_substr[SUBSTRING_SIZE];
-        strncpy(dir_substr, dir, SUBSTRING_SIZE);
-        strncpy(time_substr, timestr, SUBSTRING_SIZE);
-
-        // sprintf(file_name, "output/%s_results_%s.txt", dir, timestr);
-        sprintf(file_name, "output/%s_results_%s.txt", dir_substr, time_substr);
-        file_pointer = fopen(file_name, "w");
-        PrintHeader(file_pointer, ctrl.transport_only, rttbl, chemtbl);
+        std::stringstream file_name_stream;
+        file_name_stream << "output/" << input_dir << "_results_" << string(timestr) << ".txt";
+        {
+            const string file_name = file_name_stream.str();
+            file_pointer = fopen(file_name.c_str(), "w");
+            PrintHeader(file_pointer, ctrl.transport_only, rttbl, chemtbl);
+        }
     
-        biort_printf(VL_NORMAL, "\nHBV-BioRT %s simulation started.\n", dir);
+        biort_printf(VL_NORMAL, "\nHBV-BioRT %s simulation started.\n", input_dir);
 
         // Loop through forcing cycles
         for (int kcycle = 0; kcycle <= ctrl.recycle; kcycle++)
@@ -96,7 +92,6 @@ int main(int argc, char *argv[])
             {
                 // Transport and routing
                 Transport(kstep, chemtbl, rttbl, ctrl, subcatch); // 2021-05-20
-                // printf("Finished Transport for step %d\n", kstep);
                 // Transport changes total concentrations. Primary concentrations needs to be updated using total
                 // concentrations
                 
@@ -121,24 +116,20 @@ int main(int argc, char *argv[])
         fclose(file_pointer);
     }
 
-    biort_printf(VL_NORMAL, "\nHBV-BioRT %s simulation succeeded.\n", dir);
+    biort_printf(VL_NORMAL, "\nHBV-BioRT %s simulation succeeded.\n", input_dir);
 
     // Do numerical experiment
     if (ctrl.precipchem_numexp == 1){
         CopyInitChemSubcatch(rttbl, subcatch, subcatch_numexp);
         {
             FILE* file_pointer;
-            char dir_substr[SUBSTRING_SIZE];
-            char time_substr[SUBSTRING_SIZE];
-            strncpy(dir_substr, dir, SUBSTRING_SIZE);
-            strncpy(time_substr, timestr, SUBSTRING_SIZE);
-
-            // sprintf(file_name, "output/%s_results_numexp_%s.txt", dir, timestr);
-            sprintf(file_name, "output/%s_results_numexp_%s.txt", dir_substr, time_substr);
-            file_pointer = fopen(file_name, "w");
+            std::stringstream file_name_stream;
+            file_name_stream << "output/" << input_dir << "_results_numexp_" << string(timestr) << ".txt";
+            const string file_name = file_name_stream.str();
+            file_pointer = fopen(file_name.c_str(), "w");
             PrintHeader(file_pointer, ctrl.transport_only, rttbl, chemtbl);
 
-            biort_printf(VL_NORMAL, "\nHBV-BioRT %s numerical experiment started.\n", dir);
+            biort_printf(VL_NORMAL, "\nHBV-BioRT %s numerical experiment started.\n", input_dir);
 
             for (int kstep = 0; kstep < (int)steps_numexp.size(); kstep++){
 
@@ -165,7 +156,7 @@ int main(int argc, char *argv[])
                 PrintDailyResults(file_pointer, ctrl.transport_only, steps_numexp[kstep], rttbl, subcatch_numexp);
                 subcatch_numexp.react_rate = {{ 0.0 }}; // reset reaction rates
             }
-            biort_printf(VL_NORMAL, "\nHBV-BioRT %s numerical experiment succeeded.\n", dir);
+            biort_printf(VL_NORMAL, "\nHBV-BioRT %s numerical experiment succeeded.\n", input_dir);
 
             fclose(file_pointer);
         }

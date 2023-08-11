@@ -1,6 +1,6 @@
 #include "biort.hpp"
 
-void ReadCini(const char dir[], const array<ChemTableEntry, MAXSPS>& chemtbl, ReactionNetwork& rttbl,
+void ReadCini(const string& input_dir, const array<ChemTableEntry, MAXSPS>& chemtbl, ReactionNetwork& rttbl,
     Subcatchment& subcatch)
 {
     char            file_name[MAXSTRING];
@@ -9,7 +9,7 @@ void ReadCini(const char dir[], const array<ChemTableEntry, MAXSPS>& chemtbl, Re
     int             line_number = 0;
     array<f64, MAXSPS> dummy_arr;
 
-    sprintf(file_name, "input/%s/cini.txt", dir);
+    sprintf(file_name, "input/%s/cini.txt", input_dir.c_str());
     file_pointer = fopen(file_name, "r");
 
     // printf("INITIAL CONCENTRATIONS:\n");

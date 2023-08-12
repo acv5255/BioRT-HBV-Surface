@@ -1,6 +1,6 @@
 #include "biort.hpp"
 
-void GetIAP(double iap[MAXSPS], const array<f64, MAXSPS>& activity, const array<array<f64, MAXSPS>, MAXSPS>& dep_kin, int num_reactions, int num_stc) {
+void GetIAP(array<f64, MAXSPS>& iap, const array<f64, MAXSPS>& activity, const array<array<f64, MAXSPS>, MAXSPS>& dep_kin, int num_reactions, int num_stc) {
     for (int i = 0; i < num_reactions; i++) {
         iap[i] = 0.0;
         for (int j = 0; j < num_stc; j++) {
@@ -131,8 +131,8 @@ void GetRates(array<f64, MAXSPS>& rate, array<f64, MAXSPS>& rate_spe, const arra
 
         if (kintbl[i].type == TST)
         {
-            double iap[MAXSPS];
-            double dependency[MAXSPS];
+            array<f64, MAXSPS> iap = { 0.0 };
+            array<f64, MAXSPS> dependency = { 0.0 };
             GetIAP(iap, chms.prim_actv, rttbl.dep_kin, rttbl.num_mkr, rttbl.num_stc);
             double temp_keq = pow(10, rttbl.keq_kin[i]);
             dependency[i] = GetDependenceTerm(&kintbl[i], chms);
@@ -174,9 +174,10 @@ void Reaction(int kstep, double stepsize, const array<ChemTableEntry, MAXSPS>& c
     ReactZone(LZ, temp, subcatch.soil_dz, subcatch.ws[kstep][LZ], chemtbl, kintbl, rttbl, stepsize, subcatch);
 }
 
-int SolveReact(double stepsize, const array<ChemTableEntry, MAXSPS>& chemtbl, const array<KineticTableEntry, MAXSPS>& kintbl, const ReactionNetwork& rttbl,
-    double satn, double temp, double porosity, double Zw, ChemicalState&chms)
+optional<ChemicalState> SolveReact(double stepsize, const array<ChemTableEntry, MAXSPS>& chemtbl, const array<KineticTableEntry, MAXSPS>& kintbl, const ReactionNetwork& rttbl,
+    double satn, double temp, double porosity, double Zw, ChemicalState& chms_in)
 {
+    ChemicalState chms = chms_in.copy();
     array<f64, MAXSPS> tmpconc = { 0.0 };
     array<f64, MAXSPS> tot_conc = { 0.0 };
     array<f64, MAXSPS> area;
@@ -381,7 +382,8 @@ int SolveReact(double stepsize, const array<ChemTableEntry, MAXSPS>& chemtbl, co
         if (pivot_flg != 0)
         {
             destroyMat(jcb);
-            return 1;
+            // return false;
+            return std::nullopt;
         }
 
         denseGETRS(jcb, rttbl.num_stc - rttbl.num_min, p.data(), x.data());
@@ -403,15 +405,14 @@ int SolveReact(double stepsize, const array<ChemTableEntry, MAXSPS>& chemtbl, co
         }
 
         control++;
-        if (control > MAX_ITERATIONS)   // Limit the model steps
-        {
-            destroyMat(jcb);
-            return 1;
-        }
+        // if (control > MAX_ITERATIONS)   // Limit the model steps
+        // {
+        //     destroyMat(jcb);
+        //     return 1;
+        // }
         destroyMat(jcb);
     } while (max_error > TOLERANCE);
 
-    CheckChmsForNonFinite(chms, "react.c", 389);
 
     // Update secondary species here
     for (int i = 0; i < rttbl.num_ssc; i++)
@@ -424,7 +425,6 @@ int SolveReact(double stepsize, const array<ChemTableEntry, MAXSPS>& chemtbl, co
         tmpval -= rttbl.keq[i] + gamma[i + rttbl.num_stc];
         tmpconc[i + rttbl.num_stc] = tmpval;
     }
-    CheckChmsForNonFinite(chms, "react.c", 402);
     
     for (int i = 0; i < rttbl.num_stc - rttbl.num_min; i++)
     {
@@ -435,7 +435,6 @@ int SolveReact(double stepsize, const array<ChemTableEntry, MAXSPS>& chemtbl, co
         }
         tot_conc[i] = tmpval;
     }
-    CheckChmsForNonFinite(chms, "react.c", 413);
 
     for (int i = 0; i < rttbl.num_stc + rttbl.num_ssc; i++)
     {
@@ -460,12 +459,15 @@ int SolveReact(double stepsize, const array<ChemTableEntry, MAXSPS>& chemtbl, co
         }
     }
 
-    return 0;
+    return chms;
 }
 
-int SolveSurfaceReact(double stepsize, const array<ChemTableEntry, MAXSPS>& chemtbl, const array<KineticTableEntry, MAXSPS>& kintbl, const ReactionNetwork& rttbl,
-    double tot_water, double temp, double porosity, ChemicalState&chms)
+// bool SolveSurfaceReact(double stepsize, const array<ChemTableEntry, MAXSPS>& chemtbl, const array<KineticTableEntry, MAXSPS>& kintbl, const ReactionNetwork& rttbl,
+//     double tot_water, double temp, double porosity, ChemicalState&chms)
+optional<ChemicalState> SolveSurfaceReact(double stepsize, const array<ChemTableEntry, MAXSPS>& chemtbl, const array<KineticTableEntry, MAXSPS>& kintbl, const ReactionNetwork& rttbl,
+    double tot_water, double temp, double porosity, ChemicalState& chms_in)
 {
+    ChemicalState chms = chms_in.copy();
     array<double, MAXSPS> tmpconc = { 0.0 };
     array<double, MAXSPS> tot_conc = { 0.0 };
     array<double, MAXSPS> area;
@@ -681,7 +683,8 @@ int SolveSurfaceReact(double stepsize, const array<ChemTableEntry, MAXSPS>& chem
         if (pivot_flg != 0)
         {
             destroyMat(jcb);
-            return 1;
+            // return 1;
+            return std::nullopt;
         }
 
         denseGETRS(jcb, rttbl.num_stc - rttbl.num_min, p.data(), x.data());
@@ -707,17 +710,12 @@ int SolveSurfaceReact(double stepsize, const array<ChemTableEntry, MAXSPS>& chem
         {
             // biort_printf(VL_NORMAL, "React failed to converge...\n");
             // printf("Failed to converge with stepsize of %g\n", stepsize);
-            // printf("Jacobian matrix: \n");
-            // PrintMatrix((const realtype**)jcb, matrix_dimension, matrix_dimension);
             destroyMat(jcb);
-            // printf("\n\n");
-            return 1;
-            // exit(-1);
+            // return false;
+            return std::nullopt;
         }
         destroyMat(jcb);
     } while (max_error > TOLERANCE);
-
-    CheckChmsForNonFinite(chms, "react.c", 389);
 
     // Update secondary species here
     for (int i = 0; i < rttbl.num_ssc; i++)
@@ -730,7 +728,6 @@ int SolveSurfaceReact(double stepsize, const array<ChemTableEntry, MAXSPS>& chem
         tmpval -= rttbl.keq[i] + gamma[i + rttbl.num_stc];
         tmpconc[i + rttbl.num_stc] = tmpval;
     }
-    CheckChmsForNonFinite(chms, "react.c", 402);
     
     for (int i = 0; i < rttbl.num_stc - rttbl.num_min; i++)
     {
@@ -741,7 +738,6 @@ int SolveSurfaceReact(double stepsize, const array<ChemTableEntry, MAXSPS>& chem
         }
         tot_conc[i] = tmpval;
     }
-    CheckChmsForNonFinite(chms, "react.c", 413);
 
     for (int i = 0; i < rttbl.num_stc + rttbl.num_ssc; i++)
     {
@@ -765,14 +761,13 @@ int SolveSurfaceReact(double stepsize, const array<ChemTableEntry, MAXSPS>& chem
             chms.sec_conc[i - rttbl.num_stc] = pow(10, tmpconc[i]);
         }
     }
-
-    CheckChmsForNonFinite(chms, "react.c", 438);
-    return 0;
+    // return true;
+    return optional(chms);
 }
 
 double ReactControl(const array<ChemTableEntry, MAXSPS>& chemtbl, const array<KineticTableEntry, MAXSPS>& kintbl, const ReactionNetwork& rttbl,
     double stepsize, double porosity, double depth, double satn, double temp, double Zw, array<f64, MAXSPS>& react_rate,
-    ChemicalState&chms)
+    ChemicalState& chms)
 {
     double          substep;
     double          step_counter = 0.0;
@@ -788,14 +783,13 @@ double ReactControl(const array<ChemTableEntry, MAXSPS>& chemtbl, const array<Ki
 
     while (1.0 - step_counter / stepsize > 1.0E-10 && substep > MINIMUM_SUBSTEP)
     {
-        CheckChmsForNonFinite(chms, "react.c", 451);
-        int flag = SolveReact(substep, chemtbl, kintbl, rttbl, satn, temp, porosity, Zw, chms);
-        CheckChmsForNonFinite(chms, "react.c", 453);
+        optional<ChemicalState> res = SolveReact(substep, chemtbl, kintbl, rttbl, satn, temp, porosity, Zw, chms);
 
-        if (flag == 0)
+        if (res.has_value())
         {
             // Reaction passed with current step
             step_counter += substep;
+            chms = res.value();
         }
         else
         {
@@ -853,14 +847,15 @@ double ReactSurfaceControl(const array<ChemTableEntry, MAXSPS>& chemtbl, const a
 
     while (1.0 - step_counter / stepsize > 1.0E-10 && substep > MINIMUM_SUBSTEP)
     {
-        CheckChmsForNonFinite(chms, "react.c", 892);
-        int flag = SolveSurfaceReact(substep, chemtbl, kintbl, rttbl, tot_water, temp, porosity, chms);
-        CheckChmsForNonFinite(chms, "react.c", 894);
+        // bool flag = SolveSurfaceReact(substep, chemtbl, kintbl, rttbl, tot_water, temp, porosity, chms);
+        optional<ChemicalState> res = SolveSurfaceReact(substep, chemtbl, kintbl, rttbl, tot_water, temp, porosity, chms);
 
-        if (flag == 0)
+        // if (flag == true)
+        if (res.has_value())
         {
             // Reaction passed with current step
             step_counter += substep;
+            chms = res.value();
         }
         else
         {

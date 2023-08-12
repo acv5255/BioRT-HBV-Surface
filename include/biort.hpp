@@ -14,6 +14,8 @@
 #include <vector>
 #include <stdexcept>
 #include <sstream>
+#include <tuple>
+#include <optional>
 
 // Not implemented error
 class NotImplemented : public std::logic_error {
@@ -26,6 +28,8 @@ using f64 = double;
 using std::array;
 using std::vector;
 using std::string;
+using std::tuple;
+using std::optional;
 
 // SUNDIAL Header Files
 #include "sundials/sundials_dense.h"        // Prototypes for small dense fcts.
@@ -321,7 +325,7 @@ void            ReadTempPoints(const char [], double, int *, int *);
 int             roundi(double);
 double          SoilTempFactor(double, double);
 double          SoilMoistFactor(double, double, double);
-int             SolveReact(double, const array<ChemTableEntry, MAXSPS>& chemtbl, const KineticTableEntry [], const ReactionNetwork& rttbl, double, double,
+optional<ChemicalState>   SolveReact(double, const array<ChemTableEntry, MAXSPS>& chemtbl, const KineticTableEntry [], const ReactionNetwork& rttbl, double, double,
     double, double, ChemicalState&);
 int             SolveSpeciation(const array<ChemTableEntry, MAXSPS>& chemtbl, const ControlData ctrl, const ReactionNetwork& rttbl, int, ChemicalState& chms);
 void            SortChem(char [MAXSPS][MAXSTRING], const int [MAXSPS], int, array<ChemTableEntry, MAXSPS>& chemtbl);
@@ -367,7 +371,7 @@ double          ReadParamToDouble(const char buffer[], const char keyword[], con
 int             ReadParamToInt(const char buffer[], const char keyword[], const char fn[], int line_number);
 void            ReactSurfaceZone(const double temp, const SoilConstants soil, const double tot_water, const array<ChemTableEntry, MAXSPS>& chemtbl,
                     const array<KineticTableEntry, MAXSPS>& kintbl, const ReactionNetwork& rttbl, double stepsize, Subcatchment& subcatch);
-int             SolveSurfaceReact(double stepsize, const array<ChemTableEntry, MAXSPS>& chemtbl, const array<KineticTableEntry, MAXSPS>& kintbl, const ReactionNetwork& rttbl,
+optional<ChemicalState> SolveSurfaceReact(double stepsize, const array<ChemTableEntry, MAXSPS>& chemtbl, const array<KineticTableEntry, MAXSPS>& kintbl, const ReactionNetwork& rttbl,
                     double tot_water, double temp, double porosity, ChemicalState&chms);
 double          ReactSurfaceControl(const array<ChemTableEntry, MAXSPS>& chemtbl, const array<KineticTableEntry, MAXSPS>& kintbl, const ReactionNetwork& rttbl,
                     double stepsize, double porosity, double depth, double satn, double temp, array<f64, MAXSPS>& react_rate,

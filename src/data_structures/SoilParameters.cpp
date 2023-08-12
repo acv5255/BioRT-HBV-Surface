@@ -8,7 +8,7 @@ SoilParameters::SoilParameters() {
     n_alpha = { BADVAL };
 }
 
-SoilParameters SoilParameters::copy() {
+SoilParameters SoilParameters::copy() const {
     return SoilParameters(
         this->ssa,
         this->sw_thld,

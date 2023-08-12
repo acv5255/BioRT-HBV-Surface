@@ -9,13 +9,13 @@ ChemicalState::ChemicalState() {
     this->soil_parameters = SoilParameters();
 }
 
-ChemicalState ChemicalState::copy() {
+ChemicalState ChemicalState::copy() const {
     return ChemicalState(
         this->tot_conc,
         this->prim_conc,
         this->sec_conc,
         this->prim_actv,
         this->tot_mol,
-        this->soil_parameters
+        this->soil_parameters.copy()
     );
 }

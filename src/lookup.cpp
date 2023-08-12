@@ -254,12 +254,12 @@ void Lookup(FILE *fp, const CalibrationStruct& calib, array<ChemTableEntry, MAXS
     biort_printf(VL_NORMAL, " \n Mass action species type determination (0: immobile, 1: mobile, 2: Mixed) \n");
     for (i = 0; i < rttbl.num_spc; i++)
     {
-        chemtbl[i].mtype = (chemtbl[i].itype == AQUEOUS) ? MOBILE_MA : IMMOBILE_MA;
+        chemtbl[i].mtype = (chemtbl[i].itype == AQUEOUS) ? MassActionType::MOBILE : MassActionType::IMMOBILE;
 
         for (j = 0; j < rttbl.num_stc + rttbl.num_ssc; j++)
         {
             chemtbl[i].mtype = (rttbl.conc_contrib[i][j] != 0 && chemtbl[j].itype != chemtbl[i].mtype) ?
-                MIXED_MA : chemtbl[i].mtype;
+                MassActionType::MIXED : chemtbl[i].mtype;
         }
         biort_printf(VL_NORMAL, " %12s    %10d\n", chemtbl[i].name, chemtbl[i].mtype);
     }

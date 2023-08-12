@@ -185,7 +185,7 @@ void TransportShallowZone(const ReactionNetwork& rttbl, const array<ChemTableEnt
         subcatch.chms[UZ].tot_mol[kspc] -= subcatch.chms[UZ].tot_conc[kspc] * q_perc;
         subcatch.chms[LZ].tot_mol[kspc] += subcatch.chms[UZ].tot_conc[kspc] * q_perc;
         
-        if (chemtbl[kspc].mtype == MIXED_MA)
+        if (chemtbl[kspc].mtype == MassActionType::MIXED)
         {
             for (int kssc = 0; kssc < rttbl.num_ssc; kssc++)
             {
@@ -228,7 +228,7 @@ void TransportDeepZone(const ReactionNetwork& rttbl, const array<ChemTableEntry,
             subcatch.chms[LZ].tot_mol[kspc] -= subcatch.chms[LZ].tot_conc[kspc] * q_q2;
             subcatch.chms[STREAM].tot_mol[kspc] += subcatch.chms[LZ].tot_conc[kspc] * q_q2;
             
-            if (chemtbl[kspc].mtype == MIXED_MA)
+            if (chemtbl[kspc].mtype == MassActionType::MIXED)
             {
                 for (int kssc = 0; kssc < rttbl.num_ssc; kssc++)
                 {

@@ -462,10 +462,8 @@ optional<ChemicalState> SolveReact(double stepsize, const array<ChemTableEntry, 
     return chms;
 }
 
-// bool SolveSurfaceReact(double stepsize, const array<ChemTableEntry, MAXSPS>& chemtbl, const array<KineticTableEntry, MAXSPS>& kintbl, const ReactionNetwork& rttbl,
-//     double tot_water, double temp, double porosity, ChemicalState&chms)
-optional<ChemicalState> SolveSurfaceReact(double stepsize, const array<ChemTableEntry, MAXSPS>& chemtbl, const array<KineticTableEntry, MAXSPS>& kintbl, const ReactionNetwork& rttbl,
-    double tot_water, double temp, double porosity, ChemicalState& chms_in)
+optional<ChemicalState> SolveSurfaceReact(const double stepsize, const array<ChemTableEntry, MAXSPS>& chemtbl, const array<KineticTableEntry, MAXSPS>& kintbl, const ReactionNetwork& rttbl,
+    const double tot_water, const double temp, const double porosity, const ChemicalState& chms_in)
 {
     ChemicalState chms = chms_in.copy();
     array<double, MAXSPS> tmpconc = { 0.0 };

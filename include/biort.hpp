@@ -80,9 +80,12 @@ const int MINERAL = 4;
 const int SECONDARY = 5;
 
 // RT mass action types
-const int IMMOBILE_MA = 0;
-const int MOBILE_MA = 1;
-const int MIXED_MA = 2;
+enum MassActionType {
+    IMMOBILE = 0,
+    MOBILE = 1,
+    MIXED = 2,
+    ERROR = -1
+};
 
 // RT kinetic reaction types
 const int TST = 1;
@@ -148,13 +151,14 @@ class ChemTableEntry
         int             itype;                  // type of primary species
                                                 // 1 = primary aqueous, 2 = primary adsorption,
                                                 // 3 = primary cation exchange, 4 = primary mineral
-        int             mtype;                  // type of the mass action species
+        // int             mtype;                  // type of the mass action species
                                                 // 0 = immobile mass action, 1 = mobile mass action,
                                                 // 2 = mixed mobility mass action
+        MassActionType  mtype;
 
         // Methods
         ChemTableEntry();
-        ChemTableEntry(const string& name, const f64 molar_mass, const f64 molar_vol, const f64 charge, const f64 size_fac, const int itype, const int mtype);
+        ChemTableEntry(const string& name, const f64 molar_mass, const f64 molar_vol, const f64 charge, const f64 size_fac, const int itype, const MassActionType mtype);
         ChemTableEntry copy();
 };
 
@@ -197,7 +201,7 @@ class SoilParameters {
         SoilParameters();
         SoilParameters(const array<f64, MAXSPS> ssa, const array<f64, MAXSPS>  sw_thld, const array<f64, MAXSPS> sw_exp, const array<f64, MAXSPS> q10, const array<f64, MAXSPS> n_alpha) :
             ssa(ssa), sw_thld(sw_thld), sw_exp(sw_exp), q10(q10), n_alpha(n_alpha) { };
-        SoilParameters copy();
+        SoilParameters copy() const;
 };
 
 class ChemicalState
@@ -212,9 +216,9 @@ class ChemicalState
 
         // Methods
         ChemicalState();
-        ChemicalState(const array<f64, MAXSPS> tot_conc, const array<f64, MAXSPS> prim_conc, const array<f64, MAXSPS> sec_conc, const array<f64, MAXSPS> prim_actv, const array<f64, MAXSPS> tot_mol, SoilParameters& params) : 
+        ChemicalState(const array<f64, MAXSPS> tot_conc, const array<f64, MAXSPS> prim_conc, const array<f64, MAXSPS> sec_conc, const array<f64, MAXSPS> prim_actv, const array<f64, MAXSPS> tot_mol, SoilParameters params) : 
             tot_conc(tot_conc), prim_conc(prim_conc), sec_conc(sec_conc), prim_actv(prim_actv), tot_mol(tot_mol), soil_parameters(params.copy()) { };
-        ChemicalState copy();
+        ChemicalState copy() const;
 };
 
 class CalibrationStruct {
@@ -325,8 +329,8 @@ void            ReadTempPoints(const char [], double, int *, int *);
 int             roundi(double);
 double          SoilTempFactor(double, double);
 double          SoilMoistFactor(double, double, double);
-optional<ChemicalState>   SolveReact(double, const array<ChemTableEntry, MAXSPS>& chemtbl, const KineticTableEntry [], const ReactionNetwork& rttbl, double, double,
-    double, double, ChemicalState&);
+optional<ChemicalState>   SolveReact(const double, const array<ChemTableEntry, MAXSPS>& chemtbl, const KineticTableEntry [], const ReactionNetwork& rttbl, const double, const double,
+    const double, const double, const ChemicalState& chms);
 int             SolveSpeciation(const array<ChemTableEntry, MAXSPS>& chemtbl, const ControlData ctrl, const ReactionNetwork& rttbl, int, ChemicalState& chms);
 void            SortChem(char [MAXSPS][MAXSTRING], const int [MAXSPS], int, array<ChemTableEntry, MAXSPS>& chemtbl);
 void            Speciation(const array<ChemTableEntry, MAXSPS>& chemtbl, const ControlData ctrl, const ReactionNetwork& rttbl, Subcatchment& subcatch);
@@ -371,25 +375,25 @@ double          ReadParamToDouble(const char buffer[], const char keyword[], con
 int             ReadParamToInt(const char buffer[], const char keyword[], const char fn[], int line_number);
 void            ReactSurfaceZone(const double temp, const SoilConstants soil, const double tot_water, const array<ChemTableEntry, MAXSPS>& chemtbl,
                     const array<KineticTableEntry, MAXSPS>& kintbl, const ReactionNetwork& rttbl, double stepsize, Subcatchment& subcatch);
-optional<ChemicalState> SolveSurfaceReact(double stepsize, const array<ChemTableEntry, MAXSPS>& chemtbl, const array<KineticTableEntry, MAXSPS>& kintbl, const ReactionNetwork& rttbl,
-                    double tot_water, double temp, double porosity, ChemicalState&chms);
+optional<ChemicalState> SolveSurfaceReact(const double stepsize, const array<ChemTableEntry, MAXSPS>& chemtbl, const array<KineticTableEntry, MAXSPS>& kintbl, const ReactionNetwork& rttbl,
+                    const double tot_water, const double temp, const double porosity, const ChemicalState& chms);
 double          ReactSurfaceControl(const array<ChemTableEntry, MAXSPS>& chemtbl, const array<KineticTableEntry, MAXSPS>& kintbl, const ReactionNetwork& rttbl,
                     double stepsize, double porosity, double depth, double satn, double temp, array<f64, MAXSPS>& react_rate,
                     ChemicalState&chms);
 
 //===== Constant definitions =====//
-static const char CHEM_FILE_DIR[] = "input/%s/chem.txt";
-static const char CHEM_RECYCLE_ID[] = "RECYCLE";
-static const char CHEM_ACTIVITY_ID[] = "ACTIVITY";
-static const char CHEM_TRANSPORT_ONLY_ID[] = "TRANSPORT_ONLY";
-static const char CHEM_PRECIPCHEM_ID[] = "PRECIPCHEM";
-static const char CHEM_NUMEXP_ID[] = "NUMEXP";
-static const char CHEM_TEMPERATURE_ID[] = "TEMPERATURE";
+const string CHEM_FILE_DIR = "input/%s/chem.txt";
+const string CHEM_RECYCLE_ID = "RECYCLE";
+const string CHEM_ACTIVITY_ID = "ACTIVITY";
+const string CHEM_TRANSPORT_ONLY_ID = "TRANSPORT_ONLY";
+const string CHEM_PRECIPCHEM_ID = "PRECIPCHEM";
+const string CHEM_NUMEXP_ID = "NUMEXP";
+const string CHEM_TEMPERATURE_ID = "TEMPERATURE";
 
-static const char CHEM_PRIMARY_SPECIES_ID[] = "PRIMARY_SPECIES";
-static const char CHEM_SECONDARY_SPECIES_ID[] = "SECONDARY_SPECIES";
-static const char CHEM_MINERAL_KINETICS_ID[] = "MINERAL_KINETICS";
+const string CHEM_PRIMARY_SPECIES_ID = "PRIMARY_SPECIES";
+const string CHEM_SECONDARY_SPECIES_ID = "SECONDARY_SPECIES";
+const string CHEM_MINERAL_KINETICS_ID = "MINERAL_KINETICS";
 
-static const double SATN_MINIMUM = 1e-4;       // Minimum saturation to initiate kinetic reactions
-static const int MAX_ITERATIONS = 25;
-static const double MINIMUM_SUBSTEP = 1e-20;
+const double SATN_MINIMUM = 1e-4;       // Minimum saturation to initiate kinetic reactions
+const int MAX_ITERATIONS = 25;
+const double MINIMUM_SUBSTEP = 1e-20;

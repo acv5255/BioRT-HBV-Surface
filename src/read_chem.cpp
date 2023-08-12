@@ -165,7 +165,8 @@ void ReadChem(const string& input_dir, ControlData& ctrl, ReactionNetwork& rttbl
     for (i = 0; i < rttbl.num_mkr; i++)
     {
         NextLine(file_pointer, cmdstr, &lno);
-        if (sscanf(cmdstr, "%s %*s %s", temp_str, kintbl[i].label) != 2)
+        kintbl[i].label.resize(MAXSTRING);
+        if (sscanf(cmdstr, "%s %*s %s", temp_str, kintbl[i].label.data()) != 2)
         {
             biort_printf(VL_ERROR, "Error reading mineral information in %s near Line %d.\n", file_name, lno);
             exit(EXIT_FAILURE);

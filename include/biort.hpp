@@ -136,7 +136,6 @@ class ReactionNetwork
 class ChemTableEntry
 {
     public:
-        // char            name[MAXSTRING];        // molecular formula or name
         string          name;
         double          molar_mass;             // (g mol-1)
         double          molar_vol;              // (cm3 mol-1)
@@ -159,7 +158,7 @@ class KineticTableEntry
 {
     public:
         int             position;               // position of target mineral in the array of primary species
-        char            label[MAXSTRING];       // label of kinetic reaction
+        string          label;       // label of kinetic reaction
         int             type;                   // type of the kinetic reaction
                                                 // 1: tst, 2: precipitation-only, 3: dissolution-only, 4: monod
         double          rate;                   // rate of kinetic reaction
@@ -314,7 +313,7 @@ int             ReadHbvResults(const string& input_dir, vector<int>& steps, Subc
 vector<int>     ReadPrecipChem(const string& input_dir, Subcatchment& subcatch, int, const array<ChemTableEntry, MAXSPS>& chemtbl, int);
 void            ReadMinerals(const char [], int, int, double [MAXSPS][MAXSPS], double [], array<ChemTableEntry, MAXSPS>& chemtbl,
     ReactionNetwork& rttbl);
-void            ReadMinKin(FILE *, int, double, int *, char [], array<ChemTableEntry, MAXSPS>& chemtbl, KineticTableEntry *);
+void            ReadMinKin(FILE *, int, double, int *, char [], array<ChemTableEntry, MAXSPS>& chemtbl, KineticTableEntry& kintbl);
 void            ReadPrimary(const char [], int, array<ChemTableEntry, MAXSPS>& chemtbl);
 void            ReadSecondary(const char [], int, int, array<ChemTableEntry, MAXSPS>& chemtbl, ReactionNetwork& rttbl);
 void            ReadSoil(const string& input_dir, Subcatchment& sub);

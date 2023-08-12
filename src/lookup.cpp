@@ -171,7 +171,7 @@ void Lookup(FILE *fp, const CalibrationStruct& calib, array<ChemTableEntry, MAXS
 
         while (strcmp(cmdstr, "End of mineral kinetics\r\n") != 0 && strcmp(cmdstr, "End of mineral kinetics\n") != 0)
         {
-            ReadMinKin(fp, rttbl.num_stc, calib.rate, &lno, cmdstr, chemtbl, &kintbl[i]);
+            ReadMinKin(fp, rttbl.num_stc, calib.rate, &lno, cmdstr, chemtbl, kintbl[i]);
             NextLine(fp, cmdstr, &lno);
         }
 
@@ -618,7 +618,7 @@ void ReadCationEchg(const char cmdstr[], double calval, array<ChemTableEntry, MA
 }
 
 void ReadMinKin(FILE *fp, int num_stc, double calval, int *lno, char cmdstr[], array<ChemTableEntry, MAXSPS>& chemtbl,
-    KineticTableEntry *kintbl)
+    KineticTableEntry& kintbl)
 {
     int             bytes_now;
     int             bytes_consumed = 0;
@@ -630,15 +630,15 @@ void ReadMinKin(FILE *fp, int num_stc, double calval, int *lno, char cmdstr[], a
     sscanf(cmdstr, "%s", chemn);
     WrapInParentheses(chemn);
 
-    if (strcmp(chemtbl[kintbl->position].name.c_str(), chemn) == 0)
+    if (strcmp(chemtbl[kintbl.position].name.c_str(), chemn) == 0)
     {
         NextLine(fp, cmdstr, lno);
         sscanf(cmdstr, "%*s = %s", label);
 
-        if (strcmp(kintbl->label, label) == 0)
+        if (strcmp(kintbl.label.c_str(), label) == 0)
         {
             biort_printf(VL_NORMAL, " \n Mineral kinetics %s %s found in database!\n",
-                chemtbl[kintbl->position].name, kintbl->label);
+                chemtbl[kintbl.position].name, kintbl.label);
 
             // For mineral kinetics, all species have the following lines:
             //   label, type, rate(25C), and activation.
@@ -651,19 +651,19 @@ void ReadMinKin(FILE *fp, int num_stc, double calval, int *lno, char cmdstr[], a
             {
                 if (strcmp(label, "tst") == 0)
                 {
-                    kintbl->type = TST;
+                    kintbl.type = TST;
                 }
                 else if (strcmp(label, "PrecipitationOnly") == 0)
                 {
-                    kintbl->type = PRCP_ONLY;
+                    kintbl.type = PRCP_ONLY;
                 }
                 else if (strcmp(label, "DissolutionOnly") == 0)
                 {
-                    kintbl->type = DISS_ONLY;
+                    kintbl.type = DISS_ONLY;
                 }
                 else if (strcmp(label, "monod") == 0)
                 {
-                    kintbl->type = MONOD;
+                    kintbl.type = MONOD;
                 }
             }
             else
@@ -674,13 +674,13 @@ void ReadMinKin(FILE *fp, int num_stc, double calval, int *lno, char cmdstr[], a
 
             // Read rate
             NextLine(fp, cmdstr, lno);
-            sscanf(cmdstr, "%s = %lf", optstr, &kintbl->rate);
+            sscanf(cmdstr, "%s = %lf", optstr, &kintbl.rate);
             if (strcmp(optstr, "rate(25C)") == 0)
             {
-                biort_printf(VL_NORMAL, " Rate is %f\n", kintbl->rate);
+                biort_printf(VL_NORMAL, " Rate is %f\n", kintbl.rate);
 
-                kintbl->rate += calval;
-                biort_printf(VL_NORMAL, " After calibration: Rate is %f, calib.Rate = %f \n", kintbl->rate, calval);
+                kintbl.rate += calval;
+                biort_printf(VL_NORMAL, " After calibration: Rate is %f, calib.Rate = %f \n", kintbl.rate, calval);
             }
             else
             {
@@ -690,10 +690,10 @@ void ReadMinKin(FILE *fp, int num_stc, double calval, int *lno, char cmdstr[], a
 
             // Read activation
             NextLine(fp, cmdstr, lno);
-            sscanf(cmdstr, "%s = %lf", optstr, &kintbl->actv);
+            sscanf(cmdstr, "%s = %lf", optstr, &kintbl.actv);
             if (strcmp(optstr, "activation") == 0)
             {
-                biort_printf(VL_NORMAL, " Activation is %f\n", kintbl->actv);
+                biort_printf(VL_NORMAL, " Activation is %f\n", kintbl.actv);
             }
             else
             {
@@ -701,9 +701,9 @@ void ReadMinKin(FILE *fp, int num_stc, double calval, int *lno, char cmdstr[], a
                 exit(EXIT_FAILURE);
             }
 
-            kintbl->ndep = 0;
-            kintbl->nmonod = 0;
-            kintbl->ninhib = 0;
+            kintbl.ndep = 0;
+            kintbl.nmonod = 0;
+            kintbl.ninhib = 0;
 
             NextLine(fp, cmdstr, lno);
             while (cmdstr[0] != '+')
@@ -720,15 +720,15 @@ void ReadMinKin(FILE *fp, int num_stc, double calval, int *lno, char cmdstr[], a
                     if (sscanf(cmdstr + bytes_consumed, "%s %lf", chemn, &temp) == 2)
                     {
                         WrapInParentheses(chemn);
-                        kintbl->dep_index[0] = FindChem(chemn, num_stc, chemtbl);
-                        if (kintbl->dep_index[0] < 0)
+                        kintbl.dep_index[0] = FindChem(chemn, num_stc, chemtbl);
+                        if (kintbl.dep_index[0] < 0)
                         {
                             biort_printf(VL_ERROR, "Error finding dependence in species table.\n");
                             exit(EXIT_FAILURE);
                         }
-                        kintbl->ndep = 1;
-                        kintbl->dep_power[0] = temp;
-                        biort_printf(VL_NORMAL, " Dependency: %s %f\n", chemn, kintbl->dep_power[0]);
+                        kintbl.ndep = 1;
+                        kintbl.dep_power[0] = temp;
+                        biort_printf(VL_NORMAL, " Dependency: %s %f\n", chemn, kintbl.dep_power[0]);
                     }
                     else
                     {
@@ -741,8 +741,8 @@ void ReadMinKin(FILE *fp, int num_stc, double calval, int *lno, char cmdstr[], a
                     sscanf(cmdstr, "%*s : %s", chemn);
                     WrapInParentheses(chemn);
                     biort_printf(VL_NORMAL, " Biomass species: %s \n", chemn);
-                    kintbl->biomass_index = FindChem(chemn, num_stc, chemtbl);
-                    biort_printf(VL_NORMAL, " Biomass species position: %d \n", kintbl->biomass_index);
+                    kintbl.biomass_index = FindChem(chemn, num_stc, chemtbl);
+                    biort_printf(VL_NORMAL, " Biomass species position: %d \n", kintbl.biomass_index);
                 }
                 else if (strcmp(optstr, "monod_terms") == 0)
                 {
@@ -752,15 +752,15 @@ void ReadMinKin(FILE *fp, int num_stc, double calval, int *lno, char cmdstr[], a
                         bytes_consumed += bytes_now;
 
                         WrapInParentheses(chemn);
-                        kintbl->monod_index[kintbl->nmonod] = FindChem(chemn, num_stc, chemtbl);
-                        if (kintbl->monod_index[kintbl->nmonod] < 0)
+                        kintbl.monod_index[kintbl.nmonod] = FindChem(chemn, num_stc, chemtbl);
+                        if (kintbl.monod_index[kintbl.nmonod] < 0)
                         {
                             biort_printf(VL_ERROR, "Error finding monod_terms in species table.\n");
                             exit(EXIT_FAILURE);
                         }
-                        kintbl->monod_para[kintbl->nmonod] = temp;
-                        biort_printf(VL_NORMAL, " Monod term: %s %f\n", chemn, kintbl->monod_para[kintbl->nmonod]);
-                        kintbl->nmonod++;
+                        kintbl.monod_para[kintbl.nmonod] = temp;
+                        biort_printf(VL_NORMAL, " Monod term: %s %f\n", chemn, kintbl.monod_para[kintbl.nmonod]);
+                        kintbl.nmonod++;
                     }
                 }
                 else if (strcmp(optstr, "inhibition") == 0)
@@ -771,15 +771,15 @@ void ReadMinKin(FILE *fp, int num_stc, double calval, int *lno, char cmdstr[], a
                         bytes_consumed += bytes_now;
 
                         WrapInParentheses(chemn);
-                        kintbl->inhib_index[kintbl->ninhib] = FindChem(chemn, num_stc, chemtbl);
-                        if (kintbl->inhib_index[kintbl->ninhib] < 0)
+                        kintbl.inhib_index[kintbl.ninhib] = FindChem(chemn, num_stc, chemtbl);
+                        if (kintbl.inhib_index[kintbl.ninhib] < 0)
                         {
                             biort_printf(VL_ERROR, "Error finding inhibition term in species table.\n");
                             exit(EXIT_FAILURE);
                         }
-                        kintbl->inhib_para[kintbl->ninhib] = temp;
-                        biort_printf(VL_NORMAL, " Inhibition term: %s %f\n", chemn, kintbl->inhib_para[kintbl->ninhib]);
-                        kintbl->ninhib++;
+                        kintbl.inhib_para[kintbl.ninhib] = temp;
+                        biort_printf(VL_NORMAL, " Inhibition term: %s %f\n", chemn, kintbl.inhib_para[kintbl.ninhib]);
+                        kintbl.ninhib++;
                     }
                 }
 

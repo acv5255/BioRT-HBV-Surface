@@ -160,7 +160,7 @@ void Lookup(FILE *fp, const CalibrationStruct& calib, array<ChemTableEntry, MAXS
     for (i = 0; i < rttbl.num_mkr; i++)
     {
         // Initialize kinetic reaction type
-        kintbl[i].type = BADVAL;
+        kintbl[i].type = ReactionType::ERROR_REACTION_TYPE;
 
         FindLine(fp, "BOF", &lno, ".cdbs");
         NextLine(fp, cmdstr, &lno);
@@ -175,7 +175,7 @@ void Lookup(FILE *fp, const CalibrationStruct& calib, array<ChemTableEntry, MAXS
             NextLine(fp, cmdstr, &lno);
         }
 
-        if (kintbl[i].type == BADVAL)
+        if (kintbl[i].type == ReactionType::ERROR_REACTION_TYPE)
         {
             biort_printf(VL_ERROR, "Error finding mineral kinetic %s -label %s in the database.\n",
                 chemtbl[kintbl[i].position].name, kintbl[i].label);

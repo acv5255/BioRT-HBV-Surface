@@ -93,10 +93,17 @@ enum MassActionType {
 };
 
 // RT kinetic reaction types
-const int TST = 1;
-const int PRCP_ONLY = 2;
-const int DISS_ONLY = 3;
-const int MONOD = 4;
+// const int TST = 1;
+// const int PRCP_ONLY = 2;
+// const int DISS_ONLY = 3;
+// const int MONOD = 4;
+enum ReactionType {
+    TST = 1,
+    PRCP_ONLY = 2,
+    DISS_ONLY = 3,
+    MONOD = 4,
+    ERROR_REACTION_TYPE = -1
+};
 
 extern int     verbose_mode;
 
@@ -169,8 +176,9 @@ class KineticTableEntry
     public:
         int             position;               // position of target mineral in the array of primary species
         string          label;       // label of kinetic reaction
-        int             type;                   // type of the kinetic reaction
-                                                // 1: tst, 2: precipitation-only, 3: dissolution-only, 4: monod
+        // int             type;                   // type of the kinetic reaction
+        //                                         // 1: tst, 2: precipitation-only, 3: dissolution-only, 4: monod
+        ReactionType    type;
         double          rate;                   // rate of kinetic reaction
         double          actv;                   // activation energy, used to calculate kinetic rate of reaction under
                                                 // different temperatures

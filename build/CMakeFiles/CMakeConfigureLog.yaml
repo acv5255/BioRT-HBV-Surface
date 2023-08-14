@@ -696,3 +696,26 @@ events:
         
       exitCode: 0
 ...
+
+---
+events:
+  -
+    kind: "try_compile-v1"
+    backtrace:
+      - "dep/cvode/config/SundialsPOSIXTimers.cmake:73 (try_compile)"
+      - "dep/cvode/CMakeLists.txt:357 (INCLUDE)"
+    directories:
+      source: "/home/andrew/Documents/GitHub/biort-surface-cpp/BioRT-HBV-Surface/build/dep/cvode/PosixTimersTest"
+      binary: "/home/andrew/Documents/GitHub/biort-surface-cpp/BioRT-HBV-Surface/build/dep/cvode/PosixTimersTest"
+    buildResult:
+      variable: "POSIX_TIMERS_TEST_OK"
+      cached: true
+      stdout: |
+        Change Dir: '/home/andrew/Documents/GitHub/biort-surface-cpp/BioRT-HBV-Surface/build/dep/cvode/PosixTimersTest'
+        
+        Run Build Command(s): /usr/bin/ninja -v
+        [1/2] /usr/bin/gcc-12   -g -o CMakeFiles/posixtimerstest.dir/posixtimerstest.c.o -c /home/andrew/Documents/GitHub/biort-surface-cpp/BioRT-HBV-Surface/build/dep/cvode/PosixTimersTest/posixtimerstest.c
+        [2/2] : && /usr/bin/gcc-12 -g  CMakeFiles/posixtimerstest.dir/posixtimerstest.c.o -o posixtimerstest  /usr/lib/x86_64-linux-gnu/librt.a && :
+        
+      exitCode: 0
+...

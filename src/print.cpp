@@ -8,7 +8,7 @@ void PrintHeader(FILE *file_pointer, int transpt, const ReactionNetwork& rttbl, 
     // Soil concentration file header
     fprintf(file_pointer, "%-15s",  "TIME");
 
-    if (transpt == KIN_REACTION)
+    if (transpt == SimMode::KINETIC_REACTIONS)
     {
         // Snow chemistry
         for (int kspc = 0; kspc < rttbl.num_spc; kspc++)  // 2021-06-29
@@ -182,7 +182,7 @@ void PrintHeader(FILE *file_pointer, int transpt, const ReactionNetwork& rttbl, 
     // UNITS
     fprintf(file_pointer, "%-15s",  "YYYYMMDD");
 
-    if (transpt == KIN_REACTION)
+    if (transpt == SimMode::KINETIC_REACTIONS)
     {
         // Snow zones
         for (int kspc = 0; kspc < 1 * (rttbl.num_spc); kspc++)   // 2021-09-27, SNOW +SURFACE
@@ -218,7 +218,7 @@ void PrintDailyResults(FILE *fp, int transpt, int step, const ReactionNetwork& r
     // Soil concentration file header
     fprintf(fp, "%-15d",  step);
 
-    if (transpt == KIN_REACTION)
+    if (transpt == SimMode::KINETIC_REACTIONS)
     {
 
         // Snow concentration

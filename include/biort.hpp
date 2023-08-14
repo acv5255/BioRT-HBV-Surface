@@ -69,8 +69,10 @@ const int MAXDEP = 4;
 const int SKIP_JACOB = 1;
 
 // RT simulation mode
-const int KIN_REACTION = 0;
-const int TRANSPORT_ONLY = 1;
+enum SimMode {
+    KINETIC_REACTIONS = 0,
+    TRANSPORT_ONLY = 1,
+};
 
 // RT primary species types
 const int AQUEOUS = 1;
@@ -100,7 +102,7 @@ class ControlData
 {
     public:
         int             recycle;                // number of times to recycle forcing
-        int             use_activity;           // activity coefficient mode: 0 = unity coefficient, 1 = DH equation
+        SimMode use_activity;           // activity coefficient mode: 0 = unity coefficient, 1 = DH equation
         int             transport_only;         // transport only flag: 0 = simulate kinetic reaction, 1 = transport only
         int             variable_precipchem;    // precipitation chemistry mode: 0 = constant precipitation chemistry, 1 = time-series precipitation chemistry   2021-05-20
         int             precipchem_numexp;      // Numerical experiment mode: 0 = same precipitation chemistry during warm-up and simulation
@@ -108,7 +110,7 @@ class ControlData
         
         // Methods
         ControlData();
-        ControlData(const int recycle, const int use_activity, const int transport_only, const int variable_precipchem, const int precipchem_numexp) :
+        ControlData(const int recycle, const SimMode use_activity, const int transport_only, const int variable_precipchem, const int precipchem_numexp) :
             recycle(recycle), use_activity(use_activity), transport_only(transport_only), variable_precipchem(variable_precipchem), precipchem_numexp(precipchem_numexp) { };
         ControlData copy();
 };

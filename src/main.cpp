@@ -99,7 +99,7 @@ int main(int argc, char *argv[])
                 
                 StreamSpeciation(kstep, chemtbl, ctrl, rttbl, subcatch);
 
-                if (ctrl.transport_only == KIN_REACTION)
+                if (ctrl.transport_only == SimMode::KINETIC_REACTIONS)
                 {
                     // In reaction mode, simulate reaction for soil, and speciation for stream
                     Reaction(kstep, 86400.0, chemtbl, kintbl, rttbl, subcatch);
@@ -143,7 +143,7 @@ int main(int argc, char *argv[])
                 StreamSpeciation(kstep, chemtbl, ctrl, rttbl, subcatch_numexp);
 
 
-                if (ctrl.transport_only == KIN_REACTION)
+                if (ctrl.transport_only == SimMode::KINETIC_REACTIONS)
                 {
                     // In reaction mode, simulate reaction for soil, and speciation for stream
                     Reaction(kstep, 86400.0, chemtbl, kintbl, rttbl, subcatch_numexp);

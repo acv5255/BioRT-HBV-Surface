@@ -23,13 +23,15 @@ void ReadChem(const string& input_dir, ControlData& ctrl, ReactionNetwork& rttbl
     biort_printf(VL_NORMAL, "  Forcing recycle %d time(s). \n", ctrl.recycle);
 
     NextLine(file_pointer, cmdstr, &lno);
-    ctrl.use_activity = ReadParamToInt(cmdstr, CHEM_ACTIVITY_ID.c_str(), file_name, lno);
+    int activity_pre = ReadParamToInt(cmdstr, CHEM_ACTIVITY_ID.c_str(), file_name, lno);
+    if (activity_pre == 0) ctrl.use_activity = SimMode::KINETIC_REACTIONS;
+    else {ctrl.use_activity = SimMode::TRANSPORT_ONLY;};
     biort_printf(VL_NORMAL, "  Activity correction is set to %d. \n", ctrl.use_activity);
 
     NextLine(file_pointer, cmdstr, &lno);
     ctrl.transport_only = ReadParamToInt(cmdstr, CHEM_TRANSPORT_ONLY_ID.c_str(), file_name, lno);
 
-    if (ctrl.transport_only == KIN_REACTION) {
+    if (ctrl.transport_only == SimMode::KINETIC_REACTIONS) {
         biort_printf(VL_NORMAL, "  Transport only mode disabled.\n");
     }
     else if (ctrl.transport_only == TRANSPORT_ONLY) {

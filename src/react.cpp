@@ -248,18 +248,21 @@ optional<ChemicalState> SolveReact(double stepsize, const array<ChemTableEntry, 
     {
         switch (chemtbl[i].itype)
         {
-            case AQUEOUS:
+            case PrimarySpeciesType::AQUEOUS:
                 gamma[i] = (-adh * chemtbl[i].charge * chemtbl[i].charge * root_ionic_strength) /
                     (1.0 + bdh * chemtbl[i].size_fac * root_ionic_strength) + bdt * ionic_strength;
                 break;
-            case ADSORPTION:
+            case PrimarySpeciesType::ADSORPTION:
                 gamma[i] = log10(satn);
                 break;
-            case CATION_ECHG:
+            case PrimarySpeciesType::CATION_ECHG:
                 gamma[i] = -log10(tot_cec);
                 break;
-            case MINERAL:
+            case PrimarySpeciesType::MINERAL:
                 gamma[i] = -tmpconc[i];
+                break;
+            case PrimarySpeciesType::SPECIES_TYPE_ERROR:
+                printf("Species type error, exiting...\n");
                 break;
         }
     }
@@ -547,19 +550,22 @@ optional<ChemicalState> SolveSurfaceReact(const double stepsize, const array<Che
     {
         switch (chemtbl[i].itype)
         {
-            case AQUEOUS:
+            case PrimarySpeciesType::AQUEOUS:
                 gamma[i] = (-adh * chemtbl[i].charge * chemtbl[i].charge * root_ionic_strength) /
                     (1.0 + bdh * chemtbl[i].size_fac * root_ionic_strength) + bdt * ionic_strength;
                 break;
-            case ADSORPTION:
+            case PrimarySpeciesType::ADSORPTION:
                 gamma[i] = log10(tot_water);
                 break;
-            case CATION_ECHG:
+            case PrimarySpeciesType::CATION_ECHG:
                 gamma[i] = -log10(tot_cec);
                 break;
-            case MINERAL:
+            case PrimarySpeciesType::MINERAL:
                 gamma[i] = -tmpconc[i];
                 break;
+            case PrimarySpeciesType::SPECIES_TYPE_ERROR:
+                printf("Primary species type error...\n");
+                exit(-1);
         }
     }
     CheckChmsForNonFinite(chms, "react.c", 246);

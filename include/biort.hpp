@@ -75,11 +75,14 @@ enum SimMode {
 };
 
 // RT primary species types
-const int AQUEOUS = 1;
-const int ADSORPTION = 2;
-const int CATION_ECHG = 3;
-const int MINERAL = 4;
-const int SECONDARY = 5;
+enum PrimarySpeciesType {
+    AQUEOUS = 1,
+    ADSORPTION = 2,
+    CATION_ECHG = 3,
+    MINERAL = 4,
+    // SECONDARY = 5,
+    SPECIES_TYPE_ERROR = -1
+};
 
 // RT mass action types
 enum MassActionType {
@@ -150,17 +153,14 @@ class ChemTableEntry
         double          molar_vol;              // (cm3 mol-1)
         double          charge;                 // charge
         double          size_fac;               // size factor for DH equation
-        int             itype;                  // type of primary species
+        PrimarySpeciesType     itype;                  // type of primary species
                                                 // 1 = primary aqueous, 2 = primary adsorption,
                                                 // 3 = primary cation exchange, 4 = primary mineral
-        // int             mtype;                  // type of the mass action species
-                                                // 0 = immobile mass action, 1 = mobile mass action,
-                                                // 2 = mixed mobility mass action
         MassActionType  mtype;
 
         // Methods
         ChemTableEntry();
-        ChemTableEntry(const string& name, const f64 molar_mass, const f64 molar_vol, const f64 charge, const f64 size_fac, const int itype, const MassActionType mtype);
+        ChemTableEntry(const string& name, const f64 molar_mass, const f64 molar_vol, const f64 charge, const f64 size_fac, const PrimarySpeciesType itype, const MassActionType mtype);
         ChemTableEntry copy();
 };
 

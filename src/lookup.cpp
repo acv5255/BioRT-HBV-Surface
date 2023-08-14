@@ -258,7 +258,7 @@ void Lookup(FILE *fp, const CalibrationStruct& calib, array<ChemTableEntry, MAXS
 
         for (j = 0; j < rttbl.num_stc + rttbl.num_ssc; j++)
         {
-            chemtbl[i].mtype = (rttbl.conc_contrib[i][j] != 0 && chemtbl[j].itype != chemtbl[i].mtype) ?
+            chemtbl[i].mtype = (rttbl.conc_contrib[i][j] != 0 && (int)chemtbl[j].itype != (int)chemtbl[i].mtype) ?
                 MassActionType::MIXED : chemtbl[i].mtype;
         }
         biort_printf(VL_NORMAL, " %12s    %10d\n", chemtbl[i].name, chemtbl[i].mtype);

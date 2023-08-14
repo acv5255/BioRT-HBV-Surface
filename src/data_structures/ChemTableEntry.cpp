@@ -5,12 +5,11 @@ ChemTableEntry::ChemTableEntry() {
     this->molar_vol = BADVAL;
     this->charge = BADVAL;
     this->size_fac = BADVAL;
-    this->itype = -1;
-    // this->mtype = -1;
+    this->itype = PrimarySpeciesType::SPECIES_TYPE_ERROR;
     this->mtype = MassActionType::ERROR;
 }
 
-ChemTableEntry::ChemTableEntry(const string& name, const f64 molar_mass, const f64 molar_vol, const f64 charge, const f64 size_fac, const int itype, const MassActionType mtype) {
+ChemTableEntry::ChemTableEntry(const string& name, const f64 molar_mass, const f64 molar_vol, const f64 charge, const f64 size_fac, const PrimarySpeciesType itype, const MassActionType mtype) {
     this->name = name;
     this->molar_mass = molar_mass;
     this->molar_vol = molar_vol;

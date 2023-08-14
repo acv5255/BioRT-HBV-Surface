@@ -118,11 +118,11 @@ void ReadChem(const string& input_dir, ControlData& ctrl, ReactionNetwork& rttbl
             case MINERAL:
                 rttbl.num_min++;
                 break;
-            case SECONDARY:
-                biort_printf(VL_ERROR, "%s is a secondary species, but is listed as a primary species.\n"
-                    "Error at Line %d in %s.\n", chemn[i], lno, file_name);
-                exit(EXIT_FAILURE);
-                break;
+            // case SECONDARY:
+            //     biort_printf(VL_ERROR, "%s is a secondary species, but is listed as a primary species.\n"
+            //         "Error at Line %d in %s.\n", chemn[i], lno, file_name);
+            //     exit(EXIT_FAILURE);
+            //     break;
             default:
                 break;
         }
@@ -326,7 +326,7 @@ void SortChem(char chemn[MAXSPS][MAXSTRING], const int p_type[MAXSPS], int nsps,
     for (i = 0; i < nsps; i++)
     {
         strcpy(chemtbl[i].name.data(), chemn[rank[i]]);
-        chemtbl[i].itype = p_type[rank[i]];
+        chemtbl[i].itype = PrimarySpeciesType(p_type[rank[i]]);
     }
 }
 

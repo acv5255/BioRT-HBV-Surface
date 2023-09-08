@@ -1,4 +1,4 @@
-# Install script for directory: /home/andrew/Documents/GitHub/biort-surface-cpp/BioRT-HBV-Surface/dep/cvode/examples
+# Install script for directory: /home/andrew/Documents/Github/BioRT-HBV-Surface/dep/cvode/examples
 
 # Set the install prefix
 if(NOT DEFINED CMAKE_INSTALL_PREFIX)
@@ -44,11 +44,11 @@ endif()
 
 if(NOT CMAKE_INSTALL_LOCAL_ONLY)
   # Include the install script for each subdirectory.
-  include("/home/andrew/Documents/GitHub/biort-surface-cpp/BioRT-HBV-Surface/build/dep/cvode/examples/cvode/cmake_install.cmake")
-  include("/home/andrew/Documents/GitHub/biort-surface-cpp/BioRT-HBV-Surface/build/dep/cvode/examples/nvector/cmake_install.cmake")
-  include("/home/andrew/Documents/GitHub/biort-surface-cpp/BioRT-HBV-Surface/build/dep/cvode/examples/sunmatrix/cmake_install.cmake")
-  include("/home/andrew/Documents/GitHub/biort-surface-cpp/BioRT-HBV-Surface/build/dep/cvode/examples/sunlinsol/cmake_install.cmake")
-  include("/home/andrew/Documents/GitHub/biort-surface-cpp/BioRT-HBV-Surface/build/dep/cvode/examples/sunnonlinsol/cmake_install.cmake")
+  include("/home/andrew/Documents/Github/BioRT-HBV-Surface/build/dep/cvode/examples/cvode/cmake_install.cmake")
+  include("/home/andrew/Documents/Github/BioRT-HBV-Surface/build/dep/cvode/examples/nvector/cmake_install.cmake")
+  include("/home/andrew/Documents/Github/BioRT-HBV-Surface/build/dep/cvode/examples/sunmatrix/cmake_install.cmake")
+  include("/home/andrew/Documents/Github/BioRT-HBV-Surface/build/dep/cvode/examples/sunlinsol/cmake_install.cmake")
+  include("/home/andrew/Documents/Github/BioRT-HBV-Surface/build/dep/cvode/examples/sunnonlinsol/cmake_install.cmake")
 
 endif()
 

@@ -1,4 +1,4 @@
-# Install script for directory: /home/andrew/Documents/GitHub/biort-surface-cpp/BioRT-HBV-Surface/src
+# Install script for directory: /home/andrew/Documents/Github/BioRT-HBV-Surface/src
 
 # Set the install prefix
 if(NOT DEFINED CMAKE_INSTALL_PREFIX)
@@ -44,6 +44,6 @@ endif()
 
 if(NOT CMAKE_INSTALL_LOCAL_ONLY)
   # Include the install script for the subdirectory.
-  include("/home/andrew/Documents/GitHub/biort-surface-cpp/BioRT-HBV-Surface/build/src/data_structures/cmake_install.cmake")
+  include("/home/andrew/Documents/Github/BioRT-HBV-Surface/build/src/data_structures/cmake_install.cmake")
 endif()
 

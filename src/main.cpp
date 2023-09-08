@@ -4,7 +4,9 @@ int             verbose_mode;
 
 int main(int argc, char *argv[])
 {
-    char                timestr[MAXSTRING];     // time stamp
+    // char                timestr[MAXSTRING];     // time stamp
+    string              timestr;
+    timestr.reserve(MAXSTRING);
     vector<int>         steps;                  // Model time steps
     size_t              nsteps_numexp;          // number of simulation steps
     vector<int>         steps_numexp;           // Numexp model time steps
@@ -69,13 +71,13 @@ int main(int argc, char *argv[])
 
     time(&rawtime);
     timestamp = localtime(&rawtime);
-    strftime(timestr, 11, "%y%m%d%H%M", timestamp);
+    strftime(timestr.data(), 11, "%y%m%d%H%M", timestamp);
 
     // Open output file
     {
         FILE* file_pointer;
         std::stringstream file_name_stream;
-        file_name_stream << "output/" << input_dir << "_results_" << string(timestr) << ".txt";
+        file_name_stream << "output/" << input_dir << "_results_" << timestr << ".txt";
         {
             const string file_name = file_name_stream.str();
             file_pointer = fopen(file_name.c_str(), "w");
@@ -124,7 +126,7 @@ int main(int argc, char *argv[])
         {
             FILE* file_pointer;
             std::stringstream file_name_stream;
-            file_name_stream << "output/" << input_dir << "_results_numexp_" << string(timestr) << ".txt";
+            file_name_stream << "output/" << input_dir << "_results_numexp_" << timestr << ".txt";
             const string file_name = file_name_stream.str();
             file_pointer = fopen(file_name.c_str(), "w");
             PrintHeader(file_pointer, ctrl.transport_only, rttbl, chemtbl);

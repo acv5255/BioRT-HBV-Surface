@@ -1,4 +1,4 @@
-# Install script for directory: /home/andrew/Documents/GitHub/biort-surface-cpp/BioRT-HBV-Surface/dep/cvode/examples/sunlinsol
+# Install script for directory: /home/andrew/Documents/Github/BioRT-HBV-Surface/dep/cvode/examples/sunlinsol
 
 # Set the install prefix
 if(NOT DEFINED CMAKE_INSTALL_PREFIX)
@@ -44,13 +44,13 @@ endif()
 
 if(NOT CMAKE_INSTALL_LOCAL_ONLY)
   # Include the install script for each subdirectory.
-  include("/home/andrew/Documents/GitHub/biort-surface-cpp/BioRT-HBV-Surface/build/dep/cvode/examples/sunlinsol/band/cmake_install.cmake")
-  include("/home/andrew/Documents/GitHub/biort-surface-cpp/BioRT-HBV-Surface/build/dep/cvode/examples/sunlinsol/dense/cmake_install.cmake")
-  include("/home/andrew/Documents/GitHub/biort-surface-cpp/BioRT-HBV-Surface/build/dep/cvode/examples/sunlinsol/spgmr/serial/cmake_install.cmake")
-  include("/home/andrew/Documents/GitHub/biort-surface-cpp/BioRT-HBV-Surface/build/dep/cvode/examples/sunlinsol/spfgmr/serial/cmake_install.cmake")
-  include("/home/andrew/Documents/GitHub/biort-surface-cpp/BioRT-HBV-Surface/build/dep/cvode/examples/sunlinsol/spbcgs/serial/cmake_install.cmake")
-  include("/home/andrew/Documents/GitHub/biort-surface-cpp/BioRT-HBV-Surface/build/dep/cvode/examples/sunlinsol/sptfqmr/serial/cmake_install.cmake")
-  include("/home/andrew/Documents/GitHub/biort-surface-cpp/BioRT-HBV-Surface/build/dep/cvode/examples/sunlinsol/pcg/serial/cmake_install.cmake")
+  include("/home/andrew/Documents/Github/BioRT-HBV-Surface/build/dep/cvode/examples/sunlinsol/band/cmake_install.cmake")
+  include("/home/andrew/Documents/Github/BioRT-HBV-Surface/build/dep/cvode/examples/sunlinsol/dense/cmake_install.cmake")
+  include("/home/andrew/Documents/Github/BioRT-HBV-Surface/build/dep/cvode/examples/sunlinsol/spgmr/serial/cmake_install.cmake")
+  include("/home/andrew/Documents/Github/BioRT-HBV-Surface/build/dep/cvode/examples/sunlinsol/spfgmr/serial/cmake_install.cmake")
+  include("/home/andrew/Documents/Github/BioRT-HBV-Surface/build/dep/cvode/examples/sunlinsol/spbcgs/serial/cmake_install.cmake")
+  include("/home/andrew/Documents/Github/BioRT-HBV-Surface/build/dep/cvode/examples/sunlinsol/sptfqmr/serial/cmake_install.cmake")
+  include("/home/andrew/Documents/Github/BioRT-HBV-Surface/build/dep/cvode/examples/sunlinsol/pcg/serial/cmake_install.cmake")
 
 endif()
 

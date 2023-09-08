@@ -1,4 +1,4 @@
-# Install script for directory: /home/andrew/Documents/GitHub/biort-surface-cpp/BioRT-HBV-Surface/dep/cvode/src/sundials
+# Install script for directory: /home/andrew/Documents/Github/BioRT-HBV-Surface/dep/cvode/src/sundials
 
 # Set the install prefix
 if(NOT DEFINED CMAKE_INSTALL_PREFIX)
@@ -50,28 +50,28 @@ endif()
 
 if(CMAKE_INSTALL_COMPONENT STREQUAL "Unspecified" OR NOT CMAKE_INSTALL_COMPONENT)
   file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/include/sundials" TYPE FILE FILES
-    "/home/andrew/Documents/GitHub/biort-surface-cpp/BioRT-HBV-Surface/dep/cvode/include/sundials/sundials_band.h"
-    "/home/andrew/Documents/GitHub/biort-surface-cpp/BioRT-HBV-Surface/dep/cvode/include/sundials/sundials_dense.h"
-    "/home/andrew/Documents/GitHub/biort-surface-cpp/BioRT-HBV-Surface/dep/cvode/include/sundials/sundials_direct.h"
-    "/home/andrew/Documents/GitHub/biort-surface-cpp/BioRT-HBV-Surface/dep/cvode/include/sundials/sundials_fnvector.h"
-    "/home/andrew/Documents/GitHub/biort-surface-cpp/BioRT-HBV-Surface/dep/cvode/include/sundials/sundials_iterative.h"
-    "/home/andrew/Documents/GitHub/biort-surface-cpp/BioRT-HBV-Surface/dep/cvode/include/sundials/sundials_linearsolver.h"
-    "/home/andrew/Documents/GitHub/biort-surface-cpp/BioRT-HBV-Surface/dep/cvode/include/sundials/sundials_math.h"
-    "/home/andrew/Documents/GitHub/biort-surface-cpp/BioRT-HBV-Surface/dep/cvode/include/sundials/sundials_matrix.h"
-    "/home/andrew/Documents/GitHub/biort-surface-cpp/BioRT-HBV-Surface/dep/cvode/include/sundials/sundials_mpi.h"
-    "/home/andrew/Documents/GitHub/biort-surface-cpp/BioRT-HBV-Surface/dep/cvode/include/sundials/sundials_mpi_types.h"
-    "/home/andrew/Documents/GitHub/biort-surface-cpp/BioRT-HBV-Surface/dep/cvode/include/sundials/sundials_nonlinearsolver.h"
-    "/home/andrew/Documents/GitHub/biort-surface-cpp/BioRT-HBV-Surface/dep/cvode/include/sundials/sundials_mpi.h"
-    "/home/andrew/Documents/GitHub/biort-surface-cpp/BioRT-HBV-Surface/dep/cvode/include/sundials/sundials_mpi_types.h"
-    "/home/andrew/Documents/GitHub/biort-surface-cpp/BioRT-HBV-Surface/dep/cvode/include/sundials/sundials_nvector.h"
-    "/home/andrew/Documents/GitHub/biort-surface-cpp/BioRT-HBV-Surface/dep/cvode/include/sundials/sundials_pcg.h"
-    "/home/andrew/Documents/GitHub/biort-surface-cpp/BioRT-HBV-Surface/dep/cvode/include/sundials/sundials_sparse.h"
-    "/home/andrew/Documents/GitHub/biort-surface-cpp/BioRT-HBV-Surface/dep/cvode/include/sundials/sundials_spbcgs.h"
-    "/home/andrew/Documents/GitHub/biort-surface-cpp/BioRT-HBV-Surface/dep/cvode/include/sundials/sundials_spfgmr.h"
-    "/home/andrew/Documents/GitHub/biort-surface-cpp/BioRT-HBV-Surface/dep/cvode/include/sundials/sundials_spgmr.h"
-    "/home/andrew/Documents/GitHub/biort-surface-cpp/BioRT-HBV-Surface/dep/cvode/include/sundials/sundials_sptfqmr.h"
-    "/home/andrew/Documents/GitHub/biort-surface-cpp/BioRT-HBV-Surface/dep/cvode/include/sundials/sundials_types.h"
-    "/home/andrew/Documents/GitHub/biort-surface-cpp/BioRT-HBV-Surface/dep/cvode/include/sundials/sundials_version.h"
+    "/home/andrew/Documents/Github/BioRT-HBV-Surface/dep/cvode/include/sundials/sundials_band.h"
+    "/home/andrew/Documents/Github/BioRT-HBV-Surface/dep/cvode/include/sundials/sundials_dense.h"
+    "/home/andrew/Documents/Github/BioRT-HBV-Surface/dep/cvode/include/sundials/sundials_direct.h"
+    "/home/andrew/Documents/Github/BioRT-HBV-Surface/dep/cvode/include/sundials/sundials_fnvector.h"
+    "/home/andrew/Documents/Github/BioRT-HBV-Surface/dep/cvode/include/sundials/sundials_iterative.h"
+    "/home/andrew/Documents/Github/BioRT-HBV-Surface/dep/cvode/include/sundials/sundials_linearsolver.h"
+    "/home/andrew/Documents/Github/BioRT-HBV-Surface/dep/cvode/include/sundials/sundials_math.h"
+    "/home/andrew/Documents/Github/BioRT-HBV-Surface/dep/cvode/include/sundials/sundials_matrix.h"
+    "/home/andrew/Documents/Github/BioRT-HBV-Surface/dep/cvode/include/sundials/sundials_mpi.h"
+    "/home/andrew/Documents/Github/BioRT-HBV-Surface/dep/cvode/include/sundials/sundials_mpi_types.h"
+    "/home/andrew/Documents/Github/BioRT-HBV-Surface/dep/cvode/include/sundials/sundials_nonlinearsolver.h"
+    "/home/andrew/Documents/Github/BioRT-HBV-Surface/dep/cvode/include/sundials/sundials_mpi.h"
+    "/home/andrew/Documents/Github/BioRT-HBV-Surface/dep/cvode/include/sundials/sundials_mpi_types.h"
+    "/home/andrew/Documents/Github/BioRT-HBV-Surface/dep/cvode/include/sundials/sundials_nvector.h"
+    "/home/andrew/Documents/Github/BioRT-HBV-Surface/dep/cvode/include/sundials/sundials_pcg.h"
+    "/home/andrew/Documents/Github/BioRT-HBV-Surface/dep/cvode/include/sundials/sundials_sparse.h"
+    "/home/andrew/Documents/Github/BioRT-HBV-Surface/dep/cvode/include/sundials/sundials_spbcgs.h"
+    "/home/andrew/Documents/Github/BioRT-HBV-Surface/dep/cvode/include/sundials/sundials_spfgmr.h"
+    "/home/andrew/Documents/Github/BioRT-HBV-Surface/dep/cvode/include/sundials/sundials_spgmr.h"
+    "/home/andrew/Documents/Github/BioRT-HBV-Surface/dep/cvode/include/sundials/sundials_sptfqmr.h"
+    "/home/andrew/Documents/Github/BioRT-HBV-Surface/dep/cvode/include/sundials/sundials_types.h"
+    "/home/andrew/Documents/Github/BioRT-HBV-Surface/dep/cvode/include/sundials/sundials_version.h"
     )
 endif()
 

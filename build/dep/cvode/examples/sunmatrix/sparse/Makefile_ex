@@ -27,9 +27,9 @@ exec_prefix  = /usr/local
 includedir   = /usr/local/include
 libdir       = /usr/local/lib
 
-CPP      = /usr/bin/gcc-12
+CPP      = /usr/bin/gcc
 CPPFLAGS = -O3 -DNDEBUG
-CC       = /usr/bin/gcc-12
+CC       = /usr/bin/gcc
 CFLAGS   = -O3 -DNDEBUG
 LDFLAGS  = 
 LIBS     =  -lm /usr/lib/x86_64-linux-gnu/librt.a -lsundials_sunmatrixdense -lsundials_sunmatrixband

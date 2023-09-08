@@ -1,4 +1,4 @@
-# Install script for directory: /home/andrew/Documents/GitHub/biort-surface-cpp/BioRT-HBV-Surface/dep/cvode/examples/sunnonlinsol/newton
+# Install script for directory: /home/andrew/Documents/Github/BioRT-HBV-Surface/dep/cvode/examples/sunnonlinsol/newton
 
 # Set the install prefix
 if(NOT DEFINED CMAKE_INSTALL_PREFIX)
@@ -52,11 +52,11 @@ if(CMAKE_INSTALL_COMPONENT STREQUAL "Unspecified" OR NOT CMAKE_INSTALL_COMPONENT
     message(FATAL_ERROR "ABSOLUTE path INSTALL DESTINATION forbidden (by caller): ${CMAKE_ABSOLUTE_DESTINATION_FILES}")
   endif()
   file(INSTALL DESTINATION "/usr/local/examples/sunnonlinsol/newton" TYPE FILE FILES
-    "/home/andrew/Documents/GitHub/biort-surface-cpp/BioRT-HBV-Surface/dep/cvode/src/sundials/sundials_nvector.c"
-    "/home/andrew/Documents/GitHub/biort-surface-cpp/BioRT-HBV-Surface/dep/cvode/src/sundials/sundials_matrix.c"
-    "/home/andrew/Documents/GitHub/biort-surface-cpp/BioRT-HBV-Surface/dep/cvode/src/sundials/sundials_linearsolver.c"
-    "/home/andrew/Documents/GitHub/biort-surface-cpp/BioRT-HBV-Surface/dep/cvode/src/sundials/sundials_nonlinearsolver.c"
-    "/home/andrew/Documents/GitHub/biort-surface-cpp/BioRT-HBV-Surface/dep/cvode/examples/sunnonlinsol/newton/test_sunnonlinsol_newton.c"
+    "/home/andrew/Documents/Github/BioRT-HBV-Surface/dep/cvode/src/sundials/sundials_nvector.c"
+    "/home/andrew/Documents/Github/BioRT-HBV-Surface/dep/cvode/src/sundials/sundials_matrix.c"
+    "/home/andrew/Documents/Github/BioRT-HBV-Surface/dep/cvode/src/sundials/sundials_linearsolver.c"
+    "/home/andrew/Documents/Github/BioRT-HBV-Surface/dep/cvode/src/sundials/sundials_nonlinearsolver.c"
+    "/home/andrew/Documents/Github/BioRT-HBV-Surface/dep/cvode/examples/sunnonlinsol/newton/test_sunnonlinsol_newton.c"
     )
 endif()
 
@@ -69,7 +69,7 @@ if(CMAKE_INSTALL_COMPONENT STREQUAL "Unspecified" OR NOT CMAKE_INSTALL_COMPONENT
   if(CMAKE_ERROR_ON_ABSOLUTE_INSTALL_DESTINATION)
     message(FATAL_ERROR "ABSOLUTE path INSTALL DESTINATION forbidden (by caller): ${CMAKE_ABSOLUTE_DESTINATION_FILES}")
   endif()
-  file(INSTALL DESTINATION "/usr/local/examples/sunnonlinsol/newton" TYPE FILE FILES "/home/andrew/Documents/GitHub/biort-surface-cpp/BioRT-HBV-Surface/build/dep/cvode/examples/sunnonlinsol/newton/CMakeLists.txt")
+  file(INSTALL DESTINATION "/usr/local/examples/sunnonlinsol/newton" TYPE FILE FILES "/home/andrew/Documents/Github/BioRT-HBV-Surface/build/dep/cvode/examples/sunnonlinsol/newton/CMakeLists.txt")
 endif()
 
 if(CMAKE_INSTALL_COMPONENT STREQUAL "Unspecified" OR NOT CMAKE_INSTALL_COMPONENT)
@@ -81,6 +81,6 @@ if(CMAKE_INSTALL_COMPONENT STREQUAL "Unspecified" OR NOT CMAKE_INSTALL_COMPONENT
   if(CMAKE_ERROR_ON_ABSOLUTE_INSTALL_DESTINATION)
     message(FATAL_ERROR "ABSOLUTE path INSTALL DESTINATION forbidden (by caller): ${CMAKE_ABSOLUTE_DESTINATION_FILES}")
   endif()
-  file(INSTALL DESTINATION "/usr/local/examples/sunnonlinsol/newton" TYPE FILE RENAME "Makefile" FILES "/home/andrew/Documents/GitHub/biort-surface-cpp/BioRT-HBV-Surface/build/dep/cvode/examples/sunnonlinsol/newton/Makefile_ex")
+  file(INSTALL DESTINATION "/usr/local/examples/sunnonlinsol/newton" TYPE FILE RENAME "Makefile" FILES "/home/andrew/Documents/Github/BioRT-HBV-Surface/build/dep/cvode/examples/sunnonlinsol/newton/Makefile_ex")
 endif()
 

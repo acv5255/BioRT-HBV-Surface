@@ -172,7 +172,7 @@ void Reaction(int kstep, double stepsize, const ChemTableEntry chemtbl[],
         ReactSurfaceZone(temp, subcatch->soil_surface, tot_water_surf, chemtbl, kintbl, rttbl, stepsize, subcatch);
         // printf("Surface concentrations after reaction: \n");
         // PrintChemicalState(&subcatch->chms[SURFACE]);
-        printf("\n");
+        // printf("\n");
     }
     CheckChmsForNonFinite(&subcatch->chms[SURFACE], "react.c", 153);
 
@@ -512,11 +512,8 @@ int SolveSurfaceReact(double stepsize, const ChemTableEntry chemtbl[], const Kin
     for (int i = rttbl->num_stc - rttbl->num_min; i < rttbl->num_stc; i++) {
         int offset = rttbl->num_stc - rttbl->num_min;
         fsw[i - offset] = pow(tot_water, chms->sw_exp[i]);
-        // fsw[i - offset] = 1.0;
-        printf("fsw for species %d: %g\n", i - offset, fsw[i - offset]);
     }
 
-    // SoilMoistFactorRange(fsw, tot_water, chms->sw_thld, chms->sw_exp, rttbl->num_stc - rttbl->num_min, rttbl->num_stc, rttbl->num_stc - rttbl->num_min);
     SetZeroRange(rate_spe, 0, rttbl->num_stc);
     GetRates(rate_pre, rate_spe, area, ftemp, fsw, fzw, rttbl, kintbl, chms);
 
@@ -720,14 +717,8 @@ int SolveSurfaceReact(double stepsize, const ChemTableEntry chemtbl[], const Kin
         control++;
         if (control > MAX_ITERATIONS)   // Limit the model steps
         {
-            // biort_printf(VL_NORMAL, "React failed to converge...\n");
-            // printf("Failed to converge with stepsize of %g\n", stepsize);
-            // printf("Jacobian matrix: \n");
-            // PrintMatrix((const realtype**)jcb, matrix_dimension, matrix_dimension);
             destroyMat(jcb);
-            // printf("\n\n");
             return 1;
-            // exit(-1);
         }
         destroyMat(jcb);
     } while (max_error > TOLERANCE);
@@ -821,7 +812,6 @@ double ReactControl(const ChemTableEntry chemtbl[], const KineticTableEntry kint
     if (roundi(step_counter) != roundi(stepsize))   // Reactions fail
     {
         printf("Failed to converge with stepsize %g\n", substep);
-        // return -substep;
         exit(-1);
     }
     else    // Reactions succeed

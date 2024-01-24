@@ -89,6 +89,7 @@ typedef struct ControlData
     int             variable_precipchem;    // precipitation chemistry mode: 0 = constant precipitation chemistry, 1 = time-series precipitation chemistry   2021-05-20
     int             precipchem_numexp;      // Numerical experiment mode: 0 = same precipitation chemistry during warm-up and simulation
                                             // 1 = different precipitation chemistry during warm-up and simulation useful for numerical experiment  2021-09-09
+    bool            do_surface_reactions;   // True = yes, do surface reactions; False = never do surface reactions
 } ControlData;
 
 typedef struct ReactionNetwork
@@ -227,7 +228,7 @@ void            PrintDailyResults(FILE *, int, int, const ReactionNetwork *, con
 void            PrintHeader(FILE *, int, const ReactionNetwork *, const ChemTableEntry chemtbl[]);
 double          ReactControl(const ChemTableEntry [], const KineticTableEntry [], const ReactionNetwork *, double, double, double,
     double, double, double, double [], ChemicalState *);
-void            Reaction(int, double, const ChemTableEntry [], const KineticTableEntry [],
+void            Reaction(int, double, const ControlData*, const ChemTableEntry [], const KineticTableEntry [],
     const ReactionNetwork *, Subcatchment* subcatch);
 void            ReadAdsorption(const char [], int, int, ChemTableEntry [], ReactionNetwork *);
 void            ReadCationEchg(const char [], double, ChemTableEntry [], ReactionNetwork *);
@@ -311,10 +312,12 @@ static const char CHEM_TRANSPORT_ONLY_ID[] = "TRANSPORT_ONLY";
 static const char CHEM_PRECIPCHEM_ID[] = "PRECIPCHEM";
 static const char CHEM_NUMEXP_ID[] = "NUMEXP";
 static const char CHEM_TEMPERATURE_ID[] = "TEMPERATURE";
+static const char CHEM_DO_SURFACE_REACTIONS_ID[] = "DO_SURFACE_REACTIONS";
 
 static const char CHEM_PRIMARY_SPECIES_ID[] = "PRIMARY_SPECIES";
 static const char CHEM_SECONDARY_SPECIES_ID[] = "SECONDARY_SPECIES";
 static const char CHEM_MINERAL_KINETICS_ID[] = "MINERAL_KINETICS";
+
 
 static const double SATN_MINIMUM = 1e-4;       // Minimum saturation to initiate kinetic reactions
 static const int MAX_ITERATIONS = 25;

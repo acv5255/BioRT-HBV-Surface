@@ -160,19 +160,13 @@ void GetRates(double rate[MAXSPS], double rate_spe[MAXSPS], const double area[MA
 
 }
 
-void Reaction(int kstep, double stepsize, const ChemTableEntry chemtbl[],
+void Reaction(int kstep, double stepsize, const ControlData *ctrl, const ChemTableEntry chemtbl[],
     const KineticTableEntry kintbl[], const ReactionNetwork *rttbl, Subcatchment* subcatch)
 {
     const double temp = subcatch->tmp[kstep];
-    if (subcatch->q[kstep][Q0] >= 0.1) {
+    if ((subcatch->q[kstep][Q0] >= 0.1) && ctrl->do_surface_reactions) {
         const double tot_water_surf = subcatch->ws[kstep][SURFACE] + subcatch->q[kstep][Q0];
-        // printf("Starting surface reactions on step %d with total water = %g mm\n", kstep, tot_water_surf);
-        // printf("Surface concentrations before reaction: \n");
-        // PrintChemicalState(&subcatch->chms[SURFACE]);
         ReactSurfaceZone(temp, subcatch->soil_surface, tot_water_surf, chemtbl, kintbl, rttbl, stepsize, subcatch);
-        // printf("Surface concentrations after reaction: \n");
-        // PrintChemicalState(&subcatch->chms[SURFACE]);
-        // printf("\n");
     }
     CheckChmsForNonFinite(&subcatch->chms[SURFACE], "react.c", 153);
 

@@ -72,6 +72,16 @@ void ReadChem(const char dir[], ControlData *ctrl, ReactionNetwork *rttbl, ChemT
     rttbl->tmp = ReadParamToDouble(cmdstr, CHEM_TEMPERATURE_ID, file_name, lno);
     biort_printf(VL_NORMAL, "  Temperature = %3.1f \n", rttbl->tmp);
 
+    // Andrew's addition -- for surface reactions
+    NextLine(file_pointer, cmdstr, &lno);
+    ctrl->do_surface_reactions = (bool)ReadParamToInt(cmdstr, CHEM_DO_SURFACE_REACTIONS_ID, file_name, lno);
+    if (!ctrl->do_surface_reactions) {
+        biort_printf(VL_NORMAL, "  Surface reactions turned off\n");
+    }
+    else {
+        biort_printf(VL_NORMAL, "  Surface reactions are on\n");
+    }
+
     // Count numbers of species and reactions
     FindLine(file_pointer, CHEM_PRIMARY_SPECIES_ID, &lno, file_name);
     rttbl->num_stc = CountLines(file_pointer, cmdstr, 1, "SECONDARY_SPECIES");

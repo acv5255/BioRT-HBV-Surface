@@ -98,8 +98,8 @@ void TransportSurfaceZone(const ReactionNetwork* rttbl, const ControlData ctrl, 
             c_prcp_i = subcatch->prcp_conc_time[step][kspc];
         }
         // Precipitation
-        double dm_rain = c_prcp_i * q_rain;             // Input of mass of chemical species i from rain - note: 1 mm water = 1 L water
-        double dm_snow = c_prcp_i * q_snow;             // Change in mass of chemical species i in snow reservoir
+        const double dm_rain = c_prcp_i * q_rain;             // Input of mass of chemical species i from rain - note: 1 mm water = 1 L water
+        const double dm_snow = c_prcp_i * q_snow;             // Change in mass of chemical species i in snow reservoir
         subcatch->chms[SNOW].tot_mol[kspc] += dm_snow;
 
         double c_snow = ZERO_CONC;

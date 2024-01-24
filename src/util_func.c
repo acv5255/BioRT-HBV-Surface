@@ -351,21 +351,6 @@ void PrintChemicalState(const ChemicalState* chms) {
     printf("Secondary concentration: ");
     PrintArray(chms->sec_conc);
 
-    // printf("SSA: ");
-    // PrintArray(chms->ssa);
-
-    // printf("SW Threshold: ");
-    // PrintArray(chms->sw_thld);
-
-    // printf("SW Exponent: ");
-    // PrintArray(chms->sw_exp);
-
-    // printf("Q10: ");
-    // PrintArray(chms->q10);
-
-    // printf("N_alpha: ");
-    // PrintArray(chms->n_alpha);
-
     return;
 }
 

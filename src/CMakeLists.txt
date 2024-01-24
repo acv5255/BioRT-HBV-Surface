@@ -28,7 +28,8 @@ target_compile_options(
     PRIVATE
     -Wall
     -Wextra
-    -Werror
+    # -Werror
+    -g
 )
 
 target_include_directories(
@@ -49,4 +50,11 @@ target_link_libraries(
     m
     sundials_cvode
     sundials_nvecserial
+)
+
+
+add_custom_command(
+    TARGET biort
+    POST_BUILD
+    COMMAND ${CMAKE_COMMAND} -E copy $<TARGET_FILE:biort> ${BioRT_SOURCE_DIR}
 )

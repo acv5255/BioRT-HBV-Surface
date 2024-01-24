@@ -6,7 +6,7 @@ double WellMixedConcentration(double c_in, double c_0, double q, double v_0, dou
     /*
         Calculate the concentration exiting a well-mixed bucket
      */
-    return c_in + (c_0 - c_in) * exp(-t * (q / (q + v_0)));
+    return c_in + (c_0 - c_in) * exp(-t * q / (q + v_0));
 }
 
 double TransportMassChange(const double c_in, const double c_0, const double q, const double v_0, const double t) {
@@ -64,7 +64,7 @@ void UpdatePrimConc(const ReactionNetwork *rttbl, const ControlData ctrl, Subcat
 }
 
 void TransportSurfaceZone(const ReactionNetwork* rttbl, const ControlData ctrl, Subcatchment* subcatch, const int step) {
-    const double t = 1.0;     // Time step for transportation
+    const double t = 1.0;     // Time step [in days] for transportation
     const double q_snow = subcatch->q[step][Psnow];
     const double q_snowmelt = subcatch->q[step][snowmelt];
     const double q_rain = subcatch->q[step][Prain];
@@ -82,10 +82,10 @@ void TransportSurfaceZone(const ReactionNetwork* rttbl, const ControlData ctrl, 
     const double ws_sz_tot = ws_sz + q_q1 + q_perc;
 
     const double q = (q_rain + q_snowmelt);
-    const bool do_surface_transport = q > SURFACE_MIN;   // Only do surface transport of there is a threshold
-    const double q_inf = (q_rain + q_snowmelt) - q_q0;      // The residual water enters the shallow zone
-    const double x_0 = do_surface_transport ? q_q0 / q : 0.0;    // Fraction of water input going to the stream
-    const double x_inf = do_surface_transport ? q_inf / q : 1.0; // Fraction of water input entering as infiltration
+    const bool do_surface_transport = q > SURFACE_MIN;              // Only do surface transport of there is a threshold
+    const double q_inf = (q_rain + q_snowmelt) - q_q0;              // The residual water enters the shallow zone
+    const double x_0 = do_surface_transport ? q_q0 / q : 0.0;       // Fraction of water input going to the stream
+    const double x_inf = do_surface_transport ? q_inf / q : 1.0;    // Fraction of water input entering as infiltration
         
     for (int kspc = 0; kspc < rttbl->num_spc; kspc++)
     {
@@ -97,6 +97,7 @@ void TransportSurfaceZone(const ReactionNetwork* rttbl, const ControlData ctrl, 
         else if (ctrl.variable_precipchem == true) {
             c_prcp_i = subcatch->prcp_conc_time[step][kspc];
         }
+
         // Precipitation
         const double dm_rain = c_prcp_i * q_rain;             // Input of mass of chemical species i from rain - note: 1 mm water = 1 L water
         const double dm_snow = c_prcp_i * q_snow;             // Change in mass of chemical species i in snow reservoir
@@ -119,28 +120,30 @@ void TransportSurfaceZone(const ReactionNetwork* rttbl, const ControlData ctrl, 
         }
 
         // Mass transfer section
-        const double m_0 = subcatch->chms[SURFACE].tot_mol[kspc];  // Initial number of moles
+        const double m_surface_0 = subcatch->chms[SURFACE].tot_mol[kspc];  // Initial number of moles in the surface zone
         double c_in = (dm_rain + dm_snowmelt) / (q_rain + q_snowmelt);  // Weighted average of snowmelt and rain concentrations
         if (!isfinite(c_in)) c_in = ZERO_CONC;
         
-        const double c_0 = m_0 / (v_0 + q);
+        const double c_surface_0 = m_surface_0 / (v_0 + q);                 // Initial concentration of the surface zone
 
-        // const double dm = TransportMassChange(q, c_in, c_0, v_0, t);
-        const double c_f = WellMixedConcentration(c_in, c_0, q, v_0, t);
+        const double c_f = WellMixedConcentration(c_in, c_surface_0, q, v_0, t);
+        // const double m = c_f * (q + v_0);
         const double m = c_f * (q + v_0);
-        const double dm = m - m_0;
+        const double dm = m - m_surface_0;
         const double m_in = c_in * q * t;
-        const double m_out = m_in - dm;
+        const double m_out = m_in + dm;
+        // const double m_out = m_in - dm;
                 
         // Diagnostic values //
-        const double m_f_surf = m_0 + dm;
-        const double c_final = m_f_surf / (v_0 + q);
+        const double m_f_surf = m_surface_0 + dm;       // Final mass in the surface zone
+        const double c_final = m_f_surf / (v_0 + q);    // Final concentration in the surface zone
 
+        // TODO: Figure out why the line below is incorrect
         const double new_mass_stream = subcatch->chms[STREAM].tot_mol[kspc] + x_0 * fabs(m_out);
         const double new_mass_sz = subcatch->chms[UZ].tot_mol[kspc] + x_inf * fabs(m_out);
 
-        bool should_increase = (c_in > c_0);
-        bool did_increase = (c_final > c_0);
+        bool should_increase = (c_in > c_surface_0);
+        bool did_increase = (c_final > c_surface_0);
         bool expected_behavior = (should_increase == did_increase);
 
 
@@ -154,6 +157,7 @@ void TransportSurfaceZone(const ReactionNetwork* rttbl, const ControlData ctrl, 
         // Transport moles between reservoirs
         subcatch->chms[SURFACE].tot_mol[kspc] = m_f_surf;
         subcatch->chms[STREAM].tot_mol[kspc] = new_mass_stream;
+        subcatch->chms[STREAM].tot_mol[kspc] = 0.0;
         subcatch->chms[UZ].tot_mol[kspc] = new_mass_sz;
         // Infiltration
         /*

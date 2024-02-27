@@ -5,6 +5,10 @@ const double SURFACE_MIN = 1e-3;
 double WellMixedConcentration(double c_in, double c_0, double q, double v_0, double t) {
     /*
         Calculate the concentration exiting a well-mixed bucket
+
+        Assumptions:
+            - Volume in the bucket is constant and equal to surface storage + Q0
+            - Q_in = Q_out = Q  (which is Q0 at the surface)
      */
     return c_in + (c_0 - c_in) * exp(-t * q / (q + v_0));
 }

@@ -1,15 +1,22 @@
 #pragma once
 
+
+
 #include <stdio.h>
 #include <stdlib.h>
-#include <unistd.h>
+#ifdef WIN32                // This snippet comes from https://stackoverflow.com/questions/230062/whats-the-best-way-to-check-if-a-file-exists-in-c
+    #include <io.h>
+    #define F_OK 0
+    #define access _access
+#else 
+    #include <unistd.h>
+#endif
 #include <math.h>
 #include <string.h>
 #include <time.h>
 #include <errno.h>
 #include <stdarg.h>
 #include <float.h>
-#include <sys/stat.h>
 #include <stdbool.h>
 
 // SUNDIAL Header Files
@@ -44,12 +51,6 @@ static const int snowmelt = 8;
 #define LZ                      3
 #define STREAM                  4
 #define SM                      5
-// static const int SNOW = 0;
-// static const int SURFACE = 1;
-// static const int UZ = 2;
-// static const int LZ = 3;
-// static const int STREAM = 4;
-// static const int SM = 5;
 
 #define MAXSPS 20
 #define MAXDEP 4
@@ -209,6 +210,8 @@ typedef struct Subcatchment
 #else
 # define mkdir(path)            mkdir(path, 0755)
 #endif
+
+
 
 void            CopyConstSubcatchProp(const Subcatchment* subcatch, Subcatchment* subcatch_numexp);
 void            CopyInitChemSubcatch(ReactionNetwork *, const Subcatchment* subcatch, Subcatchment* subcatch_numexp );

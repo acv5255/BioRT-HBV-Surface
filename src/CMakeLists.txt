@@ -23,13 +23,30 @@ add_executable(biort
     util_func.c
 )
 
+
+IF(WIN32)
+    add_compile_definitions(
+        /DWIN32     
+    )
+ELSE()
+    add_compile_definitions(
+        O2
+    )
+ENDIF()
+
+if(WIN32)
+    add_compile_options(
+        /MT
+    )
+endif()
+
+
 target_compile_options(
     biort
     PRIVATE
     -Wall
     -Wextra
     # -Werror
-    -g
 )
 
 target_include_directories(
@@ -45,13 +62,33 @@ target_link_directories(
     ${BioRT_SOURCE_DIR}/build/dep/cvode/src/nvector/serial
 )
 
-target_link_libraries(
-    biort PRIVATE
-    m
-    sundials_cvode
-    sundials_nvecserial
-)
+# target_link_libraries(
+#     biort PRIVATE
+#     m
+#     sundials_cvode
+#     sundials_nvecserial
+# )
 
+
+if (WIN32)
+	target_link_libraries(
+	    biort PRIVATE
+        # libucrt
+	    libvcruntime
+	    sundials_cvode
+	    sundials_nvecserial
+	)
+else()
+	target_link_libraries(
+	    biort PRIVATE
+        m
+	    sundials_cvode
+	    sundials_nvecserial
+	)
+endif()
+
+add_dependencies(biort sundials_cvode_static)
+add_dependencies(biort sundials_nvecserial_static)
 
 add_custom_command(
     TARGET biort

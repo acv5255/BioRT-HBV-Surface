@@ -11,6 +11,7 @@ void GetIAP(double iap[MAXSPS], const double activity[MAXSPS], const double dep_
     return;
 }
 
+
 double GetMonodTerm(const KineticTableEntry* entry, const ChemicalState* chms) {
     double monodterm = 1.0;
 
@@ -23,6 +24,7 @@ double GetMonodTerm(const KineticTableEntry* entry, const ChemicalState* chms) {
 
     return monodterm;
 }
+
 
 double GetInhibTerm(const KineticTableEntry* entry, const ChemicalState* chms) {
     double inhibterm = 1.0;
@@ -37,6 +39,7 @@ double GetInhibTerm(const KineticTableEntry* entry, const ChemicalState* chms) {
     return inhibterm;
 }
 
+
 double GetDependenceTerm(const KineticTableEntry* entry, const ChemicalState* chms) {
     double dep_term = 1.0;
     for (int k = 0; k < entry->ndep; k++) {
@@ -45,6 +48,7 @@ double GetDependenceTerm(const KineticTableEntry* entry, const ChemicalState* ch
     }
     return dep_term;
 }
+
 
 void GetSecondarySpecies(double conc[MAXSPS], const double gamma[MAXSPS], const ReactionNetwork* rttbl) {
     for (int i = 0; i < rttbl->num_ssc; i++) {
@@ -67,6 +71,7 @@ void GetSecondarySpecies(double conc[MAXSPS], const double gamma[MAXSPS], const 
 
     return;
 }
+
 
 void ReactZone(const int kzone, const double temp, const SoilConstants soil, const double tot_water, const ChemTableEntry chemtbl[],
         const KineticTableEntry kintbl[], const ReactionNetwork* rttbl, double stepsize, Subcatchment* subcatch) {
@@ -99,6 +104,7 @@ void ReactZone(const int kzone, const double temp, const SoilConstants soil, con
     }
 }
 
+
 void ReactSurfaceZone(const double temp, const SoilConstants soil, const double tot_water, const ChemTableEntry chemtbl[],
         const KineticTableEntry kintbl[], const ReactionNetwork* rttbl, double stepsize, Subcatchment* subcatch) {
     
@@ -122,6 +128,7 @@ void ReactSurfaceZone(const double temp, const SoilConstants soil, const double 
         printf("React failed to converge...\n");
     }
 }
+
 
 void GetRates(double rate[MAXSPS], double rate_spe[MAXSPS], const double area[MAXSPS], const double ftemp[MAXSPS], const double fsw[MAXSPS], const double fzw[MAXSPS],
     const ReactionNetwork* rttbl, const KineticTableEntry kintbl[MAXSPS], const ChemicalState* chms) {
@@ -160,6 +167,7 @@ void GetRates(double rate[MAXSPS], double rate_spe[MAXSPS], const double area[MA
 
 }
 
+
 void Reaction(int kstep, double stepsize, const ControlData *ctrl, const ChemTableEntry chemtbl[],
     const KineticTableEntry kintbl[], const ReactionNetwork *rttbl, Subcatchment* subcatch)
 {
@@ -173,6 +181,7 @@ void Reaction(int kstep, double stepsize, const ControlData *ctrl, const ChemTab
     ReactZone(UZ, temp, subcatch->soil_sz, subcatch->ws[kstep][UZ], chemtbl, kintbl, rttbl, stepsize, subcatch);
     ReactZone(LZ, temp, subcatch->soil_dz, subcatch->ws[kstep][LZ], chemtbl, kintbl, rttbl, stepsize, subcatch);
 }
+
 
 int SolveReact(double stepsize, const ChemTableEntry chemtbl[], const KineticTableEntry kintbl[], const ReactionNetwork *rttbl,
     double satn, double temp, double porosity, double Zw, ChemicalState *chms)
@@ -470,6 +479,7 @@ int SolveReact(double stepsize, const ChemTableEntry chemtbl[], const KineticTab
     CheckChmsForNonFinite(chms, "react.c", 438);
     return 0;
 }
+
 
 int SolveSurfaceReact(double stepsize, const ChemTableEntry chemtbl[], const KineticTableEntry kintbl[], const ReactionNetwork *rttbl,
     double tot_water, double temp, double porosity, ChemicalState *chms)
@@ -770,6 +780,7 @@ int SolveSurfaceReact(double stepsize, const ChemTableEntry chemtbl[], const Kin
     return 0;
 }
 
+
 double ReactControl(const ChemTableEntry chemtbl[], const KineticTableEntry kintbl[], const ReactionNetwork *rttbl,
     double stepsize, double porosity, double depth, double satn, double temp, double Zw, double react_rate[],
     ChemicalState *chms)
@@ -833,6 +844,7 @@ double ReactControl(const ChemTableEntry chemtbl[], const KineticTableEntry kint
         }
     }
 }
+
 
 double ReactSurfaceControl(const ChemTableEntry chemtbl[], const KineticTableEntry kintbl[], const ReactionNetwork *rttbl,
     double stepsize, double porosity, double depth, double tot_water, double temp, double react_rate[],
@@ -899,10 +911,12 @@ double ReactSurfaceControl(const ChemTableEntry chemtbl[], const KineticTableEnt
     }
 }
 
+
 double SoilTempFactor(double q10, double stc)
 {
     return pow(q10, (stc - 20.0) / 10.0);
 }
+
 
 double SoilMoistFactor(double satn, double sw_thld, double sw_exp)
 {
@@ -912,11 +926,13 @@ double SoilMoistFactor(double satn, double sw_thld, double sw_exp)
     return fsw;
 }
 
+
 double WTDepthFactor(double Zw, double n_alpha){
     double fzw;
     fzw     =   (n_alpha==0) ? 1 : exp(-fabs(n_alpha)*pow(Zw,n_alpha/fabs(n_alpha)));
     return    fzw;
 }
+
 
 void SoilMoistFactorRange(double dst[MAXSPS], double satn, const double sw_threshold[MAXSPS], const double sw_exponent[MAXSPS], int start, int end, int offset) {
     /* Calculate the soil moisture factor over an array */
@@ -928,17 +944,20 @@ void SoilMoistFactorRange(double dst[MAXSPS], double satn, const double sw_thres
     return;
 }
 
+
 void GetSurfaceAreaRange(double area[MAXSPS], const double prim_conc[MAXSPS], const double ssa[MAXSPS], const ChemTableEntry chemtbl[], int start, int end, int offset) {
     for (int i = start; i < end; i++) {
         area[i - offset] = prim_conc[i] * ssa[i] * chemtbl[i].molar_mass;
     }
 }
 
+
 void GetTempFactorRange(double ftemp[MAXSPS], const double q10[MAXSPS], double temperature, int start, int end, int offset) {
     for (int i = start; i < end; i++) {
         ftemp[i - offset] = SoilTempFactor(q10[i], temperature);
     }
 }
+
 
 void GetWTDepthFactorRange(double fzw[MAXSPS], double Zw, const double n_alpha[MAXSPS], int start, int end, int offset) {
     for (int i = start; i < end; i++) {

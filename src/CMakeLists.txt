@@ -40,14 +40,23 @@ if(WIN32)
     )
 endif()
 
-
-target_compile_options(
-    biort
-    PRIVATE
-    -Wall
-    -Wextra
-    # -Werror
-)
+if(WIN32)
+    target_compile_options(
+        biort
+        PRIVATE
+        /Wall
+        # -Werror
+    )
+else()
+    target_compile_options(
+        biort
+        PRIVATE
+        -Wall
+        -Wextra
+        -O2
+        # -Werror
+    )
+endif()
 
 target_include_directories(
     biort PRIVATE
@@ -56,18 +65,19 @@ target_include_directories(
     ${BioRT_SOURCE_DIR}/include
 )
 
-target_link_directories(
-    biort PRIVATE
-    ${BioRT_SOURCE_DIR}/build/dep/cvode/src/cvode
-    ${BioRT_SOURCE_DIR}/build/dep/cvode/src/nvector/serial
-)
-
-# target_link_libraries(
-#     biort PRIVATE
-#     m
-#     sundials_cvode
-#     sundials_nvecserial
-# )
+IF(WIN32)
+    target_link_directories(
+        biort PRIVATE
+        ${BioRT_SOURCE_DIR}/build/dep/cvode/src/cvode/Debug
+        ${BioRT_SOURCE_DIR}/build/dep/cvode/src/nvector/serial/Debug
+    )
+ELSE()
+    target_link_directories(
+        biort PRIVATE
+        ${BioRT_SOURCE_DIR}/build/dep/cvode/src/cvode
+        ${BioRT_SOURCE_DIR}/build/dep/cvode/src/nvector/serial
+    )
+ENDIF()
 
 
 if (WIN32)

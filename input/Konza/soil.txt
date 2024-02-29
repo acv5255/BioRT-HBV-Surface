@@ -3,6 +3,6 @@ POROSITY_LZ             0.05    # lower zone porosity (m3 m-3)
 WS_PASSIVE_SF           0
 WS_PASSIVE_UZ           50       # upper zone passive water storage (mm)
 WS_PASSIVE_LZ           900      # lower zone passive water storage (mm)
-DEPTH_SF           1      
+DEPTH_SF                1      
 DEPTH_UZ                2000     # upper zone depth (mm)
 DEPTH_LZ                20000     # lower zone depth (mm)

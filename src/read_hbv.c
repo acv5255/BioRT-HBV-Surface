@@ -127,7 +127,7 @@ void ReadHbvResults(const char dir[], int *nsteps, int *steps[], Subcatchment* s
     // Add 1. residual moisture to LZ & UZ and 2. SM to UZ
     for (int kstep = 0; kstep < *nsteps; kstep++)
     {
-        subcatch->ws[kstep][SURFACE]+= MIN(subcatch->soil_surface.ws_passive, STORAGE_MIN);
+        subcatch->ws[kstep][SURFACE] = MAX(subcatch->soil_surface.ws_passive, SURFACE_STORAGE_MIN);
         // if (subcatch->q[kstep][Q0] > 0.0) subcatch->ws[kstep][SURFACE] = subcatch->q[kstep][Q0];
         subcatch->ws[kstep][UZ] += subcatch->soil_sz.ws_passive;
         subcatch->ws[kstep][LZ] += subcatch->soil_dz.ws_passive;

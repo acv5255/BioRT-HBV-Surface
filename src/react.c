@@ -132,7 +132,7 @@ void ReactSurfaceZone(const double temp, const SoilConstants soil, const double 
 
 void GetRates(double rate[MAXSPS], double rate_spe[MAXSPS], const double area[MAXSPS], const double ftemp[MAXSPS], const double fsw[MAXSPS], const double fzw[MAXSPS],
     const ReactionNetwork* rttbl, const KineticTableEntry kintbl[MAXSPS], const ChemicalState* chms) {
-        
+    
     for (int i = 0; i < rttbl->num_mkr; i++) {
         int min_pos = kintbl[i].position - rttbl->num_stc + rttbl->num_min;
 

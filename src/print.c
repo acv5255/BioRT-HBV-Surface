@@ -32,7 +32,7 @@ void PrintHeader(FILE *file_pointer, int transpt, const ReactionNetwork *rttbl, 
             char substr[SUBSTRING_SIZE];
             strncpy(substr, chemn, SUBSTRING_SIZE);
 
-            sprintf(tempstr, "%s_SURFACE", substr);
+            sprintf(tempstr, "%s_SF", substr);
             fprintf(file_pointer, "\t%-15s", tempstr);
 
         }
@@ -135,8 +135,8 @@ void PrintHeader(FILE *file_pointer, int transpt, const ReactionNetwork *rttbl, 
             char substr[SUBSTRING_SIZE];
             strncpy(substr, chemn, SUBSTRING_SIZE);
 
-            sprintf(tempstr, "%s_SURFACE", substr);
-            // sprintf(tempstr, "%s_SURFACE", chemn);
+            sprintf(tempstr, "%s_SF", substr);
+            // sprintf(tempstr, "%s_SF", chemn);
             fprintf(file_pointer, "\t%-15s", tempstr);
 
         }

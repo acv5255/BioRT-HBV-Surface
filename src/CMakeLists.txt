@@ -68,8 +68,8 @@ target_include_directories(
 IF(WIN32)
     target_link_directories(
         biort PRIVATE
-        ${BioRT_SOURCE_DIR}/build/dep/cvode/src/cvode/Debug
-        ${BioRT_SOURCE_DIR}/build/dep/cvode/src/nvector/serial/Debug
+	${BioRT_SOURCE_DIR}/build/dep/cvode/src/cvode/Release
+	${BioRT_SOURCE_DIR}/build/dep/cvode/src/nvector/serial/Release
     )
 ELSE()
     target_link_directories(

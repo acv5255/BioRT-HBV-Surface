@@ -309,7 +309,7 @@ ENDIF()
 # ---------------------------------------------------------------
 
 OPTION(BUILD_STATIC_LIBS "Build static libraries" ON)
-OPTION(BUILD_SHARED_LIBS "Build shared libraries" ON)
+OPTION(BUILD_SHARED_LIBS "Build shared libraries" OFF)
 
 # Prepare substitution variable SUNDIALS_EXPORT for sundials_config.h
 # When building shared SUNDIALS libraries under Windows, use

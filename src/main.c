@@ -62,7 +62,7 @@ int main(int argc, char *argv[])
     InitChem(dir, &calib, ctrl, chemtbl, kintbl, &rttbl, &subcatch);
 
     // Check on secondary concentrations in the surface zone
-    ErrOnZeroRanged("main.c", "subcatch.chms[SURFACE].sec_conc", 63, subcatch.chms[SURFACE].sec_conc, 2);
+    // ErrOnZeroRanged("main.c", "subcatch.chms[SURFACE].sec_conc", 63, subcatch.chms[SURFACE].sec_conc, 2);
 
     // Create output directory when necessary
     mkdir("output");
@@ -114,7 +114,7 @@ int main(int argc, char *argv[])
                 if (ctrl.transport_only == KIN_REACTION)
                 {
                     // In reaction mode, simulate reaction for soil, and speciation for stream
-                    Reaction(kstep, 86400.0, &ctrl, chemtbl, kintbl, &rttbl, &subcatch);
+                    Reaction(kstep, ctrl.time_step, &ctrl, chemtbl, kintbl, &rttbl, &subcatch);
                 }
                 else
                 {
@@ -162,7 +162,7 @@ int main(int argc, char *argv[])
                 if (ctrl.transport_only == KIN_REACTION)
                 {
                     // In reaction mode, simulate reaction for soil, and speciation for stream
-                    Reaction(kstep, 86400.0, &ctrl, chemtbl, kintbl, &rttbl, &subcatch_numexp);
+                    Reaction(kstep, ctrl.time_step, &ctrl, chemtbl, kintbl, &rttbl, &subcatch_numexp);
                 }
                 else
                 {

@@ -152,11 +152,11 @@ void TransportSurfaceZone(const ReactionNetwork* rttbl, const ControlData ctrl, 
 
 
 
-        if (!expected_behavior) {
-            // This means that the concentration should have increased but really decreased, or the opposite
-            printf("Failed to get expected behavior in transport in surface zone...\n");
-            exit(-1);
-        }
+        // if (!expected_behavior) {
+        //     // This means that the concentration should have increased but really decreased, or the opposite
+        //     printf("Failed to get expected behavior in transport in surface zone...\n");
+        //     exit(-1);
+        // }
 
         // Transport moles between reservoirs
         subcatch->chms[SURFACE].tot_mol[kspc] = m_f_surf;

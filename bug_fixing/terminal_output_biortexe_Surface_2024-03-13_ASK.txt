@@ -1,0 +1,127 @@
+PS C:\Users\malor\Desktop\BioRT-HBV-Surface> .\biort.exe Sagehen_Ca_092223_Hydro665693_Q0Q1Q2_1-70-29
+SOIL PARAMTERS
+  Upper zone porosity is 0.50 m3 m-3.
+  Lower zone porosity is 0.05 m3 m-3.
+  Surface zone passive water storage is 1.00 mm.
+  Upper zone passive water storage is 50.00 mm.
+  Lower zone passive water storage is 500.00 mm.
+  Depth of surface zone is 1.00 mm.
+  Depth of upper zone is 2000.00 mm.
+  Depth of lower zone is 80000.00 mm.
+
+HBV MODEL PARAMETERS
+  Percolation rate is 0.54 mm day-1
+  K1 is 0.09 day-1
+  K2 is 0.04 day-1
+  Routing parameter is 1.93
+  TT is 2.11
+  SFCF is 0.67
+
+BIORT CONTROL PARAMETERS
+  Forcing recycle 2 time(s).
+  Activity correction is set to 1.
+  Transport only mode disabled.
+  Using time-series precipitation chemistry in precipchem.txt.
+  Using different precipitation chemistry during warmup and simulation run.
+  Temperature = 25.0
+  Surface reactions turned off
+
+PRIMARY SPECIES
+  6 chemical species specified.
+  4 aqueous species specified.
+  0 surface complexation specified.
+  0 cation exchange specified.
+  2 minerals specified.
+
+SECONDARY SPECIES
+  0 secondary species specified.
+
+MINERAL KINETIC REACTIONS
+  2 mineral kinetic reaction(s) specified.
+  Kinetic reaction on 'Sagehenite_UZ' is specified, label 'default'.
+  Position_check (num_mkr[i] vs num_stc[j]) (0, 4)
+  Kinetic reaction on 'Sagehenite_LZ' is specified, label 'default'.
+  Position_check (num_mkr[i] vs num_stc[j]) (1, 5)
+
+
+
+READING TIME-SERIES PRECIPITATION CHEMISTRY from "precipchem.txt"
+
+Hydrology in input/Sagehen_Ca_092223_Hydro665693_Q0Q1Q2_1-70-29/Results.txt will be used for numerical experiment.
+
+READING TIME-SERIES PRECIPITATION CHEMISTRY from "Numexp_precipchem.txt"
+
+DATABASE
+
+ Temperature point 25.00 found in database (Pos. 2).
+
+ Debye-Huckel Parameters set to A=0.5114; B=0.3288; b=0.0410
+
+ Primary species 'Ca++' found in database.
+ molar_mass = 40.0780
+
+ Primary species 'Cl-' found in database.
+ molar_mass = 35.4527
+
+ Primary species 'H+' found in database.
+ molar_mass = 1.0079
+
+ Primary species 'SiO2(aq)' found in database.
+ molar_mass = 60.0843
+
+ Mineral 'Sagehenite_UZ' found in database!
+ 'Sagehenite_UZ'  100.7900  3   1.0000 'Ca++'    2.0000 'SiO2(aq)'    4.0000 'H2O'   31.1921    26.5780    20.8090    15.3121     9.7228     5.1155     1.1209    -2.5408   278.2073
+ Keq = 26.5780
+ molar_mass = 278.2073, molar_vol = 100.7900
+
+ Mineral 'Sagehenite_LZ' found in database!
+ 'Sagehenite_LZ'  100.7900  3   1.0000 'Ca++'    2.0000 'SiO2(aq)'    4.0000 'H2O'   31.1921    26.5780    20.8090    15.3121     9.7228     5.1155     1.1209    -2.5408   278.2073
+ Keq = 26.5780
+ molar_mass = 278.2073, molar_vol = 100.7900
+
+ Selecting the kinetic species 'Sagehenite_UZ' from all possible species.
+
+ Selecting the kinetic species 'Sagehenite_LZ' from all possible species.
+
+
+ Mineral kinetics 'Sagehenite_UZ' default found in database!
+ Rate is -11.000000
+ After calibration: Rate is -11.000000, calib->Rate = 0.000000
+ Activation is 0.000000
+ No dependency.
+
+ Mineral kinetics 'Sagehenite_LZ' default found in database!
+ Rate is -12.000000
+ After calibration: Rate is -12.000000, calib->Rate = 0.000000
+ Activation is 0.000000
+ No dependency.
+
+ Total Concentration Matrix!
+                  'H+'          'Cl-'         'Ca++'        'SiO2(aq)'    'Sagehenite_UZ''Sagehenite_LZ'
+ Sum'H+'          1.00          0.00          0.00          0.00          0.00          0.00
+ Sum'Cl-'         0.00          1.00          0.00          0.00          0.00          0.00
+ Sum'Ca++'        0.00          0.00          1.00          0.00          0.00          0.00
+ Sum'SiO2(aq)'    0.00          0.00          0.00          1.00          0.00          0.00
+ Sum'Sagehenite_UZ'0.00          0.00          0.00          0.00          1.00          0.00
+ Sum'Sagehenite_LZ'0.00          0.00          0.00          0.00          0.00          1.00
+
+ Kinetic Mass Matrix!
+               'H+'          'Cl-'         'Ca++'        'SiO2(aq)'    'Sagehenite_UZ''Sagehenite_LZ'
+ 'Sagehenite_UZ'0.000000      0.000000      1.000000      2.000000      -1.000000     0.000000       Keq = 26.58
+ 'Sagehenite_LZ'0.000000      0.000000      1.000000      2.000000      0.000000      -1.000000      Keq = 26.58
+
+ Mass action species type determination (0: immobile, 1: mobile, 2: Mixed)
+         'H+'             1
+        'Cl-'             1
+       'Ca++'             1
+   'SiO2(aq)'             1
+
+ Individual species type determination (1: aqueous, 2: adsorption, 3: ion exchange, 4: solid)
+         'H+'             1
+        'Cl-'             1
+       'Ca++'             1
+   'SiO2(aq)'             1
+ 'Sagehenite_UZ'             4
+ 'Sagehenite_LZ'             4
+Array 'subcatch.chms[SURFACE].sec_conc' in file 'main.c' near line '63' contains zero value (ranged) when it shouldn't, exiting...
+0  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0

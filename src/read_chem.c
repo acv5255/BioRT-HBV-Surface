@@ -82,6 +82,10 @@ void ReadChem(const char dir[], ControlData *ctrl, ReactionNetwork *rttbl, ChemT
         biort_printf(VL_NORMAL, "  Surface reactions are on\n");
     }
 
+    NextLine(file_pointer, cmdstr, &lno);
+    ctrl->time_step = ReadParamToDouble(cmdstr, "TIME_STEP", file_name, lno);
+    printf("  Time step for simulation: %f seconds\n", ctrl->time_step);
+
     // Count numbers of species and reactions
     FindLine(file_pointer, CHEM_PRIMARY_SPECIES_ID, &lno, file_name);
     rttbl->num_stc = CountLines(file_pointer, cmdstr, 1, "SECONDARY_SPECIES");

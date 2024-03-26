@@ -135,14 +135,21 @@ void GetRates(double rate[MAXSPS], double rate_spe[MAXSPS], const double area[MA
     
     for (int i = 0; i < rttbl->num_mkr; i++) {
         int min_pos = kintbl[i].position - rttbl->num_stc + rttbl->num_min;
+        SetZero(rate);
 
         if (kintbl[i].type == TST)
         {
-            double iap[MAXSPS];
-            double dependency[MAXSPS];
+            double iap[MAXSPS] = {0.0};
+            double dependency[MAXSPS] = {0.0};
             GetIAP(iap, chms->prim_actv, rttbl->dep_kin, rttbl->num_mkr, rttbl->num_stc);
+            ErrorOnArrayNan(iap, "iap", "react.c", 145);
             double temp_keq = pow(10, rttbl->keq_kin[i]);
             dependency[i] = GetDependenceTerm(&kintbl[i], chms);
+            ErrorOnArrayNan(dependency, "dependency", "react.c", 148);
+            ErrorOnArrayNan(area, "area", "react.c", 149);
+            ErrorOnArrayNan(ftemp, "ftemp", "react.c", 150);
+            ErrorOnArrayNan(fsw, "fsw", "react.c", 151);
+            ErrorOnArrayNan(fzw, "fzw", "react.c", 152);
 
             // Calculate the predicted rate depending on the type of rate law
             //   rate_pre: rate per reaction (mol L-1 porous media s-1)
@@ -150,6 +157,7 @@ void GetRates(double rate[MAXSPS], double rate_spe[MAXSPS], const double area[MA
             //   rate: mol/m2 of min/s
             //   dependency: dimensionless
             rate[i] = area[min_pos] * pow(10, kintbl[i].rate) * dependency[i] * (1.0 - iap[i] / temp_keq) * ftemp[min_pos] * fsw[min_pos] * fzw[min_pos];
+            ErrorOnArrayNan(rate, "rate", "react.c", 155);
         }
         else if (kintbl[i].type == MONOD)
         {
@@ -201,10 +209,11 @@ int SolveReact(double stepsize, const ChemTableEntry chemtbl[], const KineticTab
     const double    inv_sat = 1.0 / satn;//inv_sat(L of porous space/L of water)= 1/sat(L of water/L of porous space)
     SetZero(tmpconc); SetZero(tot_conc);
     CheckChmsForNonFinite(chms, "react.c", 174);
-    // ErrOnZeroRanged("react.c", "chms->sec_conc", 175, chms->sec_conc, rttbl->num_ssc);
+    // printf("Q10 array:\n");
+    // PrintArray(chms->q10);
     {
-        int start = rttbl->num_stc - rttbl->num_min;
-        int end = rttbl->num_stc;
+        int start = rttbl->num_stc - rttbl->num_min;    // Start of the mineral block
+        int end = rttbl->num_stc;                       // End of the mineral block
         int offset = start;
         GetSurfaceAreaRange(area, chms->prim_conc, chms->ssa, chemtbl, rttbl->num_stc - rttbl->num_min, rttbl->num_stc, rttbl->num_stc - rttbl->num_min);
         GetTempFactorRange(ftemp, chms->q10, temp, start, end, offset);
@@ -214,6 +223,8 @@ int SolveReact(double stepsize, const ChemTableEntry chemtbl[], const KineticTab
     SoilMoistFactorRange(fsw, satn, chms->sw_thld, chms->sw_exp, rttbl->num_stc - rttbl->num_min, rttbl->num_stc, rttbl->num_stc - rttbl->num_min);
     SetZeroRange(rate_spe, 0, rttbl->num_stc);
     GetRates(rate_pre, rate_spe, area, ftemp, fsw, fzw, rttbl, kintbl, chms);
+    ErrorOnArrayNan(rate_pre, "rate_pre", "react.c", 216);
+
 
     for (int i = 0; i < rttbl->num_mkr; i++)
     {
@@ -302,6 +313,7 @@ int SolveReact(double stepsize, const ChemTableEntry chemtbl[], const KineticTab
                     iap[i] += (chemtbl[j].itype != MINERAL) ? (tmpconc[j] + gamma[j]) * rttbl->dep_kin[i][j] : 0.0;
                 }
                 iap[i] = pow(10, iap[i]);
+                ErrorOnArrayNan(iap, "iap", "react.c", 307);
 
                 double temp_keq = pow(10, rttbl->keq_kin[i]);
 
@@ -312,6 +324,8 @@ int SolveReact(double stepsize, const ChemTableEntry chemtbl[], const KineticTab
                         gamma[kintbl[i].dep_index[k]]) * kintbl[i].dep_power[k];
                 }
                 dependency[i] = pow(10.0, dependency[i]);
+                ErrorOnArrayNan(dependency, "dependency", "react.c", 318);
+                ErrorOnArrayNan(area, "area", "react.c", 319);
 
                 // Calculate predicted rate depending on type of rate law
                 // rate_pre: in mol / L water / s
@@ -319,6 +333,7 @@ int SolveReact(double stepsize, const ChemTableEntry chemtbl[], const KineticTab
                 // rate: mol/m2/s
                 // dependency: dimensionless
                 rate_pre[i] = area[min_pos] * pow(10, kintbl[i].rate) * dependency[i] * (1.0 - (iap[i] / temp_keq)) * ftemp[min_pos] * fsw[min_pos] * fzw[min_pos];
+                ErrorOnArrayNan(rate_pre, "rate_pre", "react.c", 327);
             }
             else if (kintbl[i].type == MONOD)
             {
@@ -337,6 +352,8 @@ int SolveReact(double stepsize, const ChemTableEntry chemtbl[], const KineticTab
             // concentration are mol/L porous media. For the aqueous species, the unit of the rate and the unit of the
             // concentration are mol/L pm and mol/L water respectively.
         }
+        ErrorOnArrayNan(rate_pre, "rate_pre", "react.c", 340);
+
         for (int i = 0; i < rttbl->num_spc; i++)
         {
             // rate(mol/m2 water/s)= rate(mol/m2 pm/s)*inv_sat(L of porous space/L of water)/porosity(L of porous space/L of pm)
@@ -452,6 +469,8 @@ int SolveReact(double stepsize, const ChemTableEntry chemtbl[], const KineticTab
         tot_conc[i] = tmpval;
     }
     CheckChmsForNonFinite(chms, "react.c", 413);
+    ErrorOnArrayNan(rate_pre, "rate_pre", "react.c", 455);
+    ErrorOnArrayNan(rate_spet, "rate_spet", "react.c", 456);
 
     for (int i = 0; i < rttbl->num_stc + rttbl->num_ssc; i++)
     {
@@ -476,7 +495,7 @@ int SolveReact(double stepsize, const ChemTableEntry chemtbl[], const KineticTab
         }
     }
 
-    CheckChmsForNonFinite(chms, "react.c", 438);
+    CheckChmsForNonFinite(chms, "react.c", 479);
     return 0;
 }
 
@@ -649,6 +668,9 @@ int SolveSurfaceReact(double stepsize, const ChemTableEntry chemtbl[], const Kin
             rate_spet[i] *= (chemtbl[i].itype == AQUEOUS) ? (inv_sat/porosity) : 1.0;
         }
 
+        CheckChmsForNonFinite(chms, "react.c", 652);
+
+
         // Calculate the residual for each aqueous primary species
         for (int i = 0; i < rttbl->num_stc - rttbl->num_min; i++)
         {
@@ -727,7 +749,7 @@ int SolveSurfaceReact(double stepsize, const ChemTableEntry chemtbl[], const Kin
         destroyMat(jcb);
     } while (max_error > TOLERANCE);
 
-    CheckChmsForNonFinite(chms, "react.c", 389);
+    CheckChmsForNonFinite(chms, "react.c", 730);
 
     // Update secondary species here
     for (int i = 0; i < rttbl->num_ssc; i++)
@@ -936,6 +958,7 @@ double WTDepthFactor(double Zw, double n_alpha){
 
 void SoilMoistFactorRange(double dst[MAXSPS], double satn, const double sw_threshold[MAXSPS], const double sw_exponent[MAXSPS], int start, int end, int offset) {
     /* Calculate the soil moisture factor over an array */
+    SetZero(dst);
     if (satn < 1.0) {
         for (int i = start; i < end; i++) {
             dst[i - offset] = SoilMoistFactor(satn, sw_threshold[i], sw_exponent[i]);
@@ -946,6 +969,7 @@ void SoilMoistFactorRange(double dst[MAXSPS], double satn, const double sw_thres
 
 
 void GetSurfaceAreaRange(double area[MAXSPS], const double prim_conc[MAXSPS], const double ssa[MAXSPS], const ChemTableEntry chemtbl[], int start, int end, int offset) {
+    // SetZero(area);
     for (int i = start; i < end; i++) {
         area[i - offset] = prim_conc[i] * ssa[i] * chemtbl[i].molar_mass;
     }
@@ -953,8 +977,10 @@ void GetSurfaceAreaRange(double area[MAXSPS], const double prim_conc[MAXSPS], co
 
 
 void GetTempFactorRange(double ftemp[MAXSPS], const double q10[MAXSPS], double temperature, int start, int end, int offset) {
+    SetZero(ftemp);
     for (int i = start; i < end; i++) {
         ftemp[i - offset] = SoilTempFactor(q10[i], temperature);
+        // ftemp[i] = SoilTempFactor(q10[i - offset], temperature);
     }
 }
 

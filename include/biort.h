@@ -91,6 +91,7 @@ typedef struct ControlData
     int             precipchem_numexp;      // Numerical experiment mode: 0 = same precipitation chemistry during warm-up and simulation
                                             // 1 = different precipitation chemistry during warm-up and simulation useful for numerical experiment  2021-09-09
     bool            do_surface_reactions;   // True = yes, do surface reactions; False = never do surface reactions
+    double          time_step;
 } ControlData;
 
 typedef struct ReactionNetwork
